@@ -46,9 +46,21 @@ Leva uns 15 minutos. **No fim você me manda dois valores** e eu ligo tudo no si
 
 ## Etapa 2 — Criar o aplicativo no Discord
 
-Você precisa do endereço do seu projeto Supabase aqui. Pegue assim:
-no Supabase, vá em **Project Settings** (engrenagem) → **API** e copie o valor de
-**Project URL**. É algo como `https://abcdefghijklm.supabase.co`.
+Você precisa do endereço do seu projeto Supabase aqui. Há dois jeitos de achar:
+
+**Pela barra de endereço** (mais rápido, não depende de menu). Estando no painel
+do projeto, o endereço do navegador é:
+
+```
+https://supabase.com/dashboard/project/abcdefghijklmnop
+                                       └── identificador ──┘
+```
+
+O endereço do projeto é esse identificador com `.supabase.co`:
+`https://abcdefghijklmnop.supabase.co`
+
+**Pelo botão Connect**, no topo do painel: ele abre uma caixa com o Project URL
+e a chave já prontos para copiar.
 
 1. Abra **https://discord.com/developers/applications** e entre com sua conta
    do Discord.
@@ -111,23 +123,31 @@ no Supabase, vá em **Project Settings** (engrenagem) → **API** e copie o valo
 
 ## O que me mandar
 
-No Supabase, em **Project Settings** → **API**, copie estes dois valores:
+Clique em **Connect**, no topo do painel do projeto. A caixa que abre já traz os
+dois valores prontos:
 
 1. **Project URL** — `https://xxxxxxxx.supabase.co`
-2. **anon public** (a chave longa, na seção *Project API keys*)
+2. A chave pública. Dependendo de quando o projeto foi criado ela aparece como
+   **`anon public`** (formato antigo, uma cadeia longa começando em `eyJ…`) ou
+   como **Publishable key** (formato novo, começando em `sb_publishable_…`).
+   **Qualquer uma das duas serve** — o site usa a que existir.
+
+Se preferir pelo menu, é **Settings → API Keys** (não existe mais a página
+*Settings → API* que versões anteriores tinham).
 
 Cole os dois aqui no chat que eu configuro o site.
 
 ### É seguro mandar essa chave?
 
-Sim. A chave `anon public` é **feita para ficar visível** no código do site —
-todo mundo que abrir a página vai conseguir lê-la, e isso é normal. Quem protege
-os dados são as políticas de Row Level Security que você criou na Etapa 1:
-mesmo com a chave em mãos, ninguém consegue ler linha de outra pessoa.
+Sim. Essa chave é **feita para ficar visível** no código do site — todo mundo
+que abrir a página consegue lê-la, e isso é normal em qualquer site que use
+Supabase. Quem protege os dados são as políticas de Row Level Security que você
+criou na Etapa 1: mesmo com a chave em mãos, ninguém lê linha de outra pessoa.
 
 **O que você nunca deve mandar para ninguém** (nem para mim):
 
-- a chave **`service_role`** — essa ignora todas as proteções;
+- a chave **`service_role`** ou qualquer **Secret key** (`sb_secret_…`) — essas
+  ignoram todas as proteções;
 - a **Database Password** da Etapa 1;
 - o **Client Secret** do Discord (ele fica só no Supabase).
 
