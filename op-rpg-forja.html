@@ -1,0 +1,2706 @@
+<title>Forja de Técnicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Cinzel:wght@500;600;700&family=Bebas+Neue&family=Archivo+Black&family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;600&display=swap">
+
+<style>
+/* ── 0 · tipografia e formatação (trocáveis pelo painel Aparência) ─ */
+:root{
+  --font-display:"Oswald","Arial Narrow",Arial,sans-serif;
+  --font-body:"Spectral",Georgia,"Times New Roman",serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --fs-base:16px;
+  --lh:1.6;
+  --dens:1;
+  --radius:3px;
+  --ls-title:0em;
+  --title-scale:1;
+  --surf-mix:100%;
+  --surf-blur:0px;
+  --bg-image:none;
+  --bg-size:auto;
+  --bg-repeat:no-repeat;
+  --bg-attach:scroll;
+}
+
+/* ── 1 · neutros claros + paleta padrão ─────────────────────────── */
+:root{
+  --ink:#101E29; --ink2:#41535F; --ink3:#71838F;
+  --paper:#E9EDEF; --surf:#FFFFFF; --surf2:#F3F6F7; --surf3:#E2E8EB;
+  --line:#CBD5DB; --line2:#A6B6C0;
+  --red:#B8372C; --gold:#96660C; --sea:#1C6478; --ok:#25705A;
+  --redsoft:color-mix(in srgb, var(--red) 11%, transparent);
+  --goldsoft:color-mix(in srgb, var(--gold) 13%, transparent);
+  --seasoft:color-mix(in srgb, var(--sea) 11%, transparent);
+  --oksoft:color-mix(in srgb, var(--ok) 11%, transparent);
+  --onaccent:#FFFFFF;
+}
+/* ── 2 · paletas, variante clara ─────────────────────────────────── */
+:root[data-palette="grandline"]{ --red:#0F7A6E; --gold:#8A6100; --sea:#1E5F8A; --ok:#2C6A45; }
+:root[data-palette="porsol"]  { --red:#C05A16; --gold:#8C6A00; --sea:#8A4A6E; --ok:#3F7046; }
+:root[data-palette="yonko"]   { --red:#6E3A9E; --gold:#96660C; --sea:#2E6B8F; --ok:#25705A; }
+:root[data-palette="kairoseki"]{ --red:#2B5C7A; --gold:#6E7A2E; --sea:#4A6070; --ok:#2E6B5B; }
+
+/* ── 3 · neutros escuros + acentos escuros da paleta padrão ──────── */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+    --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+    --line:#263B4C; --line2:#3A5468;
+    --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+    --redsoft:color-mix(in srgb, var(--red) 15%, transparent);
+    --goldsoft:color-mix(in srgb, var(--gold) 15%, transparent);
+    --seasoft:color-mix(in srgb, var(--sea) 15%, transparent);
+    --oksoft:color-mix(in srgb, var(--ok) 15%, transparent);
+    --onaccent:#0A131A;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+  --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+  --line:#263B4C; --line2:#3A5468;
+  --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+  --redsoft:color-mix(in srgb, var(--red) 15%, transparent);
+  --goldsoft:color-mix(in srgb, var(--gold) 15%, transparent);
+  --seasoft:color-mix(in srgb, var(--sea) 15%, transparent);
+  --oksoft:color-mix(in srgb, var(--ok) 15%, transparent);
+  --onaccent:#0A131A;
+}
+/* ── 4 · paletas, variante escura (specificity maior que o bloco 3) ─ */
+@media (prefers-color-scheme: dark){
+  :root[data-palette="grandline"]:not([data-theme="light"]){ --red:#4FC0B0; --gold:#DFA845; --sea:#6BADE0; --ok:#5FBE92; }
+  :root[data-palette="porsol"]:not([data-theme="light"])  { --red:#F0904A; --gold:#D9B34A; --sea:#D98BB8; --ok:#6FBE7E; }
+  :root[data-palette="yonko"]:not([data-theme="light"])   { --red:#B292E8; --gold:#DFA845; --sea:#6FB3D6; --ok:#4FB58D; }
+  :root[data-palette="kairoseki"]:not([data-theme="light"]){ --red:#6FB0D4; --gold:#BFC96B; --sea:#9AB0C0; --ok:#5FC0A8; }
+}
+:root[data-palette="grandline"][data-theme="dark"]{ --red:#4FC0B0; --gold:#DFA845; --sea:#6BADE0; --ok:#5FBE92; }
+:root[data-palette="porsol"][data-theme="dark"]  { --red:#F0904A; --gold:#D9B34A; --sea:#D98BB8; --ok:#6FBE7E; }
+:root[data-palette="yonko"][data-theme="dark"]   { --red:#B292E8; --gold:#DFA845; --sea:#6FB3D6; --ok:#4FB58D; }
+:root[data-palette="kairoseki"][data-theme="dark"]{ --red:#6FB0D4; --gold:#BFC96B; --sea:#9AB0C0; --ok:#5FC0A8; }
+
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0; color:var(--ink);
+  background-color:var(--paper); background-image:var(--bg-image); background-size:var(--bg-size);
+  background-repeat:var(--bg-repeat); background-attachment:var(--bg-attach); background-position:center;
+  font-family:var(--font-body); font-size:var(--fs-base); line-height:var(--lh); -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display); font-weight:600; margin:0; text-wrap:balance;
+  line-height:1.15; letter-spacing:var(--ls-title)}
+.mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums}
+a{color:var(--sea)}
+:focus-visible{outline:2px solid var(--red); outline-offset:2px; border-radius:2px}
+p{margin:0 0 14px}
+
+/* nav */
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:60;
+  background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1260px; margin:0 auto; padding:0 16px; display:flex; align-items:center; gap:14px; min-height:52px}
+.brand{font-family:var(--font-display); font-weight:700; font-size:14px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--red); white-space:nowrap; text-decoration:none}
+.navscroll{flex:1; overflow-x:auto; scrollbar-width:none}
+.navscroll::-webkit-scrollbar{display:none}
+.navlist{display:flex; gap:2px; list-style:none; margin:0; padding:0}
+.navlist a{display:block; padding:7px 10px; font-family:var(--font-display); font-weight:500; font-size:12.5px;
+  letter-spacing:.09em; text-transform:uppercase; white-space:nowrap; color:var(--ink2); text-decoration:none; border-radius:var(--radius)}
+.navlist a:hover{color:var(--ink); background:var(--surf3)}
+
+/* seletor de aparência */
+.appearance{position:relative; flex:none}
+.themebtn{border:1px solid var(--line); background:var(--surf); color:var(--ink2); border-radius:var(--radius);
+  padding:6px 11px; cursor:pointer; font-family:var(--font-display); font-size:12px; font-weight:500;
+  letter-spacing:.09em; text-transform:uppercase; display:flex; align-items:center; gap:7px}
+.themebtn:hover{border-color:var(--line2); color:var(--ink)}
+.themebtn .dot{width:11px; height:11px; border-radius:50%; background:var(--red); flex:none;
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent)}
+.pop{position:absolute; right:0; top:calc(100% + 8px); width:min(330px, calc(100vw - 32px));
+  max-height:min(76vh, 640px); overflow-y:auto; background:var(--surf);
+  border:1px solid var(--line2); box-shadow:0 12px 34px -14px rgba(0,0,0,.45); z-index:70; padding:13px}
+.pop h4{font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink3); margin:0 0 7px; display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.pop h4 + h4, .pop .sec2{margin-top:15px}
+.pop h4 button{border:0; background:none; padding:0; cursor:pointer; color:var(--sea);
+  font-family:var(--font-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase}
+.pop h4 button:hover{color:var(--red)}
+.pop select{width:100%; font-family:var(--font-body); font-size:14px; color:var(--ink);
+  background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:6px 8px}
+.pop select + select{margin-top:7px}
+.cpick{display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:center; margin-top:7px}
+.cpick input[type=color]{width:34px; height:30px; padding:0; border:1px solid var(--line2);
+  border-radius:50%; background:none; cursor:pointer; overflow:hidden; flex:none}
+.cpick input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
+.cpick input[type=color]::-webkit-color-swatch{border:0; border-radius:50%}
+.cpick input[type=color]::-moz-color-swatch{border:0; border-radius:50%}
+.cpick .lab{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--ink3); line-height:1.2}
+.cpick input[type=text]{width:100%; font-family:var(--font-mono); font-size:12.5px; text-transform:uppercase;
+  color:var(--ink); background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:4px 7px; margin-top:2px}
+.cpick input[type=text].bad{border-color:var(--red); color:var(--red)}
+.popseg{display:flex; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+.popseg button{flex:1; border:0; border-right:1px solid var(--line); background:var(--surf2); color:var(--ink2);
+  font-family:var(--font-display); font-size:12px; font-weight:500; letter-spacing:.05em;
+  padding:7px 4px; cursor:pointer; text-transform:uppercase}
+.popseg button:last-child{border-right:0}
+.popseg button:hover{background:var(--surf3); color:var(--ink)}
+.popseg button[aria-pressed="true"]{background:var(--red); color:var(--onaccent)}
+.swatches{display:grid; grid-template-columns:repeat(5,1fr); gap:7px}
+.sw{border:1px solid var(--line2); background:var(--surf2); border-radius:var(--radius); padding:6px 3px 5px;
+  cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:5px}
+.sw:hover{border-color:var(--ink3)}
+.sw[aria-pressed="true"]{border-color:var(--red); border-width:2px; padding:5px 2px 4px}
+.sw i{display:block; width:100%; height:13px; border-radius:2px}
+.sw span{font-family:var(--font-mono); font-size:8px; letter-spacing:.04em; color:var(--ink3);
+  text-transform:uppercase; line-height:1}
+
+.wrap{max-width:1260px; margin:0 auto; padding-inline:16px}
+section{padding-block:calc(48px * var(--dens)); border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--font-mono); font-size:11.5px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--red); margin:0 0 10px}
+h2.sec{font-size:calc(clamp(26px,4.2vw,36px) * var(--title-scale)); margin-bottom:8px}
+.lede{color:var(--ink2); font-size:17px; margin:8px 0 0; max-width:64ch}
+.small{font-size:14px; color:var(--ink2)}
+
+.hero{border-top:0; padding-block:clamp(30px,5vw,54px) 30px;
+  background:radial-gradient(900px 320px at 10% -20%, var(--goldsoft), transparent 65%),
+             radial-gradient(700px 300px at 92% 0%, var(--redsoft), transparent 62%)}
+.hero h1{font-size:calc(clamp(34px,7.5vw,62px) * var(--title-scale)); font-weight:700; line-height:1; text-transform:uppercase; letter-spacing:-.005em}
+.hero h1 em{font-style:normal; color:var(--red)}
+.hero p{font-size:clamp(16px,2.1vw,19px); color:var(--ink2); max-width:60ch; margin-top:14px}
+
+/* forja */
+.forge{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:18px; align-items:start; margin-top:8px}
+.panel{background:var(--surf); border:1px solid var(--line)}
+.panel > .ph{padding:11px 15px; background:var(--surf2); border-bottom:1px solid var(--line);
+  display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.panel > .ph h3{font-size:calc(15px * var(--title-scale)); text-transform:uppercase; letter-spacing:.08em}
+.panel > .ph .hint{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; color:var(--ink3); text-align:right}
+.pb{padding:calc(15px * var(--dens))}
+.panel + .panel{margin-top:14px}
+
+.field{margin-bottom:13px}
+.field:last-child{margin-bottom:0}
+.field > label{display:block; font-family:var(--font-mono); font-size:10.5px; font-weight:600;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px}
+select,input[type=text],input[type=number],textarea{
+  width:100%; font-family:var(--font-body); font-size:15px; color:var(--ink);
+  background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:8px 10px}
+textarea{line-height:1.5; resize:vertical; min-height:130px}
+input[type=number]{font-family:var(--font-mono); text-align:center}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.row3{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px}
+
+.seg{display:flex; flex-wrap:wrap; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+.seg button{flex:1 1 auto; min-width:86px; border:0; border-right:1px solid var(--line); background:var(--surf2);
+  color:var(--ink2); font-family:var(--font-display); font-size:13px; font-weight:500; letter-spacing:.05em;
+  padding:8px 6px; cursor:pointer; text-transform:uppercase}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--surf3); color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--red); color:var(--onaccent)}
+
+/* catálogo de efeitos */
+.catgroup{border-top:1px solid var(--line)}
+.catgroup > h4{font-family:var(--font-mono); font-size:10.5px; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink3); padding:11px 15px 7px; background:var(--surf2)}
+.efx{border-bottom:1px solid var(--line)}
+.efx > .top{display:grid; grid-template-columns:20px 1fr; gap:10px; align-items:start; padding:calc(10px * var(--dens)) 15px; cursor:pointer}
+.efx > .top:hover{background:var(--surf2)}
+.efx input[type=checkbox]{width:16px; height:16px; margin:3px 0 0; accent-color:var(--red); cursor:pointer}
+.efx .head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.efx .nm{display:block; font-family:var(--font-display); font-weight:500; font-size:15.5px; line-height:1.2}
+.efx .pp{font-family:var(--font-mono); font-size:11.5px; font-weight:600; color:var(--gold);
+  white-space:nowrap; flex:none}
+.efx .pp.neg{color:var(--ok)}
+.efx .ds{display:block; font-size:13.5px; color:var(--ink2); line-height:1.45; margin-top:4px}
+.efx .extra{display:none; padding:0 15px 12px 45px}
+.efx.on .extra{display:block}
+.efx.on > .top{background:var(--redsoft)}
+.opt{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:9px}
+.opt > label{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink3); flex:none}
+.opt input[type=number]{width:66px; padding:4px; font-size:14px}
+.opt select{width:auto; min-width:150px; padding:5px 8px; font-size:14px}
+.opt .out{font-family:var(--font-mono); font-size:13px; color:var(--ink2)}
+.chk{display:flex; align-items:flex-start; gap:8px; margin-top:9px; font-size:14px; color:var(--ink2); cursor:pointer}
+.chk input{width:15px; height:15px; margin:3px 0 0; accent-color:var(--red)}
+.chk b{font-family:var(--font-display); font-weight:500; color:var(--ink)}
+.chk .cost{font-family:var(--font-mono); font-size:12px; color:var(--gold)}
+.warn{display:block; padding:0 15px 10px 45px; font-size:13px; color:var(--red)}
+
+.conds{display:flex; flex-wrap:wrap; gap:5px; margin-top:9px}
+.cond{font-family:var(--font-mono); font-size:11px; padding:3px 7px; border:1px solid var(--line2);
+  background:var(--surf2); color:var(--ink2); border-radius:2px; cursor:pointer; white-space:nowrap}
+.cond:hover{border-color:var(--red); color:var(--ink)}
+.cond[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:var(--onaccent)}
+.cond[disabled]{opacity:.38; cursor:not-allowed}
+
+/* razão */
+.side{position:sticky; top:calc(env(safe-area-inset-top,0px) + 64px)}
+.ledger{background:var(--surf); border:1px solid var(--line)}
+.ledgerhead{padding:10px 15px; background:var(--ink); color:var(--paper);
+  display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+:root[data-theme="dark"] .ledgerhead,
+:root:not([data-theme="light"]) .ledgerhead{background:var(--surf3); color:var(--ink)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .ledgerhead{background:var(--ink); color:#E9EDEF}}
+.ledgerhead .t{font-family:var(--font-display); font-size:14px; font-weight:600; letter-spacing:.1em; text-transform:uppercase}
+.gauge{padding:13px 15px 15px}
+.gaugetop{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px}
+.gaugetop b{font-family:var(--font-display); font-size:34px; font-weight:600; line-height:1; color:var(--gold)}
+.gaugetop b.over{color:var(--red)}
+.gaugetop span{font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--ink3)}
+.bar{height:8px; background:var(--surf3); border:1px solid var(--line); border-radius:2px; overflow:hidden}
+.bar i{display:block; height:100%; background:var(--gold)}
+.bar i.over{background:var(--red)}
+.lines{border-top:1px solid var(--line)}
+.lines .ln{display:flex; justify-content:space-between; gap:10px; padding:calc(6px * var(--dens)) 15px; font-size:14px; border-bottom:1px solid var(--line)}
+.lines .ln:last-child{border-bottom:0}
+.lines .ln span:first-child{color:var(--ink2)}
+.lines .ln span:last-child{font-family:var(--font-mono); font-weight:500; white-space:nowrap}
+.lines .ln.tot{background:var(--surf2)}
+.lines .ln.tot span:first-child{color:var(--ink); font-family:var(--font-display); letter-spacing:.04em; font-weight:600}
+.lines .ln.tot span:last-child{font-weight:600}
+.lines .ln.cut span:last-child{color:var(--ok)}
+.lines .ln.cap span:last-child{color:var(--gold)}
+
+.alerts{padding:0 15px 13px}
+.alert{font-size:13.5px; padding:8px 11px; border-left:3px solid var(--red); background:var(--redsoft); margin-top:9px}
+.alert.ok{border-left-color:var(--ok); background:var(--oksoft)}
+.alert.warn{border-left-color:var(--gold); background:var(--goldsoft)}
+
+/* bloco da técnica */
+.statblock{background:var(--surf); border:1px solid var(--line2); margin-top:14px}
+.sb-grade{padding:7px 15px; background:var(--ink); color:var(--paper);
+  font-family:var(--font-display); font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase}
+:root[data-theme="dark"] .sb-grade,
+:root:not([data-theme="light"]) .sb-grade{background:var(--surf3); color:var(--ink)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .sb-grade{background:var(--ink); color:#E9EDEF}}
+.sb-name{padding:12px 15px 4px; font-family:var(--font-display); font-size:calc(24px * var(--title-scale)); font-weight:600;
+  text-transform:uppercase; letter-spacing:.02em; line-height:1.1}
+.sb-desc{padding:0 15px 13px; font-size:14.5px; color:var(--ink2); white-space:pre-wrap}
+.sb-rows{border-top:1px solid var(--line)}
+.sb-cell{padding:calc(7px * var(--dens)) 15px; display:flex; justify-content:space-between; gap:12px; font-size:14px;
+  border-bottom:1px solid var(--line)}
+.sb-cell:last-child{border-bottom:0}
+.sb-cell em{font-style:normal; font-family:var(--font-mono); font-size:10px; font-weight:600;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); padding-top:3px; flex:none}
+.sb-cell b{font-family:var(--font-body); font-weight:500; text-align:right}
+.sb-cell.acc b{color:var(--red); font-family:var(--font-display); font-size:16px; font-weight:600}
+.sb-cell.stack{display:block}
+.sb-cell.stack em{display:block; margin-bottom:5px}
+.sb-efx{list-style:none; margin:0; padding:0}
+.sb-efx li{font-size:14px; padding:2px 0 2px 13px; position:relative; color:var(--ink)}
+.sb-efx li::before{content:"·"; position:absolute; left:2px; color:var(--red); font-weight:700}
+.sb-efx li i{font-style:normal; font-family:var(--font-mono); font-size:11.5px; color:var(--ink3)}
+.actions{display:flex; gap:9px; padding:13px 15px; border-top:1px solid var(--line); flex-wrap:wrap; align-items:center}
+.btn{font-family:var(--font-display); font-size:13px; font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+  padding:8px 13px; border:1px solid var(--line2); background:var(--surf2); color:var(--ink); border-radius:var(--radius); cursor:pointer}
+.btn:hover{border-color:var(--red); color:var(--red)}
+.btn.primary{background:var(--red); border-color:var(--red); color:var(--onaccent)}
+.btn.primary:hover{opacity:.87; color:var(--onaccent)}
+.btn.ghost{color:var(--ink2)}
+.toast{font-family:var(--font-mono); font-size:12px; color:var(--ok)}
+
+.drafts{padding:12px 15px}
+.draftlist{display:flex; flex-wrap:wrap; gap:6px; margin-top:9px}
+.draft{display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11.5px;
+  border:1px solid var(--line2); background:var(--surf2); padding:3px 4px 3px 8px; border-radius:2px}
+.draft i{font-style:normal; color:var(--red); font-weight:600}
+.drafts .aviso{font-size:12px; color:var(--ink2); line-height:1.45}
+.drafts .aviso.bad{color:var(--red)}
+.drafts .aviso.ok{color:var(--ok)}
+.draft button{border:0; background:none; color:var(--ink3); cursor:pointer; font-size:14px; line-height:1; padding:0 3px}
+.draft button:hover{color:var(--red)}
+.draft span{cursor:pointer}
+.draft span:hover{color:var(--red)}
+
+/* referência */
+.tablebox{overflow-x:auto; border:1px solid var(--line); background:var(--surf); margin:18px 0}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:14px}
+th,td{text-align:left; padding:calc(8px * var(--dens)) 12px; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{font-family:var(--font-mono); font-size:10.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink3); background:var(--surf2); white-space:nowrap; border-bottom:1px solid var(--line2)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surf2)}
+td.num,th.num{font-family:var(--font-mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+td strong{font-family:var(--font-display); font-weight:500; font-size:15px}
+.note{border-left:3px solid var(--gold); background:var(--goldsoft); padding:12px 15px; margin:18px 0; font-size:15px}
+.note b{font-family:var(--font-display)}
+.note p:last-child{margin-bottom:0}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px}
+.card{background:var(--surf); border:1px solid var(--line); padding:calc(15px * var(--dens)) 16px}
+.card h3{font-size:calc(18px * var(--title-scale)); margin-bottom:6px}
+.card p:last-child{margin-bottom:0}
+footer{border-top:1px solid var(--line); padding-block:26px 40px; color:var(--ink3); font-size:13.5px}
+footer p{margin:0 0 5px}
+
+/* superfícies translúcidas quando há fundo — a 100% ficam idênticas ao sólido */
+.panel, .card, .ledger, .statblock, .tablebox{
+  background:color-mix(in srgb, var(--surf) var(--surf-mix), transparent);
+  backdrop-filter:blur(var(--surf-blur));
+}
+
+/* controles deslizantes do painel de aparência */
+.pop .slider{display:grid; grid-template-columns:1fr auto; gap:4px 8px; align-items:center; margin-top:9px}
+.pop .slider .lab{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--ink3)}
+.pop .slider .val{font-family:var(--font-mono); font-size:11px; color:var(--ink2); text-align:right}
+.pop .slider input[type=range]{grid-column:1 / -1; width:100%; accent-color:var(--red); margin:0}
+.pop .filelinha{display:flex; gap:7px; margin-top:8px; flex-wrap:wrap}
+.pop .filelinha .btn{flex:1 1 auto; padding:6px 10px; font-size:12px}
+.pop .aviso{font-size:12px; color:var(--ink2); margin-top:7px; line-height:1.4}
+.pop .aviso.bad{color:var(--red)}
+.pop .chkline{display:flex; align-items:center; gap:8px; margin-top:9px; font-size:13px; color:var(--ink2); cursor:pointer}
+.pop .chkline input{width:15px; height:15px; accent-color:var(--red); margin:0}
+
+@media (max-width:960px){ .forge{grid-template-columns:1fr} .side{position:static} }
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<nav class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#topo">OP&nbsp;RPG · FORJA</a>
+    <div class="navscroll">
+      <ul class="navlist">
+        <li><a href="#forja">Forja</a></li>
+        <li><a href="#graus">Graus</a></li>
+        <li><a href="#dano">Dano</a></li>
+        <li><a href="#duracao">Duração</a></li>
+        <li><a href="#condicoes">Condições</a></li>
+        <li><a href="#efeitos">Efeitos</a></li>
+        <li><a href="#formas">Formas</a></li>
+        <li><a href="#mp">Manifestações</a></li>
+      </ul>
+    </div>
+    <div class="appearance">
+      <button class="themebtn" id="themebtn" type="button" aria-haspopup="true" aria-expanded="false">
+        <span class="dot"></span>Cores
+      </button>
+      <div class="pop" id="pop" hidden role="dialog" aria-label="Aparência do site">
+        <h4>Tema</h4>
+        <div class="popseg" id="seg-tema" role="group" aria-label="Tema">
+          <button type="button" data-v="light" aria-pressed="false">Claro</button>
+          <button type="button" data-v="dark" aria-pressed="false">Escuro</button>
+          <button type="button" data-v="auto" aria-pressed="true">Sistema</button>
+        </div>
+
+        <h4>Paleta</h4>
+        <div class="swatches" id="swatches"></div>
+
+        <h4 class="sec2">Cores livres <button type="button" id="btn-reset-cores">Voltar ao padrão</button></h4>
+        <div class="cpick">
+          <input type="color" id="c-red" aria-label="Cor de destaque">
+          <span><span class="lab">Destaque — títulos, botões</span><input type="text" id="h-red" maxlength="7" spellcheck="false" aria-label="Hex da cor de destaque"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-gold" aria-label="Cor de energia">
+          <span><span class="lab">Energia — medidor de PP</span><input type="text" id="h-gold" maxlength="7" spellcheck="false" aria-label="Hex da cor de energia"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-sea" aria-label="Cor de informação">
+          <span><span class="lab">Informação — links</span><input type="text" id="h-sea" maxlength="7" spellcheck="false" aria-label="Hex da cor de informação"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-ok" aria-label="Cor de sucesso">
+          <span><span class="lab">Sucesso — reduções de PP</span><input type="text" id="h-ok" maxlength="7" spellcheck="false" aria-label="Hex da cor de sucesso"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-ink" aria-label="Cor do texto">
+          <span><span class="lab">Texto principal</span><input type="text" id="h-ink" maxlength="7" spellcheck="false" aria-label="Hex da cor do texto"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-ink2" aria-label="Cor do texto secundário">
+          <span><span class="lab">Texto secundário</span><input type="text" id="h-ink2" maxlength="7" spellcheck="false" aria-label="Hex da cor do texto secundário"></span>
+        </div>
+
+        <h4 class="sec2">Fundo <button type="button" id="btn-reset-fundo">Voltar ao padrão</button></h4>
+        <div class="cpick">
+          <input type="color" id="c-paper" aria-label="Cor de fundo">
+          <span><span class="lab">Cor do fundo</span><input type="text" id="h-paper" maxlength="7" spellcheck="false" aria-label="Hex da cor de fundo"></span>
+        </div>
+        <select id="f-padraofundo" aria-label="Textura do fundo" style="margin-top:8px"></select>
+        <div class="filelinha">
+          <button class="btn" type="button" id="btn-img">Escolher imagem…</button>
+          <button class="btn" type="button" id="btn-img-off">Remover</button>
+        </div>
+        <input type="file" id="file-img" accept="image/*" hidden>
+        <p class="aviso" id="aviso-fundo">A imagem fica salva só neste navegador e é reduzida para caber.</p>
+        <div class="slider">
+          <span class="lab">Véu sobre o fundo</span><span class="val" id="v-veu">0%</span>
+          <input type="range" id="f-veu" min="0" max="95" step="5" value="0" aria-label="Véu sobre o fundo">
+        </div>
+        <div class="slider">
+          <span class="lab">Opacidade dos painéis</span><span class="val" id="v-painel">100%</span>
+          <input type="range" id="f-painel" min="55" max="100" step="5" value="100" aria-label="Opacidade dos painéis">
+        </div>
+        <label class="chkline"><input type="checkbox" id="f-fixo"> Fundo parado ao rolar a página</label>
+
+        <h4 class="sec2">Fontes</h4>
+        <select id="f-display" aria-label="Fonte dos títulos"></select>
+        <select id="f-corpo" aria-label="Fonte do texto"></select>
+        <select id="f-numeros" aria-label="Fonte dos números"></select>
+
+        <h4 class="sec2">Formatação <button type="button" id="btn-reset-form">Voltar ao padrão</button></h4>
+        <select id="f-tamanho" aria-label="Tamanho do texto">
+          <option value="13">Texto muito pequeno</option>
+          <option value="14">Texto pequeno</option>
+          <option value="15">Texto médio</option>
+          <option value="16" selected>Texto normal</option>
+          <option value="17">Texto grande</option>
+          <option value="18">Texto maior</option>
+          <option value="20">Texto muito grande</option>
+          <option value="22">Texto enorme</option>
+        </select>
+        <select id="f-titulos" aria-label="Tamanho dos títulos">
+          <option value="0.8">Títulos discretos</option>
+          <option value="0.9">Títulos menores</option>
+          <option value="1" selected>Títulos normais</option>
+          <option value="1.15">Títulos maiores</option>
+          <option value="1.3">Títulos enormes</option>
+        </select>
+        <select id="f-entrelinha" aria-label="Entrelinha">
+          <option value="1.42">Entrelinha apertada</option>
+          <option value="1.6" selected>Entrelinha normal</option>
+          <option value="1.8">Entrelinha solta</option>
+        </select>
+        <select id="f-densidade" aria-label="Densidade">
+          <option value="0.7">Espaçamento compacto</option>
+          <option value="1" selected>Espaçamento normal</option>
+          <option value="1.35">Espaçamento arejado</option>
+        </select>
+        <select id="f-cantos" aria-label="Cantos">
+          <option value="0px">Cantos retos</option>
+          <option value="3px" selected>Cantos suaves</option>
+          <option value="9px">Cantos arredondados</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<section class="hero" id="topo">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 6.4–6.9 · Capítulo 10</p>
+    <h1>Forja de <em>Técnicas</em></h1>
+    <p>Monte Técnicas de Combate, Técnicas Auxiliares e Manifestações de Poder dentro do orçamento de Pontos de Poder do grau. A forja aplica os limites do livro, soma os efeitos e escreve o bloco pronto para a ficha.</p>
+  </div>
+</section>
+
+<section id="forja" style="border-top:0; padding-top:10px">
+  <div class="wrap">
+    <div class="forge">
+
+      <!-- ══════ ESQUERDA ══════ -->
+      <div>
+
+        <div class="panel">
+          <div class="ph"><h3>1 · Base</h3><div class="hint" id="h-base">—</div></div>
+          <div class="pb">
+            <div class="field">
+              <label>Tipo de Técnica</label>
+              <div class="seg" id="seg-tipo" role="group" aria-label="Tipo de Técnica">
+                <button type="button" data-v="combate" aria-pressed="true">De Combate</button>
+                <button type="button" data-v="auxiliar" aria-pressed="false">Auxiliar</button>
+                <button type="button" data-v="auxiliar-desperta" aria-pressed="false">Aux. Desperta</button>
+                <button type="button" data-v="mp" aria-pressed="false">Manifestação</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Origem da Técnica</label>
+              <div class="seg" id="seg-origem" role="group" aria-label="Origem">
+                <button type="button" data-v="fruto" aria-pressed="true">Akuma no Mi</button>
+                <button type="button" data-v="estilo" aria-pressed="false">Estilo de Combate</button>
+              </div>
+              <p class="small" id="origem-nota" style="margin:7px 0 0"></p>
+            </div>
+
+            <div class="row2">
+              <div class="field" id="wrap-grau">
+                <label for="f-grau">Grau</label>
+                <select id="f-grau"></select>
+              </div>
+              <div class="field" id="wrap-forma">
+                <label for="f-forma">Forma</label>
+                <select id="f-forma">
+                  <option value="normal">Normal</option>
+                  <option value="alternativa">Forma Alternativa</option>
+                  <option value="aperfeicoada">Forma Aperfeiçoada</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field" id="wrap-ativacao" hidden>
+              <label for="f-ativacao">Ativação da Manifestação</label>
+              <select id="f-ativacao">
+                <option value="passiva">Passiva — −3 pontos virtuais</option>
+                <option value="inacao">Inação — −1 ponto virtual</option>
+                <option value="bonus">Ação Bônus — +2 pontos virtuais</option>
+                <option value="reacao">Reação — +2 pontos virtuais</option>
+                <option value="poderosa" selected>Ação Poderosa — +3 pontos virtuais</option>
+              </select>
+            </div>
+
+            <div class="row2">
+              <div class="field">
+                <label for="f-nome">Nome da Técnica</label>
+                <input type="text" id="f-nome" value="Gomu-Gomu no Pistol" maxlength="60">
+              </div>
+              <div class="field">
+                <label for="f-fonte">Fruto / Estilo (requisito)</label>
+                <input type="text" id="f-fonte" value="Gomu-Gomu no Mi" maxlength="60">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-dano">
+          <div class="ph"><h3>2 · Dano e alvo</h3><div class="hint" id="h-dano">—</div></div>
+          <div class="pb">
+            <div class="field">
+              <label for="f-alvo">Como a Técnica atinge</label>
+              <select id="f-alvo">
+                <option value="ataque-cc">Alvo único — jogada de ataque (Técnicas) corpo a corpo · d10 por PP</option>
+                <option value="ataque-dist">Alvo único — jogada de ataque (Técnicas) à distância · d10 por PP</option>
+                <option value="salv-metade">Alvo único — Salvaguarda, metade do dano no sucesso · d8 por PP</option>
+                <option value="salv-nenhum">Alvo único — Salvaguarda, nenhum dano no sucesso · d10 por PP</option>
+                <option value="area">Múltiplos alvos em área · d6 por PP</option>
+                <option value="area-limitada" selected>Área limitada (intensificada) · d8 por PP</option>
+                <option value="sem-dano">Não causa dano</option>
+              </select>
+              <p class="small" id="alvo-nota" style="margin:7px 0 0"></p>
+            </div>
+
+            <div class="row3">
+              <div class="field">
+                <label for="f-dados">Dados de dano</label>
+                <input type="number" id="f-dados" min="0" max="14" step="1" value="4">
+              </div>
+              <div class="field">
+                <label for="f-tipodano">Tipo de dano</label>
+                <select id="f-tipodano"></select>
+              </div>
+              <div class="field">
+                <label for="f-salvatr">Salvaguarda exigida</label>
+                <select id="f-salvatr">
+                  <option>Destreza</option><option>Constituição</option><option>Força</option>
+                  <option>Sabedoria</option><option>Vontade</option><option>Presença</option>
+                </select>
+              </div>
+            </div>
+
+            <label class="chk" style="margin-top:4px">
+              <input type="checkbox" id="f-regra-dano">
+              <span>Usar a regra opcional de <b>custo por tipo de dano</b> (Cap. 6.5)</span>
+            </label>
+            <div id="afinidade-wrap" hidden style="margin-top:11px">
+              <div class="field" style="margin:0">
+                <label for="f-afinidade">Tipo de dano com afinidade ao fruto (custa 0 PP)</label>
+                <select id="f-afinidade"></select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="ph"><h3>3 · Execução, alcance e duração</h3><div class="hint" id="h-alcance">—</div></div>
+          <div class="pb">
+            <div class="row3">
+              <div class="field">
+                <label for="f-requisito">Requisito de execução</label>
+                <select id="f-requisito"></select>
+              </div>
+              <div class="field">
+                <label for="f-alcance">Área de efeito</label>
+                <select id="f-alcance">
+                  <option value="toque">Toque</option>
+                  <option value="pessoal">Pessoal</option>
+                  <option value="linha" selected>Linha</option>
+                  <option value="cone">Cone</option>
+                  <option value="esfera">Esfera</option>
+                  <option value="cilindro">Cilindro</option>
+                  <option value="emanacao">Emanação</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-duracao">Duração</label>
+                <select id="f-duracao">
+                  <option value="Instantâneo">Instantâneo</option>
+                  <option value="Até o final do seu turno">Até o final do seu turno</option>
+                  <option value="Até o início do seu próximo turno">Até o início do seu próximo turno</option>
+                  <option value="Até 1 minuto">Até 1 minuto</option>
+                  <option value="Até 10 minutos">Até 10 minutos</option>
+                  <option value="Especial (até 1 hora)">Especial (até 1 hora)</option>
+                  <option value="Especial (indeterminado)">Especial (indeterminado)</option>
+                </select>
+              </div>
+            </div>
+            <p class="small" id="requisito-nota" style="margin:0 0 8px"></p>
+            <p class="small" id="alcance-nota" style="margin:0 0 8px"></p>
+            <p class="small" id="duracao-nota" style="margin:0"></p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="ph"><h3>4 · Efeitos</h3><div class="hint">Cada efeito soma ou desconta PP</div></div>
+          <div id="efeitos-catalogo"></div>
+        </div>
+
+      </div>
+
+      <!-- ══════ DIREITA ══════ -->
+      <div class="side">
+        <div class="ledger">
+          <div class="ledgerhead">
+            <div class="t" id="ledger-title">Orçamento de PP</div>
+            <button class="btn ghost" type="button" id="btn-clear"
+              style="padding:4px 9px; font-size:11px; background:transparent; border-color:currentColor; color:inherit">Limpar tudo</button>
+          </div>
+          <div class="gauge">
+            <div class="gaugetop"><b id="g-gasto">0</b><span id="g-limite">de 0 PP</span></div>
+            <div class="bar"><i id="g-bar" style="width:0%"></i></div>
+          </div>
+          <div class="lines" id="ledger-lines"></div>
+          <div class="alerts" id="ledger-alerts"></div>
+        </div>
+
+        <div class="statblock">
+          <div class="sb-grade" id="sb-grade">2º GRAU</div>
+          <div class="sb-name" id="sb-name">Gomu-Gomu no Pistol</div>
+          <div class="sb-desc" id="sb-desc"></div>
+          <div class="sb-rows" id="sb-rows"></div>
+          <div class="actions">
+            <button class="btn primary" type="button" id="btn-copy">Copiar Técnica</button>
+            <button class="btn" type="button" id="btn-save">Salvar rascunho</button>
+            <span class="toast" id="toast"></span>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px">
+          <div class="ph"><h3>Minhas Técnicas</h3><div class="hint" id="draft-count">0 salvas</div></div>
+          <div class="drafts">
+            <div class="draftlist" id="draftlist"></div>
+            <div class="filelinha" style="margin-top:11px">
+              <button class="btn primary" type="button" id="btn-exportar">Copiar código</button>
+              <button class="btn" type="button" id="btn-colar">Colar código</button>
+              <button class="btn" type="button" id="btn-importar">Abrir arquivo</button>
+            </div>
+            <input type="file" id="file-tecnicas" accept="application/json,.json" hidden>
+            <p class="aviso" id="aviso-drafts" style="margin-top:8px">As técnicas ficam só neste navegador. Copie o código de vez em quando — é ele que sobrevive a trocar de computador ou limpar os dados do site, e dá para mandar pelo Discord.</p>
+
+            <div id="export-box" hidden style="margin-top:10px">
+              <label for="export-text" id="export-label" style="display:block; font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px">Código das suas técnicas</label>
+              <textarea id="export-text" readonly spellcheck="false" style="min-height:110px; font-family:var(--font-mono); font-size:11.5px"></textarea>
+              <div class="filelinha">
+                <button class="btn primary" type="button" id="btn-copiar-export">Copiar</button>
+                <button class="btn" type="button" id="btn-so-aberta">Só a técnica aberta</button>
+                <button class="btn" type="button" id="btn-todas">Todas</button>
+                <button class="btn" type="button" id="btn-baixar">Baixar arquivo</button>
+                <button class="btn" type="button" id="btn-fechar-export">Fechar</button>
+              </div>
+            </div>
+
+            <div id="import-box" hidden style="margin-top:10px">
+              <label for="import-text" style="display:block; font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px">Cole aqui o código recebido</label>
+              <textarea id="import-text" spellcheck="false" placeholder="{&quot;app&quot;:&quot;op-rpg-forja&quot;,…}" style="min-height:96px; font-family:var(--font-mono); font-size:11.5px"></textarea>
+              <div class="filelinha">
+                <button class="btn primary" type="button" id="btn-import-ok">Importar</button>
+                <button class="btn" type="button" id="btn-import-cancel">Fechar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="field" style="max-width:820px; margin-top:22px">
+      <label for="f-desc">Descrição da Técnica — gerada automaticamente, edite à vontade</label>
+      <textarea id="f-desc" spellcheck="true"></textarea>
+      <p class="small" style="margin-top:6px">Enquanto você não mexer aqui, a forja reescreve este texto a cada mudança. Depois da primeira edição sua, ele passa a ser só seu — e os efeitos continuam listados no bloco à direita, então nada se perde. Use <strong>Limpar tudo</strong> para recomeçar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GRAUS -->
+<section id="graus">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 6.6 e 6.7</p>
+    <h2 class="sec">Limites por grau</h2>
+    <p class="lede">O grau é a espinha dorsal de tudo: define o teto de PP, o máximo de dados de dano e o alcance de cada tipo de área.</p>
+    <div class="tablebox">
+      <table style="min-width:800px">
+        <thead><tr>
+          <th>Grau</th><th class="num">Nível</th><th class="num">PP máx</th>
+          <th class="num">Dano alvo único</th><th class="num">Dano em área</th>
+          <th class="num">Esfera / Cilindro / Emanação</th><th class="num">Cone</th><th class="num">Linha</th><th>Requisito</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><strong>1º</strong></td><td class="num">1º</td><td class="num">2</td><td class="num">2d10</td><td class="num">2d6</td><td class="num">3 m</td><td class="num">12 m</td><td class="num">Toque ou 9 m</td><td>Ação Poderosa</td></tr>
+          <tr><td><strong>2º</strong></td><td class="num">3º</td><td class="num">4</td><td class="num">4d10</td><td class="num">4d6</td><td class="num">4,5 m</td><td class="num">15 m</td><td class="num">Toque ou 15 m</td><td>Ação Poderosa</td></tr>
+          <tr><td><strong>3º</strong></td><td class="num">6º</td><td class="num">6</td><td class="num">6d10</td><td class="num">6d6</td><td class="num">6 m</td><td class="num">18 m</td><td class="num">Toque ou 21 m</td><td>Ação Poderosa</td></tr>
+          <tr><td><strong>4º</strong></td><td class="num">9º</td><td class="num">8</td><td class="num">8d10</td><td class="num">8d6</td><td class="num">7,5 m</td><td class="num">21 m</td><td class="num">Toque ou 27 m</td><td>Usuário Avançado</td></tr>
+          <tr><td><strong>5º</strong></td><td class="num">12º</td><td class="num">10</td><td class="num">10d10</td><td class="num">10d6</td><td class="num">9 m</td><td class="num">24 m</td><td class="num">Toque ou 33 m</td><td>Usuário Avançado</td></tr>
+          <tr><td><strong>6º</strong></td><td class="num">16º</td><td class="num">12</td><td class="num">12d10</td><td class="num">12d6</td><td class="num">10,5 m</td><td class="num">27 m</td><td class="num">Toque ou 39 m</td><td>Estágio Desperto</td></tr>
+          <tr><td><strong>7º</strong></td><td class="num">20º</td><td class="num">14</td><td class="num">14d10</td><td class="num">14d6</td><td class="num">12 m</td><td class="num">30 m</td><td class="num">Toque ou 45 m</td><td>Estágio Desperto</td></tr>
+          <tr><td><strong>Auxiliar</strong></td><td class="num">1º, 6º, 12º</td><td class="num">10</td><td class="num" colspan="2">Não causa dano direto</td><td class="num">6 m</td><td class="num">18 m</td><td class="num">21 m</td><td>Ação Bônus ou Reação</td></tr>
+          <tr><td><strong>Aux. Desperta</strong></td><td class="num">16º, 20º</td><td class="num">15</td><td class="num" colspan="2">Não causa dano direto</td><td class="num">9 m</td><td class="num">24 m</td><td class="num">Toque ou 33 m</td><td>Ação Bônus ou Reação</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><p><b>Usuários simples</b> só recebem a primeira Técnica Auxiliar no 6º nível de personagem, e não no 1º.</p></div>
+  </div>
+</section>
+
+<!-- DANO -->
+<section id="dano">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 6.4</p>
+    <h2 class="sec">A conta do dano</h2>
+    <p class="lede">Cada dado de dano custa exatamente 1 PP. O que muda é o <em>tamanho</em> do dado, e ele depende de como a Técnica atinge.</p>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Forma de atingir</th><th class="num">Dado por PP</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Alvo único, jogada de ataque</strong></td><td class="num">1d10</td><td>Corpo a corpo usa Força; à distância usa Destreza — ou o atributo que o seu Estilo permitir.</td></tr>
+          <tr><td><strong>Alvo único, Salvaguarda</strong></td><td class="num">1d8</td><td>A criatura recebe metade do dano se passar.</td></tr>
+          <tr><td><strong>Alvo único, Salvaguarda</strong></td><td class="num">1d10</td><td>A criatura não recebe dano algum se passar — tudo ou nada.</td></tr>
+          <tr><td><strong>Múltiplos alvos em área</strong></td><td class="num">1d6</td><td>Padrão para Cone, Esfera, Cilindro, Emanação e Linha larga.</td></tr>
+          <tr><td><strong>Área limitada (intensificada)</strong></td><td class="num">1d8</td><td>Só vale para as cinco situações listadas abaixo. O alcance fica travado e <em>Reduzir Área</em> não pode ser usado.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>Quando a área conta como limitada</h3>
+        <p class="small" style="margin-bottom:0">Dano só em criaturas que acertarem ou tocarem você até o seu próximo turno · só em criaturas que fizerem uma ação específica · dentro de uma linha reta de 1,5 m de largura · só a até 1,5 m de você · só a até 1,5 m do espaço por onde você se deslocar.</p></div>
+      <div class="card"><h3>Teto absoluto</h3>
+        <p class="small" style="margin-bottom:0">O máximo de dados é <strong>o dobro do grau</strong> — e como cada dado custa 1 PP, gastar tudo em dano consome o orçamento inteiro. Todo efeito adicional exige cortar dados ou pagar com um efeito de redução.</p></div>
+    </div>
+    <h3 style="font-size:22px; margin-top:34px">Custo por tipo de dano (regra opcional)</h3>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th class="num">Custo</th><th>Tipos de dano</th></tr></thead>
+        <tbody>
+          <tr><td class="num"><strong>0 PP</strong></td><td>Contundente, Cortante, Perfurante</td></tr>
+          <tr><td class="num"><strong>1 PP</strong></td><td>Ácido, Elétrico, Fogo, Frio, Veneno</td></tr>
+          <tr><td class="num"><strong>2 PP</strong></td><td>Psíquico, Energia, Trovejante — ou metade do grau, o que for <em>menor</em> (mínimo 1 PP)</td></tr>
+          <tr><td class="num"><strong>3 PP</strong></td><td>Verdadeiro — ou metade do grau, o que for <em>maior</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="max-width:66ch">Com essa regra ativa, você ainda escolhe <strong>um</strong> tipo de dano com afinidade ao fruto para não custar nada — exceto Verdadeiro, que sempre cobra.</p>
+  </div>
+</section>
+
+<!-- DURAÇÃO -->
+<section id="duracao">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 6.4, 6.5 e 6.8</p>
+    <h2 class="sec">Duração não é de graça</h2>
+    <p class="lede">Por padrão toda Técnica é <strong>Instantânea</strong>. Esticar isso é uma escolha que se paga — efeito por efeito.</p>
+
+    <div class="grid2" style="margin-top:22px">
+      <div class="card">
+        <h3>Duração Prolongada</h3>
+        <p class="small">Cada efeito diz se pode ser prolongado e quanto custa. O <strong>primeiro minuto</strong> custa o valor indicado no efeito; <strong>cada minuto seguinte custa metade disso</strong>, arredondado para baixo, com mínimo de 1 PP.</p>
+        <p class="small" style="margin-bottom:0">Na forja, a caixa <em>Duração prolongada</em> aparece dentro do próprio efeito, já com o custo calculado. Efeitos que não podem ser prolongados não mostram a caixa.</p>
+      </div>
+      <div class="card">
+        <h3>Duração Especial</h3>
+        <p class="small">É a duração longa <strong>gratuita</strong> — horas, dias, anos, para sempre. Mas ela só vale para Técnicas que <em>não</em> causam dano nem efeitos negativos (condições, alterações no ambiente ou em criaturas).</p>
+        <p class="small" style="margin-bottom:0">A exceção: uma Técnica que causa essas alterações pode ter Duração Especial se os efeitos só forem ativados por você ou por um <strong>gatilho</strong> descrito na Técnica — e aí o efeito em si tem de ser instantâneo ou respeitar os limites do grau.</p>
+      </div>
+      <div class="card">
+        <h3>Duração já inclusa</h3>
+        <p class="small" style="margin-bottom:0">Alguns efeitos já vêm com 1 minuto embutido e não aceitam prolongamento: <strong>Power Up</strong>, <strong>Criar Lacaio</strong>, <strong>Criar Arma</strong>, <strong>Aumentar Dano</strong> e <strong>Dano Contínuo</strong>. Outros nunca podem ser prolongados, como Adicionar Empurrão, Aumentar Alcance e todos os efeitos de redução.</p>
+      </div>
+      <div class="card">
+        <h3>Concentração Crucial</h3>
+        <p class="small" style="margin-bottom:0">O caminho inverso: se a Técnica dura 1 minuto ou mais, você pode fazê-la exigir <strong>Concentração</strong> e <strong>ganhar</strong> PP de volta — −2 PP no primeiro minuto e −1 PP por minuto seguinte. Perder a concentração encerra a Técnica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONDIÇÕES -->
+<section id="condicoes">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 10.3</p>
+    <h2 class="sec">Condições e seus custos</h2>
+    <p class="lede">Uma Técnica pode impor até 3 condições, e toda condição imposta assim exige uma Salvaguarda para ser evitada.</p>
+    <div class="tablebox" id="tab-condicoes"></div>
+    <div class="note">
+      <p><b>Enfraquecido não pode ser reproduzido.</b> É a condição da água do mar e do kairoseki — nenhuma Técnica pode impô-la.</p>
+      <p style="margin-top:9px"><b>Duas Salvaguardas.</b> Se a Técnica causa dano <em>e</em> impõe condição, só quem falhou no teste do dano faz o segundo teste. Quem passou no primeiro não é afetado de jeito nenhum.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EFEITOS -->
+<section id="efeitos">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 6.8</p>
+    <h2 class="sec">Catálogo completo de efeitos</h2>
+    <p class="lede">Todos os efeitos do livro, com o custo e a exigência de cada um. São diretrizes flexíveis — o Narrador pode ajustar custos conforme a sinergia entre efeitos combinados.</p>
+    <div class="tablebox"><table style="min-width:760px" id="tab-efeitos"></table></div>
+    <div class="grid2" style="margin-top:8px">
+      <div class="card"><h3>Teto de redução</h3>
+        <p class="small">Uma Técnica de Combate só pode ter o custo reduzido em um valor <strong>igual ao seu grau</strong>. Técnicas Auxiliares podem reduzir até <strong>6 PP</strong>.</p>
+        <p class="small" style="margin-bottom:0">Quando as reduções escolhidas passam desse teto, a forja mostra a sobra numa linha própria da razão — nada some em silêncio.</p></div>
+      <div class="card"><h3>Custo mínimo</h3>
+        <p class="small" style="margin-bottom:0">Nenhuma Técnica chega a custar zero: o piso é sempre <strong>1 PP</strong>. Os descontos do Estilo de Combate entram por fora do teto de redução, porque vêm do Capítulo 3 e não da lista de efeitos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAS -->
+<section id="formas">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 6.5 e 3.1</p>
+    <h2 class="sec">Formas e descontos de Estilo</h2>
+    <div class="grid2">
+      <div class="card"><h3>Forma Aperfeiçoada</h3>
+        <p class="small">A evolução natural de uma Técnica de Combate. Pode subir <strong>até 2 graus</strong> acima da original, com teto no 5º grau, e recebe todas as características do grau novo.</p>
+        <p class="small">Só pode ser executada quando você já tiver ao menos uma Técnica de Combate daquele mesmo grau vinda do fruto. Um fruto dá <strong>uma Forma Aperfeiçoada por grau</strong>.</p>
+        <p class="small" style="margin-bottom:0">Custo extra: <strong>metade do grau escolhido</strong>, arredondado para baixo. É sempre tratada como uma Técnica nova.</p></div>
+      <div class="card"><h3>Forma Alternativa</h3>
+        <p class="small">Uma variação no <strong>mesmo grau</strong>. Pode mudar dado de dano, tipo de dano, alcance, efeitos e condições.</p>
+        <p class="small" style="margin-bottom:0">Custo extra: <strong>metade do grau</strong>, arredondado para baixo — o que dá zero em Técnicas de 1º grau. Técnicas Auxiliares não têm aumento nenhum.</p></div>
+      <div class="card"><h3>Técnicas de Estilo de Combate</h3>
+        <p class="small">Quando você troca uma Técnica predefinida do seu Estilo por uma criada, valem as regras deste capítulo com três mudanças: as Formas <strong>não aumentam</strong> o custo, não há limite de Formas Aperfeiçoadas no mesmo grau, e a criação <strong>ignora os requisitos inerentes</strong> da Akuma no Mi.</p>
+        <p class="small" style="margin-bottom:0">E o desconto que muda tudo: toda Técnica de Combate recebe <strong>−metade do grau</strong> (mínimo 1 PP) e toda Técnica Auxiliar recebe <strong>−1 PP</strong>.</p></div>
+      <div class="card"><h3>Ataque Combinado</h3>
+        <p class="small">Para entrar num Ataque Combinado a Técnica precisa de <em>todos</em> estes requisitos: ser Técnica de Combate e causar dano diretamente · exigir Ação Poderosa · ter duração Instantâneo · não causar condições · não ter alcance Cilindro ou Esfera, a não ser que você não seja o ponto de origem.</p>
+        <p class="small" style="margin-bottom:0">A forja marca isso sozinha no rodapé do bloco.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MP -->
+<section id="mp">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 6.9</p>
+    <h2 class="sec">Manifestações de Poder</h2>
+    <p class="lede">Poderes inatos do fruto. Não consomem Pontos de Poder — são medidos em <strong>Pontos Virtuais</strong>, que estimam a quanto os efeitos equivaleriam em PP.</p>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card"><h3>Orçamento virtual</h3>
+        <p class="small">Toda MP começa com <strong>6 pontos virtuais</strong>. A forma de ativação ajusta esse número:</p>
+        <div class="tablebox" style="margin:10px 0 0"><table style="min-width:0"><tbody>
+          <tr><td>Passiva</td><td class="num">−3</td></tr><tr><td>Inação</td><td class="num">−1</td></tr>
+          <tr><td>Ação Bônus</td><td class="num">+2</td></tr><tr><td>Reação</td><td class="num">+2</td></tr>
+          <tr><td>Ação Poderosa</td><td class="num">+3</td></tr></tbody></table></div>
+        <p class="small" style="margin:10px 0 0">Efeitos de redução também <em>somam</em> pontos virtuais — mas o gasto nunca pode ultrapassar <strong>12 pontos</strong>.</p></div>
+      <div class="card"><h3>O que uma MP não pode fazer</h3>
+        <p class="small" style="margin-bottom:0">Causar dano diretamente · aumentar o dano de jogadas de ataque · recuperar Pontos de Vida sem limite de uso · recuperar Pontos de Poder de qualquer forma · aumentar a CR de alguém, a não ser com requisito Ação Poderosa · usar os efeitos <em>Técnica Rápida</em> e <em>Técnica Demorada</em>.</p></div>
+      <div class="card"><h3>Regras herdadas</h3>
+        <p class="small" style="margin-bottom:0">Uma MP segue por padrão as regras de <strong>Técnica de 2º grau</strong> para alcance e demais cálculos, e usa exatamente os mesmos efeitos das Técnicas, tanto para custo quanto para redução.</p></div>
+      <div class="card"><h3>Quantas você tem</h3>
+        <p class="small" style="margin-bottom:0">Entre <strong>1 e 3</strong>, dependendo do tipo de usuário. Usuários de <strong>Zoan Comum e Ancestral não recebem Manifestações de Poder</strong> — o poder deles vem dos Traços.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>OP RPG — Livro do Jogador 2.0</strong>, criação e desenvolvimento de Brendo Neves. Ferramenta de apoio baseada nos Capítulos 3, 6 e 10; toda Técnica criada precisa da aprovação do Narrador.</p>
+    <p>Conteúdo sob Open Game License 1.0a. One Piece é obra de Eiichiro Oda.</p>
+  </div>
+</footer>
+</main>
+
+<script>
+(function(){
+"use strict";
+var $ = function(id){ return document.getElementById(id); };
+
+/* ═════════ aparência: tema + paleta ═════════ */
+var root = document.documentElement;
+var PALETAS = [
+  {id:"", nome:"Marinho",  c:["#B8372C","#96660C","#1C6478"]},
+  {id:"grandline", nome:"Grand Line", c:["#0F7A6E","#8A6100","#1E5F8A"]},
+  {id:"porsol", nome:"Pôr do Sol", c:["#C05A16","#8C6A00","#8A4A6E"]},
+  {id:"yonko", nome:"Yonko", c:["#6E3A9E","#96660C","#2E6B8F"]},
+  {id:"kairoseki", nome:"Kairoseki", c:["#2B5C7A","#6E7A2E","#4A6070"]}
+];
+var FONTES_TITULO = [
+  ["oswald",  "Oswald — condensada (padrão)", '"Oswald","Arial Narrow",Arial,sans-serif'],
+  ["cinzel",  "Cinzel — clássica",            '"Cinzel",Georgia,serif'],
+  ["bebas",   "Bebas Neue — cartaz",          '"Bebas Neue","Arial Narrow",sans-serif'],
+  ["archivo", "Archivo Black — pesada",       '"Archivo Black",Impact,sans-serif'],
+  ["spectral","Spectral — serifada",          '"Spectral",Georgia,serif'],
+  ["plexsans","IBM Plex Sans — neutra",       '"IBM Plex Sans",system-ui,sans-serif']
+];
+var FONTES_CORPO = [
+  ["spectral","Spectral — serifada (padrão)", '"Spectral",Georgia,"Times New Roman",serif'],
+  ["lora",    "Lora — serifada suave",        '"Lora",Georgia,serif'],
+  ["sourcesans","Source Sans 3 — sem serifa", '"Source Sans 3",system-ui,sans-serif'],
+  ["plexsans","IBM Plex Sans — sem serifa",   '"IBM Plex Sans",system-ui,sans-serif'],
+  ["atkinson","Atkinson Hyperlegible — alta legibilidade", '"Atkinson Hyperlegible",system-ui,sans-serif']
+];
+var FONTES_NUM = [
+  ["plexmono","IBM Plex Mono (padrão)", '"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace'],
+  ["sourcesans","Source Sans 3",        '"Source Sans 3",system-ui,sans-serif'],
+  ["plexsans","IBM Plex Sans",          '"IBM Plex Sans",system-ui,sans-serif'],
+  ["atkinson","Atkinson Hyperlegible",  '"Atkinson Hyperlegible",system-ui,sans-serif']
+];
+var CORES_LIVRES = [
+  {id:"red",   varname:"--red"},
+  {id:"gold",  varname:"--gold"},
+  {id:"sea",   varname:"--sea"},
+  {id:"ok",    varname:"--ok"},
+  {id:"ink",   varname:"--ink"},
+  {id:"ink2",  varname:"--ink2"},
+  {id:"paper", varname:"--paper"}
+];
+var FORMATACAO = [
+  {id:"tamanho",    varname:"--fs-base",    sel:"f-tamanho",    padrao:"16"},
+  {id:"titulos",    varname:"--title-scale",sel:"f-titulos",    padrao:"1"},
+  {id:"entrelinha", varname:"--lh",         sel:"f-entrelinha", padrao:"1.6"},
+  {id:"densidade",  varname:"--dens",       sel:"f-densidade",  padrao:"1"},
+  {id:"cantos",     varname:"--radius",     sel:"f-cantos",     padrao:"3px"}
+];
+
+/* texturas geradas em CSS — não dependem de nenhum arquivo externo */
+var TEXTURAS = [
+  {id:"", nome:"Sem textura", css:"none", size:"auto", repeat:"no-repeat"},
+  {id:"pontos", nome:"Pontilhado", size:"20px 20px", repeat:"repeat",
+   css:"radial-gradient(color-mix(in srgb, var(--ink) 12%, transparent) 1px, transparent 1px)"},
+  {id:"grade", nome:"Grade náutica", size:"auto", repeat:"repeat",
+   css:"repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink) 7%, transparent) 0 1px, transparent 1px 44px),"
+     + "repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 7%, transparent) 0 1px, transparent 1px 44px)"},
+  {id:"ondas", nome:"Ondas", size:"auto", repeat:"repeat",
+   css:"repeating-linear-gradient(135deg, color-mix(in srgb, var(--sea) 11%, transparent) 0 2px, transparent 2px 17px)"},
+  {id:"bruma", nome:"Bruma", size:"cover", repeat:"no-repeat",
+   css:"radial-gradient(900px 520px at 12% 6%, color-mix(in srgb, var(--sea) 20%, transparent), transparent 70%),"
+     + "radial-gradient(820px 470px at 88% 20%, color-mix(in srgb, var(--red) 16%, transparent), transparent 68%),"
+     + "radial-gradient(760px 430px at 48% 98%, color-mix(in srgb, var(--gold) 15%, transparent), transparent 70%)"},
+  {id:"papel", nome:"Papel envelhecido", size:"110px 110px", repeat:"repeat",
+   css:"radial-gradient(circle at 22% 28%, color-mix(in srgb, var(--gold) 13%, transparent) 0 7px, transparent 8px),"
+     + "radial-gradient(circle at 72% 64%, color-mix(in srgb, var(--gold) 9%, transparent) 0 11px, transparent 12px),"
+     + "radial-gradient(circle at 48% 88%, color-mix(in srgb, var(--ink) 5%, transparent) 0 5px, transparent 6px)"},
+  {id:"escamas", nome:"Escamas", size:"32px 32px", repeat:"repeat",
+   css:"radial-gradient(circle at 50% 100%, transparent 0 13px, color-mix(in srgb, var(--sea) 13%, transparent) 13px 15px, transparent 15px)"}
+];
+
+function lerPref(k, d){ try{ var v = localStorage.getItem(k); return v === null ? d : v; }catch(e){ return d; } }
+function gravarPref(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+
+var tema = lerPref("oprpg-theme", "auto");
+var paleta = lerPref("oprpg-palette", "");
+var coresLivres = {};
+CORES_LIVRES.forEach(function(c){ coresLivres[c.id] = lerPref("oprpg-cor-" + c.id, ""); });
+var fontes = {
+  display: lerPref("oprpg-font-display", "oswald"),
+  corpo:   lerPref("oprpg-font-corpo", "spectral"),
+  numeros: lerPref("oprpg-font-numeros", "plexmono")
+};
+var formatacao = {};
+FORMATACAO.forEach(function(f){ formatacao[f.id] = lerPref("oprpg-fmt-" + f.id, f.padrao); });
+var fundo = {
+  textura: lerPref("oprpg-bg-textura", ""),
+  imagem:  lerPref("oprpg-bg-img", ""),
+  veu:     lerPref("oprpg-bg-veu", "0"),
+  painel:  lerPref("oprpg-bg-painel", "100"),
+  fixo:    lerPref("oprpg-bg-fixo", "0") === "1"
+};
+
+function acharTextura(id){
+  for(var i = 0; i < TEXTURAS.length; i++) if(TEXTURAS[i].id === id) return TEXTURAS[i];
+  return TEXTURAS[0];
+}
+function aplicarFundo(){
+  var tex = acharTextura(fundo.textura);
+  var camadas = [], tamanhos = [], repeticoes = [];
+
+  var veu = Number(fundo.veu) || 0;
+  if(veu > 0){
+    var c = "color-mix(in srgb, var(--paper) " + veu + "%, transparent)";
+    camadas.push("linear-gradient(" + c + ", " + c + ")");
+    tamanhos.push("cover"); repeticoes.push("no-repeat");
+  }
+  if(tex.css !== "none"){
+    camadas.push(tex.css);
+    tamanhos.push(tex.size); repeticoes.push(tex.repeat);
+  }
+  if(fundo.imagem){
+    camadas.push('url("' + fundo.imagem + '")');
+    tamanhos.push("cover"); repeticoes.push("no-repeat");
+  }
+
+  root.style.setProperty("--bg-image", camadas.length ? camadas.join(", ") : "none");
+  root.style.setProperty("--bg-size", tamanhos.length ? tamanhos.join(", ") : "auto");
+  root.style.setProperty("--bg-repeat", repeticoes.length ? repeticoes.join(", ") : "no-repeat");
+  root.style.setProperty("--bg-attach", fundo.fixo ? "fixed" : "scroll");
+
+  var pct = Number(fundo.painel) || 100;
+  root.style.setProperty("--surf-mix", pct + "%");
+  root.style.setProperty("--surf-blur", pct < 100 ? "7px" : "0px");
+
+  $("f-padraofundo").value = fundo.textura;
+  $("f-veu").value = String(veu);
+  $("v-veu").textContent = veu + "%";
+  $("f-painel").value = String(pct);
+  $("v-painel").textContent = pct + "%";
+  $("f-fixo").checked = fundo.fixo;
+  $("btn-img-off").disabled = !fundo.imagem;
+  $("btn-img-off").style.opacity = fundo.imagem ? "1" : ".5";
+}
+
+function acharFonte(lista, id){
+  for(var i = 0; i < lista.length; i++) if(lista[i][0] === id) return lista[i];
+  return lista[0];
+}
+function corLida(varname){
+  var v = getComputedStyle(root).getPropertyValue(varname).trim();
+  return /^#[0-9a-f]{6}$/i.test(v) ? v : "#888888";
+}
+function aplicarAparencia(){
+  if(tema === "auto") root.removeAttribute("data-theme");
+  else root.setAttribute("data-theme", tema);
+  if(paleta) root.setAttribute("data-palette", paleta);
+  else root.removeAttribute("data-palette");
+
+  // cores livres: inline vence qualquer regra de tema ou paleta
+  CORES_LIVRES.forEach(function(c){
+    if(coresLivres[c.id]) root.style.setProperty(c.varname, coresLivres[c.id]);
+    else root.style.removeProperty(c.varname);
+  });
+  root.style.setProperty("--font-display", acharFonte(FONTES_TITULO, fontes.display)[2]);
+  root.style.setProperty("--font-body", acharFonte(FONTES_CORPO, fontes.corpo)[2]);
+  root.style.setProperty("--font-mono", acharFonte(FONTES_NUM, fontes.numeros)[2]);
+  root.style.setProperty("--ls-title", fontes.display === "bebas" ? ".03em" : "0em");
+  root.style.setProperty("--fs-base", formatacao.tamanho + "px");
+  root.style.setProperty("--title-scale", formatacao.titulos);
+  root.style.setProperty("--lh", formatacao.entrelinha);
+  root.style.setProperty("--dens", formatacao.densidade);
+  root.style.setProperty("--radius", formatacao.cantos);
+  aplicarFundo();
+
+  Array.prototype.forEach.call($("seg-tema").querySelectorAll("button"), function(b){
+    b.setAttribute("aria-pressed", String(b.dataset.v === tema));
+  });
+  Array.prototype.forEach.call($("swatches").querySelectorAll(".sw"), function(b){
+    b.setAttribute("aria-pressed", String(b.dataset.p === paleta));
+  });
+  $("f-display").value = fontes.display;
+  $("f-corpo").value = fontes.corpo;
+  $("f-numeros").value = fontes.numeros;
+  FORMATACAO.forEach(function(f){ $(f.sel).value = formatacao[f.id]; });
+
+  // os seletores de cor sempre mostram a cor em vigor
+  CORES_LIVRES.forEach(function(c){
+    var atual = coresLivres[c.id] || corLida(c.varname);
+    $("c-" + c.id).value = atual;
+    var campo = $("h-" + c.id);
+    if(document.activeElement !== campo){ campo.value = atual.toUpperCase(); campo.classList.remove("bad"); }
+  });
+}
+$("swatches").innerHTML = PALETAS.map(function(p){
+  return '<button type="button" class="sw" data-p="' + p.id + '" aria-pressed="false" title="' + p.nome + '">'
+    + '<i style="background:linear-gradient(90deg,' + p.c[0] + ' 0 34%,' + p.c[1] + ' 34% 67%,' + p.c[2] + ' 67% 100%)"></i>'
+    + '<span>' + p.nome.split(" ")[0] + '</span></button>';
+}).join("");
+$("seg-tema").addEventListener("click", function(ev){
+  var b = ev.target.closest("button[data-v]"); if(!b) return;
+  tema = b.dataset.v; gravarPref("oprpg-theme", tema); aplicarAparencia();
+});
+$("swatches").addEventListener("click", function(ev){
+  var b = ev.target.closest(".sw"); if(!b) return;
+  paleta = b.dataset.p; gravarPref("oprpg-palette", paleta);
+  // escolher uma paleta pronta descarta as cores livres
+  CORES_LIVRES.forEach(function(c){ coresLivres[c.id] = ""; gravarPref("oprpg-cor-" + c.id, ""); });
+  aplicarAparencia();
+});
+
+/* cores livres */
+function definirCor(id, valor){
+  coresLivres[id] = valor;
+  gravarPref("oprpg-cor-" + id, valor);
+  aplicarAparencia();
+}
+CORES_LIVRES.forEach(function(c){
+  $("c-" + c.id).addEventListener("input", function(){ definirCor(c.id, this.value); });
+  $("h-" + c.id).addEventListener("input", function(){
+    var v = this.value.trim();
+    if(v && v.charAt(0) !== "#") v = "#" + v;
+    if(/^#[0-9a-fA-F]{6}$/.test(v)){ this.classList.remove("bad"); definirCor(c.id, v.toLowerCase()); }
+    else this.classList.add("bad");
+  });
+  $("h-" + c.id).addEventListener("blur", function(){ this.classList.remove("bad"); aplicarAparencia(); });
+});
+$("btn-reset-cores").addEventListener("click", function(){
+  CORES_LIVRES.forEach(function(c){ coresLivres[c.id] = ""; gravarPref("oprpg-cor-" + c.id, ""); });
+  aplicarAparencia();
+});
+
+/* fundo */
+$("f-padraofundo").innerHTML = TEXTURAS.map(function(t){
+  return '<option value="' + t.id + '">' + t.nome + '</option>';
+}).join("");
+function avisoFundo(msg, ruim){
+  var el = $("aviso-fundo");
+  el.textContent = msg;
+  el.classList.toggle("bad", !!ruim);
+}
+var AVISO_PADRAO = "A imagem fica salva só neste navegador e é reduzida para caber.";
+$("f-padraofundo").addEventListener("change", function(){
+  fundo.textura = this.value; gravarPref("oprpg-bg-textura", this.value); aplicarFundo();
+});
+$("f-veu").addEventListener("input", function(){
+  fundo.veu = this.value; gravarPref("oprpg-bg-veu", this.value); aplicarFundo();
+});
+$("f-painel").addEventListener("input", function(){
+  fundo.painel = this.value; gravarPref("oprpg-bg-painel", this.value); aplicarFundo();
+});
+$("f-fixo").addEventListener("change", function(){
+  fundo.fixo = this.checked; gravarPref("oprpg-bg-fixo", this.checked ? "1" : "0"); aplicarFundo();
+});
+$("btn-img").addEventListener("click", function(){ $("file-img").click(); });
+$("btn-img-off").addEventListener("click", function(){
+  fundo.imagem = ""; gravarPref("oprpg-bg-img", ""); avisoFundo(AVISO_PADRAO); aplicarFundo();
+});
+$("file-img").addEventListener("change", function(){
+  var file = this.files && this.files[0];
+  this.value = "";
+  if(!file) return;
+  if(!/^image\//.test(file.type)){ avisoFundo("Esse arquivo não é uma imagem.", true); return; }
+  avisoFundo("Preparando a imagem…");
+  var reader = new FileReader();
+  reader.onerror = function(){ avisoFundo("Não consegui ler esse arquivo.", true); };
+  reader.onload = function(){
+    var img = new Image();
+    img.onerror = function(){ avisoFundo("Não consegui abrir essa imagem.", true); };
+    img.onload = function(){
+      var max = 1600, w = img.naturalWidth, h = img.naturalHeight;
+      if(!w || !h){ avisoFundo("Essa imagem veio vazia.", true); return; }
+      if(w > max || h > max){ var k = Math.min(max/w, max/h); w = Math.round(w*k); h = Math.round(h*k); }
+      var dados;
+      try{
+        var cv = document.createElement("canvas");
+        cv.width = w; cv.height = h;
+        cv.getContext("2d").drawImage(img, 0, 0, w, h);
+        dados = cv.toDataURL("image/jpeg", 0.72);
+      }catch(e){ dados = reader.result; }
+      fundo.imagem = dados;
+      var kb = Math.round(dados.length * 0.75 / 1024);
+      try{
+        localStorage.setItem("oprpg-bg-img", dados);
+        avisoFundo("Imagem aplicada (" + kb + " KB). Se o texto ficar difícil de ler, suba o véu.");
+      }catch(e){
+        var cota = e && (e.name === "QuotaExceededError" || e.name === "NS_ERROR_DOM_QUOTA_REACHED");
+        avisoFundo("Imagem aplicada (" + kb + " KB), mas "
+          + (cota ? "grande demais para o navegador guardar"
+                  : "este navegador não está guardando dados do site")
+          + " — ela some ao recarregar a página.", true);
+      }
+      if(!Number(fundo.veu)){
+        fundo.veu = "45"; gravarPref("oprpg-bg-veu", "45");
+      }
+      aplicarFundo();
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+$("btn-reset-fundo").addEventListener("click", function(){
+  fundo = {textura:"", imagem:"", veu:"0", painel:"100", fixo:false};
+  gravarPref("oprpg-bg-textura", ""); gravarPref("oprpg-bg-img", "");
+  gravarPref("oprpg-bg-veu", "0"); gravarPref("oprpg-bg-painel", "100"); gravarPref("oprpg-bg-fixo", "0");
+  CORES_LIVRES.forEach(function(c){
+    if(c.id === "paper" || c.id === "ink" || c.id === "ink2"){
+      coresLivres[c.id] = ""; gravarPref("oprpg-cor-" + c.id, "");
+    }
+  });
+  avisoFundo(AVISO_PADRAO);
+  aplicarAparencia();
+});
+
+/* fontes */
+function encher(sel, lista){
+  $(sel).innerHTML = lista.map(function(f){ return '<option value="' + f[0] + '">' + f[1] + '</option>'; }).join("");
+}
+encher("f-display", FONTES_TITULO);
+encher("f-corpo", FONTES_CORPO);
+encher("f-numeros", FONTES_NUM);
+[["f-display","display","oprpg-font-display"],["f-corpo","corpo","oprpg-font-corpo"],
+ ["f-numeros","numeros","oprpg-font-numeros"]].forEach(function(t){
+  $(t[0]).addEventListener("change", function(){
+    fontes[t[1]] = this.value; gravarPref(t[2], this.value); aplicarAparencia();
+  });
+});
+
+/* formatação */
+FORMATACAO.forEach(function(f){
+  $(f.sel).addEventListener("change", function(){
+    formatacao[f.id] = this.value; gravarPref("oprpg-fmt-" + f.id, this.value); aplicarAparencia();
+  });
+});
+$("btn-reset-form").addEventListener("click", function(){
+  FORMATACAO.forEach(function(f){ formatacao[f.id] = f.padrao; gravarPref("oprpg-fmt-" + f.id, f.padrao); });
+  formatacao.titulos = "1"; gravarPref("oprpg-fmt-titulos", "1");
+  fontes = {display:"oswald", corpo:"spectral", numeros:"plexmono"};
+  gravarPref("oprpg-font-display", "oswald");
+  gravarPref("oprpg-font-corpo", "spectral");
+  gravarPref("oprpg-font-numeros", "plexmono");
+  aplicarAparencia();
+});
+$("themebtn").addEventListener("click", function(ev){
+  ev.stopPropagation();
+  var open = !$("pop").hidden;
+  $("pop").hidden = open;
+  this.setAttribute("aria-expanded", String(!open));
+});
+document.addEventListener("click", function(ev){
+  if(!$("pop").hidden && !ev.target.closest(".appearance")){
+    $("pop").hidden = true; $("themebtn").setAttribute("aria-expanded", "false");
+  }
+});
+document.addEventListener("keydown", function(ev){
+  if(ev.key === "Escape" && !$("pop").hidden){
+    $("pop").hidden = true; $("themebtn").setAttribute("aria-expanded", "false"); $("themebtn").focus();
+  }
+});
+aplicarAparencia();
+
+/* ═════════ dados do livro ═════════ */
+var GRAUS = {
+  1:{nivel:"1º", pp:2,  dados:2,  raio:"3 m",    cone:"12 m", linha:"9 m"},
+  2:{nivel:"3º", pp:4,  dados:4,  raio:"4,5 m",  cone:"15 m", linha:"15 m"},
+  3:{nivel:"6º", pp:6,  dados:6,  raio:"6 m",    cone:"18 m", linha:"21 m"},
+  4:{nivel:"9º", pp:8,  dados:8,  raio:"7,5 m",  cone:"21 m", linha:"27 m"},
+  5:{nivel:"12º",pp:10, dados:10, raio:"9 m",    cone:"24 m", linha:"33 m"},
+  6:{nivel:"16º",pp:12, dados:12, raio:"10,5 m", cone:"27 m", linha:"39 m"},
+  7:{nivel:"20º",pp:14, dados:14, raio:"12 m",   cone:"30 m", linha:"45 m"}
+};
+var AUX      = {pp:10, raio:"6 m", cone:"18 m", linha:"21 m"};
+var AUX_DESP = {pp:15, raio:"9 m", cone:"24 m", linha:"33 m"};
+
+var CONDICOES = [
+  {n:"Agarrado",    pp:1, d:"Deslocamento 0 e sem bônus de deslocamento. Acaba se quem agarrou ficar incapacitado ou soltar."},
+  {n:"Amedrontado", pp:1, d:"Desvantagem em Testes e ataques comuns enquanto vir a fonte do medo; não pode se aproximar dela."},
+  {n:"Atordoado",   pp:6, d:"Incapacitado, não se move, fala com dificuldade. Falha automática em Salvaguardas de Força e Destreza; ataques contra ela têm vantagem e críticos somam 2 dados."},
+  {n:"Bêbado",      pp:1, d:"Desvantagem em Salvaguardas, Testes de Destreza e no que mais o Narrador julgar. Acaba com um descanso."},
+  {n:"Caído",       pp:1, d:"Só rasteja. Desvantagem nos próprios ataques; ataques a até 1,5 m têm vantagem, os de longe têm desvantagem."},
+  {n:"Cego",        pp:1, d:"Falha automática em Testes que dependam da visão. Ataques contra ela têm vantagem; os dela, desvantagem."},
+  {n:"Empoderado",  pp:3, d:"Dano corpo a corpo vira 1d12; PP de Técnicas que erram não são descontados; deslocamento imune a terreno difícil."},
+  {n:"Enfeitiçado", pp:2, d:"Não pode atacar nem prejudicar quem a enfeitiçou, que ganha vantagem em interações sociais com ela."},
+  {n:"Enfurecido",  pp:1, d:"Ataca a fonte da fúria a todo custo com desvantagem, +1d4 corpo a corpo, sem concentração. Dura 1 minuto."},
+  {n:"Envenenado",  pp:1, d:"Desvantagem em ataques e Testes de Atributo."},
+  {n:"Estremecido", pp:2, d:"Desvantagem em ataques, não pode usar Técnicas nem concentração, e cada 1,5 m de movimento custa 1,5 m a mais."},
+  {n:"Impedido",    pp:2, d:"Deslocamento 0. Ataques contra ela têm vantagem, os dela têm desvantagem, e desvantagem em Salvaguardas de Destreza."},
+  {n:"Incapacitado",pp:4, d:"Não pode usar ações, ações poderosas, ações bônus nem reações."},
+  {n:"Inconsciente",pp:8, d:"Incapacitada, caída, larga tudo. Falha automática em Força e Destreza; qualquer acerto a 1,5 m é crítico."},
+  {n:"Invisível",   pp:5, d:"Não pode ser vista sem sentidos especiais. Ataques contra ela têm desvantagem; os dela, vantagem."},
+  {n:"Letárgico",   pp:2, d:"Não usa Técnicas, escolhe só uma atividade por turno e causa metade do dano (menos com armas de fogo)."},
+  {n:"Paralisado",  pp:8, d:"Incapacitada, sem se mover ou falar. Falha automática em Força e Destreza; qualquer acerto a 1,5 m é crítico."},
+  {n:"Petrificado", pp:6, exclusiva:true,
+   d:"Incapacitada, sem se mover, ouvir ou falar, e sem guardar memória do período ao ser despetrificada. Invulnerável a Ácido, Elétrico, Fogo, Frio, Psíquico e Veneno; resistente a Cortante e Perfurante; vulnerável a Contundente, Energia e Trovejante. Falha automática em Salvaguardas de Força e Destreza e ataques contra ela têm vantagem. Dura até ser desfeita e não garante ganho de experiência."},
+  {n:"Queimado",    pp:1, d:"1d6 de Fogo na primeira jogada de ataque de cada turno, sem concentração, até apagar o fogo com uma ação."},
+  {n:"Sangramento", pp:1, d:"1d6 Cortante na primeira vez que se mover no turno, até um Teste de Medicina CD 10 ou Sobrevivência CD 16."},
+  {n:"Sonolento",   pp:1, d:"Sem reações, no máximo um ataque corpo a corpo por turno, desvantagem em Destreza e Sabedoria."},
+  {n:"Sufocado",    pp:1, d:"Não fala. Depois de 1 + mod. CON turnos, Salvaguarda de CON CD 10 (+2 por turno) para não desmaiar."},
+  {n:"Surdo",       pp:1, d:"Falha automática em qualquer Teste que dependa da audição."}
+];
+
+var TIPOS_DANO = ["Contundente","Cortante","Perfurante","Ácido","Elétrico","Fogo","Frio","Veneno","Psíquico","Energia","Trovejante","Verdadeiro"];
+function custoTipoDano(tipo, g){
+  if(["Contundente","Cortante","Perfurante"].indexOf(tipo) >= 0) return 0;
+  if(["Ácido","Elétrico","Fogo","Frio","Veneno"].indexOf(tipo) >= 0) return 1;
+  if(tipo === "Verdadeiro") return Math.max(3, Math.floor(g/2));
+  return Math.min(2, Math.max(1, Math.floor(g/2)));
+}
+function ceil2(g){ return Math.ceil(g/2); }
+function custoProlongado(base, minutos){
+  if(base <= 0 || minutos <= 1) return Math.max(0, base);
+  return base + (minutos - 1) * Math.max(1, Math.floor(base/2));
+}
+
+/* ═════════ catálogo de efeitos ═════════
+   cost(g,q,aux,st) → PP (negativo = redução)
+   prolongBase(g,st) → custo do 1º minuto de Duração Prolongada (ausente = não prolongável)
+   rotulo(q,st) → sufixo mostrado na razão e na lista de efeitos              */
+var EFEITOS = [
+{id:"condicao", cat:"Controle", nm:"Adicionar Condição",
+  ds:"Impõe até 3 condições, cada uma com Salvaguarda própria.",
+  custoTxt:"PP da condição",
+  conds:{label:"Condições impostas (até 3)", max:3},
+  cost:function(g,q,aux,st){ return st.ppConds("condicao"); },
+  prolongBase:function(g,st){ var c = st.primeiraCondPP("condicao"); return c ? ceil2(c) + 1 : 0; },
+  prolongMax:1, prolongTxt:"metade do custo (↑) +1 PP · máx. 1 minuto",
+  rotulo:function(q,st){ var n = st.nomesConds("condicao"); return n.length ? n.join(", ") : "nenhuma escolhida"; }},
+
+{id:"empurrao", cat:"Controle", nm:"Adicionar Empurrão",
+  ds:"Empurra uma criatura Grande ou menor que falhe numa Salvaguarda de Força. Cada PP também dá 1d8 de dano de colisão, até 3d8.",
+  custoTxt:"1 PP por 3 m", qtd:{label:"metros de empurrão", min:3, max:30, step:3, val:6},
+  cost:function(g,q){ return q/3; },
+  rotulo:function(q){ return q + " m, " + Math.min(3, Math.round(q/3)) + "d8 de colisão"; }},
+
+{id:"vantagem", cat:"Controle", nm:"Adicionar Vantagem / Desvantagem",
+  ds:"Dá vantagem a um aliado ou desvantagem a um inimigo na próxima jogada de ataque comum, Teste de Atributo ou Salvaguarda.",
+  custoTxt:"metade do grau (arred. ↑) · 4 PP em Auxiliares",
+  escolha:{id:"modo", label:"efeito", opcoes:[["desvantagem","Desvantagem em um inimigo"],["vantagem","Vantagem em um aliado"]], val:"desvantagem"},
+  cost:function(g,q,aux){ return aux ? 4 : ceil2(g); },
+  prolongBase:function(){ return 2; }, prolongTxt:"2 PP — só a primeira jogada da rodada é afetada",
+  rotulo:function(q,st){ return st.escolha("vantagem","modo") === "vantagem" ? "vantagem" : "desvantagem"; }},
+
+{id:"aumentar-alcance", cat:"Controle", nm:"Aumentar Alcance",
+  ds:"Estende o alcance de uma jogada de ataque (Técnicas) à distância.",
+  custoTxt:"1 PP por 6 m", needs:"linha-ataque", qtd:{label:"metros extras", min:6, max:60, step:6, val:6},
+  cost:function(g,q){ return q/6; }, rotulo:function(q){ return "+" + q + " m"; }},
+
+{id:"aumentar-area", cat:"Controle", nm:"Aumentar Área",
+  ds:"Estende Cone, Esfera, Cilindro ou Linha.",
+  custoTxt:"1 PP por 3 m", needs:"area", qtd:{label:"metros extras", min:3, max:45, step:3, val:3},
+  cost:function(g,q){ return q/3; }, rotulo:function(q){ return "+" + q + " m"; }},
+
+{id:"alargar-linha", cat:"Controle", nm:"Alargar a Linha",
+  ds:"Em vez de comprimento, aumenta a largura da área em Linha.",
+  custoTxt:"2 PP por 1,5 m de largura", needs:"linha", qtd:{label:"faixas de 1,5 m", min:1, max:8, step:1, val:1},
+  cost:function(g,q){ return q*2; },
+  rotulo:function(q){ return "largura " + String(1.5 + 1.5*q).replace(".", ",") + " m"; }},
+
+{id:"condicao-area", cat:"Controle", nm:"Condição / Efeito em Área",
+  ds:"Aplica a mesma condição em todas as criaturas da área. Quem passou na Salvaguarda do dano não é afetado.",
+  custoTxt:"metade do grau (arred. ↑) · grátis no 1º grau", needs:"area",
+  cost:function(g){ return g === 1 ? 0 : ceil2(g); },
+  prolongBase:function(g){ return ceil2(g === 1 ? 0 : ceil2(g)) + 1; },
+  prolongMax:1, prolongTxt:"metade do custo (↑) +1 PP · máx. 1 minuto"},
+
+{id:"controle-cirurgico", cat:"Controle", nm:"Controle Cirúrgico",
+  ds:"Protege um número de aliados igual ao seu mod. de Destreza (mínimo 1) dentro da área.",
+  custoTxt:"1 PP", needs:"salvaguarda", cost:function(){ return 1; },
+  prolongBase:function(){ return 1; }, prolongTxt:"1 PP"},
+
+{id:"power-up", cat:"Controle", nm:"Power Up",
+  ds:"Envolve seu corpo no poder do fruto por até 1 minuto. Só volta a funcionar após um descanso curto ou longo.",
+  custoTxt:"3 PP + opções · duração de 1 min já inclusa", duracaoInclusa:true,
+  opts:[
+    {id:"pu-desv", t:"Criaturas têm desvantagem em Salvaguardas contra Técnicas do seu fruto", pp:2},
+    {id:"pu-tam",  t:"Categoria de tamanho +1 (até Enorme)", pp:1},
+    {id:"pu-dad",  t:"+5 dados de dano em Técnicas instantâneas (limitado pelo grau)", pp:3},
+    {id:"pu-esc",  t:"PV só caem depois da forma absorver 10 × seu nível em dano", pp:4}],
+  cost:function(g,q,aux,st){ return 3 + st.optSum("power-up"); }},
+
+{id:"tecnica-dominada", cat:"Controle", nm:"Técnica Dominada",
+  ds:"Permite variar o custo em PP a cada uso, conforme a necessidade.",
+  custoTxt:"1 PP", cost:function(){ return 1; }},
+
+{id:"criar-lacaio", cat:"Controle", nm:"Criar Lacaio",
+  ds:"Cria uma criatura por até 1 minuto: CR 15, 50 PV, 9 m de deslocamento, ataque +9 (1d12+5). Age no seu turno.",
+  custoTxt:"7 PP + melhorias (teto de 15 PP) · duração inclusa", duracaoInclusa:true,
+  qtd:{label:"PP em melhorias", min:0, max:8, step:1, val:0},
+  cost:function(g,q){ return 7 + q; },
+  rotulo:function(q){ return q ? "+" + q + " PP em melhorias" : "básico"; }},
+
+{id:"tecnica-rapida", cat:"Controle", nm:"Técnica Rápida",
+  ds:"A Técnica de Combate passa a ser executada com Ação Bônus ou Reação, em vez de Ação Poderosa.",
+  custoTxt:"PP igual ao grau", needs:"grau4", cost:function(g){ return g; }},
+
+{id:"acerto-automatico", cat:"Ofensivo", nm:"Acerto Automático",
+  ds:"Acerta sem rolar dados — e, por isso, não pode ser crítico.",
+  custoTxt:"PP igual ao grau", needs:"ataque", cost:function(g){ return g; }},
+
+{id:"critico", cat:"Ofensivo", nm:"Adicionar Crítico",
+  ds:"Amplia a margem de acerto crítico da Técnica.",
+  custoTxt:"1 PP (19-20) · 2 PP (18-20)", needs:"ataque",
+  escolha:{id:"margem", label:"margem", opcoes:[["1","19-20 · 1 PP"],["2","18-20 · 2 PP"]], val:"1"},
+  cost:function(g,q,aux,st){ return Number(st.escolha("critico","margem")); },
+  prolongBase:function(){ return 1; }, prolongTxt:"1 PP — só o primeiro ataque da rodada",
+  rotulo:function(q,st){ return st.escolha("critico","margem") === "2" ? "18-20" : "19-20"; }},
+
+{id:"ataque-cerco", cat:"Ofensivo", nm:"Ataque de Cerco",
+  ds:"Dobra o dano em objetos e estruturas que ninguém esteja vestindo ou carregando.",
+  custoTxt:"2 PP", cost:function(){ return 2; },
+  prolongBase:function(){ return 1; }, prolongTxt:"1 PP — todos os ataques são afetados"},
+
+{id:"ataques-multiplos", cat:"Ofensivo", nm:"Ataques Múltiplos",
+  ds:"Concede mais 2 jogadas de ataque (comum) até o final do seu turno, com todos os bônus normais.",
+  custoTxt:"6 PP", needs:"bonus-turno", cost:function(){ return 6; }},
+
+{id:"aumentar-acerto", cat:"Ofensivo", nm:"Aumentar Acerto",
+  ds:"Soma um bônus fixo à jogada de ataque (Técnicas).",
+  custoTxt:"1 PP por +1, até +3", needs:"ataque", qtd:{label:"bônus", min:1, max:3, step:1, val:1},
+  cost:function(g,q){ return q; },
+  prolongBase:function(){ return 2; }, prolongTxt:"2 PP — só o primeiro ataque da rodada",
+  rotulo:function(q){ return "+" + q + " no acerto"; }},
+
+{id:"aumentar-dano", cat:"Ofensivo", nm:"Aumentar Dano",
+  ds:"+3 no dano da primeira jogada de ataque (comum) de cada rodada, por 1 minuto.",
+  custoTxt:"3 PP · exige Concentração e Ação Bônus · duração inclusa", duracaoInclusa:true,
+  needs:"sem-dano-bonus", cost:function(){ return 3; }},
+
+{id:"criar-arma", cat:"Ofensivo", nm:"Criar Arma",
+  ds:"Cria uma arma com dano próprio por até 1 minuto. Consome 2 PP ao final de cada turno ou se desfaz.",
+  custoTxt:"1 PP = 2d8, +1 PP por d8 (até 4d8) · duração inclusa", duracaoInclusa:true,
+  needs:"sem-dano-bonus",
+  escolha:{id:"dados", label:"dano da arma", opcoes:[["1","2d8 · 1 PP"],["2","3d8 · 2 PP"],["3","4d8 · 3 PP"]], val:"1"},
+  cost:function(g,q,aux,st){ return Number(st.escolha("criar-arma","dados")); },
+  rotulo:function(q,st){ return (Number(st.escolha("criar-arma","dados")) + 1) + "d8"; }},
+
+{id:"dano-adicional", cat:"Ofensivo", nm:"Dano Adicional",
+  ds:"Soma dados de dano a outras Técnicas instantâneas. Cada dado não usado devolve 1 PP.",
+  custoTxt:"1 PP por dado, até 5", needs:"sem-dano", qtd:{label:"dados extras", min:1, max:5, step:1, val:3},
+  cost:function(g,q){ return q; }, rotulo:function(q){ return "+" + q + " dados"; }},
+
+{id:"dano-continuo", cat:"Ofensivo", nm:"Dano Contínuo",
+  ds:"Continua causando dano no início de cada turno das criaturas afetadas. Máximo de dados por turno igual ao grau.",
+  custoTxt:"1 + metade do grau (↑) + 1 PP por dado · duração inclusa", duracaoInclusa:true, needs:"dano",
+  qtd:{label:"dados por turno", min:1, max:7, step:1, val:3},
+  opts:[{id:"dc-fixa", t:"Área fixa sem emanação, ou alvo único com Salvaguarda a cada turno", pp:-2}],
+  cost:function(g,q,aux,st){ return 1 + ceil2(g) + q + st.optSum("dano-continuo"); },
+  rotulo:function(q){ return q + " dados por turno"; }},
+
+{id:"dano-insistente", cat:"Ofensivo", nm:"Dano Insistente",
+  ds:"Garante ao menos metade do dano em todas as criaturas da área, mesmo nas que anulariam o dano.",
+  custoTxt:"metade do grau (arred. ↑)", needs:"area-salv", cost:function(g){ return ceil2(g); },
+  prolongBase:function(){ return 1; }, prolongTxt:"1 PP — só a primeira jogada de dano da rodada"},
+
+{id:"cura", cat:"Suporte", nm:"Adicionar Cura",
+  ds:"Recupera Pontos de Vida de uma ou mais criaturas.",
+  custoTxt:"1 PP = 1d10 (único) ou 1d6 (área)", needs:"nao-1grau",
+  qtd:{label:"dados de cura", min:1, max:12, step:1, val:4},
+  cost:function(g,q){ return q; },
+  prolongTxt:"segue as regras de Dano Contínuo, trocando dano por cura",
+  rotulo:function(q,st){ return q + "d" + (st.areaCura() ? 6 : 10); }},
+
+{id:"pv-temp", cat:"Suporte", nm:"Adicionar PV Temporários",
+  ds:"Cria Pontos de Vida temporários em você ou em outra criatura.",
+  custoTxt:"1 PP = 1d10 (único) ou 1d4 (área)",
+  qtd:{label:"dados de PV temp.", min:1, max:12, step:1, val:4},
+  cost:function(g,q){ return q; },
+  prolongBase:function(){ return 2; }, prolongTxt:"2 PP — duram enquanto a Técnica durar",
+  rotulo:function(q,st){ return q + "d" + (st.areaCura() ? 4 : 10); }},
+
+{id:"voo", cat:"Suporte", nm:"Adicionar Voo",
+  ds:"Concede deslocamento de voo a uma criatura.",
+  custoTxt:"2 PP = 9 m, +1 PP por 3 m (teto 15 m)",
+  qtd:{label:"metros de voo", min:9, max:15, step:3, val:9},
+  cost:function(g,q){ return 2 + (q-9)/3; },
+  prolongBase:function(){ return 1; }, prolongTxt:"1 PP",
+  rotulo:function(q){ return q + " m de voo"; }},
+
+{id:"aumentar-cr", cat:"Suporte", nm:"Aumentar Classe de Resistência",
+  ds:"Aumenta a CR de uma criatura.",
+  custoTxt:"1 PP por +1, até +3", qtd:{label:"bônus de CR", min:1, max:3, step:1, val:3},
+  cost:function(g,q){ return q; },
+  prolongBase:function(){ return 3; }, prolongTxt:"3 PP",
+  rotulo:function(q){ return "+" + q + " de CR"; }},
+
+{id:"aumentar-movimento", cat:"Suporte", nm:"Aumentar Movimento",
+  ds:"Aumenta o deslocamento normal de uma criatura.",
+  custoTxt:"1 PP = +3 m · 2 PP = +6 m",
+  escolha:{id:"m", label:"aumento", opcoes:[["3","+3 m · 1 PP"],["6","+6 m · 2 PP"]], val:"6"},
+  cost:function(g,q,aux,st){ return Number(st.escolha("aumentar-movimento","m"))/3; },
+  prolongBase:function(){ return 1; }, prolongTxt:"1 PP",
+  rotulo:function(q,st){ return "+" + st.escolha("aumentar-movimento","m") + " m"; }},
+
+{id:"contencao-coletiva", cat:"Suporte", nm:"Contenção de Dano (coletivo)",
+  ds:"Reduz o dano sofrido por você e por todos atrás de você num cone de 12 m.",
+  custoTxt:"1 PP por 1d8, até 15 dados", needs:"reacao",
+  qtd:{label:"dados de proteção (d8)", min:1, max:15, step:1, val:5},
+  cost:function(g,q){ return q; }, rotulo:function(q){ return q + "d8 de redução"; }},
+
+{id:"contencao-individual", cat:"Suporte", nm:"Contenção de Dano (individual)",
+  ds:"Reduz o dano sofrido por uma criatura.",
+  custoTxt:"1 PP por 2d8, até 30 dados", needs:"reacao",
+  qtd:{label:"PP em proteção", min:1, max:15, step:1, val:5},
+  cost:function(g,q){ return q; }, rotulo:function(q){ return (q*2) + "d8 de redução"; }},
+
+{id:"reducao-movimento", cat:"Suporte", nm:"Redução de Movimento",
+  ds:"Corta o deslocamento normal da criatura afetada.",
+  custoTxt:"1 PP = metade · 2 PP = zero",
+  escolha:{id:"modo", label:"efeito", opcoes:[["1","Reduz à metade · 1 PP"],["2","Reduz a 0 · 2 PP"]], val:"1"},
+  cost:function(g,q,aux,st){ return Number(st.escolha("reducao-movimento","modo")); },
+  prolongBase:function(){ return 1; }, prolongTxt:"1 PP",
+  rotulo:function(q,st){ return st.escolha("reducao-movimento","modo") === "2" ? "deslocamento 0" : "metade do deslocamento"; }},
+
+{id:"concentracao-crucial", cat:"Redução", nm:"Concentração Crucial",
+  ds:"A Técnica passa a exigir Concentração e termina se você perdê-la.",
+  custoTxt:"−2 PP no 1º minuto, −1 PP por minuto seguinte", needs:"duracao-longa",
+  qtd:{label:"minutos", min:1, max:5, step:1, val:1},
+  cost:function(g,q){ return -(2 + (q-1)); }, rotulo:function(q){ return q + " min"; }},
+
+{id:"efeito-colateral", cat:"Redução", nm:"Efeito Colateral",
+  ds:"A Técnica prejudica você também. A redução é igual ao custo em PP do efeito que você recebe — por isso basta escolher as condições que caem sobre você. Você sempre sofre o efeito por inteiro, falhando automaticamente em qualquer Salvaguarda contra ela.",
+  custoTxt:"até −4 por efeito e até −4 por dano (teto −8)",
+  conds:{label:"Condições que você também sofre — redução limitada a −4 PP", max:3},
+  escolha:{id:"outro", label:"outro efeito sofrido, fora da lista",
+    opcoes:[["0","Nenhum · −0 PP"],["1","Leve — ex.: metade do deslocamento · −1 PP"],["2","Médio · −2 PP"],
+            ["3","Forte · −3 PP"],["4","Severo · −4 PP"]], val:"0"},
+  escolha2:{id:"dano", label:"dano que você sofre ao final",
+    opcoes:[["0","Nenhum dano · −0 PP"],["1","5 pontos de dano · −1 PP"],["2","10 pontos · −2 PP"],
+            ["3","15 pontos · −3 PP"],["4","20 pontos · −4 PP"]], val:"2"},
+  cost:function(g,q,aux,st){
+    var ef = Math.min(4, st.ppConds("efeito-colateral") + Number(st.escolha("efeito-colateral","outro")));
+    return -(ef + Number(st.escolha2("efeito-colateral","dano")));
+  },
+  rotulo:function(q,st){
+    var nomes = st.nomesConds("efeito-colateral").slice();
+    var outro = Number(st.escolha("efeito-colateral","outro"));
+    var ef = Math.min(4, st.ppConds("efeito-colateral") + outro);
+    var dano = Number(st.escolha2("efeito-colateral","dano"));
+    if(outro > 0) nomes.push("outro efeito");
+    var p = [];
+    if(nomes.length) p.push(nomes.join(", ") + " (−" + ef + ")");
+    if(dano > 0) p.push((dano*5) + " pts de dano (−" + dano + ")");
+    return p.length ? p.join(" · ") : "nada escolhido";
+  }},
+
+{id:"reduzir-area", cat:"Redução", nm:"Reduzir Área",
+  ds:"Encolhe a área da Técnica — e trava o alcance, que não pode mais ser aumentado de jeito nenhum.",
+  custoTxt:"−1 PP por 6 m de raio ou 9 m de cone (teto −3)", needs:"area",
+  qtd:{label:"redução", min:1, max:3, step:1, val:1}, cost:function(g,q){ return -q; },
+  rotulo:function(q){ return "−" + q + " PP de área"; }},
+
+{id:"requisito-limitador", cat:"Redução", nm:"Requisito Limitador",
+  ds:"Só funciona sob uma condição de peso real — “apenas à noite”, “apenas submerso”. Não vale arma empunhada ou postura.",
+  custoTxt:"−1 a −5 PP, a critério do Narrador",
+  qtd:{label:"redução", min:1, max:5, step:1, val:2}, cost:function(g,q){ return -q; },
+  rotulo:function(q){ return "−" + q + " PP"; }},
+
+{id:"tecnica-debilitante", cat:"Redução", nm:"Técnica Debilitante",
+  ds:"Depois da Técnica, você fica impedido de gastar PP voluntariamente. Se ficar sem PP suficiente, recebe 1 Nível de Exaustão.",
+  custoTxt:"−3 PP por minuto, até 2 minutos",
+  qtd:{label:"minutos", min:1, max:2, step:1, val:1}, cost:function(g,q){ return -(3*q); },
+  rotulo:function(q){ return q + " min sem gastar PP"; }},
+
+{id:"tecnica-demorada", cat:"Redução", nm:"Técnica Demorada",
+  ds:"A Técnica Auxiliar passa a exigir uma Ação Poderosa em vez de Ação Bônus ou Reação.",
+  custoTxt:"−3 PP", needs:"auxiliar", cost:function(){ return -3; }},
+
+{id:"tecnica-dependente", cat:"Redução", nm:"Técnica Dependente",
+  ds:"Só pode ser usada enquanto outra Técnica ou Manifestação de Poder predeterminada estiver ativa.",
+  custoTxt:"metade dos PP da Técnica exigida (−1 a −3)",
+  qtd:{label:"redução", min:1, max:3, step:1, val:2}, cost:function(g,q){ return -q; },
+  rotulo:function(q){ return "−" + q + " PP"; }},
+
+{id:"tecnica-devoradora", cat:"Redução", nm:"Técnica Devoradora",
+  ds:"Você fica 10 minutos sem poder usar Haki de nenhum tipo. Exige que a Técnica tenha Haki como requisito.",
+  custoTxt:"−3 PP", cost:function(){ return -3; }},
+
+{id:"tecnica-exaustiva", cat:"Redução", nm:"Técnica Exaustiva",
+  ds:"Ao final da Técnica você recebe Níveis de Exaustão. Alternativamente, só os efeitos deles por 1 hora.",
+  custoTxt:"−4 PP por Nível de Exaustão",
+  qtd:{label:"Níveis de Exaustão", min:1, max:3, step:1, val:1}, cost:function(g,q){ return -(4*q); },
+  rotulo:function(q){ return q + (q === 1 ? " nível" : " níveis"); }},
+
+{id:"tecnica-indomavel", cat:"Redução", nm:"Técnica Indomável",
+  ds:"O dado vira d8 e quem passar na Salvaguarda não sofre dano nenhum — tudo ou nada.",
+  custoTxt:"redução igual ao grau", needs:"area-salv", cost:function(g){ return -g; }},
+
+{id:"tecnica-nao-ofensiva", cat:"Redução", nm:"Técnica Não Ofensiva",
+  ds:"A Técnica não pode causar dano nem ajudar nenhum outro ataque a causar dano.",
+  custoTxt:"−2 PP (Combate) · −1 PP (Auxiliar)", needs:"sem-dano",
+  cost:function(g,q,aux){ return aux ? -1 : -2; }}
+];
+var MAPA = {};
+EFEITOS.forEach(function(e){ MAPA[e.id] = e; });
+
+/* ═════════ estado ═════════ */
+function estadoInicial(){
+  return {
+    tipo:"combate", origem:"fruto", grau:2, forma:"normal", ativacao:"poderosa",
+    nome:"Gomu-Gomu no Pistol", fonte:"Gomu-Gomu no Mi",
+    alvo:"area-limitada", dados:4, tipoDano:"Contundente", salvAtr:"Destreza",
+    regraDano:false, afinidade:"Contundente",
+    requisito:"poderosa", alcance:"linha", duracao:"Instantâneo",
+    ativos:{}, qtds:{}, escolhas:{}, escolhas2:{}, opts:{}, prolong:{}, prolongMin:{},
+    condsPor:{"condicao":[], "efeito-colateral":[]},
+    descTocada:false
+  };
+}
+var S = estadoInicial();
+
+function isAux(){ return S.tipo === "auxiliar" || S.tipo === "auxiliar-desperta"; }
+function isMP(){ return S.tipo === "mp"; }
+function grauEfetivo(){ return (isAux() || isMP()) ? 2 : S.grau; }
+function specs(){
+  if(S.tipo === "auxiliar") return AUX;
+  if(S.tipo === "auxiliar-desperta") return AUX_DESP;
+  if(isMP()) return GRAUS[2];
+  return GRAUS[S.grau];
+}
+function ehArea(){
+  if(["cone","esfera","cilindro","emanacao"].indexOf(S.alcance) >= 0) return true;
+  return S.alcance === "linha" && (S.alvo === "area" || S.alvo === "area-limitada");
+}
+function ehAtaque(){ return S.alvo === "ataque-cc" || S.alvo === "ataque-dist"; }
+function ehSalv(){ return ["salv-metade","salv-nenhum","area","area-limitada"].indexOf(S.alvo) >= 0; }
+function temDano(){ return S.alvo !== "sem-dano" && S.dados > 0; }
+function dadoDano(){
+  if(S.ativos["tecnica-indomavel"]) return 8;
+  if(["ataque-cc","ataque-dist","salv-nenhum"].indexOf(S.alvo) >= 0) return 10;
+  if(["salv-metade","area-limitada"].indexOf(S.alvo) >= 0) return 8;
+  if(S.alvo === "area") return 6;
+  return 0;
+}
+function condsDe(id){
+  if(!S.condsPor) S.condsPor = {};
+  if(!S.condsPor[id]) S.condsPor[id] = [];
+  return S.condsPor[id];
+}
+function maxConds(id){ var e = MAPA[id]; return (e && e.conds && e.conds.max) || 3; }
+function temEfeitoNegativo(){
+  return temDano() || (S.ativos["condicao"] && condsDe("condicao").length > 0) || S.ativos["condicao-area"]
+    || S.ativos["reducao-movimento"] || S.ativos["vantagem"] || S.ativos["dano-continuo"];
+}
+function duracaoLonga(){ return S.duracao !== "Instantâneo"; }
+
+var ctx = {
+  ppConds: function(id){
+    var arr = condsDe(id);
+    return CONDICOES.reduce(function(a,c){ return a + (arr.indexOf(c.n) >= 0 ? c.pp : 0); }, 0);
+  },
+  nomesConds: function(id){ return condsDe(id).slice(); },
+  primeiraCondPP: function(id){
+    var arr = condsDe(id);
+    if(!arr.length) return 0;
+    var c = CONDICOES.filter(function(x){ return x.n === arr[0]; })[0];
+    return c ? c.pp : 0;
+  },
+  optSum: function(id){
+    var e = MAPA[id], o = S.opts[id] || {}, sum = 0;
+    if(!e || !e.opts) return 0;
+    e.opts.forEach(function(op){ if(o[op.id]) sum += op.pp; });
+    return sum;
+  },
+  escolha: function(id, campo){
+    var e = MAPA[id];
+    return (S.escolhas[id] != null) ? S.escolhas[id] : (e && e.escolha ? e.escolha.val : "0");
+  },
+  escolha2: function(id, campo){
+    var e = MAPA[id];
+    return (S.escolhas2[id] != null) ? S.escolhas2[id] : (e && e.escolha2 ? e.escolha2.val : "0");
+  },
+  areaCura: function(){ return ehArea(); }
+};
+
+/* ═════════ catálogo (DOM) ═════════ */
+function montarCatalogo(){
+  var host = $("efeitos-catalogo"), html = "";
+  ["Controle","Ofensivo","Suporte","Redução"].forEach(function(cat){
+    html += '<div class="catgroup"><h4>' + cat + (cat === "Redução" ? " no custo" : "") + '</h4>';
+    EFEITOS.filter(function(e){ return e.cat === cat; }).forEach(function(e){
+      var neg = e.cat === "Redução";
+      html += '<div class="efx" id="efx-' + e.id + '">'
+        + '<label class="top"><input type="checkbox" data-ef="' + e.id + '">'
+        + '<span><span class="head"><span class="nm">' + e.nm + '</span>'
+        + '<span class="pp' + (neg ? " neg" : "") + '">' + e.custoTxt + '</span></span>'
+        + '<span class="ds">' + e.ds + '</span></span></label>';
+
+      var extra = "";
+      if(e.conds){
+        extra += '<div class="opt" style="display:block"><label style="display:block; margin-bottom:6px">'
+          + e.conds.label + '</label>'
+          + '<div class="conds" data-condset="' + e.id + '">' + CONDICOES.map(function(c){
+              return '<button type="button" class="cond" data-cond="' + c.n + '" aria-pressed="false" title="'
+                + (c.exclusiva ? "Condição Exclusiva — " : "") + c.d.replace(/"/g,"&quot;") + '">'
+                + c.n + (c.exclusiva ? " ✦" : "") + ' <span style="opacity:.7">' + c.pp + '</span></button>';
+            }).join("") + '</div></div>';
+      }
+      if(e.escolha){
+        extra += '<div class="opt"><label for="s-' + e.id + '">' + e.escolha.label + '</label>'
+          + '<select id="s-' + e.id + '" data-sel="' + e.id + '">'
+          + e.escolha.opcoes.map(function(o){ return '<option value="' + o[0] + '"' + (o[0] === e.escolha.val ? " selected" : "") + '>' + o[1] + '</option>'; }).join("")
+          + '</select></div>';
+      }
+      if(e.escolha2){
+        extra += '<div class="opt"><label for="s2-' + e.id + '">' + e.escolha2.label + '</label>'
+          + '<select id="s2-' + e.id + '" data-sel2="' + e.id + '">'
+          + e.escolha2.opcoes.map(function(o){ return '<option value="' + o[0] + '"' + (o[0] === e.escolha2.val ? " selected" : "") + '>' + o[1] + '</option>'; }).join("")
+          + '</select></div>';
+      }
+      if(e.qtd){
+        extra += '<div class="opt"><label for="q-' + e.id + '">' + e.qtd.label + '</label>'
+          + '<input type="number" id="q-' + e.id + '" data-q="' + e.id + '" min="' + e.qtd.min + '" max="' + e.qtd.max
+          + '" step="' + e.qtd.step + '" value="' + e.qtd.val + '"></div>';
+      }
+      if(e.opts){
+        e.opts.forEach(function(op){
+          extra += '<label class="chk"><input type="checkbox" data-opt="' + e.id + '" data-optid="' + op.id + '">'
+            + '<span>' + op.t + ' <span class="cost">(' + (op.pp > 0 ? "+" : "") + op.pp + ' PP)</span></span></label>';
+        });
+      }
+      if(e.prolongBase){
+        extra += '<label class="chk"><input type="checkbox" data-prol="' + e.id + '">'
+          + '<span><b>Duração prolongada</b> <span class="cost" id="pc-' + e.id + '"></span><br>'
+          + '<span style="font-size:13px">' + (e.prolongTxt || "") + '</span></span></label>'
+          + '<div class="opt" id="pm-' + e.id + '" hidden><label for="pmin-' + e.id + '">minutos</label>'
+          + '<input type="number" id="pmin-' + e.id + '" data-pmin="' + e.id + '" min="1" max="'
+          + (e.prolongMax || 10) + '" step="1" value="1"></div>';
+      } else if(e.duracaoInclusa){
+        extra += '<p class="small" style="margin:9px 0 0">Duração de 1 minuto já inclusa no custo — este efeito não aceita prolongamento.</p>';
+      }
+      if(extra) html += '<div class="extra">' + extra + '</div>';
+      html += '<span class="warn" id="w-' + e.id + '" hidden></span></div>';
+    });
+    html += '</div>';
+  });
+  host.innerHTML = html;
+
+  host.addEventListener("change", function(ev){
+    var t = ev.target;
+    if(t.dataset.ef){
+      S.ativos[t.dataset.ef] = t.checked;
+      $("efx-" + t.dataset.ef).classList.toggle("on", t.checked);
+      if(t.dataset.ef === "tecnica-rapida" && !t.checked && S.tipo === "combate") S.requisito = "poderosa";
+      if(t.dataset.ef === "tecnica-demorada"){ S.requisito = t.checked ? "poderosa" : "bonus"; }
+    }
+    if(t.dataset.q) S.qtds[t.dataset.q] = Number(t.value);
+    if(t.dataset.sel) S.escolhas[t.dataset.sel] = t.value;
+    if(t.dataset.sel2) S.escolhas2[t.dataset.sel2] = t.value;
+    if(t.dataset.opt){
+      S.opts[t.dataset.opt] = S.opts[t.dataset.opt] || {};
+      S.opts[t.dataset.opt][t.dataset.optid] = t.checked;
+    }
+    if(t.dataset.prol){
+      S.prolong[t.dataset.prol] = t.checked;
+      $("pm-" + t.dataset.prol).hidden = !t.checked;
+    }
+    if(t.dataset.pmin) S.prolongMin[t.dataset.pmin] = Number(t.value);
+    S.descTocada = false;
+    render();
+  });
+  host.addEventListener("click", function(ev){
+    var b = ev.target.closest(".cond");
+    if(!b) return;
+    var caixa = b.closest("[data-condset]");
+    if(!caixa) return;
+    var set = caixa.dataset.condset, arr = condsDe(set);
+    var i = arr.indexOf(b.dataset.cond);
+    if(i >= 0) arr.splice(i, 1);
+    else { if(arr.length >= maxConds(set)) return; arr.push(b.dataset.cond); }
+    S.descTocada = false;
+    render();
+  });
+  EFEITOS.forEach(function(e){ if(e.qtd) S.qtds[e.id] = e.qtd.val; });
+}
+
+/* ═════════ cálculo ═════════ */
+function calcular(){
+  var g = grauEfetivo(), aux = isAux();
+  var linhas = [], somaEfeitos = 0, somaReducoes = 0, alertas = [], resumoEfeitos = [];
+
+  var custoDano = temDano() ? S.dados : 0;
+  if(custoDano > 0) linhas.push({k:"Dano — " + S.dados + "d" + dadoDano(), v:"+" + custoDano + " PP"});
+  if(S.regraDano && temDano()){
+    var ct = (S.tipoDano === S.afinidade && S.tipoDano !== "Verdadeiro") ? 0 : custoTipoDano(S.tipoDano, g);
+    if(ct > 0){ custoDano += ct; linhas.push({k:"Tipo de dano — " + S.tipoDano, v:"+" + ct + " PP"}); }
+  }
+  somaEfeitos += custoDano;
+
+  EFEITOS.forEach(function(e){
+    if(!S.ativos[e.id]) return;
+    var q = S.qtds[e.id] != null ? S.qtds[e.id] : (e.qtd ? e.qtd.val : 0);
+    var v = Math.round(e.cost(g, q, aux, ctx));
+    var det = e.rotulo ? e.rotulo(q, ctx) : "";
+    var rotulo = e.nm + (det ? " — " + det : "");
+
+    if(v >= 0){ somaEfeitos += v; linhas.push({k:rotulo, v:"+" + v + " PP"}); }
+    else { somaReducoes += -v; linhas.push({k:rotulo, v:v + " PP", cut:true}); }
+
+    // duração prolongada deste efeito
+    if(e.prolongBase && S.prolong[e.id]){
+      var base = Math.round(e.prolongBase(g, ctx));
+      var min = Math.max(1, Math.min(e.prolongMax || 10, S.prolongMin[e.id] || 1));
+      var cp = custoProlongado(base, min);
+      var pc = $("pc-" + e.id);
+      if(pc) pc.textContent = cp ? "+" + cp + " PP" : "";
+      if(cp > 0){
+        somaEfeitos += cp;
+        linhas.push({k:"↳ Duração prolongada (" + e.nm + ", " + min + " min)", v:"+" + cp + " PP"});
+      }
+      det = det ? det + " · duração prolongada " + min + " min" : "duração prolongada " + min + " min";
+      rotulo = e.nm + " — " + det;
+    } else if(e.prolongBase){
+      var pc0 = $("pc-" + e.id);
+      if(pc0) pc0.textContent = "+" + Math.round(e.prolongBase(g, ctx)) + " PP";
+    }
+    if(e.cat !== "Redução") resumoEfeitos.push({nm:e.nm, det:det, pp:v});
+    else resumoEfeitos.push({nm:e.nm, det:det, pp:v, red:true});
+  });
+
+  var tetoRed = aux ? 6 : g;
+  var redAplicada = Math.min(somaReducoes, tetoRed);
+  if(somaReducoes > tetoRed){
+    linhas.push({k:"Teto de redução — " + (aux ? "Auxiliares: 6 PP" : g + "º grau: " + g + " PP"),
+                 v:"+" + (somaReducoes - tetoRed) + " PP", cap:true});
+    alertas.push({t:"warn", m:"Você escolheu " + somaReducoes + " PP de redução, mas o teto "
+      + (aux ? "de uma Técnica Auxiliar é 6 PP" : "de uma Técnica de " + g + "º grau é " + g + " PP")
+      + ". Só " + redAplicada + " PP entraram na conta."});
+  }
+
+  var bruto = somaEfeitos - redAplicada;
+
+  var extraForma = 0;
+  if(S.tipo === "combate" && S.forma !== "normal"){
+    if(S.origem === "estilo") extraForma = 0;
+    else if(S.forma === "aperfeicoada") extraForma = Math.floor(Math.min(S.grau + 2, 5) / 2);
+    else extraForma = Math.floor(S.grau / 2);
+    if(extraForma > 0){
+      linhas.push({k:"Forma " + (S.forma === "aperfeicoada" ? "Aperfeiçoada" : "Alternativa"), v:"+" + extraForma + " PP"});
+      bruto += extraForma;
+    }
+  }
+
+  var descEstilo = 0;
+  if(S.origem === "estilo" && !isMP()){
+    descEstilo = aux ? 1 : Math.max(1, Math.floor(g/2));
+    linhas.push({k:"Desconto de Estilo de Combate", v:"−" + descEstilo + " PP", cut:true});
+    bruto -= descEstilo;
+  }
+
+  var total = Math.max(1, bruto);
+  if(bruto < 1 && somaEfeitos > 0)
+    alertas.push({t:"warn", m:"O custo caiu abaixo de 1 PP e foi travado em 1 PP — nenhuma Técnica pode custar zero."});
+
+  var limite, rotuloLimite;
+  if(isMP()){
+    var modAtiv = {passiva:-3, inacao:-1, bonus:2, reacao:2, poderosa:3}[S.ativacao];
+    limite = Math.min(12, 6 + modAtiv + somaReducoes);
+    rotuloLimite = "de " + limite + " pontos virtuais";
+  } else {
+    limite = specs().pp;
+    rotuloLimite = "de " + limite + " PP";
+  }
+
+  /* ── validações ── */
+  if(!isMP() && !aux && S.dados > specs().dados)
+    alertas.push({t:"erro", m:"Máximo de " + specs().dados + " dados de dano numa Técnica de " + g + "º grau — você colocou " + S.dados + "."});
+  if(aux && temDano())
+    alertas.push({t:"erro", m:"Técnicas Auxiliares não podem causar dano diretamente. Use o efeito Dano Adicional para potencializar outras Técnicas."});
+  if(isMP() && temDano())
+    alertas.push({t:"erro", m:"Manifestações de Poder não podem causar dano diretamente nem aumentar o dano de jogadas de ataque."});
+  if(isMP() && S.ativos["aumentar-cr"] && S.ativacao !== "poderosa")
+    alertas.push({t:"erro", m:"Uma Manifestação só pode aumentar a CR de uma criatura se a ativação for Ação Poderosa."});
+  if(isMP() && (S.ativos["tecnica-rapida"] || S.ativos["tecnica-demorada"]))
+    alertas.push({t:"erro", m:"Os efeitos Técnica Rápida e Técnica Demorada não podem ser usados em Manifestações de Poder."});
+  if(total > limite)
+    alertas.push({t:"erro", m:"Estouro de " + (total - limite) + (isMP() ? " pontos virtuais" : " PP") + " acima do teto. Corte dados de dano, remova um efeito ou acrescente uma redução."});
+  if(S.alvo === "area-limitada"){
+    if(S.ativos["reduzir-area"])
+      alertas.push({t:"erro", m:"Reduzir Área não pode ser combinado com a área limitada intensificada (d8)."});
+    if(S.ativos["aumentar-area"] || S.ativos["aumentar-alcance"] || S.ativos["alargar-linha"])
+      alertas.push({t:"erro", m:"Uma Técnica de área limitada intensificada não pode ter o alcance aumentado de forma nenhuma."});
+  }
+  if(S.ativos["cura"] && S.tipo === "combate" && S.grau === 1)
+    alertas.push({t:"erro", m:"Adicionar Cura não pode ser usado em Técnicas de 1º grau."});
+
+  var exclusivas = [];
+  ["condicao","efeito-colateral"].forEach(function(setId){
+    if(!S.ativos[setId]) return;
+    condsDe(setId).forEach(function(n){
+      var c = CONDICOES.filter(function(x){ return x.n === n; })[0];
+      if(c && c.exclusiva && exclusivas.indexOf(n) < 0) exclusivas.push(n);
+    });
+  });
+  if(exclusivas.length)
+    alertas.push({t:"warn", m:(exclusivas.length > 1 ? "As condições " : "A condição ") + exclusivas.join(" e ")
+      + (exclusivas.length > 1 ? " são exclusivas" : " é exclusiva")
+      + ": só cabe em frutos cuja natureza justifique o efeito, e depende do aval do Narrador."});
+
+  // requisito × efeitos
+  if(S.tipo === "combate" && S.requisito !== "poderosa" && !S.ativos["tecnica-rapida"])
+    alertas.push({t:"erro", m:"Uma Técnica de Combate só executa com Ação Bônus ou Reação através do efeito Técnica Rápida (+" + g + " PP)."});
+  if(isAux() && S.requisito === "poderosa" && !S.ativos["tecnica-demorada"])
+    alertas.push({t:"erro", m:"Uma Técnica Auxiliar só exige Ação Poderosa através do efeito Técnica Demorada (−3 PP)."});
+
+  // duração
+  var temDuracaoPaga = EFEITOS.some(function(e){ return S.ativos[e.id] && ((e.prolongBase && S.prolong[e.id]) || e.duracaoInclusa); });
+  if(duracaoLonga() && temEfeitoNegativo() && !temDuracaoPaga){
+    alertas.push({t:"erro", m:"Esta Técnica dura além do instantâneo e causa dano ou efeito negativo, então a duração precisa ser paga: marque «Duração prolongada» em algum efeito, ou use um efeito que já inclua duração (Power Up, Dano Contínuo, Criar Lacaio, Criar Arma, Aumentar Dano)."});
+  }
+  if(duracaoLonga() && !temEfeitoNegativo() && !temDuracaoPaga && S.duracao.indexOf("Especial") < 0)
+    alertas.push({t:"warn", m:"Sem dano nem efeito negativo, essa duração se enquadra em Duração Especial (Cap. 6.5) e é gratuita — vale registrar isso na descrição."});
+  if(S.duracao.indexOf("Especial") >= 0 && temEfeitoNegativo())
+    alertas.push({t:"warn", m:"Duração Especial com efeitos negativos só vale se eles forem ativados por você ou por um gatilho descrito na Técnica, e o efeito em si respeitar os limites do grau."});
+
+  // exigências
+  EFEITOS.forEach(function(e){
+    if(!S.ativos[e.id] || !e.needs) return;
+    var ok = true, msg = "";
+    switch(e.needs){
+      case "area": ok = ehArea(); msg = "exige uma Técnica que afete uma área."; break;
+      case "linha": ok = S.alcance === "linha"; msg = "exige alcance em Linha."; break;
+      case "linha-ataque": ok = S.alcance === "linha" && ehAtaque(); msg = "exige alcance em Linha com jogada de ataque (Técnicas)."; break;
+      case "ataque": ok = ehAtaque(); msg = "exige uma jogada de ataque (Técnicas)."; break;
+      case "area-salv": ok = ehArea() && ehSalv(); msg = "exige área com Salvaguarda para metade ou todo o dano."; break;
+      case "salvaguarda": ok = ehSalv(); msg = "exige uma Salvaguarda para evitar dano ou condição."; break;
+      case "dano": ok = temDano(); msg = "exige que a Técnica cause dano."; break;
+      case "sem-dano": ok = !temDano(); msg = "exige que a Técnica não cause dano diretamente."; break;
+      case "sem-dano-bonus": ok = !temDano() && S.requisito === "bonus"; msg = "exige que a Técnica não cause dano direto e seja executada com Ação Bônus."; break;
+      case "reacao": ok = S.requisito === "reacao"; msg = "exige que a Técnica seja executada com Reação."; break;
+      case "bonus-turno": ok = S.requisito === "bonus" && S.duracao === "Até o final do seu turno"; msg = "exige Ação Bônus e duração até o final do seu turno."; break;
+      case "grau4": ok = S.tipo === "combate" && S.grau <= 4; msg = "só vale para Técnicas de Combate de 4º grau ou menor."; break;
+      case "auxiliar": ok = isAux(); msg = "só vale para Técnicas Auxiliares."; break;
+      case "duracao-longa": ok = S.duracao.indexOf("minuto") >= 0 || S.duracao.indexOf("hora") >= 0 || S.duracao.indexOf("indeterminado") >= 0; msg = "exige duração de 1 minuto ou mais."; break;
+      case "nao-1grau": ok = S.tipo !== "combate" || S.grau > 1; msg = "não pode ser usado em Técnicas de 1º grau."; break;
+    }
+    var w = $("w-" + e.id);
+    if(w){ w.hidden = ok; w.textContent = ok ? "" : e.nm + " " + msg; }
+  });
+
+  return {linhas:linhas, total:total, limite:limite, rotuloLimite:rotuloLimite,
+          alertas:alertas, resumo:resumoEfeitos};
+}
+
+/* ═════════ textos ═════════ */
+function listar(nomes){
+  var a = nomes.map(function(c){ return '"' + c + '"'; });
+  if(a.length <= 1) return a.join("");
+  return a.slice(0, -1).join(", ") + " e " + a[a.length - 1];
+}
+function gerarDescricao(){
+  var p = [], dado = dadoDano();
+  if(temDano()){
+    if(S.alvo === "ataque-cc") p.push("Você realiza uma jogada de ataque (Técnicas) corpo a corpo contra uma criatura.");
+    else if(S.alvo === "ataque-dist") p.push("Você realiza uma jogada de ataque (Técnicas) à distância contra uma criatura.");
+    else if(S.alvo === "salv-metade") p.push("O alvo desta Técnica deve fazer uma Salvaguarda de " + S.salvAtr + ". Sofrendo todo o dano se falhar ou metade desse dano se obtiver sucesso.");
+    else if(S.alvo === "salv-nenhum") p.push("O alvo desta Técnica deve fazer uma Salvaguarda de " + S.salvAtr + ". Sofrendo todo o dano se falhar ou nenhum dano se obtiver sucesso.");
+    else p.push("Toda a criatura dentro da área da Técnica deve fazer uma Salvaguarda de " + S.salvAtr
+      + ". Sofrendo todo o dano se falhar ou " + (S.ativos["tecnica-indomavel"] ? "nenhum dano" : "metade desse dano") + " se obtiver sucesso.");
+  }
+  if(S.ativos["acerto-automatico"]) p.push("Essa Técnica não tem chance de errar.");
+  if(S.ativos["aumentar-acerto"]) p.push("A Técnica recebe +" + (S.qtds["aumentar-acerto"] || 1) + " na jogada de ataque.");
+  if(S.ativos["critico"]) p.push("Esta Técnica tem margem de acerto crítico " + (ctx.escolha("critico") === "2" ? "18-20" : "19-20") + ".");
+  if(S.ativos["empurrao"]){
+    var m = S.qtds["empurrao"] || 6;
+    p.push("O impacto empurra a criatura Grande ou menor para um espaço desocupado a até " + m
+      + " metros de distância dela, caso ela não passe em uma Salvaguarda de Força. Durante o empurrão, se a criatura bater em um objeto ou estrutura com mais de 1,5 metro de raio, ela receberá "
+      + Math.min(3, Math.round(m/3)) + "d8 de dano extra.");
+  }
+  var cImpostas = condsDe("condicao");
+  if(S.ativos["condicao"] && cImpostas.length){
+    var pre = temDano() && (S.alvo === "area" || S.alvo === "area-limitada")
+      ? "A criatura que não passar na primeira Salvaguarda deve ser bem-sucedida em uma nova Salvaguarda de " + S.salvAtr
+      : "A criatura atingida deve ser bem-sucedida em uma Salvaguarda de " + S.salvAtr;
+    var dur = (S.prolong["condicao"] ? "por até 1 minuto, repetindo a Salvaguarda ao final de cada turno dela" : "até o final do próximo turno da criatura");
+    p.push(pre + " ou receberá " + (cImpostas.length > 1 ? "as condições " : "a condição ")
+      + listar(cImpostas) + ", " + dur + ".");
+  }
+  if(S.ativos["condicao-area"]) p.push("A condição afeta todas as criaturas dentro da área da Técnica.");
+  if(S.ativos["controle-cirurgico"]) p.push("Ao realizar esta Técnica você pode escolher um número de criaturas igual ao seu modificador de Destreza (mínimo de uma criatura) dentro da área da Técnica para não sofrer dano.");
+  if(S.ativos["dano-insistente"]) p.push("Caso a criatura passe na Salvaguarda e tenha qualquer característica para não sofrer nenhum dano, ela ainda assim receberá metade do dano.");
+  if(S.ativos["ataque-cerco"]) p.push("O dano desta Técnica é dobrado em objetos e estruturas.");
+  if(S.ativos["dano-continuo"]) p.push("A Técnica continua causando " + (S.qtds["dano-continuo"] || 1) + "d" + dado + " no início de cada turno de cada criatura afetada, enquanto durar.");
+  if(S.ativos["cura"]) p.push("A Técnica recupera " + (S.qtds["cura"] || 1) + "d" + (ehArea() ? 6 : 10) + " Pontos de Vida.");
+  if(S.ativos["pv-temp"]) p.push("A criatura afetada recebe " + (S.qtds["pv-temp"] || 1) + "d" + (ehArea() ? 4 : 10) + " Pontos de Vida temporários.");
+  if(S.ativos["aumentar-cr"]) p.push("A CR da criatura afetada aumenta em +" + (S.qtds["aumentar-cr"] || 1) + " enquanto a Técnica durar.");
+  if(S.ativos["aumentar-movimento"]) p.push("O deslocamento normal da criatura afetada aumenta em " + ctx.escolha("aumentar-movimento") + " metros.");
+  if(S.ativos["reducao-movimento"]) p.push("O deslocamento da criatura afetada é " + (ctx.escolha("reducao-movimento") === "2" ? "reduzido a 0" : "reduzido pela metade") + ".");
+  if(S.ativos["voo"]) p.push("A criatura afetada recebe " + (S.qtds["voo"] || 9) + " metros de deslocamento de voo.");
+  if(S.ativos["contencao-coletiva"]) p.push("A Técnica reduz " + (S.qtds["contencao-coletiva"] || 1) + "d8 do dano recebido por você e por toda criatura em um cone de 12 metros atrás de você.");
+  if(S.ativos["contencao-individual"]) p.push("A Técnica reduz " + ((S.qtds["contencao-individual"] || 1) * 2) + "d8 de um dano qualquer.");
+  if(S.ativos["vantagem"]) p.push(ctx.escolha("vantagem") === "vantagem"
+    ? "A criatura afetada recebe vantagem na sua próxima jogada de ataque (comum), Teste de Atributo ou Salvaguarda, até o final do próximo turno dela."
+    : "A criatura afetada recebe desvantagem na sua próxima jogada de ataque (comum), Teste de Atributo ou Salvaguarda, até o final do próximo turno dela.");
+  if(S.ativos["ataques-multiplos"]) p.push("Você realiza mais 2 jogadas de ataque (comum) até o final do seu turno.");
+  if(S.ativos["aumentar-dano"]) p.push("Enquanto esta Técnica estiver ativa, você recebe +3 de dano na primeira jogada de ataque (comum) de cada rodada.");
+  if(S.ativos["criar-arma"]) p.push("Enquanto a Técnica durar, suas jogadas de ataque (comum) com a arma criada causam "
+    + (Number(ctx.escolha("criar-arma")) + 1) + "d8 de dano. Você deve consumir 2 Pontos de Poder ao final de cada turno ou ela se desfaz.");
+  if(S.ativos["dano-adicional"]) p.push("Você adiciona " + (S.qtds["dano-adicional"] || 1) + " dados de dano extra às suas Técnicas de duração “Instantâneo”, limitado pelo mesmo valor do grau da Técnica. Cada dado não utilizado reduz o custo desta Técnica em −1 PP.");
+  if(S.ativos["criar-lacaio"]) p.push("Você cria um lacaio com CR 15, 50 Pontos de Vida e 9 metros de deslocamento, que age no seu turno e pode usar uma ação para Atacar (uma vez), Ajudar, Usar um Objeto ou Agarrão.");
+  if(S.ativos["power-up"]){
+    var po = S.opts["power-up"] || {}, lst = [];
+    if(po["pu-desv"]) lst.push("criaturas têm desvantagem em Salvaguardas contra Técnicas do seu fruto");
+    if(po["pu-tam"]) lst.push("sua categoria de tamanho aumenta em 1, até Enorme");
+    if(po["pu-dad"]) lst.push("Técnicas de Combate instantâneas recebem 5 dados de dano extra, limitado pelo grau da Técnica");
+    if(po["pu-esc"]) lst.push("seus Pontos de Vida só podem ser reduzidos depois que a forma sofrer 10 × seu nível de personagem em dano");
+    p.push("Enquanto a Técnica durar" + (lst.length ? ": " + lst.join("; ") + "." : ", você assume uma forma de combate.")
+      + " Ao final da Técnica, ela só poderá ser usada novamente ao término de um descanso curto ou longo.");
+  }
+  if(S.ativos["tecnica-dominada"]) p.push("Você pode gastar Pontos de Poder adicionais para aumentar o efeito desta Técnica a cada uso.");
+  if(S.ativos["requisito-limitador"]) p.push("Esta Técnica só pode ser executada sob o requisito adicional descrito acima.");
+  if(S.ativos["tecnica-dependente"]) p.push("Esta Técnica só pode ser usada enquanto a Técnica exigida estiver ativa.");
+  if(S.ativos["efeito-colateral"]){
+    var cProprias = condsDe("efeito-colateral");
+    if(cProprias.length) p.push("Ao executar esta Técnica, você também recebe "
+      + (cProprias.length > 1 ? "as condições " : "a condição ") + listar(cProprias)
+      + ", sem direito a Salvaguarda.");
+    if(Number(ctx.escolha("efeito-colateral","outro")) > 0)
+      p.push("Você também sofre por inteiro o efeito colateral descrito acima, sem direito a resistir.");
+    var dmg = Number(ctx.escolha2("efeito-colateral","dano")) * 5;
+    if(dmg > 0) p.push("Ao final da Técnica, você recebe " + dmg + " pontos de dano, que não podem ser reduzidos ou transferidos para Pontos de Vida temporários.");
+  }
+  if(S.ativos["tecnica-debilitante"]) p.push("Após a duração dessa Técnica, você fica " + (S.qtds["tecnica-debilitante"] || 1)
+    + " minuto(s) incapaz de gastar Pontos de Poder voluntariamente. Caso não possua PP suficientes para usar qualquer Técnica ou característica, você recebe 1 Nível de Exaustão.");
+  if(S.ativos["tecnica-devoradora"]) p.push("Ao encerrar esta Técnica, o usuário não poderá usar Haki de nenhum tipo durante 10 minutos.");
+  if(S.ativos["tecnica-exaustiva"]){
+    var ne = S.qtds["tecnica-exaustiva"] || 1;
+    p.push("Ao final da Técnica, você recebe " + ne + (ne === 1 ? " Nível" : " Níveis") + " de Exaustão.");
+  }
+  if(S.ativos["concentracao-crucial"]) p.push("A Técnica exige sua Concentração e termina prematuramente caso você a perca.");
+  return p.join("\n\n");
+}
+
+function ataqueCombinado(){
+  if(S.tipo !== "combate" || !temDano()) return false;
+  if(S.duracao !== "Instantâneo") return false;
+  if(S.requisito !== "poderosa") return false;
+  if(S.ativos["condicao"] && condsDe("condicao").length) return false;
+  if(S.ativos["condicao-area"]) return false;
+  if(S.alcance === "cilindro" || S.alcance === "esfera") return false;
+  return true;
+}
+function textoAlcance(){
+  var sp = specs();
+  var extraArea = S.ativos["aumentar-area"] ? (S.qtds["aumentar-area"] || 0) : 0;
+  var extraLinha = S.ativos["aumentar-alcance"] ? (S.qtds["aumentar-alcance"] || 0) : 0;
+  var menos = S.ativos["reduzir-area"] ? (S.qtds["reduzir-area"] || 0) : 0;
+  function somar(base, extra, cortePP, porPP){
+    var n = parseFloat(String(base).replace(",", ".")) + extra - (cortePP * porPP);
+    return String(Math.max(0, n)).replace(".", ",") + " m";
+  }
+  switch(S.alcance){
+    case "toque": return "Toque";
+    case "pessoal": return "Pessoal";
+    case "linha": return "Até " + somar(sp.linha, extraLinha + extraArea, 0, 0) + ", Linha"
+      + (S.ativos["alargar-linha"] ? " (largura " + String(1.5 + 1.5 * (S.qtds["alargar-linha"] || 1)).replace(".", ",") + " m)" : "");
+    case "cone": return "Até " + somar(sp.cone, extraArea, menos, 9) + ", Cone";
+    case "esfera": return "Até " + somar(sp.raio, extraArea, menos, 6) + " de raio, Esfera";
+    case "cilindro": return "Até " + somar(sp.raio, extraArea, menos, 6) + " de raio, Cilindro";
+    case "emanacao": return "Até " + somar(sp.raio, extraArea, menos, 6) + ", Emanação";
+  }
+  return "—";
+}
+var REQ_LABEL = {poderosa:"Ação Poderosa", bonus:"Ação Bônus", reacao:"Reação"};
+function textoRequisito(){
+  var parts = [];
+  if(S.fonte.trim()) parts.push(S.fonte.trim());
+  if(S.ativos["tecnica-dependente"]) parts.push("Técnica exigida ativa");
+  if(S.ativos["requisito-limitador"]) parts.push("requisito limitador");
+  if(isMP()){
+    parts.push({passiva:"Passiva", inacao:"Inação", bonus:"Ação Bônus", reacao:"Reação", poderosa:"Ação Poderosa"}[S.ativacao]);
+    return parts.join(", ");
+  }
+  if(S.tipo === "auxiliar-desperta") parts.push("Estágio Desperto");
+  if(S.tipo === "combate"){
+    if(S.grau >= 6) parts.push("Estágio Desperto");
+    else if(S.grau >= 4) parts.push("Usuário Avançado");
+  }
+  if(S.ativos["concentracao-crucial"]) parts.push("Concentração");
+  parts.push(REQ_LABEL[S.requisito] || "Ação Poderosa");
+  return parts.join(", ");
+}
+
+/* ═════════ render ═════════ */
+function opcoesRequisito(){
+  var sel = $("f-requisito"), opts;
+  if(isMP()) opts = [["poderosa","Definido pela ativação acima"]];
+  else if(isAux()) opts = [["bonus","Ação Bônus"],["reacao","Reação"],["poderosa","Ação Poderosa (exige Técnica Demorada)"]];
+  else opts = [["poderosa","Ação Poderosa"],["bonus","Ação Bônus (exige Técnica Rápida)"],["reacao","Reação (exige Técnica Rápida)"]];
+  sel.innerHTML = opts.map(function(o){ return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("");
+  if(!opts.some(function(o){ return o[0] === S.requisito; })) S.requisito = opts[0][0];
+  sel.value = S.requisito;
+  sel.disabled = isMP();
+}
+
+function render(){
+  $("wrap-grau").hidden = S.tipo !== "combate";
+  $("wrap-forma").hidden = S.tipo === "mp";
+  $("wrap-ativacao").hidden = !isMP();
+  $("panel-dano").style.opacity = (isAux() || isMP()) ? ".62" : "1";
+  $("afinidade-wrap").hidden = !S.regraDano;
+  opcoesRequisito();
+
+  var sp = specs(), g = grauEfetivo();
+  $("h-base").textContent = isMP() ? "Regras de 2º grau · 6 pontos virtuais base"
+    : (isAux() ? "Teto de " + sp.pp + " PP" : "Nível " + sp.nivel + " · teto de " + sp.pp + " PP");
+  $("h-dano").textContent = (isAux() || isMP()) ? "Não pode causar dano direto" : "Até " + sp.dados + " dados · 1 PP por dado";
+  $("h-alcance").textContent = "Linha " + sp.linha + " · Cone " + sp.cone + " · Raio " + sp.raio;
+
+  $("origem-nota").innerHTML = S.origem === "estilo"
+    ? "Técnica criada por um <strong>Estilo de Combate</strong>: ganha o desconto do Capítulo 3, as Formas não custam PP a mais e os requisitos inerentes da Akuma no Mi são ignorados."
+    : "Técnica criada por uma <strong>Akuma no Mi</strong>: precisa ser condizente com as propriedades do fruto e leva o fruto como requisito.";
+
+  var notas = {
+    "ataque-cc":"Corpo a corpo usa Força; o alcance é Toque, e aumentos de alcance de armas se aplicam.",
+    "ataque-dist":"À distância usa Destreza. Você tem desvantagem se houver criatura hostil a até 1,5 m que possa ver você.",
+    "salv-metade":"Alvo único sem jogada de ataque: o alcance vira o de uma Técnica com jogada de ataque, seja Toque ou à distância.",
+    "salv-nenhum":"Tudo ou nada: dado maior, mas um sucesso na Salvaguarda anula o dano inteiro.",
+    "area":"Padrão para áreas. Toda criatura na área faz a Salvaguarda para sofrer metade ou todo o dano.",
+    "area-limitada":"Só vale nas cinco situações do Capítulo 6.4. O alcance fica travado e Reduzir Área não pode ser usado.",
+    "sem-dano":"Obrigatório para Técnicas Auxiliares e Manifestações de Poder."
+  };
+  $("alvo-nota").textContent = notas[S.alvo] || "";
+  $("alcance-nota").innerHTML = "O ponto de origem pode ser colocado em qualquer ponto até o alcance da <strong>Linha</strong> do grau — " + sp.linha + " nesta Técnica.";
+  $("requisito-nota").innerHTML = isMP()
+    ? "Em Manifestações de Poder o requisito é a própria ativação, escolhida no painel 1."
+    : (S.tipo === "combate"
+      ? "Técnicas de Combate exigem <strong>Ação Poderosa</strong> por padrão. Ação Bônus ou Reação só através do efeito <strong>Técnica Rápida</strong>."
+      : "Técnicas Auxiliares usam <strong>Ação Bônus ou Reação</strong>. Ação Poderosa só através do efeito <strong>Técnica Demorada</strong>, que devolve 3 PP.");
+  $("duracao-nota").innerHTML = duracaoLonga()
+    ? "Duração além do instantâneo precisa ser paga: marque <strong>Duração prolongada</strong> dentro de um efeito, use um efeito que já inclua duração, ou enquadre a Técnica em <strong>Duração Especial</strong> (sem dano nem efeito negativo)."
+    : "Por padrão toda Técnica é instantânea e não paga nada por duração.";
+
+  var r = calcular();
+  var over = r.total > r.limite;
+  var gel = $("g-gasto");
+  gel.textContent = String(r.total);
+  gel.classList.toggle("over", over);
+  $("g-limite").textContent = r.rotuloLimite;
+  var bar = $("g-bar");
+  bar.style.width = Math.min(100, (r.total / Math.max(1, r.limite)) * 100) + "%";
+  bar.classList.toggle("over", over);
+  $("ledger-title").textContent = isMP() ? "Orçamento virtual" : "Orçamento de PP";
+
+  $("ledger-lines").innerHTML = r.linhas.map(function(l){
+    return '<div class="ln' + (l.cut ? " cut" : "") + (l.cap ? " cap" : "") + '"><span>' + l.k + '</span><span>' + l.v + '</span></div>';
+  }).join("") + '<div class="ln tot"><span>Custo final</span><span>' + r.total + (isMP() ? " pts" : " PP") + '</span></div>';
+
+  $("ledger-alerts").innerHTML = r.alertas.map(function(a){
+    return '<div class="alert ' + (a.t === "erro" ? "" : a.t) + '">' + a.m + '</div>';
+  }).join("") || '<div class="alert ok">Técnica dentro de todos os limites do livro.</div>';
+
+  if(!S.descTocada) $("f-desc").value = gerarDescricao();
+
+  $("sb-grade").textContent = isMP() ? "Manifestação de Poder"
+    : (S.tipo === "auxiliar" ? "Técnica Auxiliar"
+    : (S.tipo === "auxiliar-desperta" ? "Técnica Auxiliar Desperta"
+    : S.grau + "º Grau" + (S.forma === "aperfeicoada" ? " · Forma Aperfeiçoada" : (S.forma === "alternativa" ? " · Forma Alternativa" : ""))));
+  $("sb-name").textContent = S.nome || "Sem nome";
+  $("sb-desc").textContent = $("f-desc").value;
+
+  var rows = "";
+  function row(rot, val, acc){
+    rows += '<div class="sb-cell' + (acc ? " acc" : "") + '"><em>' + rot + '</em><b>' + val + '</b></div>';
+  }
+  row("Duração", S.duracao);
+  row("Alcance", textoAlcance());
+  row("Requisito", textoRequisito());
+  row(isMP() ? "Pontos Virtuais" : "Pontos de Poder", r.total, true);
+  if(temDano()) row("Dano", S.dados + "d" + dadoDano() + " de dano " + S.tipoDano);
+  if(S.ativos["cura"] && !temDano()) row("Cura", (S.qtds["cura"] || 1) + "d" + (ehArea() ? 6 : 10) + " de Cura");
+  if(r.resumo.length){
+    rows += '<div class="sb-cell stack"><em>Efeitos aplicados</em><ul class="sb-efx">'
+      + r.resumo.map(function(x){
+          return '<li>' + x.nm + (x.det ? ' <i>' + x.det + '</i>' : "")
+            + ' <i>' + (x.pp >= 0 ? "+" : "") + x.pp + ' PP</i></li>';
+        }).join("") + '</ul></div>';
+  }
+  if(S.tipo === "combate") row("Ataque Combinado", ataqueCombinado() ? "Possível" : "Impossível");
+  $("sb-rows").innerHTML = rows;
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-condset]"), function(caixa){
+    var set = caixa.dataset.condset, arr = condsDe(set), lim = maxConds(set);
+    Array.prototype.forEach.call(caixa.querySelectorAll(".cond"), function(b){
+      var on = arr.indexOf(b.dataset.cond) >= 0;
+      b.setAttribute("aria-pressed", String(on));
+      b.disabled = !on && arr.length >= lim;
+    });
+  });
+}
+
+/* ═════════ tabelas de referência ═════════ */
+$("tab-condicoes").innerHTML = '<table><thead><tr><th>Condição</th><th class="num">Custo</th><th>Efeito</th></tr></thead><tbody>'
+  + CONDICOES.map(function(c){
+      return '<tr><td><strong>' + c.n + '</strong>'
+        + (c.exclusiva ? '<br><span class="small" style="color:var(--gold)">Condição Exclusiva</span>' : "")
+        + '</td><td class="num">' + c.pp + ' PP</td><td>' + c.d + '</td></tr>';
+    }).join("")
+  + '<tr><td><strong>Enfraquecido</strong></td><td class="num">—</td><td>Água do mar e kairoseki. Incapacitado, sem nadar, sem usar nada da Akuma no Mi, falha automática em todas as Salvaguardas. <em>Não pode ser reproduzido por Técnicas.</em></td></tr>'
+  + '</tbody></table>';
+
+var EXIG = {
+  "area":"Técnica que afete uma área", "linha":"Alcance em Linha",
+  "linha-ataque":"Linha + jogada de ataque (Técnicas)", "ataque":"Jogada de ataque (Técnicas)",
+  "area-salv":"Área com Salvaguarda para metade ou todo o dano", "salvaguarda":"Salvaguarda para evitar dano ou condição",
+  "dano":"Técnica que cause dano", "sem-dano":"Não pode causar dano diretamente",
+  "sem-dano-bonus":"Sem dano direto, Concentração e Ação Bônus", "reacao":"Execução com Reação",
+  "bonus-turno":"Ação Bônus e duração até o final do seu turno", "grau4":"Técnica de Combate de 4º grau ou menor",
+  "auxiliar":"Técnicas Auxiliares", "duracao-longa":"Duração de 1 minuto ou mais", "nao-1grau":"Não ser de 1º grau"
+};
+$("tab-efeitos").innerHTML = '<thead><tr><th>Efeito</th><th>Categoria</th><th>Custo</th><th>Exigência</th><th>Duração prolongada</th></tr></thead><tbody>'
+  + EFEITOS.map(function(e){
+      var prol = e.prolongTxt || (e.duracaoInclusa ? "1 minuto já incluso" : "—");
+      return '<tr><td><strong>' + e.nm + '</strong><br><span class="small">' + e.ds + '</span></td><td>' + e.cat
+        + '</td><td class="num">' + e.custoTxt + '</td><td>' + (EXIG[e.needs] || "Nenhuma") + '</td><td>' + prol + '</td></tr>';
+    }).join("") + '</tbody>';
+
+/* ═════════ bindings ═════════ */
+function seg(id, key){
+  $(id).addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-v]"); if(!b) return;
+    S[key] = b.dataset.v;
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function(x){
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    if(key === "tipo"){
+      if(isAux() || isMP()){ S.alvo = "sem-dano"; S.dados = 0; $("f-alvo").value = "sem-dano"; $("f-dados").value = 0; }
+      else if(S.alvo === "sem-dano"){ S.alvo = "area-limitada"; S.dados = Math.min(4, specs().dados); $("f-alvo").value = "area-limitada"; $("f-dados").value = S.dados; }
+      S.requisito = isAux() ? "bonus" : "poderosa";
+    }
+    S.descTocada = false;
+    render();
+  });
+}
+seg("seg-tipo", "tipo");
+seg("seg-origem", "origem");
+
+for(var i = 1; i <= 7; i++){
+  var o = document.createElement("option");
+  o.value = String(i);
+  o.textContent = i + "º grau — nível " + GRAUS[i].nivel + " · " + GRAUS[i].pp + " PP · até " + GRAUS[i].dados + " dados";
+  if(i === 2) o.selected = true;
+  $("f-grau").appendChild(o);
+}
+TIPOS_DANO.forEach(function(t){
+  [$("f-tipodano"), $("f-afinidade")].forEach(function(sel){
+    var op = document.createElement("option"); op.value = t; op.textContent = t;
+    if(t === "Contundente") op.selected = true;
+    sel.appendChild(op);
+  });
+});
+
+function bind(id, key, num){
+  $(id).addEventListener("input", function(){
+    S[key] = num ? Number(this.value) : this.value;
+    if(key !== "nome" && key !== "fonte") S.descTocada = false;
+    render();
+  });
+}
+["f-grau|grau|1","f-forma|forma|","f-ativacao|ativacao|","f-nome|nome|","f-fonte|fonte|",
+ "f-alvo|alvo|","f-dados|dados|1","f-tipodano|tipoDano|","f-salvatr|salvAtr|","f-afinidade|afinidade|",
+ "f-requisito|requisito|","f-alcance|alcance|","f-duracao|duracao|"].forEach(function(spec){
+  var p = spec.split("|"); bind(p[0], p[1], !!p[2]);
+});
+$("f-regra-dano").addEventListener("change", function(){ S.regraDano = this.checked; S.descTocada = false; render(); });
+$("f-desc").addEventListener("input", function(){ S.descTocada = true; $("sb-desc").textContent = this.value; });
+
+/* copiar */
+function textoCompleto(){
+  var r = calcular(), out = [];
+  out.push($("sb-grade").textContent.toUpperCase());
+  out.push((S.nome || "Sem nome").toUpperCase());
+  out.push("");
+  if($("f-desc").value.trim()){ out.push($("f-desc").value); out.push(""); }
+  out.push("Duração: " + S.duracao);
+  out.push("Alcance: " + textoAlcance());
+  out.push("Requisito: " + textoRequisito());
+  out.push((isMP() ? "Pontos Virtuais: " : "Pontos de Poder: ") + r.total);
+  if(temDano()) out.push("Dano: " + S.dados + "d" + dadoDano() + " de dano " + S.tipoDano);
+  if(S.ativos["cura"] && !temDano()) out.push("Cura: " + (S.qtds["cura"] || 1) + "d" + (ehArea() ? 6 : 10));
+  if(r.resumo.length){
+    out.push("");
+    out.push("Efeitos aplicados:");
+    r.resumo.forEach(function(x){
+      out.push("  · " + x.nm + (x.det ? " (" + x.det + ")" : "") + " — " + (x.pp >= 0 ? "+" : "") + x.pp + " PP");
+    });
+  }
+  if(S.tipo === "combate") out.push("Ataque Combinado: " + (ataqueCombinado() ? "Possível" : "Impossível"));
+  return out.join("\n");
+}
+function toast(msg, cor){
+  var t = $("toast"); t.textContent = msg; t.style.color = cor || "var(--ok)";
+  setTimeout(function(){ if(t.textContent === msg) t.textContent = ""; }, 2600);
+}
+$("btn-copy").addEventListener("click", function(){
+  var txt = textoCompleto();
+  try{
+    navigator.clipboard.writeText(txt).then(
+      function(){ toast("Copiado!"); },
+      function(){ toast("Não consegui copiar — selecione o texto do bloco.", "var(--red)"); });
+  }catch(e){ toast("Não consegui copiar — selecione o texto do bloco.", "var(--red)"); }
+});
+
+/* limpar tudo */
+function aplicarEstado(x){
+  S = x;
+  $("f-grau").value = S.grau; $("f-forma").value = S.forma; $("f-ativacao").value = S.ativacao;
+  $("f-nome").value = S.nome; $("f-fonte").value = S.fonte; $("f-alvo").value = S.alvo;
+  $("f-dados").value = S.dados; $("f-tipodano").value = S.tipoDano; $("f-salvatr").value = S.salvAtr;
+  $("f-alcance").value = S.alcance; $("f-duracao").value = S.duracao;
+  $("f-regra-dano").checked = !!S.regraDano; $("f-afinidade").value = S.afinidade;
+  ["seg-tipo","seg-origem"].forEach(function(sid){
+    var key = sid === "seg-tipo" ? "tipo" : "origem";
+    Array.prototype.forEach.call($(sid).querySelectorAll("button"), function(b){
+      b.setAttribute("aria-pressed", String(b.dataset.v === S[key]));
+    });
+  });
+  EFEITOS.forEach(function(e){
+    var cb = document.querySelector('[data-ef="' + e.id + '"]');
+    var on = !!S.ativos[e.id];
+    if(cb){ cb.checked = on; $("efx-" + e.id).classList.toggle("on", on); }
+    if(e.qtd && $("q-" + e.id)) $("q-" + e.id).value = S.qtds[e.id] != null ? S.qtds[e.id] : e.qtd.val;
+    if(e.escolha && $("s-" + e.id)) $("s-" + e.id).value = S.escolhas[e.id] != null ? S.escolhas[e.id] : e.escolha.val;
+    if(e.escolha2 && $("s2-" + e.id)) $("s2-" + e.id).value = S.escolhas2[e.id] != null ? S.escolhas2[e.id] : e.escolha2.val;
+    if(e.opts) e.opts.forEach(function(op){
+      var el = document.querySelector('[data-opt="' + e.id + '"][data-optid="' + op.id + '"]');
+      if(el) el.checked = !!((S.opts[e.id] || {})[op.id]);
+    });
+    if(e.prolongBase){
+      var pb = document.querySelector('[data-prol="' + e.id + '"]');
+      if(pb) pb.checked = !!S.prolong[e.id];
+      if($("pm-" + e.id)) $("pm-" + e.id).hidden = !S.prolong[e.id];
+      if($("pmin-" + e.id)) $("pmin-" + e.id).value = S.prolongMin[e.id] || 1;
+    }
+  });
+  opcoesRequisito();
+}
+$("btn-clear").addEventListener("click", function(){
+  var novo = estadoInicial();
+  novo.nome = ""; novo.fonte = "";
+  novo.alvo = "sem-dano"; novo.dados = 0;
+  aplicarEstado(novo);
+  S.descTocada = true;
+  $("f-desc").value = "";
+  render();
+  toast("Forja limpa.");
+});
+
+/* ═════════ minhas técnicas: guardar, exportar, importar ═════════ */
+var KEY = "oprpg-forja-rascunhos";
+var LIMITE_DRAFTS = 60;
+var draftsMem = null;
+
+function lerDrafts(){
+  if(draftsMem) return draftsMem;
+  try{ draftsMem = JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ draftsMem = []; }
+  if(!Array.isArray(draftsMem)) draftsMem = [];
+  return draftsMem;
+}
+function salvarDrafts(d){
+  draftsMem = d;
+  try{ localStorage.setItem(KEY, JSON.stringify(d)); return true; }catch(e){ return false; }
+}
+function avisoDrafts(msg, tipo){
+  var el = $("aviso-drafts");
+  el.textContent = msg;
+  el.classList.toggle("bad", tipo === "bad");
+  el.classList.toggle("ok", tipo === "ok");
+}
+var AVISO_DRAFTS_PADRAO = "As técnicas ficam só neste navegador. Exporte o arquivo de vez em quando — é ele que sobrevive a trocar de computador ou limpar os dados do site.";
+
+function etiqueta(x){
+  if(x.tipo === "mp") return "MP";
+  if(x.tipo === "auxiliar") return "Aux";
+  if(x.tipo === "auxiliar-desperta") return "Aux✦";
+  return (x.grau || 1) + "º";
+}
+function novoId(){ return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); }
+
+function renderDrafts(){
+  var d = lerDrafts(), host = $("draftlist");
+  $("draft-count").textContent = d.length === 1 ? "1 salva" : d.length + " salvas";
+  if(!d.length){ host.innerHTML = '<span class="small">Nenhuma técnica salva ainda.</span>'; return; }
+  host.innerHTML = d.map(function(x, i){
+    return '<span class="draft"><i>' + etiqueta(x) + '</i><span data-load="' + i + '">'
+      + (x.nome || "Sem nome") + '</span>'
+      + '<button type="button" data-del="' + i + '" aria-label="Apagar técnica">×</button></span>';
+  }).join("");
+}
+$("btn-save").addEventListener("click", function(){
+  var d = lerDrafts(), snap = JSON.parse(JSON.stringify(S));
+  snap.desc = $("f-desc").value;
+  snap.id = novoId();
+  d.unshift(snap);
+  var ok = salvarDrafts(d.slice(0, LIMITE_DRAFTS));
+  renderDrafts();
+  toast(ok ? "Técnica salva." : "Salva só nesta visita.", ok ? "var(--ok)" : "var(--red)");
+  if(!ok) avisoDrafts("Este navegador não está guardando dados do site, então a lista some ao recarregar. Exporte o arquivo antes de sair.", "bad");
+});
+
+/* ── exportar ──
+   O código guarda só o que difere do padrão: campos simples preenchidos e,
+   dos mapas de efeito, apenas as entradas de efeitos realmente ligados.
+   Ao importar, estadoInicial() devolve todo o resto.                      */
+var CAMPOS_SIMPLES = ["tipo","origem","grau","forma","ativacao","nome","fonte","alvo","dados",
+  "tipoDano","salvAtr","regraDano","afinidade","requisito","alcance","duracao","desc","id"];
+
+function enxugar(t){
+  var out = {}, ativos = {};
+  Object.keys(t.ativos || {}).forEach(function(k){ if(t.ativos[k]) ativos[k] = true; });
+
+  CAMPOS_SIMPLES.forEach(function(k){
+    var v = t[k];
+    if(v === undefined || v === null || v === "" || v === false) return;
+    out[k] = v;
+  });
+  if(t.dados === 0) out.dados = 0;
+  if(Object.keys(ativos).length) out.ativos = ativos;
+
+  ["qtds","escolhas","escolhas2","prolongMin"].forEach(function(nome){
+    var m = t[nome] || {}, r = {};
+    Object.keys(m).forEach(function(k){ if(ativos[k]) r[k] = m[k]; });
+    if(Object.keys(r).length) out[nome] = r;
+  });
+
+  var pr = {};
+  Object.keys(t.prolong || {}).forEach(function(k){ if(ativos[k] && t.prolong[k]) pr[k] = true; });
+  if(Object.keys(pr).length) out.prolong = pr;
+
+  var op = {};
+  Object.keys(t.opts || {}).forEach(function(k){
+    if(!ativos[k]) return;
+    var sub = {};
+    Object.keys(t.opts[k] || {}).forEach(function(k2){ if(t.opts[k][k2]) sub[k2] = true; });
+    if(Object.keys(sub).length) op[k] = sub;
+  });
+  if(Object.keys(op).length) out.opts = op;
+
+  var cp = {};
+  Object.keys(t.condsPor || {}).forEach(function(k){
+    if(Array.isArray(t.condsPor[k]) && t.condsPor[k].length) cp[k] = t.condsPor[k];
+  });
+  if(Object.keys(cp).length) out.condsPor = cp;
+
+  return out;
+}
+function pacoteExport(){
+  return {
+    app: "op-rpg-forja",
+    versao: 1,
+    tecnicas: lerDrafts().map(enxugar)
+  };
+}
+function nomeArquivo(){
+  var d = new Date();
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  return "forja-tecnicas-" + d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()) + ".json";
+}
+function mostrarTextoExport(dados){
+  $("export-text").value = dados;
+  $("export-box").hidden = false;
+  $("export-text").focus();
+  $("export-text").select();
+}
+function comTempo(promessa, ms){
+  return Promise.race([promessa, new Promise(function(res){ setTimeout(function(){ res(null); }, ms); })]);
+}
+function temClaude(){
+  try{ return !!(window.claude && typeof window.claude.use === "function"); }catch(e){ return false; }
+}
+/* pedido de "permissions" disparado no carregamento: quando o usuário clicar já estará pronto */
+var promPerms = temClaude() ? window.claude.use("permissions") : null;
+
+/* Resolve o namespace de downloads, pedindo a permissão quando ela ainda
+   não foi concedida — use() devolve null enquanto o grant não existe.    */
+function pegarDownloads(){
+  if(!temClaude()) return Promise.resolve(null);
+  return comTempo(promPerms || window.claude.use("permissions"), 12000).then(function(perms){
+    if(!perms) return comTempo(window.claude.use("downloads"), 12000);
+    return perms.state("downloads").then(function(st){
+      if(st === "granted") return comTempo(window.claude.use("downloads"), 12000);
+      if(st === "prompt"){
+        avisoDrafts("Aguardando sua autorização para salvar o arquivo…");
+        return perms.request(["downloads"]).then(function(mapa){
+          var novo = mapa && mapa.downloads;
+          if(novo === "granted") return comTempo(window.claude.use("downloads"), 12000);
+          return {recusado: novo === "denied"};
+        });
+      }
+      return null;
+    });
+  }).catch(function(){ return null; });
+}
+/* O download só existe para quem a plataforma serve a capacidade; visitantes
+   de link público não recebem. Por isso o botão principal é copiar o código,
+   e o download vira uma opção extra que aparece só quando é possível.      */
+/* Fora do artefato (site hospedado ou arquivo local) o download do próprio
+   navegador funciona para qualquer visitante; dentro do artefato ele é inerte
+   e só a capacidade da plataforma serve — e não para visitantes de link.   */
+var podeBaixar = !temClaude();
+function ajustarBotoes(){
+  $("btn-baixar").hidden = !podeBaixar;
+}
+function baixarNativo(dados, nomeArq){
+  try{
+    var blob = new Blob([dados], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = nomeArq;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+    return true;
+  }catch(e){ return false; }
+}
+if(temClaude()){
+  comTempo(promPerms, 12000).then(function(perms){
+    if(!perms) return;
+    return perms.state("downloads").then(function(st){
+      podeBaixar = (st === "granted" || st === "prompt");
+      ajustarBotoes();
+    });
+  }).catch(function(){});
+}
+
+function baixarArquivo(dados, qtd){
+  var texto = qtd + (qtd === 1 ? " técnica." : " técnicas.");
+  if(!temClaude()){
+    if(baixarNativo(dados, nomeArquivo())) avisoDrafts("Arquivo baixado com " + texto, "ok");
+    else avisoDrafts("O navegador bloqueou o download. Copie o código acima.", "bad");
+    return Promise.resolve();
+  }
+  avisoDrafts("Preparando o arquivo…");
+  return pegarDownloads().then(function(dl){
+    if(dl && dl.recusado){ avisoDrafts("Você não autorizou o download. O código acima continua valendo."); return; }
+    if(!dl || typeof dl.save !== "function"){
+      podeBaixar = false; ajustarBotoes();
+      avisoDrafts("O download não está disponível neste acesso. Copie o código acima — ele guarda tudo igual.", "bad");
+      return;
+    }
+    return dl.save({filename: nomeArquivo(), data: dados}).then(function(){
+      avisoDrafts("Arquivo salvo com " + qtd + (qtd === 1 ? " técnica." : " técnicas."), "ok");
+    }, function(err){
+      var cod = err && err.code;
+      if(cod === "declined"){ avisoDrafts("Download cancelado. O código acima continua valendo."); return; }
+      if(cod === "rate_limited"){ avisoDrafts("Já há um pedido de download aberto. Tente de novo em instantes.", "bad"); return; }
+      avisoDrafts("Não consegui salvar o arquivo. Copie o código acima.", "bad");
+    });
+  }).catch(function(){
+    avisoDrafts("Não consegui salvar o arquivo. Copie o código acima.", "bad");
+  });
+}
+
+function tecnicaAberta(){
+  var snap = JSON.parse(JSON.stringify(S));
+  snap.desc = $("f-desc").value;
+  snap.id = novoId();
+  return {app:"op-rpg-forja", versao:1, tecnicas:[enxugar(snap)]};
+}
+function abrirExport(pacote, rotulo){
+  var dados = JSON.stringify(pacote);
+  $("import-box").hidden = true;
+  $("export-label").textContent = rotulo + " · " + dados.length + " caracteres"
+    + (dados.length > 1900 ? " (passa do limite de uma mensagem no Discord)" : "");
+  mostrarTextoExport(dados);
+  ajustarBotoes();
+  return dados;
+}
+function exportarTodas(copiar){
+  var d = lerDrafts();
+  if(!d.length){ avisoDrafts("Nenhuma técnica salva ainda — este é o código da técnica aberta na forja."); return false; }
+  abrirExport(pacoteExport(), "Código de " + d.length + (d.length === 1 ? " técnica" : " técnicas"));
+  if(copiar) copiarExport();
+  return true;
+}
+function exportarAberta(copiar){
+  abrirExport(tecnicaAberta(), "Código de «" + (S.nome || "sem nome") + "»");
+  if(copiar) copiarExport();
+}
+$("btn-exportar").addEventListener("click", function(){
+  if(!exportarTodas(true)) exportarAberta(true);
+});
+$("btn-todas").addEventListener("click", function(){
+  if(!exportarTodas(true)) exportarAberta(true);
+});
+$("btn-so-aberta").addEventListener("click", function(){ exportarAberta(true); });
+function copiarExport(){
+  var txt = $("export-text").value;
+  function manual(){
+    $("export-text").select();
+    avisoDrafts("Aperte Ctrl+C (ou Cmd+C) para copiar o texto selecionado.", "bad");
+  }
+  try{
+    navigator.clipboard.writeText(txt).then(function(){
+      avisoDrafts("Código copiado. Guarde num arquivo de texto ou mande no Discord — para trazer de volta, use «Colar código».", "ok");
+    }, manual);
+  }catch(e){ manual(); }
+}
+$("btn-copiar-export").addEventListener("click", function(){ copiarExport(); });
+$("btn-baixar").addEventListener("click", function(){
+  // baixa exatamente o que está na caixa, seja a coleção inteira ou uma técnica só
+  var bruto = $("export-text").value, pacote;
+  try{ pacote = JSON.parse(bruto); }catch(e){ avisoDrafts("Abra o código antes de baixar.", "bad"); return; }
+  var qtd = (pacote.tecnicas || []).length;
+  baixarArquivo(JSON.stringify(pacote, null, 2), qtd);
+});
+$("btn-fechar-export").addEventListener("click", function(){
+  $("export-box").hidden = true;
+  avisoDrafts(AVISO_DRAFTS_PADRAO);
+});
+
+/* ── importar: mesma rotina para arquivo e para texto colado ── */
+function importarTexto(texto, origem){
+  var pacote;
+  try{ pacote = JSON.parse(texto); }
+  catch(e){ avisoDrafts("Esse " + origem + " não é um código válido da Forja. Verifique se copiou tudo, do «{» ao «}».", "bad"); return false; }
+
+  var lista = pacote && Array.isArray(pacote.tecnicas) ? pacote.tecnicas
+            : (Array.isArray(pacote) ? pacote : (pacote && pacote.tipo ? [pacote] : null));
+  if(!lista){ avisoDrafts("Não encontrei técnicas nesse " + origem + ".", "bad"); return false; }
+  if(pacote && pacote.app && pacote.app !== "op-rpg-forja"){
+    avisoDrafts("Esse código é de outro programa.", "bad"); return false;
+  }
+
+  var atuais = lerDrafts(), chaves = {};
+  atuais.forEach(function(x){ chaves[x.id || JSON.stringify(x)] = true; });
+
+  var novas = 0, repetidas = 0, invalidas = 0;
+  lista.forEach(function(x){
+    if(!x || typeof x !== "object" || !x.tipo){ invalidas++; return; }
+    var chave = x.id || JSON.stringify(x);
+    if(chaves[chave]){ repetidas++; return; }
+    if(!x.id) x.id = novoId();
+    chaves[chave] = true;
+    atuais.push(x);
+    novas++;
+  });
+
+  var ok = salvarDrafts(atuais.slice(0, LIMITE_DRAFTS));
+  renderDrafts();
+
+  var partes = [];
+  if(novas) partes.push(novas + (novas === 1 ? " técnica importada" : " técnicas importadas"));
+  else partes.push("Nada de novo para importar");
+  if(repetidas) partes.push(repetidas + (repetidas === 1 ? " já estava na lista" : " já estavam na lista"));
+  if(invalidas) partes.push(invalidas + (invalidas === 1 ? " item ignorado por estar corrompido" : " itens ignorados por estarem corrompidos"));
+  if(atuais.length > LIMITE_DRAFTS) partes.push("a lista foi cortada no limite de " + LIMITE_DRAFTS);
+  if(novas && !ok) partes.push("mas este navegador não está guardando nada, então valem só nesta visita");
+  avisoDrafts(partes.join(" · ") + ".", novas ? (ok ? "ok" : "bad") : (invalidas ? "bad" : ""));
+  return novas > 0;
+}
+$("btn-colar").addEventListener("click", function(){
+  $("export-box").hidden = true;
+  $("import-box").hidden = false;
+  $("import-text").value = "";
+  $("import-text").focus();
+  avisoDrafts("Cole o código que você copiou ou recebeu e clique em Importar.");
+});
+$("btn-import-ok").addEventListener("click", function(){
+  var txt = $("import-text").value.trim();
+  if(!txt){ avisoDrafts("Cole o código na caixa antes de importar.", "bad"); return; }
+  if(importarTexto(txt, "código")){ $("import-box").hidden = true; $("import-text").value = ""; }
+});
+$("btn-import-cancel").addEventListener("click", function(){
+  $("import-box").hidden = true;
+  avisoDrafts(AVISO_DRAFTS_PADRAO);
+});
+$("btn-importar").addEventListener("click", function(){ $("file-tecnicas").click(); });
+$("file-tecnicas").addEventListener("change", function(){
+  var file = this.files && this.files[0];
+  this.value = "";
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onerror = function(){ avisoDrafts("Não consegui ler esse arquivo.", "bad"); };
+  reader.onload = function(){ importarTexto(reader.result, "arquivo"); };
+  reader.readAsText(file);
+});
+$("draftlist").addEventListener("click", function(ev){
+  var del = ev.target.closest("[data-del]"), load = ev.target.closest("[data-load]"), d = lerDrafts();
+  if(del){ d.splice(Number(del.dataset.del), 1); salvarDrafts(d); renderDrafts(); return; }
+  if(load){
+    var guardado = d[Number(load.dataset.load)]; if(!guardado) return;
+    // trabalha sempre numa cópia: mexer no objeto guardado apagaria a técnica da lista
+    var x = JSON.parse(JSON.stringify(guardado));
+    var desc = x.desc || "";
+    delete x.desc; delete x.id;
+    if(x.conds && !x.condsPor){ x.condsPor = {"condicao":x.conds, "efeito-colateral":[]}; }
+    delete x.conds;
+    var base = estadoInicial();
+    Object.keys(x).forEach(function(k){ base[k] = x[k]; });
+    aplicarEstado(base);
+    S.descTocada = true;
+    $("f-desc").value = desc;
+    render();
+    toast("Rascunho carregado.");
+  }
+});
+
+/* boot */
+montarCatalogo();
+renderDrafts();
+ajustarBotoes();
+render();
+})();
+</script>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OP RPG — Ferramentas</title>
+<meta name="description" content="Guia de criação de personagem e forja de Técnicas para o OP RPG — Livro do Jogador 2.0.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏴‍☠️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ink:#101E29; --ink2:#41535F; --ink3:#71838F;
+  --paper:#E9EDEF; --surf:#FFFFFF; --surf2:#F3F6F7;
+  --line:#CBD5DB; --line2:#A6B6C0;
+  --red:#B8372C; --gold:#96660C; --sea:#1C6478;
+  --redsoft:color-mix(in srgb, var(--red) 11%, transparent);
+  --goldsoft:color-mix(in srgb, var(--gold) 13%, transparent);
+  --seasoft:color-mix(in srgb, var(--sea) 11%, transparent);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+    --paper:#0A131A; --surf:#111E28; --surf2:#162733;
+    --line:#263B4C; --line2:#3A5468;
+    --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+  --paper:#0A131A; --surf:#111E28; --surf2:#162733;
+  --line:#263B4C; --line2:#3A5468;
+  --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Spectral",Georgia,serif; font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3{font-family:"Oswald","Arial Narrow",Arial,sans-serif; font-weight:600; margin:0; text-wrap:balance; line-height:1.1}
+img{max-width:100%}
+a{color:var(--sea)}
+:focus-visible{outline:2px solid var(--red); outline-offset:3px; border-radius:3px}
+.wrap{max-width:940px; margin:0 auto; padding-inline:16px}
+
+header{padding-block:clamp(44px,9vw,88px) clamp(28px,5vw,44px);
+  background:radial-gradient(900px 340px at 8% -20%, var(--goldsoft), transparent 66%),
+             radial-gradient(760px 320px at 94% 2%, var(--redsoft), transparent 64%)}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--red); margin:0 0 14px}
+h1{font-size:clamp(42px,9.5vw,86px); font-weight:700; text-transform:uppercase; letter-spacing:-.01em}
+h1 em{font-style:normal; color:var(--red); display:block}
+.sub{font-size:clamp(17px,2.4vw,21px); color:var(--ink2); max-width:54ch; margin:20px 0 0}
+
+main{padding-block:clamp(26px,5vw,44px) 60px}
+.cards{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(288px,1fr))}
+.card{display:flex; flex-direction:column; background:var(--surf); border:1px solid var(--line);
+  border-top:4px solid var(--red); text-decoration:none; color:inherit}
+.card:hover{border-color:var(--line2); border-top-color:var(--red)}
+.card:hover h2{color:var(--red)}
+.card .bd{padding:20px 22px 22px; flex:1; display:flex; flex-direction:column}
+.card .tag{font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); margin-bottom:9px}
+.card h2{font-size:29px; text-transform:uppercase; letter-spacing:.01em}
+.card p{color:var(--ink2); font-size:15.5px; margin:11px 0 0; flex:1}
+.card .go{font-family:"Oswald",sans-serif; font-weight:500; font-size:14px; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--red); margin-top:18px}
+.card .go::after{content:" →"}
+
+.sobre{margin-top:36px; border-top:1px solid var(--line); padding-top:26px;
+  display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.sobre h3{font-size:16px; text-transform:uppercase; letter-spacing:.09em; margin-bottom:8px}
+.sobre p{color:var(--ink2); font-size:15px; margin:0}
+.sobre code{font-family:"IBM Plex Mono",monospace; font-size:13.5px; background:var(--surf2);
+  border:1px solid var(--line); padding:1px 5px; border-radius:2px}
+
+footer{border-top:1px solid var(--line); padding-block:24px 44px; color:var(--ink3); font-size:14px}
+footer p{margin:0 0 6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Livro do Jogador 2.0 · Ferramentas não oficiais</p>
+    <h1>OP RPG<em>Ferramentas</em></h1>
+    <p class="sub">Duas ferramentas para a mesa: um guia que leva a ficha em branco até o 3º nível, e uma forja que monta Técnicas dentro do orçamento de Pontos de Poder do grau.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="cards">
+      <a class="card" href="guia.html">
+        <div class="bd">
+          <div class="tag">Capítulos 1 a 5 e 9</div>
+          <h2>Rota do Novato</h2>
+          <p>Como o jogo funciona, os seis atributos, os sete passos da ficha, as nove espécies, os doze Estilos de Combate e o que se ganha em cada um dos três primeiros níveis. Traz um montador de ficha que calcula PV, CR, PP e salvaguardas ao vivo.</p>
+          <div class="go">Abrir o guia</div>
+        </div>
+      </a>
+      <a class="card" href="forja.html">
+        <div class="bd">
+          <div class="tag">Capítulos 3, 6 e 10</div>
+          <h2>Forja de Técnicas</h2>
+          <p>Monte Técnicas de Combate, Técnicas Auxiliares e Manifestações de Poder. A forja aplica os limites de cada grau, soma os quarenta efeitos do livro, cobra a duração e escreve o bloco pronto para a ficha.</p>
+          <div class="go">Abrir a forja</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="sobre">
+      <div>
+        <h3>Suas técnicas são suas</h3>
+        <p>Nada é enviado para servidor nenhum. As técnicas ficam no seu navegador, e você guarda cópias com <code>Copiar código</code> ou baixando o arquivo.</p>
+      </div>
+      <div>
+        <h3>Funciona no celular</h3>
+        <p>As duas páginas se adaptam a telas estreitas. Dá para montar uma Técnica na mesa pelo telefone.</p>
+      </div>
+      <div>
+        <h3>Do jeito que você gosta</h3>
+        <p>A forja tem um painel de aparência com tema, paletas, cores livres por hex, fontes, tamanhos e imagem de fundo.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>OP RPG — Livro do Jogador 2.0</strong>, criação e desenvolvimento de Brendo Neves. Estas ferramentas são de apoio e não substituem o livro; toda criação precisa da aprovação do Narrador.</p>
+    <p>Conteúdo sob Open Game License 1.0a. One Piece é obra de Eiichiro Oda.</p>
+  </div>
+</footer>
+
+</body>
+</html>

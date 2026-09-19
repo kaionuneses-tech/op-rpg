@@ -1,0 +1,1261 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Rota do Novato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ink:#101E29; --ink2:#41535F; --ink3:#71838F;
+  --paper:#E9EDEF; --surf:#FFFFFF; --surf2:#F3F6F7; --surf3:#E2E8EB;
+  --line:#CBD5DB; --line2:#A6B6C0;
+  --red:#B8372C; --gold:#A87413; --sea:#1C6478; --ok:#25705A;
+  --redsoft:rgba(184,55,44,.10); --goldsoft:rgba(168,116,19,.12); --seasoft:rgba(28,100,120,.10);
+  --shadow:0 1px 2px rgba(16,30,41,.06), 0 8px 24px -16px rgba(16,30,41,.35);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+    --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+    --line:#263B4C; --line2:#3A5468;
+    --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+    --redsoft:rgba(234,110,99,.13); --goldsoft:rgba(223,168,69,.14); --seasoft:rgba(84,174,195,.13);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+  --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+  --line:#263B4C; --line2:#3A5468;
+  --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+  --redsoft:rgba(234,110,99,.13); --goldsoft:rgba(223,168,69,.14); --seasoft:rgba(84,174,195,.13);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Spectral",Georgia,"Times New Roman",serif;
+  font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Oswald","Arial Narrow",Arial,sans-serif; font-weight:600; margin:0; text-wrap:balance; letter-spacing:.005em; line-height:1.14}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace; font-variant-numeric:tabular-nums}
+a{color:var(--sea)}
+:focus-visible{outline:2px solid var(--red); outline-offset:2px; border-radius:2px}
+
+/* ---------- nav ---------- */
+.topbar{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:50;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:1180px; margin:0 auto; padding:0 16px; display:flex; align-items:center; gap:14px; min-height:52px}
+.brand{font-family:"Oswald",sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--red); white-space:nowrap; text-decoration:none}
+.navscroll{flex:1; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none}
+.navscroll::-webkit-scrollbar{display:none}
+.navlist{display:flex; gap:2px; list-style:none; margin:0; padding:0}
+.navlist a{
+  display:block; padding:7px 10px; font-family:"Oswald",sans-serif; font-weight:500;
+  font-size:12.5px; letter-spacing:.09em; text-transform:uppercase; white-space:nowrap;
+  color:var(--ink2); text-decoration:none; border-radius:3px;
+}
+.navlist a:hover{color:var(--ink); background:var(--surf3)}
+.themebtn{
+  flex:none; border:1px solid var(--line); background:var(--surf); color:var(--ink2);
+  border-radius:3px; padding:5px 9px; cursor:pointer; font-size:14px; line-height:1;
+}
+.themebtn:hover{border-color:var(--line2); color:var(--ink)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1180px; margin:0 auto; padding-inline:16px}
+.prose{max-width:66ch}
+section{padding-block:56px; border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--red); margin:0 0 10px;
+}
+h2.sec{font-size:clamp(28px,4.6vw,40px); margin-bottom:8px}
+.lede{color:var(--ink2); font-size:17.5px; margin:10px 0 0; max-width:62ch}
+p{margin:0 0 15px}
+.small{font-size:14.5px; color:var(--ink2)}
+
+/* ---------- hero ---------- */
+.hero{
+  border-top:0; padding-block:clamp(40px,7vw,80px) 48px;
+  background:
+    radial-gradient(1100px 380px at 12% -10%, var(--seasoft), transparent 65%),
+    radial-gradient(760px 320px at 92% 8%, var(--redsoft), transparent 62%);
+}
+.hero h1{
+  font-size:clamp(40px,9vw,80px); font-weight:700; line-height:.98;
+  letter-spacing:-.005em; text-transform:uppercase;
+}
+.hero h1 em{font-style:normal; color:var(--red); display:block}
+.hero-sub{font-size:clamp(17px,2.3vw,20px); color:var(--ink2); max-width:56ch; margin-top:18px}
+.rule{height:3px; background:var(--ink); width:72px; margin:22px 0 0}
+.facts{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(128px,1fr)); gap:1px;
+  margin-top:34px; background:var(--line); border:1px solid var(--line);
+}
+.fact{background:var(--surf); padding:13px 14px}
+.fact b{display:block; font-family:"Oswald",sans-serif; font-size:26px; font-weight:600; line-height:1}
+.fact span{display:block; margin-top:5px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3)}
+
+/* ---------- generic blocks ---------- */
+.grid{display:grid; gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surf); border:1px solid var(--line); padding:16px 17px}
+.card h3{font-size:19px; margin-bottom:6px}
+.card h4{font-size:12px; font-family:"IBM Plex Mono",monospace; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); margin:14px 0 5px}
+.card p:last-child{margin-bottom:0}
+
+.note{
+  border-left:3px solid var(--gold); background:var(--goldsoft);
+  padding:13px 16px; margin:20px 0; font-size:15.5px;
+}
+.note b{font-family:"Oswald",sans-serif; letter-spacing:.03em}
+.note p:last-child{margin-bottom:0}
+
+.tag{
+  display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; padding:2px 7px; border:1px solid var(--line2);
+  color:var(--ink2); border-radius:2px; white-space:nowrap;
+}
+.tag.r{color:var(--red); border-color:var(--red); background:var(--redsoft)}
+.tag.s{color:var(--sea); border-color:var(--sea); background:var(--seasoft)}
+.tag.g{color:var(--gold); border-color:var(--gold); background:var(--goldsoft)}
+
+/* ---------- tables ---------- */
+.tablebox{overflow-x:auto; border:1px solid var(--line); background:var(--surf); margin:18px 0}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:14.5px}
+th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink3); background:var(--surf2); white-space:nowrap;
+  border-bottom:1px solid var(--line2);
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surf2)}
+td.num,th.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+td strong{font-family:"Oswald",sans-serif; font-weight:500; font-size:15.5px}
+
+/* ---------- steps ---------- */
+.steps{counter-reset:step; display:grid; gap:0; margin-top:26px; border-top:1px solid var(--line)}
+.step{
+  display:grid; grid-template-columns:62px 1fr; gap:0 20px;
+  padding:26px 0; border-bottom:1px solid var(--line);
+}
+.step-n{
+  counter-increment:step; font-family:"Oswald",sans-serif; font-weight:700; font-size:15px;
+  letter-spacing:.1em; color:var(--red); padding-top:4px;
+}
+.step-n::before{content:"PASSO " counter(step,upper-roman)}
+.step h3{font-size:23px; margin-bottom:8px}
+.step-body{max-width:64ch}
+.step ul{margin:10px 0 0; padding-left:20px}
+.step li{margin-bottom:6px}
+.formula{
+  font-family:"IBM Plex Mono",monospace; font-size:14px; background:var(--surf2);
+  border:1px solid var(--line); border-left:3px solid var(--sea);
+  padding:11px 14px; margin:14px 0; overflow-x:auto; white-space:nowrap;
+}
+
+/* ---------- style cards ---------- */
+.stylecard{background:var(--surf); border:1px solid var(--line); display:flex; flex-direction:column}
+.stylecard header{padding:14px 16px 12px; border-bottom:1px solid var(--line); background:var(--surf2)}
+.stylecard header h3{font-size:21px; text-transform:uppercase; letter-spacing:.02em}
+.statline{display:flex; flex-wrap:wrap; gap:6px; margin-top:9px}
+.stylecard .body{padding:14px 16px; flex:1}
+.lvl{display:grid; grid-template-columns:34px 1fr; gap:0 10px; padding:9px 0; border-top:1px dashed var(--line)}
+.lvl:first-child{border-top:0; padding-top:0}
+.lvl .n{font-family:"Oswald",sans-serif; font-weight:700; font-size:14px; color:var(--red); padding-top:2px}
+.lvl b{font-family:"Oswald",sans-serif; font-weight:500; font-size:16px; display:block}
+.lvl span{font-size:14.5px; color:var(--ink2); display:block; margin-top:2px}
+.meta{font-size:13.5px; color:var(--ink2); margin-top:12px; padding-top:11px; border-top:1px solid var(--line)}
+.meta div{margin-bottom:3px}
+.meta em{font-style:normal; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-right:6px}
+
+/* ---------- builder ---------- */
+.builder{display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:18px; align-items:start; margin-top:26px}
+.panel{background:var(--surf); border:1px solid var(--line); padding:17px 18px}
+.panel > h3{font-size:18px; margin-bottom:14px; padding-bottom:9px; border-bottom:1px solid var(--line)}
+.field{margin-bottom:14px}
+.field label{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px}
+select,input[type=number]{
+  width:100%; font-family:"Spectral",serif; font-size:15px; color:var(--ink);
+  background:var(--surf2); border:1px solid var(--line); border-radius:3px; padding:8px 10px;
+}
+input[type=number]{font-family:"IBM Plex Mono",monospace; text-align:center}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.attrgrid{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+.attrhead,.attrrow{display:grid; grid-template-columns:1.25fr 68px 58px 58px 52px 46px; gap:1px; background:var(--line)}
+.attrhead > div,.attrrow > div{background:var(--surf); padding:6px 7px; display:flex; align-items:center}
+.attrhead > div{
+  background:var(--surf2); font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--ink3); justify-content:center; text-align:center;
+}
+.attrhead > div:first-child,.attrrow > div:first-child{justify-content:flex-start}
+.attrrow > div{justify-content:center}
+.attrname{font-family:"Oswald",sans-serif; font-weight:500; font-size:14.5px; text-transform:uppercase; letter-spacing:.04em}
+.attrrow select,.attrrow input{padding:4px 2px; font-size:13.5px; border-radius:2px}
+.attrtot{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:15px}
+.attrmod{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:15px; color:var(--sea)}
+.budget{font-size:13px; color:var(--ink2); margin-top:9px; display:flex; flex-wrap:wrap; gap:6px 14px}
+.budget b{font-family:"IBM Plex Mono",monospace}
+.budget .bad{color:var(--red); font-weight:600}
+.budget .good{color:var(--ok); font-weight:600}
+
+.sheet{position:sticky; top:calc(env(safe-area-inset-top,0px) + 64px)}
+.sheet-head{background:var(--ink); color:var(--paper); padding:12px 16px}
+:root[data-theme="dark"] .sheet-head,
+:root:not([data-theme="light"]) .sheet-head{background:var(--surf3); color:var(--ink)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .sheet-head{background:var(--ink); color:#E9EDEF}}
+.sheet-head .t{font-family:"Oswald",sans-serif; font-weight:600; font-size:17px; text-transform:uppercase; letter-spacing:.06em}
+.sheet-head .s{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.06em; opacity:.8; margin-top:3px}
+.bigstats{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line)}
+.bigstat{background:var(--surf); padding:11px 8px; text-align:center}
+.bigstat b{display:block; font-family:"Oswald",sans-serif; font-size:28px; font-weight:600; line-height:1; color:var(--red)}
+.bigstat span{display:block; font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-top:5px}
+.kv{display:flex; justify-content:space-between; gap:10px; padding:7px 16px; border-bottom:1px solid var(--line); font-size:14.5px}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:var(--ink2)}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace; font-weight:500; text-align:right}
+.sheet-sub{
+  padding:9px 16px 6px; font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); background:var(--surf2);
+  border-bottom:1px solid var(--line); border-top:1px solid var(--line);
+}
+.todo{list-style:none; margin:0; padding:10px 16px 14px; font-size:14px}
+.todo li{padding-left:20px; position:relative; margin-bottom:6px; color:var(--ink2)}
+.todo li::before{content:"○"; position:absolute; left:0; color:var(--red); font-size:13px}
+
+/* ---------- track ---------- */
+.track{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); margin-top:24px}
+.lvlcard{background:var(--surf); border:1px solid var(--line); border-top:4px solid var(--red)}
+.lvlcard .hd{padding:14px 16px 12px; border-bottom:1px solid var(--line)}
+.lvlcard .hd h3{font-size:30px; line-height:1}
+.lvlcard .hd .xp{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em; color:var(--ink3); margin-top:6px}
+.lvlcard ul{margin:0; padding:13px 16px 16px 33px; font-size:15px}
+.lvlcard li{margin-bottom:9px}
+.lvlcard li:last-child{margin-bottom:0}
+.lvlcard li b{font-family:"Oswald",sans-serif; font-weight:500}
+
+/* ---------- example ---------- */
+.example{background:var(--surf); border:1px solid var(--line); padding:0; overflow:hidden}
+.example .hd{padding:15px 18px; background:var(--surf2); border-bottom:1px solid var(--line)}
+.example .hd h3{font-size:22px}
+.example .bd{padding:16px 18px}
+.example ol{margin:0; padding-left:20px}
+.example li{margin-bottom:9px}
+
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 0}
+footer{border-top:1px solid var(--line); padding-block:30px 44px; color:var(--ink3); font-size:13.5px}
+footer p{margin:0 0 6px}
+
+@media (max-width:860px){
+  .builder{grid-template-columns:1fr}
+  .sheet{position:static}
+  .attrhead,.attrrow{grid-template-columns:1fr 62px 50px 50px 46px 42px}
+}
+@media (max-width:520px){
+  .step{grid-template-columns:1fr; gap:6px}
+  .step-n{padding-top:0}
+  body{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<nav class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#inicio">OP&nbsp;RPG 2.0</a>
+    <div class="navscroll">
+      <ul class="navlist">
+        <li><a href="#basico">Básico</a></li>
+        <li><a href="#atributos">Atributos</a></li>
+        <li><a href="#ficha">Ficha</a></li>
+        <li><a href="#especies">Espécies</a></li>
+        <li><a href="#estilos">Estilos</a></li>
+        <li><a href="#profissoes">Profissões</a></li>
+        <li><a href="#hb">Hab. Básicas</a></li>
+        <li><a href="#progressao">Nível 1→3</a></li>
+        <li><a href="#montador">Montador</a></li>
+      </ul>
+    </div>
+    <button class="themebtn" id="themebtn" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <p class="eyebrow">Livro do Jogador 2.0 · Guia do novato</p>
+    <h1>Da ficha em branco<em>ao 3º nível</em></h1>
+    <p class="hero-sub">Tudo o que você precisa para criar um pirata no <strong>OP RPG</strong> e conduzi-lo pelos três primeiros níveis — sem abrir as 328 páginas do livro no meio da mesa.</p>
+    <div class="rule"></div>
+    <div class="facts">
+      <div class="fact"><b>d20</b><span>Dado principal</span></div>
+      <div class="fact"><b>6</b><span>Atributos</span></div>
+      <div class="fact"><b>9</b><span>Espécies</span></div>
+      <div class="fact"><b>12</b><span>Estilos de combate</span></div>
+      <div class="fact"><b>20</b><span>Profissões</span></div>
+      <div class="fact"><b>900</b><span>PE até o nível 3</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ BÁSICO ══════════ -->
+<section id="basico">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 1 · Regras gerais</p>
+    <h2 class="sec">Como o jogo funciona</h2>
+    <p class="lede">O jogo é um ciclo de três tempos que se repete a noite inteira, seja atravessando o Grand Line ou negociando com um marinheiro corrupto.</p>
+
+    <div class="grid g3" style="margin-top:26px">
+      <div class="card"><h3>1. O Narrador descreve</h3><p class="small">Ele apresenta o cenário: onde vocês estão, quantas portas saem da sala, o que há sobre a mesa.</p></div>
+      <div class="card"><h3>2. Os jogadores agem</h3><p class="small">Cada um diz o que o seu personagem faz. Não há turnos fora de combate — o Narrador ouve todos e decide como resolver.</p></div>
+      <div class="card"><h3>3. O Narrador narra o resultado</h3><p class="small">Ele descreve o que aconteceu, o que leva a um novo ponto de decisão. Volta ao passo 1.</p></div>
+    </div>
+
+    <h3 style="font-size:24px; margin-top:42px">A jogada de d20</h3>
+    <div class="prose">
+      <p>Ações simples não pedem dados. Quando há chance real de falhar, você rola um <span class="mono">d20</span>, soma o modificador do atributo envolvido e, se tiver proficiência, o Bônus de Proficiência. Compare com o número-alvo:</p>
+    </div>
+
+    <div class="grid g2" style="margin-top:6px">
+      <div class="card">
+        <h3>CD — Classe de Dificuldade</h3>
+        <p class="small">Alvo dos <strong>Testes de Atributo</strong> e <strong>Salvaguardas</strong>. Definida pelo Narrador.</p>
+        <div class="tablebox" style="margin:12px 0 0">
+          <table style="min-width:0">
+            <tbody>
+              <tr><td>Muito fácil</td><td class="num">5</td><td>Difícil</td><td class="num">20</td></tr>
+              <tr><td>Fácil</td><td class="num">10</td><td>Muito difícil</td><td class="num">25</td></tr>
+              <tr><td>Moderada</td><td class="num">15</td><td>Quase impossível</td><td class="num">30</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h3>CR — Classe de Resistência</h3>
+        <p class="small">Alvo das <strong>jogadas de ataque</strong> (comuns ou de Técnicas). Definida pela defesa do alvo, não pelo Narrador.</p>
+        <div class="formula" style="margin-bottom:0">CR padrão = 10 + mod. de Destreza</div>
+        <p class="small" style="margin:10px 0 0">Habilidades Básicas defensivas, escudos e Características de Combate mudam essa conta — veja o <a href="#montador">montador</a>.</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card">
+        <h3>Vantagem e desvantagem</h3>
+        <p class="small">Role um <strong>segundo d20</strong>. Com vantagem, use o maior; com desvantagem, o menor. Duas fontes de vantagem não viram três dados, e vantagem + desvantagem se anulam — sobra um d20 só.</p>
+      </div>
+      <div class="card">
+        <h3>Duas regras que valem sempre</h3>
+        <p class="small"><strong>O específico vence o geral.</strong> Se um Traço de Espécie, uma Akuma no Mi ou uma arma contradiz a regra geral, ela prevalece.</p>
+        <p class="small" style="margin-bottom:0"><strong>Arredonde para baixo.</strong> Toda divisão no jogo é arredondada para baixo, mesmo que a fração passe da metade.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><b>Os três pilares da aventura.</b> Toda ação cai em <strong>Exploração</strong> (atravessar mares, investigar ruínas), <strong>Interação Social</strong> (persuadir um oficial da Marinha) ou <strong>Combate</strong>. Só o combate é estruturado em turnos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ATRIBUTOS ══════════ -->
+<section id="atributos">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 9 · Atributos</p>
+    <h2 class="sec">Os seis atributos</h2>
+    <p class="lede">10–11 é a média de um humano comum. 18 é o teto de gente normal; piratas poderosos chegam a 20; lendas alcançam 30.</p>
+
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Atributo</th><th>Mede</th><th>Perícias</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Força</strong></td><td>Poder físico e força bruta</td><td>Atletismo</td></tr>
+          <tr><td><strong>Destreza</strong></td><td>Agilidade e precisão</td><td>Acrobacia, Furtividade, Prestidigitação</td></tr>
+          <tr><td><strong>Constituição</strong></td><td>Resistência e fôlego</td><td><em>Nenhuma perícia</em> — mas define seus PV</td></tr>
+          <tr><td><strong>Sabedoria</strong></td><td>Raciocínio e memória</td><td>História, Investigação, Medicina, Natureza, Sobrevivência</td></tr>
+          <tr><td><strong>Vontade</strong></td><td>Determinação e percepção</td><td>Haki, Intuição, Percepção, Sobrenatural, Sorte</td></tr>
+          <tr><td><strong>Presença</strong></td><td>Carisma e interação social</td><td>Atuação, Enganação, Intimidação, Persuasão, Provocação</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h3>Calculando o modificador</h3>
+        <div class="formula">mod = (valor − 10) ÷ 2, arredondado p/ baixo</div>
+        <div class="tablebox" style="margin-bottom:0">
+          <table style="min-width:0">
+            <thead><tr><th class="num">Valor</th><th class="num">Mod</th><th class="num">Valor</th><th class="num">Mod</th></tr></thead>
+            <tbody>
+              <tr><td class="num">8–9</td><td class="num">−1</td><td class="num">18–19</td><td class="num">+4</td></tr>
+              <tr><td class="num">10–11</td><td class="num">+0</td><td class="num">20–21</td><td class="num">+5</td></tr>
+              <tr><td class="num">12–13</td><td class="num">+1</td><td class="num">22–23</td><td class="num">+6</td></tr>
+              <tr><td class="num">14–15</td><td class="num">+2</td><td class="num">24–25</td><td class="num">+7</td></tr>
+              <tr><td class="num">16–17</td><td class="num">+3</td><td class="num">26–27</td><td class="num">+8</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Bônus de Proficiência</h3>
+        <p class="small">Vem do <strong>nível total</strong> do personagem, nunca do nível em um Estilo específico. Do 1º ao 4º nível ele é <strong class="mono">+2</strong>.</p>
+        <h4>Onde ele entra</h4>
+        <p class="small">Ataques com armas que você é proficiente · jogadas de ataque de Técnicas · Testes de Atributo com perícias e ferramentas proficientes · Salvaguardas proficientes.</p>
+        <h4>Onde ele não entra</h4>
+        <p class="small" style="margin-bottom:0">Jogadas de dano. E ele nunca é somado duas vezes na mesma rolagem — se duas regras mandarem somar, some uma vez só.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><b>Teste passivo.</b> <span class="mono">10 + modificadores normais</span> (+5 com vantagem, −5 com desvantagem). Um personagem de 1º nível com Vontade 15 e proficiência em Percepção tem Percepção Passiva <span class="mono">14</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FICHA ══════════ -->
+<section id="ficha">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 1.2 · Criação de personagens</p>
+    <h2 class="sec">Montando a ficha</h2>
+    <p class="lede">Sete passos, na ordem do livro. Antes de começar, pense no tipo de pirata que você quer interpretar: um atirador corajoso? Um lutador ardente? Um okama extravagante?</p>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-n"></div>
+        <div class="step-body">
+          <h3>Escolha uma Espécie</h3>
+          <p>A Espécie define aparência, os talentos naturais da sua linhagem e três números que vão direto para a ficha.</p>
+          <ul>
+            <li><strong>Traços da Espécie</strong> — um Benefício e uma Dificuldade, mais Variante ou Ancestralidade quando houver.</li>
+            <li><strong>Pontos de Vida Base</strong> — somados aos PV do Estilo de Combate no 1º nível.</li>
+            <li><strong>Deslocamento</strong> normal e de nado.</li>
+            <li><strong>Ajuste de Atributo</strong> — +2 em um atributo, ou +1 em dois. Nunca passa de 20.</li>
+            <li><strong>Traços Culturais</strong> — Pontos de Treinamento iguais ao seu mod. de Sabedoria (mínimo 1), gastos <em>na hora</em>, na criação.</li>
+          </ul>
+          <p class="small" style="margin-top:12px">Você também pode ter uma <strong>Variação Rara</strong> (Bucaneiro, Experimento Científico, Filho da Noite, Sangue Ancestral, Clone) — ela <em>substitui</em> um Benefício de Espécie e exige aval do Narrador.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n"></div>
+        <div class="step-body">
+          <h3>Escolha um Estilo de Combate</h3>
+          <p>É a decisão mais pesada da ficha. O Estilo entrega as Características de Combate, as proficiências, o Dado de Vida e o equipamento inicial.</p>
+          <ul>
+            <li><strong>Dado de Vida</strong> (d8, d10 ou d12) e o PV do 1º nível, que usa o <em>valor máximo</em> do dado.</li>
+            <li><strong>Proficiências</strong> em armas, duas Salvaguardas e perícias.</li>
+            <li><strong>Atributo Primário</strong> — onde o novato deve concentrar pontos.</li>
+            <li><strong>Arma Favorita</strong> — você pode trocar o modificador normal da arma pelo do seu Atributo Primário. Alguns estilos permitem escolher "Corporal" (os próprios punhos).</li>
+            <li><strong>Habilidade Básica Inata</strong> — uma entre duas opções, grátis, além das três HB normais.</li>
+            <li><strong>1 Técnica de Combate</strong> (1º grau) e <strong>1 Técnica Auxiliar</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n"></div>
+        <div class="step-body">
+          <h3>Escolha uma Profissão</h3>
+          <p>A função que você exerce no navio. Rende proficiência em ferramentas, duas perícias e — só na profissão do 1º nível — um kit de equipamentos completo.</p>
+          <p>O grande truque da Profissão: você adiciona o <strong>Bônus de Proficiência em qualquer Teste de Atributo relacionado a ela</strong>, mesmo em testes que você normalmente não teria. Um médico pode fazer um Teste de <em>Força</em> com proficiência para remover uma costela que perfurou o pulmão de um aliado.</p>
+          <p class="small">Prefere não ter profissão? Você ganha <strong>Ajudante Perfeito</strong> (+5 em testes de profissão dos outros, 3×/descanso longo), 2 perícias, metade do tempo de treino dos companheiros e até 5 funções no navio.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n"></div>
+        <div class="step-body">
+          <h3>Determine os valores de Atributo</h3>
+          <p>Duas formas de gerar os seis números:</p>
+          <ul>
+            <li><strong>Distribuição Padrão</strong> — <span class="mono">15, 14, 13, 12, 10, 8</span>.</li>
+            <li><strong>Aleatório</strong> — role <span class="mono">4d6</span>, some os três maiores, repita seis vezes.</li>
+          </ul>
+          <p style="margin-top:12px">Distribua entre Força, Destreza, Constituição, Sabedoria, Vontade e Presença. <strong>Depois</strong> aplique os ajustes da Espécie e do Antecedente, e só então calcule os modificadores.</p>
+          <div class="formula">PV no 1º nível = máximo do Dado de Vida + mod. CON + PV Base da Espécie</div>
+          <p class="small">Com Constituição você fecha os PV. Com Destreza (ou o Atributo Primário, dependendo da HB) você fecha a CR.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n"></div>
+        <div class="step-body">
+          <h3>Descreva o seu personagem</h3>
+          <p>Nome, sexo, altura, peso, idade e uma marca memorável. Deixe os atributos guiarem a descrição: Força alta pede corpo atlético; Sabedoria baixa sugere esquecimento; Presença baixa pode ser timidez ou brutalidade.</p>
+          <h4 style="font-family:Oswald,sans-serif; font-size:16px; margin:16px 0 6px; text-transform:uppercase; letter-spacing:.06em">O que preencher aqui</h4>
+          <ul>
+            <li><strong>Sonho</strong> — a linha de chegada dos seus objetivos. Ser o Rei dos Piratas, desvendar o Século Perdido, juntar 10 bilhões de bellys. Um sonho não prova moralidade.</li>
+            <li><strong>Caminho</strong> — o cruzamento de <em>o que</em> você quer (Conhecimento, Liberdade ou Poder) com <em>como</em> você busca (Companheirismo, Força ou Enganação). Nove combinações.</li>
+            <li><strong>Antecedente</strong> — dá uma perícia, um aumento de atributo e uma Característica Especial fora de combate.</li>
+            <li><strong>Singularidades e Defeitos</strong> — você tem <strong>5 espaços</strong>. Suave custa 1, Média custa 3, Forte custa 4. <em>Para cada espaço preenchido você deve escolher 1 Defeito do mesmo nível.</em></li>
+            <li><strong>Preconceito</strong> — vem da Espécie (Inexistente, Débil, Medíocre ou Severo) e afeta Atuação, Enganação e Persuasão diante de humanos preconceituosos.</li>
+          </ul>
+          <div class="chips">
+            <span class="tag s">C/C Conhecimento pelo Companheirismo</span>
+            <span class="tag s">L/C Liberdade pelo Companheirismo</span>
+            <span class="tag s">P/C Poder pelo Companheirismo</span>
+            <span class="tag r">C/F Conhecimento pela Força</span>
+            <span class="tag r">L/F Liberdade pela Força</span>
+            <span class="tag r">P/F Poder pela Força</span>
+            <span class="tag g">C/E Conhecimento pela Enganação</span>
+            <span class="tag g">L/E Liberdade pela Enganação</span>
+            <span class="tag g">P/E Poder pela Enganação</span>
+          </div>
+          <p class="small" style="margin-top:14px"><strong>Antecedentes:</strong> Amnésia · Artista · Criminoso · Derrotado · Erudito · Escravo · Exilado · Família D. · Mercador · Mercenário · Nobre · Pescador · Político · Predestinado · Revolucionário · Sacerdote · Sobrevivente.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n"></div>
+        <div class="step-body">
+          <h3>Escolha o equipamento</h3>
+          <p>Estilo de Combate e Profissão entregam tudo. Role os bellys extras indicados pelo Estilo (de <span class="mono">5d10 × 1.000</span> a <span class="mono">15d10 × 1.000</span> ฿).</p>
+          <div class="formula">Capacidade de carga = valor de Força × 10 kg</div>
+          <ul>
+            <li><strong>Armas corpo a corpo</strong> usam Força para ataque e dano. Com a propriedade <em>Acuidade</em> (katanas), podem usar Destreza.</li>
+            <li><strong>Armas à distância</strong> usam Destreza. Com <em>Arremesso</em> (adagas), podem usar Força.</li>
+            <li><strong>Arma Favorita</strong> sobrescreve os dois: use o modificador do seu Atributo Primário.</li>
+          </ul>
+          <div class="formula">Bônus de ataque = mod. do atributo + Bônus de Proficiência</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n"></div>
+        <div class="step-body">
+          <h3>Reúna um grupo</h3>
+          <p>Personagens raramente agem sozinhos. Combine com os outros jogadores e com o Narrador: o que seus personagens sabem uns dos outros, como se conheceram e que tipo de aventura vão viver.</p>
+          <p class="small" style="margin-bottom:0">Também no 1º nível, escolha sua <strong>Aptidão para Haki</strong> (Armamento ou Observação). Você não usa Haki ainda — ele só desperta no 8º nível — mas a escolha vale +2 Pontos de Ambição naquele tipo quando a hora chegar.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ESPÉCIES ══════════ -->
+<section id="especies">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 2 · Espécies</p>
+    <h2 class="sec">As espécies</h2>
+    <p class="lede">Todas ganham o mesmo Ajuste de Atributo (+2 em um ou +1 em dois) e Traços Culturais. O que muda são os PV Base, o deslocamento, o preconceito que enfrentam e os traços próprios.</p>
+
+    <div class="tablebox">
+      <table style="min-width:840px">
+        <thead>
+          <tr><th>Espécie</th><th class="num">PV Base</th><th>Tamanho</th><th class="num">Desloc.</th><th class="num">Nado</th><th>Preconceito</th><th>Benefício / Dificuldade</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Anões</strong></td><td class="num">8</td><td>Miúdo (10–15 cm)</td><td class="num">9 m</td><td class="num">4,5 m</td><td>Débil</td>
+            <td><strong>Corpo Pequeno</strong> (Piscar 3×/dia, Andar das Fadas) e <strong>Hóspede Feérico</strong> · <em>Ingenuidade Anormal: −10 em Intuição</em></td>
+          </tr>
+          <tr>
+            <td><strong>Celestiais</strong></td><td class="num">10</td><td>Médio</td><td class="num">12 m</td><td class="num">3 m</td><td>Débil</td>
+            <td><strong>Herança Cultural</strong>: proficiência em todos os dials, 3 dials cotidianos + 1 bélico, 2 perícias · <em>Anjos Caídos: −2 em Acrobacia abaixo de 5.000 m</em> · Variantes: Birkans, Shandians, Skypeans</td>
+          </tr>
+          <tr>
+            <td><strong>Gigantes</strong></td><td class="num">20</td><td>Enorme (13–20 m)</td><td class="num">9 m</td><td class="num">3 m</td><td>Inexistente</td>
+            <td><strong>Força Colossal</strong> (dobra a proficiência em tudo de Força) e <strong>Corpo Assustador</strong> (+2 Intimidação) · <em>Necessidades Gigantescas: 5× comida, ocupa 20 tripulantes</em></td>
+          </tr>
+          <tr>
+            <td><strong>Humanos</strong></td><td class="num">10</td><td>Médio</td><td class="num">9 m</td><td class="num">4,5 m</td><td>Inexistente</td>
+            <td><strong>Adaptação</strong>: 3 perícias à escolha · <em>Aspectos Humanos: escolha uma falha de caráter</em> · Variantes: Comuns, Humanozarrões, Braços Longos, Kujas, Pernas Longas, Pescoço de Cobra, 3 Olhos</td>
+          </tr>
+          <tr>
+            <td><strong>Lunarianos</strong></td><td class="num">16</td><td>Médio</td><td class="num">9 m</td><td class="num">3 m</td><td>Medíocre</td>
+            <td><strong>Heat</strong> (+1d10 de Fogo, usos = nível) e <strong>Manipulação do Fogo</strong> · <em>Cabeça à Prêmio: o Governo Mundial te caça</em></td>
+          </tr>
+          <tr>
+            <td><strong>Minks</strong></td><td class="num">12</td><td>Pequeno a Grande</td><td class="num">9 m</td><td class="num">4,5 m</td><td>Medíocre</td>
+            <td><strong>Electro</strong> (+1d10 Elétrico, usos = nível) · <em>Instintos Animalescos: Salvaguarda de Vontade CD 15 diante do seu "gatilho"</em> · Variantes: Ágeis, Meãos, Robustos · Forma Sulong</td>
+          </tr>
+          <tr>
+            <td><strong>Povo do Mar</strong></td><td class="num">14</td><td>Médio ou Grande</td><td class="num">9 m</td><td class="num">15 m</td><td>Severo</td>
+            <td><strong>Força Superior</strong> (proficiência + metade dela em Força) · <em>Criatura do Mar: precisa de 2× água</em> · Variantes: Homem-Peixe, Sireno</td>
+          </tr>
+          <tr>
+            <td><strong>Mestiços</strong></td><td class="num">Média das duas</td><td>Média das duas</td><td class="num">A maior</td><td class="num">A maior</td><td>A pior</td>
+            <td><strong>Dois Mundos</strong> + <strong>Miscigenação</strong>: 1 Benefício de cada Espécie de origem, 1 Dificuldade das duas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <p><b>Traços Culturais valem para todas.</b> Você recebe Pontos de Treinamento iguais ao seu modificador de Sabedoria (mínimo 1) e precisa convertê-los em treinamentos <em>imediatamente</em>, na criação. Com modificador negativo, você não se beneficia até a Sabedoria virar positiva.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ESTILOS ══════════ -->
+<section id="estilos">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 3 · Estilos de Combate</p>
+    <h2 class="sec">Os doze estilos, do 1º ao 3º nível</h2>
+    <p class="lede">Cada carta traz os números do estilo e exatamente o que ele entrega em cada um dos três primeiros níveis. Todos aprendem Técnicas no 1º e no 3º nível.</p>
+
+    <div class="grid g2" style="margin-top:26px" id="stylegrid"></div>
+
+    <div class="note" style="margin-top:26px">
+      <p><b>Técnicas, em resumo.</b> São jogadas de ataque <em>especiais</em>: bônus que valem para ataques comuns não se aplicam a elas, salvo menção expressa. Você só pode usar uma Técnica por turno — exceto Técnicas Auxiliares com requisito de ação bônus, que podem entrar junto. O grau cresce com o nível: <span class="mono">1º nível → 1º grau · 3º nível → 2º grau · 6º nível → 3º grau</span>.</p>
+      <p style="margin-top:10px"><b>Pontos de Poder (PP).</b> Seu máximo é <span class="mono">4 × nível de personagem</span> — 4 no 1º nível, 8 no 2º, 12 no 3º. Recupera tudo em um descanso longo (metade, se você estiver com Exaustão). Sem PP, a <strong>Sobrecarga</strong> permite usar uma Técnica de graça ao custo de Níveis de Exaustão iguais ao grau dela.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROFISSÕES ══════════ -->
+<section id="profissoes">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 4 · Profissões</p>
+    <h2 class="sec">Profissões</h2>
+    <p class="lede">Escolha uma no 1º nível. Depois, só a cada 5 níveis — e apenas se você tiver lido um Livro de Profissão ou estudado com um tutor por 2 h/dia durante 90 dias.</p>
+
+    <div class="grid g3" style="margin-top:24px">
+      <div class="card"><h3>Combate e caça</h3><p class="small" style="margin-bottom:0">Caçador de Recompensas · Espião · Contrabandista · Informante</p></div>
+      <div class="card"><h3>Ciência e cura</h3><p class="small" style="margin-bottom:0">Médico · Cientista · Farmacêutico · Psiquiatra · Botânico</p></div>
+      <div class="card"><h3>Navio e oficina</h3><p class="small" style="margin-bottom:0">Carpinteiro · Engenheiro · Ferreiro · Inventor</p></div>
+      <div class="card"><h3>Rota e comando</h3><p class="small" style="margin-bottom:0">Navegador · Timoneiro</p></div>
+      <div class="card"><h3>Saber e palavra</h3><p class="small" style="margin-bottom:0">Arqueólogo · Jornalista</p></div>
+      <div class="card"><h3>Convívio</h3><p class="small" style="margin-bottom:0">Cozinheiro · Músico · Adestrador</p></div>
+    </div>
+
+    <h3 style="font-size:24px; margin-top:38px">Como a Profissão evolui</h3>
+    <p class="prose">Graduações não vêm com o nível: vêm de <strong>Grandes Feitos</strong> (façanhas notáveis ou um Teste relacionado com CD 26+ em jogada limpa, sem vantagem nem rerrolagem) ou de <strong>Avanço Planejado</strong> (usar o slot do 5º, 10º, 15º ou 20º nível para subir de graduação em vez de aprender outra profissão).</p>
+
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Graduação</th><th>Benefício</th><th class="num">Desconto</th><th class="num">CD</th><th class="num">Dado</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Profissional</strong></td><td>Inicial — Bônus de Proficiência em testes da profissão</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td><strong>Especialista</strong></td><td>Vantagem em testes da profissão, 3×/descanso longo</td><td class="num">−10%</td><td class="num">−1</td><td class="num">d8</td></tr>
+          <tr><td><strong>Mestre</strong></td><td>Resultados de 9 ou menos no d20 contam como 10</td><td class="num">−20%</td><td class="num">−2</td><td class="num">d10</td></tr>
+          <tr><td><strong>Grão-Mestre</strong></td><td>Transforme uma falha em sucesso, 3×/descanso longo</td><td class="num">−50%</td><td class="num">−3</td><td class="num">d12</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ HABILIDADES BÁSICAS ══════════ -->
+<section id="hb">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 3.2 · Habilidades Básicas</p>
+    <h2 class="sec">As 20 Habilidades Básicas</h2>
+    <p class="lede">Você escolhe uma no 1º nível, outra no 2º e a última no 3º — e nunca a mesma duas vezes. Além delas, o Estilo de Combate dá uma <strong>HB Inata</strong> de graça no 1º nível.</p>
+
+    <div class="tablebox">
+      <table style="min-width:660px">
+        <thead><tr><th>Habilidade Básica</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aprimoramento de Atributo</strong></td><td>+2 em um atributo ou +1 em dois (teto de 20).</td></tr>
+          <tr><td><strong>Concentração Inabalável</strong></td><td>Sucesso automático na 1ª Salvaguarda de concentração; +2 na segunda. Vantagem sempre a partir do 5º nível.</td></tr>
+          <tr><td><strong>Corpo de Guerreiro</strong></td><td>Ataque desarmado escala com o nível (1d4 → 1d10) e a CR vira <span class="mono">10 + primário + CON</span> (bônus de CON limitado a metade do nível).</td></tr>
+          <tr><td><strong>Defesa Ofensiva</strong></td><td>CR usa o Atributo Primário no lugar de Destreza, +metade da proficiência empunhando a Arma Favorita. Com reação, some a proficiência inteira para aparar.</td></tr>
+          <tr><td><strong>Dificuldade Inefável</strong></td><td>+metade do Bônus de Proficiência em todas as CDs que você impõe. +2 no 6º nível, +3 no 9º.</td></tr>
+          <tr><td><strong>Gerenciamento de Energia</strong></td><td>Ação bônus: recupere <span class="mono">1d8 + proficiência</span> PP, 1×/descanso longo.</td></tr>
+          <tr><td><strong>Mente e Corpo</strong></td><td>Ação bônus: ignore os 5 primeiros Níveis de Exaustão por 10 minutos. 3×/descanso longo.</td></tr>
+          <tr><td><strong>Mira Treinada</strong></td><td>Dano de ataques à distância sobe um passo; críticos ricocheteiam num 2º alvo. Em troca, no máximo 1 ataque corpo a corpo por rodada.</td></tr>
+          <tr><td><strong>Perito em Técnicas</strong></td><td>Técnica que não afeta nada não gasta PP (usos = proficiência). No 5º nível, Técnicas instantâneas somam o modificador ao dano; no 10º, os dados sobem um passo.</td></tr>
+          <tr><td><strong>Preparação para a Batalha</strong></td><td>Ação bônus: por 1 minuto, nenhum ataque causa menos que metade do dano máximo, e Técnicas ganham 3 dados extras. 1×/descanso longo.</td></tr>
+          <tr><td><strong>Primeiros Socorros</strong></td><td>Ação bônus: 10 PV por nível da criatura + 4d10 PV temporários, e encerra Envenenado, Letárgico, Queimado, Sangramento e Sonolento. Gasta 1 kit.</td></tr>
+          <tr><td><strong>Prodígio do Combate</strong></td><td>Ataque de Oportunidade + crítico 19–20 (corpo a corpo ou à distância) + críticos de inimigos com CR maior causam dano normal em você.</td></tr>
+          <tr><td><strong>Quebrador de Regras</strong></td><td>Escolha: Dado de Vida um passo acima, dano corpo a corpo um passo acima, ou +1 permanente em um atributo.</td></tr>
+          <tr><td><strong>Recuo Estratégico</strong></td><td>Ação bônus: recue o dobro do deslocamento sem provocar reações. No turno seguinte, Técnica de até 3º grau pela metade do PP. 3×/descanso longo.</td></tr>
+          <tr><td><strong>Reflexo Afiado</strong></td><td>Disparada ou Esconder-se como ação bônus.</td></tr>
+          <tr><td><strong>Retomar o Fôlego</strong></td><td>Ação bônus: recupere <span class="mono">2d10 + mod. CON</span> PV. 3×/descanso longo (6d10 no 12º nível).</td></tr>
+          <tr><td><strong>Robusto</strong></td><td>+3 × nível em PV máximos ao adquirir, e +3 PV a cada novo nível.</td></tr>
+          <tr><td><strong>Sortudo</strong></td><td>Refaça um ataque, perícia ou Salvaguarda — seu ou de um inimigo — e escolha o resultado. 3×/descanso longo.</td></tr>
+          <tr><td><strong>Superando Limites</strong></td><td>Comece um encontro com 0 PP e recupere <span class="mono">nível + metade da proficiência</span>. Ou use-a para anular até 3 Níveis de Exaustão de Sobrecarga.</td></tr>
+          <tr><td><strong>Superioridade Absoluta</strong></td><td>Se sobrarem PV iguais ou menores que o seu nível após o dano, a criatura cai a 0. Cada execução soma +5 (até +15) até o fim do encontro.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <p><b>Regra opcional — trocar AVA por HB.</b> Quando o Aumento no Valor de Atributo chegar (4º, 8º, 12º, 16º e 20º nível do Estilo), o Narrador pode deixar você pegar uma Habilidade Básica no lugar, até 2 vezes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROGRESSÃO ══════════ -->
+<section id="progressao">
+  <div class="wrap">
+    <p class="eyebrow">Capítulo 1.3 · Além do 1º nível</p>
+    <h2 class="sec">A rota até o 3º nível</h2>
+    <p class="lede">Os três primeiros níveis são os mais densos da ficha: é neles que você escolhe todas as suas Habilidades Básicas. Depois disso, elas acabam.</p>
+
+    <div class="track">
+
+      <div class="lvlcard">
+        <div class="hd">
+          <h3>Nível 1</h3>
+          <div class="xp">0 PE · Proficiência +2 · 4 PP</div>
+        </div>
+        <ul>
+          <li><b>PV iniciais</b> = valor <em>máximo</em> do Dado de Vida + mod. CON + PV Base da Espécie. É o único nível que usa o máximo do dado.</li>
+          <li><b>1 Dado de Vida</b> do tipo do seu Estilo.</li>
+          <li><b>HB Inata</b> do Estilo (uma entre duas) — não conta no limite de 3.</li>
+          <li><b>1ª Habilidade Básica</b> da lista geral.</li>
+          <li><b>Característica de 1º nível</b> do Estilo de Combate.</li>
+          <li><b>1 Técnica de Combate</b> de 1º grau e <b>1 Técnica Auxiliar</b>.</li>
+          <li><b>Pontos de Treinamento</b> iguais ao mod. de Sabedoria, gastos na hora.</li>
+          <li><b>Aptidão para Haki</b>: escolha Armamento ou Observação.</li>
+        </ul>
+      </div>
+
+      <div class="lvlcard">
+        <div class="hd">
+          <h3>Nível 2</h3>
+          <div class="xp">300 PE · Proficiência +2 · 8 PP</div>
+        </div>
+        <ul>
+          <li><b>+1 Dado de Vida.</b> Role-o e some o mod. de CON aos PV máximos, ou use o valor fixo: <span class="mono">d8 → 5 · d10 → 6 · d12 → 7</span> (já com o modificador à parte).</li>
+          <li><b>2ª Habilidade Básica.</b></li>
+          <li><b>Característica de 2º nível</b> do Estilo.</li>
+          <li><b>3 Pontos de Treinamento</b> — e mais 3 a cada nível par até o 10º.</li>
+          <li><span class="small">Sem Técnica nova neste nível.</span></li>
+        </ul>
+      </div>
+
+      <div class="lvlcard">
+        <div class="hd">
+          <h3>Nível 3</h3>
+          <div class="xp">900 PE · Proficiência +2 · 12 PP</div>
+        </div>
+        <ul>
+          <li><b>+1 Dado de Vida</b> (mesma regra do 2º nível).</li>
+          <li><b>3ª e última Habilidade Básica.</b> A partir daqui, só via regra opcional de trocar AVA.</li>
+          <li><b>Característica de 3º nível</b> do Estilo — costuma ser a escolha de subclasse.</li>
+          <li><b>1 Técnica de Combate de 2º grau</b> e <b>1 Técnica Auxiliar</b>.</li>
+          <li><span class="small">O 4º nível traz o primeiro Aumento no Valor de Atributo.</span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <h3 style="font-size:24px; margin-top:44px">Tabela de avanço</h3>
+    <div class="tablebox">
+      <table style="min-width:600px">
+        <thead><tr><th class="num">Nível</th><th class="num">Pontos de Experiência</th><th class="num">Bônus de Proficiência</th><th class="num">Pontos de Poder</th><th>Estágio do jogo</th></tr></thead>
+        <tbody>
+          <tr><td class="num"><strong>1</strong></td><td class="num">0</td><td class="num">+2</td><td class="num">4</td><td>Desconhecidos</td></tr>
+          <tr><td class="num"><strong>2</strong></td><td class="num">300</td><td class="num">+2</td><td class="num">8</td><td>Desconhecidos</td></tr>
+          <tr><td class="num"><strong>3</strong></td><td class="num">900</td><td class="num">+2</td><td class="num">12</td><td>Desconhecidos</td></tr>
+          <tr><td class="num">4</td><td class="num">2.700</td><td class="num">+2</td><td class="num">16</td><td>Notoriedade Local</td></tr>
+          <tr><td class="num">5</td><td class="num">6.500</td><td class="num">+3</td><td class="num">20</td><td>Notoriedade Local</td></tr>
+          <tr><td class="num">6</td><td class="num">14.000</td><td class="num">+3</td><td class="num">24</td><td>Notoriedade Local</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card">
+        <h3>Constituição par = PV retroativos</h3>
+        <p class="small" style="margin-bottom:0">Quando a Constituição sobe para um valor <strong>par</strong>, o modificador cresce e você ganha <strong>1 PV máximo por nível já alcançado</strong>. Subir CON 17 → 18 no 8º nível rende 8 PV de uma vez.</p>
+      </div>
+      <div class="card">
+        <h3>Descanso</h3>
+        <p class="small" style="margin-bottom:0">Descanso curto: gaste Dados de Vida para curar (<span class="mono">dado + mod. CON</span> cada). Descanso longo: recupera todos os PV, todos os PP, metade dos Dados de Vida gastos e remove 1 Nível de Exaustão.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><b>Multiestilo (regra opcional).</b> Se você quiser pegar um nível em outro Estilo, precisa atender ao pré-requisito de atributo dele — e nada muda nas Habilidades Básicas: continua sendo <strong>1 por nível de personagem até o 3º, máximo de 3</strong>, e só a HB Inata do Estilo do seu 1º nível vale. As Técnicas passam a seguir o nível <em>total</em> de personagem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ MONTADOR ══════════ -->
+<section id="montador">
+  <div class="wrap">
+    <p class="eyebrow">Ferramenta</p>
+    <h2 class="sec">Montador de ficha</h2>
+    <p class="lede">Escolha Espécie, Estilo e distribua os atributos. Os números derivados — PV, CR, PP, carga, salvaguardas — são calculados ao vivo pelas regras do livro.</p>
+
+    <div class="builder">
+      <div>
+        <div class="panel">
+          <h3>1 · Identidade</h3>
+          <div class="row2">
+            <div class="field">
+              <label for="b-especie">Espécie</label>
+              <select id="b-especie"></select>
+            </div>
+            <div class="field">
+              <label for="b-estilo">Estilo de Combate</label>
+              <select id="b-estilo"></select>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="b-nivel">Nível de personagem</label>
+              <select id="b-nivel">
+                <option value="1">1º nível</option>
+                <option value="2">2º nível</option>
+                <option value="3" selected>3º nível</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="b-primario">Atributo Primário</label>
+              <select id="b-primario"></select>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label for="b-cr">Base da Classe de Resistência</label>
+            <select id="b-cr">
+              <option value="dex">Padrão — 10 + mod. Destreza</option>
+              <option value="corpo">Corpo de Guerreiro — 10 + primário + CON (limitado)</option>
+              <option value="ofensiva">Defesa Ofensiva — 10 + primário + ½ proficiência</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px">
+          <h3>2 · Atributos</h3>
+          <div class="field">
+            <label for="b-metodo">Método de geração</label>
+            <select id="b-metodo">
+              <option value="padrao">Distribuição Padrão — 15, 14, 13, 12, 10, 8</option>
+              <option value="manual">Manual (4d6 ou combinado com o Narrador)</option>
+            </select>
+          </div>
+          <div class="attrgrid" id="attrgrid">
+            <div class="attrhead">
+              <div>Atributo</div><div>Base</div><div>Espécie</div><div>Antec.</div><div>Total</div><div>Mod</div>
+            </div>
+          </div>
+          <div class="budget">
+            <span>Ajuste de Espécie: <b id="bud-esp">0/2</b> <span id="bud-esp-ok"></span></span>
+            <span>Antecedente: <b id="bud-ant">0/2</b> <span id="bud-ant-ok"></span></span>
+          </div>
+          <p class="small" style="margin:10px 0 0">Cada bolsa vale <strong>+2 em um atributo</strong> ou <strong>+1 em dois</strong>. Nenhum total pode passar de 20 na criação.</p>
+        </div>
+      </div>
+
+      <div class="sheet">
+        <div class="panel" style="padding:0">
+          <div class="sheet-head">
+            <div class="t" id="s-title">Ficha</div>
+            <div class="s" id="s-sub">—</div>
+          </div>
+          <div class="bigstats">
+            <div class="bigstat"><b id="s-pv">—</b><span>Pontos de Vida</span></div>
+            <div class="bigstat"><b id="s-cr">—</b><span>Classe de Resist.</span></div>
+            <div class="bigstat"><b id="s-pp">—</b><span>Pontos de Poder</span></div>
+          </div>
+          <div class="sheet-sub">Números derivados</div>
+          <div class="kv"><span>Bônus de Proficiência</span><span id="s-bp">—</span></div>
+          <div class="kv"><span>Dados de Vida</span><span id="s-dv">—</span></div>
+          <div class="kv"><span>Deslocamento / nado</span><span id="s-desl">—</span></div>
+          <div class="kv"><span>Capacidade de carga</span><span id="s-carga">—</span></div>
+          <div class="kv"><span>Bônus de ataque (arma favorita)</span><span id="s-atk">—</span></div>
+          <div class="kv"><span>CD das suas Técnicas</span><span id="s-cd">—</span></div>
+          <div class="sheet-sub">Salvaguardas</div>
+          <div class="kv"><span>Força</span><span id="s-sv-for">—</span></div>
+          <div class="kv"><span>Destreza</span><span id="s-sv-des">—</span></div>
+          <div class="kv"><span>Constituição</span><span id="s-sv-con">—</span></div>
+          <div class="kv"><span>Sabedoria</span><span id="s-sv-sab">—</span></div>
+          <div class="kv"><span>Vontade</span><span id="s-sv-von">—</span></div>
+          <div class="kv"><span>Presença</span><span id="s-sv-pre">—</span></div>
+          <div class="sheet-sub">Ainda falta escolher</div>
+          <ul class="todo" id="s-todo"></ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="small" style="margin-top:16px; max-width:66ch">O montador cobre os números mecânicos. Traços de Espécie, Técnicas, Singularidades, Defeitos e equipamento continuam sendo escolhas suas — use as tabelas acima e anote na ficha oficial do livro.</p>
+  </div>
+</section>
+
+<!-- ══════════ EXEMPLO ══════════ -->
+<section id="exemplo">
+  <div class="wrap">
+    <p class="eyebrow">Exemplo do livro</p>
+    <h2 class="sec">Construindo Buffy</h2>
+
+    <div class="example">
+      <div class="hd">
+        <h3>Buffy · Humano · Lutador de 1º nível</h3>
+        <div class="chips" style="margin-top:10px">
+          <span class="tag">FOR 17 (+3)</span><span class="tag">DES 10 (0)</span><span class="tag">CON 16 (+3)</span>
+          <span class="tag">SAB 8 (−1)</span><span class="tag">VON 12 (+1)</span><span class="tag">PRE 13 (+1)</span>
+        </div>
+      </div>
+      <div class="bd">
+        <ol>
+          <li><strong>Espécie:</strong> humano comum. Caio anota os traços humanos e o deslocamento de 9 metros.</li>
+          <li><strong>Estilo:</strong> Lutador. Dado de Vida d12, Bônus de Proficiência +2. Ele deixa o cálculo de PV para depois de fechar a Constituição.</li>
+          <li><strong>Atributos:</strong> distribuição padrão. 15 vai para Força (é um Lutador), 14 para Constituição, e ele reserva um valor decente para Presença — Buffy é um bom líder. Espécie e Antecedente somam +2 em Força e +2 em Constituição.
+            <div class="formula" style="margin:10px 0 0">PV = 12 (máx. do d12) + 3 (mod. CON) + 10 (PV Base humano) = 25</div>
+          </li>
+          <li><strong>Descrição:</strong> Sonho — ser o Rei dos Piratas. Caminho — Liberdade pelo Companheirismo. Antecedente — Família D. Singularidades — Voz de Todas as Coisas e Tesouro Precioso. Defeitos — Sonolência e Rosto Debochado. Sem Código de Honra.</li>
+          <li><strong>Equipamento:</strong> o da Profissão e o do Lutador. A HB <strong>Corpo de Guerreiro</strong> muda o cálculo da CR, que fecha em <strong>14</strong>.
+            <div class="formula" style="margin:10px 0 0">Ataque desarmado: +5 para acertar · 1d4+3 de dano Contundente</div>
+            <p class="small" style="margin:10px 0 0">Se arremessar uma adaga, valem os mesmos números: armas com a propriedade <em>Arremesso</em> usam Força.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>OP RPG — Livro do Jogador 2.0</strong>, criação e desenvolvimento de Brendo Neves. Este guia é um resumo de consulta rápida dos Capítulos 1 a 5 e 9 e não substitui o livro.</p>
+    <p>Conteúdo sob Open Game License 1.0a. One Piece é obra de Eiichiro Oda.</p>
+  </div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- tema ---------- */
+  var root = document.documentElement;
+  try{ var saved = localStorage.getItem("oprpg-theme"); if(saved) root.setAttribute("data-theme", saved); }catch(e){}
+  document.getElementById("themebtn").addEventListener("click", function(){
+    var cur = root.getAttribute("data-theme");
+    var isDark = cur ? cur === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = isDark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try{ localStorage.setItem("oprpg-theme", next); }catch(e){}
+  });
+
+  /* ---------- dados ---------- */
+  var ESPECIES = {
+    "Anões":       {pv:8,  desl:9,  nado:4.5, sing:"Anão"},
+    "Celestiais":  {pv:10, desl:12, nado:3,   sing:"Celestial"},
+    "Gigantes":    {pv:20, desl:9,  nado:3,   sing:"Gigante"},
+    "Humanos":     {pv:10, desl:9,  nado:4.5, sing:"Humano"},
+    "Lunarianos":  {pv:16, desl:9,  nado:3,   sing:"Lunariano"},
+    "Mestiços":    {pv:12, desl:9,  nado:4.5, sing:"Mestiço"},
+    "Minks":       {pv:12, desl:9,  nado:4.5, sing:"Mink"},
+    "Povo do Mar": {pv:14, desl:9,  nado:15,  sing:"Povo do Mar"}
+  };
+
+  var ESTILOS = [
+    {
+      nome:"Atirador", dv:8, prim:["DES"], salv:["DES","SAB"],
+      pericias:"Escolha 3 quaisquer", arma:"Pistola ou mosquete",
+      hb:"Mira Treinada · Superioridade Absoluta",
+      equip:"2 pistolas ou 1 mosquete + 80 munições · 5d10 × 1.000 ฿",
+      n1:["Caminho do Atirador","Especialize-se no Caminho do Duelista (duas pistolas, mobilidade, Gun-Fu) ou do Sniper (mosquete, visão de 5 km, Corrida Contínua). A escolha é definitiva."],
+      n2:["Guarda Astuta","Rompante Defensivo: a primeira vez em cada rodada que um inimigo visível te acerta, o dano cai pela metade. A característica ganha novos efeitos no 4º, 6º, 8º e 10º nível."],
+      n3:["Atirador de Elite","Dobra o alcance das Técnicas à distância, ignora meia e três quartos de cobertura, dobra a proficiência em ataques comuns à distância e libera o −5/+10. Mais um pacote específico do seu Caminho."]
+    },
+    {
+      nome:"Aventureiro", dv:10, prim:["DES"], salv:["DES","CON"],
+      pericias:"Escolha 3 quaisquer", arma:"Chicote, pistola ou Corporal",
+      hb:"Defesa Ofensiva · Perito em Técnicas",
+      equip:"1 pistola + 80 munições, 1 chicote, 1 adaga · 10d10 × 1.000 ฿",
+      n1:["Whip and Gun","Chicote com dado 1d10, crítico que libera tiro de pistola, dano que fura resistência a Cortante e ataque de reação. Pistola com crítico triplo, Disparo Rápido e Fan Firing (6 tiros com desvantagem)."],
+      n2:["Pronto para a Aventura","PP máximo +4 +proficiência, metade dos PP de volta no início de cada combate, Técnicas grátis fora de combate, deslocamento 15 m, proficiência em montarias e Investigação."],
+      n3:["Estilo Arriscado","Margem de crítico com chicote cresce a cada crítico natural (até 15–20), Tiro Sem Paciência acumula dados por rodada e Domador da Coragem reduz os ataques inimigos num raio de 9 m."]
+    },
+    {
+      nome:"Brutamontes", dv:12, prim:["FOR"], salv:["FOR","CON"],
+      pericias:"2 entre Atletismo, Intimidação, Provocação, Sobrevivência", arma:"Kanabo, machado grande, martelo, montante ou Corporal",
+      hb:"Corpo de Guerreiro · Superioridade Absoluta",
+      equip:"1 kanabo · 6d10 × 1.000 ฿",
+      n1:["Demônio Incarnado","+1 de dano com a arma favorita para cada inimigo que você feriu e caiu a 0 PV no encontro (teto = metade do nível de Brutamontes)."],
+      n2:["Sede de Sangue","Recupere 1d12 PV sempre que derrubar um inimigo, ou 1d6 quando um aliado derrubar alguém que você feriu. Teto de 5 × nível de Brutamontes por descanso longo."],
+      n3:["8 Trigramas","Ação bônus: por 1 minuto, role 1d8 no início de cada turno e receba um modo de combate aleatório — Sedutor, Chorão, Depressivo, Brigão, Sanguinário, Risonho, Ladrão ou Lúcido."]
+    },
+    {
+      nome:"Carateca Homem-Peixe", dv:12, prim:["FOR"], salv:["FOR","CON"],
+      pericias:"2 entre Acrobacia, Atletismo, Atuação, Intimidação", arma:"Tridente ou Corporal",
+      hb:"Corpo de Guerreiro · Aprimoramento de Atributo",
+      equip:"1 arma marcial à escolha ou 40.000 ฿ · 15d10 × 1.000 ฿",
+      n1:["Seiken","Um ataque desarmado que vira um cone de 6 m atingindo todos com uma única jogada. 1d6 + FOR, ignora Invulnerabilidade e Resistência. Usos = Bônus de Proficiência."],
+      n2:["Samehada Shotei","Com sua reação, redirecione um ataque corpo a corpo que errou você de volta para quem atacou (+3 no acerto), e siga redirecionando tudo até o seu próximo turno."],
+      n3:["Jujutsu Homem-Peixe","Quatro movimentos de agarrão e arremesso: Hikishio (derrubar), Uzushio (empurrar), Nageru (lançar aliado a 12 m) e Hinowara (agarrar e arrastar, 1d6 por 1,5 m). Seiken sobe para 2d6."]
+    },
+    {
+      nome:"Ciborgue", dv:12, prim:["FOR","SAB"], salv:["FOR","SAB"],
+      pericias:"2 entre Atletismo, Investigação, Prestidigitação, Sobrevivência", arma:"Bazuca, canhão, escopeta ou metralhadora",
+      hb:"Aprimoramento de Atributo · Perito em Técnicas",
+      equip:"20 unidades de combustível · 10d10 × 1.000 ฿",
+      n1:["Corpo Robótico","Escolha 2 Modificações — e mais 2 a cada nível de Ciborgue até o 5º. Pele de Aço, Strong Hammer, Hélice, Holograma, Mãos Auxiliares, Visão Adaptável, Membros Remotos e mais 9 opções."],
+      n2:["Mira Robótica","Ao errar um ataque, ainda cause dano igual ao mod. de Sabedoria (desde que o dado não seja 1). Com Técnicas, o dano é mod. SAB + nível de Ciborgue. Ataques comuns podem usar Sabedoria."],
+      n3:["Guerreiro da Ciência","Escolha uma tecnologia de ponta: Giga-Arm (braço de combate e agarrão), Mega-Head (Database da Marinha, hacking, acerto automático) ou Proto-Body (um robô companheiro independente)."]
+    },
+    {
+      nome:"Espadachim", dv:10, prim:["FOR","DES"], salv:["DES","VON"],
+      pericias:"2 entre Atletismo, Intimidação, Intuição, Percepção", arma:"Uma Arma Cortante à escolha",
+      hb:"Perito em Técnicas · Superando Limites",
+      equip:"2 sabres ou 2 katanas · 5d10 × 1.000 ฿",
+      n1:["Postura de Espadachim","Escolha entre Ittoryu (1 espada), Nitoryu (2), Santoryu (3), Yontoryu (4), Rokutoryu (6), Hattoryu (8) e Kyutoryu (9) — ou troque a postura por uma Manobra. Nova escolha no 3º, 6º e 9º nível."],
+      n2:["Consciência Expandida","Dano dobrado contra objetos e estruturas de rocha ou cedro (materiais melhores em níveis maiores), e cortes que atravessam construções inteiras a até 6 m — a tabela Cortar Mundos."],
+      n3:["Empunhadura","Crítico 19–20 com armas cortantes e um dado extra no crítico. Escolha Lâmina Forte (alcance, +dano, ímpeto) ou Lâmina Gentil (fura resistência, ataque bônus, dado 1d10)."]
+    },
+    {
+      nome:"Guerrilheiro", dv:10, prim:["FOR","SAB"], salv:["FOR","DES"],
+      pericias:"2 entre Acrobacia, Atletismo, Furtividade, História, Sobrevivência", arma:"Qualquer arma ou Corporal",
+      hb:"Corpo de Guerreiro · Perito em Técnicas",
+      equip:"2 pistolas ou 1 mosquete + 80 munições, ou 2 Armas Cortantes · 5d10 × 1.000 ฿",
+      n1:["Mestre das Armas","Guarde e saque duas armas com uma ação bônus, e receba uma Aptidão Bélica: Açoitador, Ardiloso, Arqueiro, Atirador, Bárbaro, Espadachim ou Lanceiro. Mais três no 5º e 11º nível."],
+      n2:["Músculos e Cérebro","Ataques comuns podem usar Sabedoria para acerto e dano. Além disso, vincule Sabedoria a Força ou a Destreza e use sempre o maior valor entre as duas em Testes e Salvaguardas."],
+      n3:["Especialista em Combate","Escolha 2 Efeitos Especiais para moldar suas Técnicas: Cirúrgica, Extravagante, Escondida, Insistente, Otimizada ou Veloz. Mais dois no 6º e no 9º nível."]
+    },
+    {
+      nome:"Lutador", dv:12, prim:["FOR"], salv:["FOR","CON"],
+      pericias:"2 entre Atletismo, Intimidação, Provocação, Sobrevivência", arma:"Uma Arma Marcial ou Corporal",
+      hb:"Corpo de Guerreiro · Superando Limites",
+      equip:"1 arma marcial à escolha ou 40.000 ฿ · 15d10 × 1.000 ฿",
+      n1:["Combatente Selvagem","Com uma ação bônus, some um movimento especial ao seu golpe desarmado: Voadora (+1d6 ou empurrão de 6 m), Golpe Baixo (+1d6 e −3 m, ou Caído) ou Subjugador (agarrar no lugar do dano)."],
+      n2:["Bom de Briga","Punhos contam como arma marcial, resultado 1 no d20 vira crítico, dano dobrado em estruturas, vantagem contra agarrados e crítico 17–20 contra Caídos — mais três truques com usos = proficiência."],
+      n3:["Posições de Luta","Assuma uma postura no início do turno: Castigo de Ferro, Descuidado, Imparável, Foco de Batalha, Fanático ou Músculo de Aço. Duas ao mesmo tempo no 6º nível, três no 10º."]
+    },
+    {
+      nome:"Ninja", dv:8, prim:["DES"], salv:["DES","SAB"],
+      pericias:"2 entre Acrobacia, Enganação, Furtividade, Prestidigitação", arma:"Katana, kunai, adaga, shuriken, foice ou arco",
+      hb:"Defesa Ofensiva · Sortudo",
+      equip:"1 katana, 5 kunais, 30 shurikens · 6d10 × 1.000 ฿",
+      n1:["Yami no Kijin","Fora da luz plena você entra no Estado Sombrio: −10 em todo dano sofrido, +1d6 Psíquico nos ataques, invisibilidade após 1 rodada oculto e teleporte de 21 m entre pontos não observados."],
+      n2:["Ninjutsu","Pontos de Ninjutsu iguais ao nível de Ninja. Escolha o conjunto Místico (Futon, Katon, Raiton) ou o Tradicional (fuga, furtividade suprema, movimentação rápida e mais)."],
+      n3:["Assassinar","+3d4 de dano, uma vez por rodada, contra alvo atingido com vantagem — ou com um inimigo dele a 1,5 m. Os dados crescem com o nível de Ninja."]
+    },
+    {
+      nome:"Okama Kenpo", dv:10, prim:["FOR","PRE"], salv:["DES","PRE"],
+      pericias:"3 entre Acrobacia, Atletismo, Atuação, Enganação, Intimidação, Intuição, Provocação", arma:"Uma Arma Marcial ou Corporal",
+      hb:"Corpo de Guerreiro · Superando Limites",
+      equip:"1 arma marcial à escolha ou 40.000 ฿ · 15d10 × 1.000 ฿",
+      n1:["Protegendo um Amigo","Com sua reação, mova-se até um aliado a 9 m e receba o ataque no lugar dele, reduzindo o dano em 1d12 + nível de Okama. Zerou o dano? Contra-ataque de graça e ganhe PP."],
+      n2:["Ambiguidade","Okama Dash (deslocamento 12 m), Resistência Okama (1d6 PV sempre que sofrer dano Contundente de humanoide) e Brutalidade Graciosa (troque Força por Presença no acerto e no dano)."],
+      n3:["Okama Way","Gambaray (cura 3d12 ou apaga a Exaustão de um aliado), Poder da Amizade (10 PV temporários por aliado, até 60), Super Protetor, Amor Próprio e Amor Insistente."]
+    },
+    {
+      nome:"Rokushiki", dv:10, prim:["FOR","DES"], salv:["FOR","DES"],
+      pericias:"2 entre Acrobacia, Atletismo, Enganação, Furtividade, História, Investigação", arma:"Adaga, katana, bastão ou Corporal",
+      hb:"Corpo de Guerreiro · Perito em Técnicas",
+      equip:"1 arma marcial à escolha ou 40.000 ฿ · 15d10 × 1.000 ฿",
+      n1:["6 Habilidades","Refaça uma Salvaguarda falha 3×/descanso longo e aprenda Soru (investida de 6 m, ação bônus) e Shigan (2d10 Perfurante, impõe Sangramento)."],
+      n2:["Táticas","Aprendizado Rápido (2 perícias emprestadas por dia), Ataques Incapacitantes (Cego, Surdo ou Mudo no lugar do dano) e Caminho das Sombras (escalada e natação plenas, sem terreno difícil)."],
+      n3:["Arma Viva + Tekkai e Rankyaku","Aprenda mais duas das 6 Habilidades e escolha 2 refinamentos: Técnica Assassina, Execução Impecável, Fôlego Treinado, Ataque de Oportunidade Traiçoeiro ou Reação Defensiva."]
+    },
+    {
+      nome:"Samurai", dv:10, prim:["FOR","DES"], salv:["CON","VON"],
+      pericias:"2 entre Intimidação, Intuição, Percepção, Sobrevivência", arma:"Arco, daito katana, foice, kanabo, katana, lança, nodachi, pistola ou shikomizue",
+      hb:"Superioridade Absoluta · Superando Limites",
+      equip:"2 katanas · 7d10 × 1.000 ฿",
+      n1:["Armamento Samurai","Crítico 19–20 com Armas de Samurai e +1d6 de dano uma vez por turno. Escolha um estilo — Zansetsu, Okamihyo, Takakaze, Kappasui ou Kitsunebi — que muda o tipo de dano e o efeito."],
+      n2:["Juramento","Um voto definitivo: Proteção (Medicina Holística, cura 1d6 por nível), Vingança (Ódio Motivacional, ataque bônus) ou Dever (Ataque Determinado, piso de dano nas Técnicas)."],
+      n3:["Bushido","Escolha o Caminho do Vassalo (+2 para acertar), do Ronin (Oportunista, reação ampliada) ou do Shogun (Consciência Expandida do Espadachim). Refeito a cada novo nível de Samurai."]
+    }
+  ];
+
+  var ATTRS = [
+    {k:"FOR", n:"Força"},   {k:"DES", n:"Destreza"}, {k:"CON", n:"Constituição"},
+    {k:"SAB", n:"Sabedoria"},{k:"VON", n:"Vontade"},  {k:"PRE", n:"Presença"}
+  ];
+  var PADRAO = [15,14,13,12,10,8];
+  var PADRAO_DEFAULT = {FOR:15, DES:14, CON:13, SAB:12, VON:10, PRE:8};
+  var MEDIA_FIXA = {8:5, 10:6, 12:7};
+
+  /* ---------- cartas de estilo ---------- */
+  var grid = document.getElementById("stylegrid");
+  grid.innerHTML = ESTILOS.map(function(s){
+    function lvl(n, d){
+      return '<div class="lvl"><div class="n">'+n+'º</div><div><b>'+d[0]+'</b><span>'+d[1]+'</span></div></div>';
+    }
+    return '<article class="stylecard">'
+      + '<header><h3>'+s.nome+'</h3><div class="statline">'
+        + '<span class="tag r">Dado de Vida d'+s.dv+'</span>'
+        + '<span class="tag s">Primário: '+s.prim.join(" ou ")+'</span>'
+        + '<span class="tag">Salv. '+s.salv.join(" · ")+'</span>'
+      + '</div></header>'
+      + '<div class="body">'
+        + lvl(1, s.n1) + lvl(2, s.n2) + lvl(3, s.n3)
+        + '<div class="meta">'
+          + '<div><em>Perícias</em>'+s.pericias+'</div>'
+          + '<div><em>Arma favorita</em>'+s.arma+'</div>'
+          + '<div><em>HB Inata</em>'+s.hb+'</div>'
+          + '<div><em>Equipamento</em>'+s.equip+'</div>'
+        + '</div>'
+      + '</div></article>';
+  }).join("");
+
+  /* ---------- montador ---------- */
+  var elEsp = document.getElementById("b-especie");
+  var elEst = document.getElementById("b-estilo");
+  var elNiv = document.getElementById("b-nivel");
+  var elPri = document.getElementById("b-primario");
+  var elCR  = document.getElementById("b-cr");
+  var elMet = document.getElementById("b-metodo");
+  var elGrid= document.getElementById("attrgrid");
+
+  Object.keys(ESPECIES).forEach(function(k){
+    var o = document.createElement("option"); o.value = k; o.textContent = k;
+    if(k === "Humanos") o.selected = true;
+    elEsp.appendChild(o);
+  });
+  ESTILOS.forEach(function(s, i){
+    var o = document.createElement("option"); o.value = String(i); o.textContent = s.nome;
+    if(s.nome === "Lutador") o.selected = true;
+    elEst.appendChild(o);
+  });
+
+  // linhas de atributo
+  ATTRS.forEach(function(a){
+    var row = document.createElement("div");
+    row.className = "attrrow";
+    row.innerHTML =
+      '<div class="attrname">'+a.n+'</div>'
+      + '<div><select id="base-'+a.k+'" aria-label="Valor base de '+a.n+'"></select></div>'
+      + '<div><input type="number" id="esp-'+a.k+'" min="0" max="2" step="1" value="0" aria-label="Ajuste de Espécie em '+a.n+'"></div>'
+      + '<div><input type="number" id="ant-'+a.k+'" min="0" max="2" step="1" value="0" aria-label="Ajuste de Antecedente em '+a.n+'"></div>'
+      + '<div class="attrtot" id="tot-'+a.k+'">—</div>'
+      + '<div class="attrmod" id="mod-'+a.k+'">—</div>';
+    elGrid.appendChild(row);
+  });
+
+  function buildBaseOptions(){
+    var manual = elMet.value === "manual";
+    ATTRS.forEach(function(a){
+      var sel = document.getElementById("base-"+a.k);
+      var prev = sel.value ? parseInt(sel.value, 10) : PADRAO_DEFAULT[a.k];
+      sel.innerHTML = "";
+      var values = manual ? range(3, 18) : PADRAO.slice();
+      values.forEach(function(v){
+        var o = document.createElement("option");
+        o.value = String(v); o.textContent = String(v);
+        sel.appendChild(o);
+      });
+      sel.value = String(values.indexOf(prev) >= 0 ? prev : values[0]);
+    });
+  }
+  function range(a,b){ var r=[]; for(var i=b;i>=a;i--) r.push(i); return r; }
+  function mod(v){ return Math.floor((v - 10) / 2); }
+  function sign(n){ return (n >= 0 ? "+" : "−") + Math.abs(n); }
+
+  function setPrimarioOptions(style){
+    var cur = elPri.value;
+    elPri.innerHTML = "";
+    style.prim.forEach(function(p){
+      var full = ATTRS.filter(function(a){ return a.k === p; })[0];
+      var o = document.createElement("option"); o.value = p; o.textContent = full ? full.n : p;
+      elPri.appendChild(o);
+    });
+    if(style.prim.indexOf(cur) >= 0) elPri.value = cur;
+    elPri.disabled = style.prim.length === 1;
+  }
+
+  function render(){
+    var esp = ESPECIES[elEsp.value];
+    var style = ESTILOS[parseInt(elEst.value, 10)];
+    var nivel = parseInt(elNiv.value, 10);
+    var bp = 2;
+
+    setPrimarioOptions(style);
+
+    // atributos
+    var totals = {}, mods = {}, espSum = 0, antSum = 0, espCount = 0, antCount = 0;
+    ATTRS.forEach(function(a){
+      var base = parseInt(document.getElementById("base-"+a.k).value, 10) || 10;
+      var e = clamp(parseInt(document.getElementById("esp-"+a.k).value, 10) || 0, 0, 2);
+      var t = clamp(parseInt(document.getElementById("ant-"+a.k).value, 10) || 0, 0, 2);
+      espSum += e; antSum += t;
+      if(e > 0) espCount++;
+      if(t > 0) antCount++;
+      var tot = base + e + t;
+      totals[a.k] = tot; mods[a.k] = mod(tot);
+      document.getElementById("tot-"+a.k).textContent = String(tot);
+      document.getElementById("tot-"+a.k).style.color = tot > 20 ? "var(--red)" : "";
+      document.getElementById("mod-"+a.k).textContent = sign(mods[a.k]);
+    });
+    budget("bud-esp", "bud-esp-ok", espSum, espCount);
+    budget("bud-ant", "bud-ant-ok", antSum, antCount);
+
+    // derivados
+    var dvMedia = MEDIA_FIXA[style.dv];
+    var pv = style.dv + mods.CON + esp.pv;
+    for(var i = 2; i <= nivel; i++) pv += dvMedia + mods.CON;
+    pv = Math.max(pv, nivel);
+
+    var primKey = elPri.value || style.prim[0];
+    var primMod = mods[primKey];
+
+    var cr;
+    if(elCR.value === "corpo"){
+      var teto = nivel === 1 ? 1 : Math.floor(nivel / 2);
+      cr = 10 + Math.max(primMod, 1) + Math.min(mods.CON, teto);
+    } else if(elCR.value === "ofensiva"){
+      cr = 10 + primMod + Math.floor(bp / 2);
+    } else {
+      cr = 10 + mods.DES;
+    }
+
+    document.getElementById("s-title").textContent = style.nome + " · " + esp.sing;
+    document.getElementById("s-sub").textContent = nivel + "º NÍVEL · PRIMÁRIO " + primKey;
+    document.getElementById("s-pv").textContent = String(pv);
+    document.getElementById("s-cr").textContent = String(cr);
+    document.getElementById("s-pp").textContent = String(4 * nivel);
+    document.getElementById("s-bp").textContent = sign(bp);
+    document.getElementById("s-dv").textContent = nivel + "d" + style.dv;
+    document.getElementById("s-desl").textContent = br(esp.desl) + " m / " + br(esp.nado) + " m";
+    document.getElementById("s-carga").textContent = (totals.FOR * 10) + " kg";
+    document.getElementById("s-atk").textContent = sign(primMod + bp) + "  ·  dano " + sign(primMod);
+    document.getElementById("s-cd").textContent = "8 " + sign(bp) + " " + sign(primMod) + " = " + (8 + bp + primMod);
+
+    ATTRS.forEach(function(a){
+      var prof = style.salv.indexOf(a.k) >= 0;
+      var v = mods[a.k] + (prof ? bp : 0);
+      var el = document.getElementById("s-sv-" + a.k.toLowerCase());
+      el.textContent = sign(v) + (prof ? "  ●" : "");
+      el.style.color = prof ? "var(--ok)" : "";
+    });
+
+    // pendências
+    var todo = [];
+    todo.push("HB Inata: " + style.hb);
+    var hbCount = Math.min(nivel, 3);
+    todo.push(hbCount + (hbCount === 1 ? " Habilidade Básica" : " Habilidades Básicas") + " da lista geral");
+    todo.push("Perícias do Estilo: " + style.pericias.toLowerCase());
+    todo.push("Profissão (2 perícias + ferramentas)");
+    todo.push("Traços da Espécie e Pontos de Treinamento (= mod. SAB, mín. 1)");
+    todo.push(nivel >= 3 ? "2 Técnicas de Combate (1º e 2º grau) e 2 Técnicas Auxiliares"
+                         : "1 Técnica de Combate de 1º grau e 1 Técnica Auxiliar");
+    if(nivel >= 2) todo.push("3 Pontos de Treinamento do 2º nível");
+    todo.push("Sonho, Caminho, Antecedente, Singularidades e Defeitos");
+    todo.push("Aptidão para Haki: Armamento ou Observação");
+    todo.push("Equipamento: " + style.equip);
+    document.getElementById("s-todo").innerHTML = todo.map(function(t){ return "<li>"+t+"</li>"; }).join("");
+  }
+
+  function clamp(v, a, b){ return Math.min(b, Math.max(a, v)); }
+  function br(n){ return String(n).replace(".", ","); }
+
+  function budget(idVal, idFlag, sum, count){
+    document.getElementById(idVal).textContent = sum + "/2";
+    var flag = document.getElementById(idFlag);
+    var valid = (sum === 2 && (count === 1 || count === 2)) || sum === 0;
+    if(sum === 0){ flag.textContent = "não usado"; flag.className = ""; }
+    else if(valid){ flag.textContent = "ok"; flag.className = "good"; }
+    else { flag.textContent = "use +2 em um ou +1 em dois"; flag.className = "bad"; }
+  }
+
+  elMet.addEventListener("change", function(){ buildBaseOptions(); render(); });
+  document.getElementById("montador").addEventListener("change", render);
+  document.getElementById("montador").addEventListener("input", render);
+
+  buildBaseOptions();
+  document.getElementById("esp-FOR").value = 2;
+  document.getElementById("ant-CON").value = 2;
+  render();
+})();
+</script>
+
+</body></html>
