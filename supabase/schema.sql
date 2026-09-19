@@ -87,6 +87,19 @@ create trigger anotacoes_atualizacao
   for each row execute function public.marcar_atualizacao();
 
 
+-- ═════════════════════ acesso pela API do site ═════════════════════════
+-- Se a opção "Automatically expose new tables" estiver desligada no projeto,
+-- as tabelas nascem sem permissão nenhuma para a API. Estes grants resolvem
+-- isso sem depender daquela caixa. Só "authenticated" entra: visitante sem
+-- login não alcança nada, e mesmo quem entra ainda passa pelas políticas
+-- de Row Level Security logo abaixo.
+
+grant usage on schema public to authenticated;
+grant select, insert, update, delete
+  on public.tecnicas, public.fichas, public.anotacoes
+  to authenticated;
+
+
 -- ═══════════════════ Row Level Security: cada um só o seu ══════════════
 -- Sem estas políticas a tabela fica trancada para todo mundo. Com elas,
 -- o Postgres compara auth.uid() (quem está logado) com user_id (o dono)
