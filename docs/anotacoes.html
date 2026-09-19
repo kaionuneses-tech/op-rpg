@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Diário de bordo da tripulação: anotações de sessão que acompanham você em qualquer aparelho.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+<style>
+:root{color-scheme:light dark;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;padding:0}
+img{max-width:100%}
+[hidden]:not([hidden=until-found i]){display:none!important}
+</style>
+<title>Diário de Bordo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ink:#101E29; --ink2:#41535F; --ink3:#71838F;
+  --paper:#E9EDEF; --surf:#FFFFFF; --surf2:#F3F6F7; --surf3:#E2E8EB;
+  --line:#CBD5DB; --line2:#A6B6C0;
+  --red:#B8372C; --gold:#96660C; --sea:#1C6478; --ok:#25705A;
+  --bar:#101E29; --bar-ink:#E9EDEF;
+  --redsoft:color-mix(in srgb, var(--red) 11%, transparent);
+  --goldsoft:color-mix(in srgb, var(--gold) 13%, transparent);
+  --seasoft:color-mix(in srgb, var(--sea) 11%, transparent);
+  --oksoft:color-mix(in srgb, var(--ok) 11%, transparent);
+  --onaccent:#FFFFFF;
+  --radius:3px;
+}
+:root[data-palette="grandline"]{ --red:#0F7A6E; --gold:#8A6100; --sea:#1E5F8A; --ok:#2C6A45; }
+:root[data-palette="porsol"]  { --red:#C05A16; --gold:#8C6A00; --sea:#8A4A6E; --ok:#3F7046; }
+:root[data-palette="yonko"]   { --red:#6E3A9E; --gold:#96660C; --sea:#2E6B8F; --ok:#25705A; }
+:root[data-palette="kairoseki"]{ --red:#2B5C7A; --gold:#6E7A2E; --sea:#4A6070; --ok:#2E6B5B; }
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+    --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+    --line:#263B4C; --line2:#3A5468;
+    --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+    --bar:#1D3341; --bar-ink:#DDE6EC; --onaccent:#0A131A;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+  --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+  --line:#263B4C; --line2:#3A5468;
+  --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+  --bar:#1D3341; --bar-ink:#DDE6EC; --onaccent:#0A131A;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-palette="grandline"]:not([data-theme="light"]){ --red:#4FC0B0; --gold:#DFA845; --sea:#6BADE0; --ok:#5FBE92; }
+  :root[data-palette="porsol"]:not([data-theme="light"])  { --red:#F0904A; --gold:#D9B34A; --sea:#D98BB8; --ok:#6FBE7E; }
+  :root[data-palette="yonko"]:not([data-theme="light"])   { --red:#B292E8; --gold:#DFA845; --sea:#6FB3D6; --ok:#4FB58D; }
+  :root[data-palette="kairoseki"]:not([data-theme="light"]){ --red:#6FB0D4; --gold:#BFC96B; --sea:#9AB0C0; --ok:#5FC0A8; }
+}
+:root[data-palette="grandline"][data-theme="dark"]{ --red:#4FC0B0; --gold:#DFA845; --sea:#6BADE0; --ok:#5FBE92; }
+:root[data-palette="porsol"][data-theme="dark"]  { --red:#F0904A; --gold:#D9B34A; --sea:#D98BB8; --ok:#6FBE7E; }
+:root[data-palette="yonko"][data-theme="dark"]   { --red:#B292E8; --gold:#DFA845; --sea:#6FB3D6; --ok:#4FB58D; }
+:root[data-palette="kairoseki"][data-theme="dark"]{ --red:#6FB0D4; --gold:#BFC96B; --sea:#9AB0C0; --ok:#5FC0A8; }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Spectral",Georgia,serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  display:flex; flex-direction:column}
+h1,h2,h3,h4{font-family:"Oswald","Arial Narrow",Arial,sans-serif; font-weight:600; margin:0; line-height:1.15}
+a{color:var(--sea)}
+:focus-visible{outline:2px solid var(--red); outline-offset:2px; border-radius:2px}
+
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:60; flex:none;
+  background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1180px; margin:0 auto; padding:0 16px; display:flex; align-items:center; gap:14px; min-height:52px}
+.brand{font-family:"Oswald",sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--red); white-space:nowrap; text-decoration:none}
+.navscroll{flex:1; overflow-x:auto; scrollbar-width:none}
+.navscroll::-webkit-scrollbar{display:none}
+.navlist{display:flex; gap:2px; list-style:none; margin:0; padding:0}
+.navlist a{display:block; padding:7px 10px; font-family:"Oswald",sans-serif; font-weight:500; font-size:12.5px;
+  letter-spacing:.09em; text-transform:uppercase; white-space:nowrap; color:var(--ink2); text-decoration:none; border-radius:var(--radius)}
+.navlist a:hover{color:var(--ink); background:var(--surf3)}
+
+.appearance{position:relative; flex:none}
+.themebtn{border:1px solid var(--line); background:var(--surf); color:var(--ink2); border-radius:var(--radius);
+  padding:6px 11px; cursor:pointer; font-family:"Oswald",sans-serif; font-size:12px; font-weight:500;
+  letter-spacing:.09em; text-transform:uppercase; display:flex; align-items:center; gap:7px}
+.themebtn:hover{border-color:var(--line2); color:var(--ink)}
+#btn-conta img{border-radius:50%; background:var(--surf3); object-fit:cover; flex:none}
+#conta-rotulo{max-width:11ch; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pop{position:absolute; right:0; top:calc(100% + 8px); width:min(300px, calc(100vw - 32px));
+  background:var(--surf); border:1px solid var(--line2); box-shadow:0 12px 34px -14px rgba(0,0,0,.45);
+  z-index:70; padding:13px}
+.pop h4{font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink3); margin:0 0 7px}
+.conta-txt{font-size:13.5px; color:var(--ink2); line-height:1.45; margin:0 0 11px}
+.conta-quem b{display:block; font-family:"Oswald",sans-serif; font-weight:500; font-size:17px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.conta-quem span{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  letter-spacing:.06em; color:var(--ink3); margin-top:2px}
+.conta-quem span.ok{color:var(--ok)}
+.conta-quem span.bad{color:var(--red)}
+
+.btn{font-family:"Oswald",sans-serif; font-size:13px; font-weight:500; letter-spacing:.06em;
+  text-transform:uppercase; padding:8px 13px; border:1px solid var(--line2); background:var(--surf2);
+  color:var(--ink); border-radius:var(--radius); cursor:pointer}
+.btn:hover{border-color:var(--red); color:var(--red)}
+.btn.primary{background:var(--red); border-color:var(--red); color:var(--onaccent)}
+.btn.primary:hover{opacity:.88; color:var(--onaccent)}
+
+/* ── área principal: lista à esquerda, editor à direita ── */
+main{flex:1; min-height:0; max-width:1180px; width:100%; margin:0 auto; padding:16px;
+  display:grid; grid-template-columns:minmax(0,300px) minmax(0,1fr); gap:16px; align-items:stretch}
+
+.lista{background:var(--surf); border:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
+.lista-topo{padding:11px 14px; background:var(--surf2); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:10px}
+.lista-topo h2{font-size:15px; text-transform:uppercase; letter-spacing:.08em}
+.lista-topo span{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; color:var(--ink3)}
+.busca{padding:10px 14px; border-bottom:1px solid var(--line)}
+.busca input{width:100%; font-family:"Spectral",serif; font-size:14px; color:var(--ink);
+  background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:7px 10px}
+.itens{flex:1; overflow-y:auto; min-height:120px}
+.item{display:block; width:100%; text-align:left; border:0; border-bottom:1px solid var(--line);
+  background:none; padding:11px 14px; cursor:pointer; color:inherit; font-family:inherit}
+.item:hover{background:var(--surf2)}
+.item[aria-current="true"]{background:var(--redsoft); box-shadow:inset 3px 0 0 var(--red)}
+.item b{display:block; font-family:"Oswald",sans-serif; font-weight:500; font-size:16px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.item span{display:block; font-size:13px; color:var(--ink2); margin-top:2px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.item i{font-style:normal; font-family:"IBM Plex Mono",monospace; font-size:10px;
+  letter-spacing:.06em; color:var(--ink3)}
+.vazio{padding:18px 14px; color:var(--ink3); font-size:14px}
+.lista-pe{padding:11px 14px; border-top:1px solid var(--line); display:flex; gap:7px; flex-wrap:wrap}
+.lista-pe .btn{flex:1 1 auto; padding:7px 10px; font-size:12px}
+
+.editor{background:var(--surf); border:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
+.editor-topo{padding:11px 14px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px}
+#a-titulo{flex:1; min-width:0; font-family:"Oswald",sans-serif; font-weight:600; font-size:21px;
+  color:var(--ink); background:none; border:0; padding:2px 0}
+#a-titulo::placeholder{color:var(--ink3)}
+#a-texto{flex:1; min-height:240px; width:100%; resize:none; border:0; background:none; color:var(--ink);
+  font-family:"Spectral",Georgia,serif; font-size:16px; line-height:1.68; padding:14px}
+#a-texto::placeholder{color:var(--ink3)}
+.editor-pe{padding:10px 14px; border-top:1px solid var(--line); display:flex; align-items:center;
+  gap:10px; flex-wrap:wrap}
+.editor-pe .estado{flex:1; font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink3)}
+.editor-pe .estado.ok{color:var(--ok)}
+.editor-pe .estado.bad{color:var(--red)}
+
+.caixa{padding:12px 14px; border-top:1px solid var(--line)}
+.caixa textarea{width:100%; min-height:110px; font-family:"IBM Plex Mono",monospace; font-size:11.5px;
+  color:var(--ink); background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius);
+  padding:8px 10px; resize:vertical; margin-bottom:7px}
+.caixa .filelinha{display:flex; gap:7px; flex-wrap:wrap}
+.caixa .btn{flex:1 1 auto; padding:6px 10px; font-size:12px}
+
+@media (max-width:820px){
+  main{grid-template-columns:1fr; height:auto}
+  html,body{height:auto}
+  .itens{max-height:280px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+<script src="app/config.js"></script>
+<script src="app/conta.js"></script>
+</head>
+<body>
+<nav class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="index.html">OP&nbsp;RPG</a>
+    <div class="navscroll">
+      <ul class="navlist">
+        <li><a href="guia.html">Guia</a></li>
+        <li><a href="forja.html">Forja</a></li>
+        <li><a href="anotacoes.html" aria-current="page">Diário</a></li>
+      </ul>
+    </div>
+    <div class="appearance" id="conta-wrap" hidden>
+      <button class="themebtn" id="btn-conta" type="button" aria-haspopup="true" aria-expanded="false">
+        <img id="conta-avatar" alt="" width="17" height="17" hidden>
+        <span id="conta-rotulo">Entrar</span>
+      </button>
+      <div class="pop" id="pop-conta" hidden role="dialog" aria-label="Sua conta">
+        <div id="conta-fora">
+          <h4>Sua conta</h4>
+          <p class="conta-txt">Entre para suas anotações acompanharem você em qualquer computador ou celular. Sem cadastro e sem senha — o Discord que você já usa basta.</p>
+          <button class="btn primary" type="button" id="btn-entrar" style="width:100%">Entrar com Discord</button>
+        </div>
+        <div id="conta-dentro" hidden>
+          <h4>Sua conta</h4>
+          <div class="conta-quem"><b id="conta-nome">—</b><span id="conta-status">—</span></div>
+          <button class="btn" type="button" id="btn-sincronizar" style="width:100%; margin-top:9px">Sincronizar agora</button>
+          <button class="btn" type="button" id="btn-sair" style="width:100%; margin-top:7px">Sair</button>
+        </div>
+      </div>
+    </div>
+    <button class="themebtn" id="themebtn" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+  </div>
+</nav>
+
+<main>
+  <section class="lista" aria-label="Suas anotações">
+    <div class="lista-topo">
+      <h2>Diário de Bordo</h2>
+      <span id="a-contagem">0</span>
+    </div>
+    <div class="busca">
+      <input type="search" id="a-busca" placeholder="Procurar no diário…" aria-label="Procurar nas anotações">
+    </div>
+    <div class="itens" id="a-itens"></div>
+    <div class="lista-pe">
+      <button class="btn primary" type="button" id="btn-nova">Nova anotação</button>
+      <button class="btn" type="button" id="btn-copiar">Copiar código</button>
+      <button class="btn" type="button" id="btn-colar">Colar código</button>
+    </div>
+    <div class="caixa" id="caixa" hidden>
+      <textarea id="caixa-texto" spellcheck="false"></textarea>
+      <div class="filelinha">
+        <button class="btn primary" type="button" id="btn-caixa-ok">Copiar</button>
+        <button class="btn" type="button" id="btn-caixa-fechar">Fechar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="editor" aria-label="Editor">
+    <div class="editor-topo">
+      <input type="text" id="a-titulo" maxlength="120" placeholder="Título da anotação">
+      <button class="btn" type="button" id="btn-apagar">Apagar</button>
+    </div>
+    <textarea id="a-texto" spellcheck="true" placeholder="Escreva aqui o que aconteceu na sessão, o que a tripulação decidiu, o que o Narrador deixou no ar…"></textarea>
+    <div class="editor-pe">
+      <span class="estado" id="a-estado">Pronto</span>
+      <button class="btn" type="button" id="btn-salvar">Salvar</button>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+"use strict";
+var $ = function(id){ return document.getElementById(id); };
+
+/* ── aparência: usa o que foi escolhido na forja ── */
+var root = document.documentElement;
+function lerPref(k, d){ try{ var v = localStorage.getItem(k); return v === null ? d : v; }catch(e){ return d; } }
+function gravarPref(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+function aplicarAparencia(){
+  var tema = lerPref("oprpg-theme", "auto");
+  var paleta = lerPref("oprpg-palette", "");
+  if(tema === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", tema);
+  if(paleta) root.setAttribute("data-palette", paleta); else root.removeAttribute("data-palette");
+  [["oprpg-cor-red","--red"],["oprpg-cor-gold","--gold"],["oprpg-cor-sea","--sea"],["oprpg-cor-ok","--ok"],
+   ["oprpg-cor-ink","--ink"],["oprpg-cor-ink2","--ink2"],["oprpg-cor-paper","--paper"],
+   ["oprpg-cor-surf","--surf"],["oprpg-cor-surf2","--surf2"],["oprpg-cor-bar","--bar"],
+   ["oprpg-cor-bar-ink","--bar-ink"],["oprpg-cor-line","--line"]].forEach(function(p){
+    var v = lerPref(p[0], "");
+    if(v) root.style.setProperty(p[1], v); else root.style.removeProperty(p[1]);
+  });
+  root.style.setProperty("--radius", lerPref("oprpg-fmt-cantos", "3px"));
+}
+aplicarAparencia();
+$("themebtn").addEventListener("click", function(){
+  var cur = lerPref("oprpg-theme", "auto");
+  var escuro = cur === "dark" || (cur === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  gravarPref("oprpg-theme", escuro ? "light" : "dark");
+  aplicarAparencia();
+});
+
+/* ── dados ── */
+var CHAVE = "oprpg-anotacoes";
+var memoria = null, atual = null, sujo = false, timer = null;
+
+function ler(){
+  if(memoria) return memoria;
+  try{ memoria = JSON.parse(localStorage.getItem(CHAVE) || "[]"); }catch(e){ memoria = []; }
+  if(!Array.isArray(memoria)) memoria = [];
+  return memoria;
+}
+function gravar(lista){
+  memoria = lista;
+  try{ localStorage.setItem(CHAVE, JSON.stringify(lista)); return true; }catch(e){ return false; }
+}
+function novoId(){ return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,8); }
+function estado(msg, tipo){
+  var el = $("a-estado");
+  el.textContent = msg;
+  el.className = "estado" + (tipo ? " " + tipo : "");
+}
+function quando(ts){
+  if(!ts) return "";
+  var d = new Date(ts), hoje = new Date();
+  var mesmoDia = d.toDateString() === hoje.toDateString();
+  return mesmoDia
+    ? "hoje " + String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0")
+    : String(d.getDate()).padStart(2,"0") + "/" + String(d.getMonth()+1).padStart(2,"0") + "/" + d.getFullYear();
+}
+
+var Conta = window.OPRPGConta || null;
+function nuvemGuardar(a){ if(Conta) Conta.guardar(a); }
+function nuvemApagar(id){ if(Conta) Conta.apagar(id); }
+
+/* ── lista ── */
+function pintar(){
+  var d = ler().slice().sort(function(a,b){ return (b.atualizadoEm||0) - (a.atualizadoEm||0); });
+  var busca = ($("a-busca").value || "").trim().toLowerCase();
+  if(busca) d = d.filter(function(a){
+    return (a.titulo||"").toLowerCase().indexOf(busca) >= 0 || (a.texto||"").toLowerCase().indexOf(busca) >= 0;
+  });
+  $("a-contagem").textContent = ler().length === 1 ? "1 anotação" : ler().length + " anotações";
+  var host = $("a-itens");
+  if(!d.length){
+    host.innerHTML = '<p class="vazio">' + (busca ? "Nada encontrado." : "Nenhuma anotação ainda. Clique em «Nova anotação».") + '</p>';
+    return;
+  }
+  host.innerHTML = d.map(function(a){
+    var resumo = (a.texto || "").replace(/\s+/g, " ").trim().slice(0, 70);
+    return '<button class="item" type="button" data-id="' + a.id + '"'
+      + (atual && a.id === atual.id ? ' aria-current="true"' : "") + '>'
+      + '<b>' + (a.titulo || "Sem título") + '</b>'
+      + '<span>' + (resumo || "—") + '</span>'
+      + '<i>' + quando(a.atualizadoEm) + '</i></button>';
+  }).join("");
+}
+
+function abrir(id){
+  salvarSeSujo();
+  var a = ler().filter(function(x){ return x.id === id; })[0];
+  if(!a) return;
+  atual = a;
+  $("a-titulo").value = a.titulo || "";
+  $("a-texto").value = a.texto || "";
+  sujo = false;
+  estado("Aberta · " + quando(a.atualizadoEm));
+  pintar();
+}
+
+function nova(){
+  salvarSeSujo();
+  atual = {id:novoId(), titulo:"", texto:"", atualizadoEm:Date.now()};
+  var d = ler(); d.unshift(atual); gravar(d);
+  $("a-titulo").value = ""; $("a-texto").value = "";
+  sujo = false;
+  pintar();
+  estado("Anotação nova");
+  $("a-titulo").focus();
+}
+
+function salvar(){
+  if(!atual) return;
+  atual.titulo = $("a-titulo").value;
+  atual.texto = $("a-texto").value;
+  atual.atualizadoEm = Date.now();
+  var d = ler();
+  var i = -1;
+  for(var k = 0; k < d.length; k++) if(d[k].id === atual.id){ i = k; break; }
+  if(i >= 0) d[i] = atual; else d.unshift(atual);
+  var ok = gravar(d);
+  nuvemGuardar(atual);
+  sujo = false;
+  pintar();
+  estado(ok ? "Salva · " + quando(atual.atualizadoEm) : "Este navegador não está guardando dados", ok ? "ok" : "bad");
+}
+function salvarSeSujo(){ if(sujo && atual) salvar(); }
+
+function marcarSujo(){
+  if(!atual) { nova(); }
+  sujo = true;
+  estado("Escrevendo…");
+  clearTimeout(timer);
+  timer = setTimeout(salvar, 1200);   /* salva sozinho 1,2s depois da última tecla */
+}
+
+$("a-titulo").addEventListener("input", marcarSujo);
+$("a-texto").addEventListener("input", marcarSujo);
+$("btn-salvar").addEventListener("click", function(){ clearTimeout(timer); salvar(); });
+$("btn-nova").addEventListener("click", nova);
+$("a-busca").addEventListener("input", pintar);
+$("a-itens").addEventListener("click", function(ev){
+  var b = ev.target.closest("[data-id]");
+  if(b) abrir(b.dataset.id);
+});
+$("btn-apagar").addEventListener("click", function(){
+  if(!atual) return;
+  var d = ler().filter(function(x){ return x.id !== atual.id; });
+  gravar(d);
+  nuvemApagar(atual.id);
+  atual = null; sujo = false;
+  $("a-titulo").value = ""; $("a-texto").value = "";
+  pintar();
+  estado("Anotação apagada");
+});
+window.addEventListener("beforeunload", salvarSeSujo);
+document.addEventListener("visibilitychange", function(){ if(document.hidden) salvarSeSujo(); });
+
+/* ── copiar e colar ── */
+function pacote(){ return {app:"op-rpg-anotacoes", versao:1, anotacoes:ler()}; }
+$("btn-copiar").addEventListener("click", function(){
+  salvarSeSujo();
+  var d = ler();
+  if(!d.length){ estado("Não há anotações para copiar.", "bad"); return; }
+  var txt = JSON.stringify(pacote());
+  $("caixa-texto").value = txt;
+  $("caixa-texto").readOnly = true;
+  $("btn-caixa-ok").textContent = "Copiar";
+  $("caixa").hidden = false;
+  $("caixa-texto").select();
+  try{
+    navigator.clipboard.writeText(txt).then(
+      function(){ estado("Código copiado — " + d.length + (d.length === 1 ? " anotação." : " anotações."), "ok"); },
+      function(){ estado("Aperte Ctrl+C para copiar.", "bad"); });
+  }catch(e){ estado("Aperte Ctrl+C para copiar.", "bad"); }
+});
+$("btn-colar").addEventListener("click", function(){
+  $("caixa-texto").value = ""; $("caixa-texto").readOnly = false;
+  $("btn-caixa-ok").textContent = "Importar";
+  $("caixa").hidden = false;
+  $("caixa-texto").focus();
+  estado("Cole o código e clique em Importar.");
+});
+$("btn-caixa-fechar").addEventListener("click", function(){ $("caixa").hidden = true; estado("Pronto"); });
+$("btn-caixa-ok").addEventListener("click", function(){
+  if(this.textContent === "Copiar"){
+    $("caixa-texto").select();
+    try{ navigator.clipboard.writeText($("caixa-texto").value); estado("Copiado.", "ok"); }
+    catch(e){ estado("Aperte Ctrl+C.", "bad"); }
+    return;
+  }
+  var txt = $("caixa-texto").value.trim();
+  if(!txt){ estado("Cole o código antes de importar.", "bad"); return; }
+  var p;
+  try{ p = JSON.parse(txt); }catch(e){ estado("Esse código não é válido.", "bad"); return; }
+  var lista = p && Array.isArray(p.anotacoes) ? p.anotacoes : (Array.isArray(p) ? p : null);
+  if(!lista){ estado("Não encontrei anotações nesse código.", "bad"); return; }
+  var d = ler(), chaves = {};
+  d.forEach(function(a){ chaves[a.id] = true; });
+  var novas = 0, repetidas = 0;
+  lista.forEach(function(a){
+    if(!a || typeof a !== "object" || (a.titulo == null && a.texto == null)) return;
+    if(!a.id) a.id = novoId();
+    if(chaves[a.id]){ repetidas++; return; }
+    if(!a.atualizadoEm) a.atualizadoEm = Date.now();
+    chaves[a.id] = true; d.push(a); nuvemGuardar(a); novas++;
+  });
+  gravar(d);
+  $("caixa").hidden = true;
+  pintar();
+  estado(novas + (novas === 1 ? " anotação importada" : " anotações importadas")
+    + (repetidas ? " · " + repetidas + " já estava(m) aqui" : "") + ".", novas ? "ok" : "");
+});
+
+/* ── conta ── */
+function pintarConta(e){
+  var wrap = $("conta-wrap");
+  wrap.hidden = !e.ligado;
+  if(!e.ligado) return;
+  $("conta-fora").hidden = e.logado;
+  $("conta-dentro").hidden = !e.logado;
+  var av = $("conta-avatar"), rot = $("conta-rotulo");
+  if(!e.logado){ av.hidden = true; rot.textContent = "Entrar"; return; }
+  rot.textContent = String(e.usuario.nome).split(/\s+/)[0] || "Conta";
+  if(e.usuario.avatar){ av.src = e.usuario.avatar; av.hidden = false; } else { av.hidden = true; }
+  $("conta-nome").textContent = e.usuario.nome;
+  var st = $("conta-status");
+  st.textContent = e.sincronizando ? "sincronizando…" : "tudo salvo na sua conta";
+  st.className = e.sincronizando ? "" : "ok";
+}
+
+if(Conta){
+  Conta.iniciar({
+    tabela: "anotacoes",
+    selecao: "titulo,texto",
+    colunas: function(a){ return {titulo:String(a.titulo || ""), texto:String(a.texto || "")}; },
+    deLinha: function(l){ return {id:l.id, titulo:l.titulo || "", texto:l.texto || ""}; },
+    lerLocal: function(){ return ler(); },
+    escreverLocal: function(lista){ gravar(lista); },
+    aoMudar: function(){
+      /* a sincronização pode trazer uma versão mais nova da anotação aberta */
+      if(atual){
+        var novo = ler().filter(function(x){ return x.id === atual.id; })[0];
+        if(novo && !sujo){
+          atual = novo;
+          $("a-titulo").value = novo.titulo || "";
+          $("a-texto").value = novo.texto || "";
+        }
+      }
+      pintar();
+    },
+    aoErro: function(err){
+      var st = $("conta-status");
+      if(st){ st.textContent = "nuvem fora do ar — salvo aqui"; st.className = "bad"; }
+      estado("A nuvem recusou (" + ((err && err.message) || "erro") + "). Salvo neste navegador.", "bad");
+    },
+    aoMudarEstado: pintarConta
+  });
+  $("btn-conta").addEventListener("click", function(ev){
+    ev.stopPropagation();
+    var aberto = !$("pop-conta").hidden;
+    $("pop-conta").hidden = aberto;
+    this.setAttribute("aria-expanded", String(!aberto));
+  });
+  document.addEventListener("click", function(ev){
+    if(!$("pop-conta").hidden && !ev.target.closest("#conta-wrap")){
+      $("pop-conta").hidden = true;
+      $("btn-conta").setAttribute("aria-expanded", "false");
+    }
+  });
+  document.addEventListener("keydown", function(ev){
+    if(ev.key === "Escape" && !$("pop-conta").hidden){
+      $("pop-conta").hidden = true;
+      $("btn-conta").setAttribute("aria-expanded", "false");
+    }
+  });
+  $("btn-entrar").addEventListener("click", function(){
+    var b = this;
+    b.disabled = true; b.textContent = "Abrindo o Discord…";
+    Conta.entrar().then(function(ok){
+      if(!ok){ b.disabled = false; b.textContent = "Entrar com Discord"; }
+    });
+  });
+  $("btn-sincronizar").addEventListener("click", function(){
+    var b = this; b.disabled = true;
+    Conta.sincronizar().then(function(r){
+      b.disabled = false;
+      if(r) estado("Sincronizado: " + r.total + (r.total === 1 ? " anotação" : " anotações") + " na conta.", "ok");
+    });
+  });
+  $("btn-sair").addEventListener("click", function(){
+    Conta.sair().then(function(){
+      $("pop-conta").hidden = true;
+      estado("Você saiu. As anotações continuam neste navegador.");
+    });
+  });
+}
+
+/* ── início ── */
+var primeiras = ler();
+if(primeiras.length){
+  var maisNova = primeiras.slice().sort(function(a,b){ return (b.atualizadoEm||0) - (a.atualizadoEm||0); })[0];
+  abrir(maisNova.id);
+} else {
+  pintar();
+  estado("Clique em «Nova anotação» para começar");
+}
+})();
+</script>
+</body>
+</html>

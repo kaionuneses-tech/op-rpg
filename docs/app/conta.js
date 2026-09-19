@@ -85,7 +85,7 @@
 
     locais.forEach(function (t) { pôr(t, Number(t.atualizadoEm) || 0); });
     remotos.forEach(function (linha) {
-      var item = linha.dados || {};
+      var item = deLinha(linha);
       item.id = linha.id;
       pôr(item, Date.parse(linha.atualizado_em) || 0);
     });
@@ -93,15 +93,32 @@
     return ordem.map(function (id) { return mapa[id].item; });
   }
 
+  /* Cada tabela tem colunas próprias. A página diz quais preencher em
+     `colunas`, e como remontar o item em `deLinha`. Sem isso, vale o
+     formato das técnicas.                                              */
   function paraLinha(item) {
-    return {
-      user_id: sessao.user.id,
-      id: item.id,
-      nome: String(item.nome || ""),
-      tipo: String(item.tipo || ""),
-      grau: (typeof item.grau === "number" ? item.grau : null),
-      dados: item
-    };
+    var linha = { user_id: sessao.user.id, id: item.id };
+    if (opcoes && typeof opcoes.colunas === "function") {
+      var extras = opcoes.colunas(item) || {};
+      Object.keys(extras).forEach(function (k) { linha[k] = extras[k]; });
+    } else {
+      linha.nome = String(item.nome || "");
+      linha.tipo = String(item.tipo || "");
+      linha.grau = (typeof item.grau === "number" ? item.grau : null);
+      linha.dados = item;
+    }
+    return linha;
+  }
+
+  function deLinha(linha) {
+    if (opcoes && typeof opcoes.deLinha === "function") return opcoes.deLinha(linha) || {};
+    return linha.dados || {};
+  }
+
+  /* as colunas que a leitura precisa trazer */
+  function selecao() {
+    var base = (opcoes && opcoes.selecao) || "dados";
+    return "id," + base + ",atualizado_em";
   }
 
   /* Puxa tudo da nuvem, junta com o local, grava o resultado nos dois lados. */
@@ -109,7 +126,7 @@
     if (!cliente || !sessao || !opcoes) return Promise.resolve(null);
     sincronizando = true; avisar();
 
-    return cliente.from(opcoes.tabela).select("id,dados,atualizado_em")
+    return cliente.from(opcoes.tabela).select(selecao())
       .then(function (r) {
         if (r.error) throw r.error;
         var locais = opcoes.lerLocal() || [];
