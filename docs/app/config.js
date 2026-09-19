@@ -7,5 +7,5 @@
    de Row Level Security, em supabase/schema.sql.                          */
 window.OPRPG_CONFIG = {
   supabaseUrl: "https://cphvyqxtavjlvzrbzwiu.supabase.co",
-  supabaseAnonKey: ""
+  supabaseAnonKey: "sb_publishable_CSO-SYBYAXEK_82KpqkLnw_ObMtmWkX"
 };
