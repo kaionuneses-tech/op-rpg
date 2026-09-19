@@ -6,6 +6,6 @@
    qualquer site que use Supabase. Quem protege os dados são as políticas
    de Row Level Security, em supabase/schema.sql.                          */
 window.OPRPG_CONFIG = {
-  supabaseUrl: "",
+  supabaseUrl: "https://cphvyqxtavjlvzrbzwiu.supabase.co",
   supabaseAnonKey: ""
 };
