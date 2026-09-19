@@ -10,6 +10,7 @@
   --font-body:"Spectral",Georgia,"Times New Roman",serif;
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
   --fs-base:16px;
+  --fs-scale:1;
   --lh:1.6;
   --dens:1;
   --radius:3px;
@@ -29,6 +30,7 @@
   --paper:#E9EDEF; --surf:#FFFFFF; --surf2:#F3F6F7; --surf3:#E2E8EB;
   --line:#CBD5DB; --line2:#A6B6C0;
   --red:#B8372C; --gold:#96660C; --sea:#1C6478; --ok:#25705A;
+  --bar:#101E29; --bar-ink:#E9EDEF;
   --redsoft:color-mix(in srgb, var(--red) 11%, transparent);
   --goldsoft:color-mix(in srgb, var(--gold) 13%, transparent);
   --seasoft:color-mix(in srgb, var(--sea) 11%, transparent);
@@ -48,6 +50,7 @@
     --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
     --line:#263B4C; --line2:#3A5468;
     --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+    --bar:#1D3341; --bar-ink:#DDE6EC;
     --redsoft:color-mix(in srgb, var(--red) 15%, transparent);
     --goldsoft:color-mix(in srgb, var(--gold) 15%, transparent);
     --seasoft:color-mix(in srgb, var(--sea) 15%, transparent);
@@ -60,6 +63,7 @@
   --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
   --line:#263B4C; --line2:#3A5468;
   --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+    --bar:#1D3341; --bar-ink:#DDE6EC;
   --redsoft:color-mix(in srgb, var(--red) 15%, transparent);
   --goldsoft:color-mix(in srgb, var(--gold) 15%, transparent);
   --seasoft:color-mix(in srgb, var(--sea) 15%, transparent);
@@ -83,7 +87,7 @@
 body{margin:0; color:var(--ink);
   background-color:var(--paper); background-image:var(--bg-image); background-size:var(--bg-size);
   background-repeat:var(--bg-repeat); background-attachment:var(--bg-attach); background-position:center;
-  font-family:var(--font-body); font-size:var(--fs-base); line-height:var(--lh); -webkit-font-smoothing:antialiased}
+  font-family:var(--font-body); font-size:calc(16px * var(--fs-scale)); line-height:var(--lh); -webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:var(--font-display); font-weight:600; margin:0; text-wrap:balance;
   line-height:1.15; letter-spacing:var(--ls-title)}
 .mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums}
@@ -96,19 +100,19 @@ p{margin:0 0 14px}
   background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line)}
 .topbar-in{max-width:1260px; margin:0 auto; padding:0 16px; display:flex; align-items:center; gap:14px; min-height:52px}
-.brand{font-family:var(--font-display); font-weight:700; font-size:14px; letter-spacing:.14em;
+.brand{font-family:var(--font-display); font-weight:700; font-size:calc(14px * var(--fs-scale)); letter-spacing:.14em;
   text-transform:uppercase; color:var(--red); white-space:nowrap; text-decoration:none}
 .navscroll{flex:1; overflow-x:auto; scrollbar-width:none}
 .navscroll::-webkit-scrollbar{display:none}
 .navlist{display:flex; gap:2px; list-style:none; margin:0; padding:0}
-.navlist a{display:block; padding:7px 10px; font-family:var(--font-display); font-weight:500; font-size:12.5px;
+.navlist a{display:block; padding:7px 10px; font-family:var(--font-display); font-weight:500; font-size:calc(12.5px * var(--fs-scale));
   letter-spacing:.09em; text-transform:uppercase; white-space:nowrap; color:var(--ink2); text-decoration:none; border-radius:var(--radius)}
 .navlist a:hover{color:var(--ink); background:var(--surf3)}
 
 /* seletor de aparência */
 .appearance{position:relative; flex:none}
 .themebtn{border:1px solid var(--line); background:var(--surf); color:var(--ink2); border-radius:var(--radius);
-  padding:6px 11px; cursor:pointer; font-family:var(--font-display); font-size:12px; font-weight:500;
+  padding:6px 11px; cursor:pointer; font-family:var(--font-display); font-size:calc(12px * var(--fs-scale)); font-weight:500;
   letter-spacing:.09em; text-transform:uppercase; display:flex; align-items:center; gap:7px}
 .themebtn:hover{border-color:var(--line2); color:var(--ink)}
 .themebtn .dot{width:11px; height:11px; border-radius:50%; background:var(--red); flex:none;
@@ -116,13 +120,13 @@ p{margin:0 0 14px}
 .pop{position:absolute; right:0; top:calc(100% + 8px); width:min(330px, calc(100vw - 32px));
   max-height:min(76vh, 640px); overflow-y:auto; background:var(--surf);
   border:1px solid var(--line2); box-shadow:0 12px 34px -14px rgba(0,0,0,.45); z-index:70; padding:13px}
-.pop h4{font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.14em;
+.pop h4{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); font-weight:600; letter-spacing:.14em;
   text-transform:uppercase; color:var(--ink3); margin:0 0 7px; display:flex; justify-content:space-between; align-items:baseline; gap:8px}
 .pop h4 + h4, .pop .sec2{margin-top:15px}
 .pop h4 button{border:0; background:none; padding:0; cursor:pointer; color:var(--sea);
-  font-family:var(--font-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase}
+  font-family:var(--font-mono); font-size:calc(9.5px * var(--fs-scale)); letter-spacing:.08em; text-transform:uppercase}
 .pop h4 button:hover{color:var(--red)}
-.pop select{width:100%; font-family:var(--font-body); font-size:14px; color:var(--ink);
+.pop select{width:100%; font-family:var(--font-body); font-size:calc(14px * var(--fs-scale)); color:var(--ink);
   background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:6px 8px}
 .pop select + select{margin-top:7px}
 .cpick{display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:center; margin-top:7px}
@@ -131,14 +135,14 @@ p{margin:0 0 14px}
 .cpick input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
 .cpick input[type=color]::-webkit-color-swatch{border:0; border-radius:50%}
 .cpick input[type=color]::-moz-color-swatch{border:0; border-radius:50%}
-.cpick .lab{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em;
+.cpick .lab{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); letter-spacing:.06em;
   text-transform:uppercase; color:var(--ink3); line-height:1.2}
-.cpick input[type=text]{width:100%; font-family:var(--font-mono); font-size:12.5px; text-transform:uppercase;
+.cpick input[type=text]{width:100%; font-family:var(--font-mono); font-size:calc(12.5px * var(--fs-scale)); text-transform:uppercase;
   color:var(--ink); background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:4px 7px; margin-top:2px}
 .cpick input[type=text].bad{border-color:var(--red); color:var(--red)}
 .popseg{display:flex; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
 .popseg button{flex:1; border:0; border-right:1px solid var(--line); background:var(--surf2); color:var(--ink2);
-  font-family:var(--font-display); font-size:12px; font-weight:500; letter-spacing:.05em;
+  font-family:var(--font-display); font-size:calc(12px * var(--fs-scale)); font-weight:500; letter-spacing:.05em;
   padding:7px 4px; cursor:pointer; text-transform:uppercase}
 .popseg button:last-child{border-right:0}
 .popseg button:hover{background:var(--surf3); color:var(--ink)}
@@ -149,16 +153,16 @@ p{margin:0 0 14px}
 .sw:hover{border-color:var(--ink3)}
 .sw[aria-pressed="true"]{border-color:var(--red); border-width:2px; padding:5px 2px 4px}
 .sw i{display:block; width:100%; height:13px; border-radius:2px}
-.sw span{font-family:var(--font-mono); font-size:8px; letter-spacing:.04em; color:var(--ink3);
+.sw span{font-family:var(--font-mono); font-size:calc(8px * var(--fs-scale)); letter-spacing:.04em; color:var(--ink3);
   text-transform:uppercase; line-height:1}
 
 .wrap{max-width:1260px; margin:0 auto; padding-inline:16px}
 section{padding-block:calc(48px * var(--dens)); border-top:1px solid var(--line)}
-.eyebrow{font-family:var(--font-mono); font-size:11.5px; font-weight:600;
+.eyebrow{font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale)); font-weight:600;
   letter-spacing:.18em; text-transform:uppercase; color:var(--red); margin:0 0 10px}
 h2.sec{font-size:calc(clamp(26px,4.2vw,36px) * var(--title-scale)); margin-bottom:8px}
-.lede{color:var(--ink2); font-size:17px; margin:8px 0 0; max-width:64ch}
-.small{font-size:14px; color:var(--ink2)}
+.lede{color:var(--ink2); font-size:calc(17px * var(--fs-scale)); margin:8px 0 0; max-width:64ch}
+.small{font-size:calc(14px * var(--fs-scale)); color:var(--ink2)}
 
 .hero{border-top:0; padding-block:clamp(30px,5vw,54px) 30px;
   background:radial-gradient(900px 320px at 10% -20%, var(--goldsoft), transparent 65%),
@@ -173,16 +177,16 @@ h2.sec{font-size:calc(clamp(26px,4.2vw,36px) * var(--title-scale)); margin-botto
 .panel > .ph{padding:11px 15px; background:var(--surf2); border-bottom:1px solid var(--line);
   display:flex; align-items:baseline; justify-content:space-between; gap:10px}
 .panel > .ph h3{font-size:calc(15px * var(--title-scale)); text-transform:uppercase; letter-spacing:.08em}
-.panel > .ph .hint{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; color:var(--ink3); text-align:right}
+.panel > .ph .hint{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); letter-spacing:.08em; color:var(--ink3); text-align:right}
 .pb{padding:calc(15px * var(--dens))}
 .panel + .panel{margin-top:14px}
 
 .field{margin-bottom:13px}
 .field:last-child{margin-bottom:0}
-.field > label{display:block; font-family:var(--font-mono); font-size:10.5px; font-weight:600;
+.field > label{display:block; font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); font-weight:600;
   letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px}
 select,input[type=text],input[type=number],textarea{
-  width:100%; font-family:var(--font-body); font-size:15px; color:var(--ink);
+  width:100%; font-family:var(--font-body); font-size:calc(15px * var(--fs-scale)); color:var(--ink);
   background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:8px 10px}
 textarea{line-height:1.5; resize:vertical; min-height:130px}
 input[type=number]{font-family:var(--font-mono); text-align:center}
@@ -191,7 +195,7 @@ input[type=number]{font-family:var(--font-mono); text-align:center}
 
 .seg{display:flex; flex-wrap:wrap; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
 .seg button{flex:1 1 auto; min-width:86px; border:0; border-right:1px solid var(--line); background:var(--surf2);
-  color:var(--ink2); font-family:var(--font-display); font-size:13px; font-weight:500; letter-spacing:.05em;
+  color:var(--ink2); font-family:var(--font-display); font-size:calc(13px * var(--fs-scale)); font-weight:500; letter-spacing:.05em;
   padding:8px 6px; cursor:pointer; text-transform:uppercase}
 .seg button:last-child{border-right:0}
 .seg button:hover{background:var(--surf3); color:var(--ink)}
@@ -199,35 +203,35 @@ input[type=number]{font-family:var(--font-mono); text-align:center}
 
 /* catálogo de efeitos */
 .catgroup{border-top:1px solid var(--line)}
-.catgroup > h4{font-family:var(--font-mono); font-size:10.5px; font-weight:600; letter-spacing:.14em;
+.catgroup > h4{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); font-weight:600; letter-spacing:.14em;
   text-transform:uppercase; color:var(--ink3); padding:11px 15px 7px; background:var(--surf2)}
 .efx{border-bottom:1px solid var(--line)}
 .efx > .top{display:grid; grid-template-columns:20px 1fr; gap:10px; align-items:start; padding:calc(10px * var(--dens)) 15px; cursor:pointer}
 .efx > .top:hover{background:var(--surf2)}
 .efx input[type=checkbox]{width:16px; height:16px; margin:3px 0 0; accent-color:var(--red); cursor:pointer}
 .efx .head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap}
-.efx .nm{display:block; font-family:var(--font-display); font-weight:500; font-size:15.5px; line-height:1.2}
-.efx .pp{font-family:var(--font-mono); font-size:11.5px; font-weight:600; color:var(--gold);
+.efx .nm{display:block; font-family:var(--font-display); font-weight:500; font-size:calc(15.5px * var(--fs-scale)); line-height:1.2}
+.efx .pp{font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale)); font-weight:600; color:var(--gold);
   white-space:nowrap; flex:none}
 .efx .pp.neg{color:var(--ok)}
-.efx .ds{display:block; font-size:13.5px; color:var(--ink2); line-height:1.45; margin-top:4px}
+.efx .ds{display:block; font-size:calc(13.5px * var(--fs-scale)); color:var(--ink2); line-height:1.45; margin-top:4px}
 .efx .extra{display:none; padding:0 15px 12px 45px}
 .efx.on .extra{display:block}
 .efx.on > .top{background:var(--redsoft)}
 .opt{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:9px}
-.opt > label{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em;
+.opt > label{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); letter-spacing:.08em;
   text-transform:uppercase; color:var(--ink3); flex:none}
-.opt input[type=number]{width:66px; padding:4px; font-size:14px}
-.opt select{width:auto; min-width:150px; padding:5px 8px; font-size:14px}
-.opt .out{font-family:var(--font-mono); font-size:13px; color:var(--ink2)}
-.chk{display:flex; align-items:flex-start; gap:8px; margin-top:9px; font-size:14px; color:var(--ink2); cursor:pointer}
+.opt input[type=number]{width:66px; padding:4px; font-size:calc(14px * var(--fs-scale))}
+.opt select{width:auto; min-width:150px; padding:5px 8px; font-size:calc(14px * var(--fs-scale))}
+.opt .out{font-family:var(--font-mono); font-size:calc(13px * var(--fs-scale)); color:var(--ink2)}
+.chk{display:flex; align-items:flex-start; gap:8px; margin-top:9px; font-size:calc(14px * var(--fs-scale)); color:var(--ink2); cursor:pointer}
 .chk input{width:15px; height:15px; margin:3px 0 0; accent-color:var(--red)}
 .chk b{font-family:var(--font-display); font-weight:500; color:var(--ink)}
-.chk .cost{font-family:var(--font-mono); font-size:12px; color:var(--gold)}
-.warn{display:block; padding:0 15px 10px 45px; font-size:13px; color:var(--red)}
+.chk .cost{font-family:var(--font-mono); font-size:calc(12px * var(--fs-scale)); color:var(--gold)}
+.warn{display:block; padding:0 15px 10px 45px; font-size:calc(13px * var(--fs-scale)); color:var(--red)}
 
 .conds{display:flex; flex-wrap:wrap; gap:5px; margin-top:9px}
-.cond{font-family:var(--font-mono); font-size:11px; padding:3px 7px; border:1px solid var(--line2);
+.cond{font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); padding:3px 7px; border:1px solid var(--line2);
   background:var(--surf2); color:var(--ink2); border-radius:2px; cursor:pointer; white-space:nowrap}
 .cond:hover{border-color:var(--red); color:var(--ink)}
 .cond[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:var(--onaccent)}
@@ -236,22 +240,19 @@ input[type=number]{font-family:var(--font-mono); text-align:center}
 /* razão */
 .side{position:sticky; top:calc(env(safe-area-inset-top,0px) + 64px)}
 .ledger{background:var(--surf); border:1px solid var(--line)}
-.ledgerhead{padding:10px 15px; background:var(--ink); color:var(--paper);
+.ledgerhead{padding:10px 15px; background:var(--bar); color:var(--bar-ink);
   display:flex; align-items:baseline; justify-content:space-between; gap:10px}
-:root[data-theme="dark"] .ledgerhead,
-:root:not([data-theme="light"]) .ledgerhead{background:var(--surf3); color:var(--ink)}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .ledgerhead{background:var(--ink); color:#E9EDEF}}
-.ledgerhead .t{font-family:var(--font-display); font-size:14px; font-weight:600; letter-spacing:.1em; text-transform:uppercase}
+.ledgerhead .t{font-family:var(--font-display); font-size:calc(14px * var(--fs-scale)); font-weight:600; letter-spacing:.1em; text-transform:uppercase}
 .gauge{padding:13px 15px 15px}
 .gaugetop{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px}
-.gaugetop b{font-family:var(--font-display); font-size:34px; font-weight:600; line-height:1; color:var(--gold)}
+.gaugetop b{font-family:var(--font-display); font-size:calc(34px * var(--fs-scale)); font-weight:600; line-height:1; color:var(--gold)}
 .gaugetop b.over{color:var(--red)}
-.gaugetop span{font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--ink3)}
+.gaugetop span{font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); letter-spacing:.08em; color:var(--ink3)}
 .bar{height:8px; background:var(--surf3); border:1px solid var(--line); border-radius:2px; overflow:hidden}
 .bar i{display:block; height:100%; background:var(--gold)}
 .bar i.over{background:var(--red)}
 .lines{border-top:1px solid var(--line)}
-.lines .ln{display:flex; justify-content:space-between; gap:10px; padding:calc(6px * var(--dens)) 15px; font-size:14px; border-bottom:1px solid var(--line)}
+.lines .ln{display:flex; justify-content:space-between; gap:10px; padding:calc(6px * var(--dens)) 15px; font-size:calc(14px * var(--fs-scale)); border-bottom:1px solid var(--line)}
 .lines .ln:last-child{border-bottom:0}
 .lines .ln span:first-child{color:var(--ink2)}
 .lines .ln span:last-child{font-family:var(--font-mono); font-weight:500; white-space:nowrap}
@@ -262,86 +263,86 @@ input[type=number]{font-family:var(--font-mono); text-align:center}
 .lines .ln.cap span:last-child{color:var(--gold)}
 
 .alerts{padding:0 15px 13px}
-.alert{font-size:13.5px; padding:8px 11px; border-left:3px solid var(--red); background:var(--redsoft); margin-top:9px}
+.alert{font-size:calc(13.5px * var(--fs-scale)); padding:8px 11px; border-left:3px solid var(--red); background:var(--redsoft); margin-top:9px}
 .alert.ok{border-left-color:var(--ok); background:var(--oksoft)}
 .alert.warn{border-left-color:var(--gold); background:var(--goldsoft)}
 
 /* bloco da técnica */
 .statblock{background:var(--surf); border:1px solid var(--line2); margin-top:14px}
-.sb-grade{padding:7px 15px; background:var(--ink); color:var(--paper);
-  font-family:var(--font-display); font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase}
-:root[data-theme="dark"] .sb-grade,
-:root:not([data-theme="light"]) .sb-grade{background:var(--surf3); color:var(--ink)}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .sb-grade{background:var(--ink); color:#E9EDEF}}
+.sb-grade{padding:7px 15px; background:var(--bar); color:var(--bar-ink);
+  font-family:var(--font-display); font-size:calc(12px * var(--fs-scale)); font-weight:600; letter-spacing:.16em; text-transform:uppercase}
 .sb-name{padding:12px 15px 4px; font-family:var(--font-display); font-size:calc(24px * var(--title-scale)); font-weight:600;
   text-transform:uppercase; letter-spacing:.02em; line-height:1.1}
-.sb-desc{padding:0 15px 13px; font-size:14.5px; color:var(--ink2); white-space:pre-wrap}
+.sb-desc{padding:0 15px 13px; font-size:calc(14.5px * var(--fs-scale)); color:var(--ink2); white-space:pre-wrap}
 .sb-rows{border-top:1px solid var(--line)}
-.sb-cell{padding:calc(7px * var(--dens)) 15px; display:flex; justify-content:space-between; gap:12px; font-size:14px;
+.sb-cell{padding:calc(7px * var(--dens)) 15px; display:flex; justify-content:space-between; gap:12px; font-size:calc(14px * var(--fs-scale));
   border-bottom:1px solid var(--line)}
 .sb-cell:last-child{border-bottom:0}
-.sb-cell em{font-style:normal; font-family:var(--font-mono); font-size:10px; font-weight:600;
+.sb-cell em{font-style:normal; font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); font-weight:600;
   letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); padding-top:3px; flex:none}
 .sb-cell b{font-family:var(--font-body); font-weight:500; text-align:right}
-.sb-cell.acc b{color:var(--red); font-family:var(--font-display); font-size:16px; font-weight:600}
+.sb-cell.acc b{color:var(--red); font-family:var(--font-display); font-size:calc(16px * var(--fs-scale)); font-weight:600}
 .sb-cell.stack{display:block}
 .sb-cell.stack em{display:block; margin-bottom:5px}
 .sb-efx{list-style:none; margin:0; padding:0}
-.sb-efx li{font-size:14px; padding:2px 0 2px 13px; position:relative; color:var(--ink)}
+.sb-efx li{font-size:calc(14px * var(--fs-scale)); padding:2px 0 2px 13px; position:relative; color:var(--ink)}
 .sb-efx li::before{content:"·"; position:absolute; left:2px; color:var(--red); font-weight:700}
-.sb-efx li i{font-style:normal; font-family:var(--font-mono); font-size:11.5px; color:var(--ink3)}
+.sb-efx li i{font-style:normal; font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale)); color:var(--ink3)}
+.sb-forma{background:var(--goldsoft)}
+.sb-forma em{color:var(--gold)}
+.sb-forma-txt{font-size:calc(14px * var(--fs-scale)); color:var(--ink); white-space:pre-wrap}
 .actions{display:flex; gap:9px; padding:13px 15px; border-top:1px solid var(--line); flex-wrap:wrap; align-items:center}
-.btn{font-family:var(--font-display); font-size:13px; font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+.btn{font-family:var(--font-display); font-size:calc(13px * var(--fs-scale)); font-weight:500; letter-spacing:.06em; text-transform:uppercase;
   padding:8px 13px; border:1px solid var(--line2); background:var(--surf2); color:var(--ink); border-radius:var(--radius); cursor:pointer}
 .btn:hover{border-color:var(--red); color:var(--red)}
 .btn.primary{background:var(--red); border-color:var(--red); color:var(--onaccent)}
 .btn.primary:hover{opacity:.87; color:var(--onaccent)}
 .btn.ghost{color:var(--ink2)}
-.toast{font-family:var(--font-mono); font-size:12px; color:var(--ok)}
+.toast{font-family:var(--font-mono); font-size:calc(12px * var(--fs-scale)); color:var(--ok)}
 
 /* conta na barra do topo — só aparece no site hospedado, com chaves configuradas */
 #btn-conta img{border-radius:50%; background:var(--surf3); object-fit:cover; flex:none}
 #conta-rotulo{max-width:11ch; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.conta-txt{font-size:13.5px; color:var(--ink2); line-height:1.45; margin:0 0 11px}
+.conta-txt{font-size:calc(13.5px * var(--fs-scale)); color:var(--ink2); line-height:1.45; margin:0 0 11px}
 .conta-quem{line-height:1.3}
-.conta-quem b{display:block; font-family:var(--font-display); font-weight:500; font-size:17px;
+.conta-quem b{display:block; font-family:var(--font-display); font-weight:500; font-size:calc(17px * var(--fs-scale));
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.conta-quem span{display:block; font-family:var(--font-mono); font-size:10.5px;
+.conta-quem span{display:block; font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale));
   letter-spacing:.06em; color:var(--ink3); margin-top:2px}
 .conta-quem span.ok{color:var(--ok)}
 .conta-quem span.bad{color:var(--red)}
 
 .drafts{padding:12px 15px}
 .draftlist{display:flex; flex-wrap:wrap; gap:6px; margin-top:9px}
-.draft{display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11.5px;
+.draft{display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale));
   border:1px solid var(--line2); background:var(--surf2); padding:3px 4px 3px 8px; border-radius:2px}
 .draft i{font-style:normal; color:var(--red); font-weight:600}
-.drafts .aviso{font-size:12px; color:var(--ink2); line-height:1.45}
+.drafts .aviso{font-size:calc(12px * var(--fs-scale)); color:var(--ink2); line-height:1.45}
 .drafts .aviso.bad{color:var(--red)}
 .drafts .aviso.ok{color:var(--ok)}
-.draft button{border:0; background:none; color:var(--ink3); cursor:pointer; font-size:14px; line-height:1; padding:0 3px}
+.draft button{border:0; background:none; color:var(--ink3); cursor:pointer; font-size:calc(14px * var(--fs-scale)); line-height:1; padding:0 3px}
 .draft button:hover{color:var(--red)}
 .draft span{cursor:pointer}
 .draft span:hover{color:var(--red)}
 
 /* referência */
 .tablebox{overflow-x:auto; border:1px solid var(--line); background:var(--surf); margin:18px 0}
-table{border-collapse:collapse; width:100%; min-width:560px; font-size:14px}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:calc(14px * var(--fs-scale))}
 th,td{text-align:left; padding:calc(8px * var(--dens)) 12px; border-bottom:1px solid var(--line); vertical-align:top}
-thead th{font-family:var(--font-mono); font-size:10.5px; font-weight:600; letter-spacing:.12em;
+thead th{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); font-weight:600; letter-spacing:.12em;
   text-transform:uppercase; color:var(--ink3); background:var(--surf2); white-space:nowrap; border-bottom:1px solid var(--line2)}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover{background:var(--surf2)}
 td.num,th.num{font-family:var(--font-mono); font-variant-numeric:tabular-nums; white-space:nowrap}
-td strong{font-family:var(--font-display); font-weight:500; font-size:15px}
-.note{border-left:3px solid var(--gold); background:var(--goldsoft); padding:12px 15px; margin:18px 0; font-size:15px}
+td strong{font-family:var(--font-display); font-weight:500; font-size:calc(15px * var(--fs-scale))}
+.note{border-left:3px solid var(--gold); background:var(--goldsoft); padding:12px 15px; margin:18px 0; font-size:calc(15px * var(--fs-scale))}
 .note b{font-family:var(--font-display)}
 .note p:last-child{margin-bottom:0}
 .grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px}
 .card{background:var(--surf); border:1px solid var(--line); padding:calc(15px * var(--dens)) 16px}
 .card h3{font-size:calc(18px * var(--title-scale)); margin-bottom:6px}
 .card p:last-child{margin-bottom:0}
-footer{border-top:1px solid var(--line); padding-block:26px 40px; color:var(--ink3); font-size:13.5px}
+footer{border-top:1px solid var(--line); padding-block:26px 40px; color:var(--ink3); font-size:calc(13.5px * var(--fs-scale))}
 footer p{margin:0 0 5px}
 
 /* superfícies translúcidas quando há fundo — a 100% ficam idênticas ao sólido */
@@ -352,15 +353,15 @@ footer p{margin:0 0 5px}
 
 /* controles deslizantes do painel de aparência */
 .pop .slider{display:grid; grid-template-columns:1fr auto; gap:4px 8px; align-items:center; margin-top:9px}
-.pop .slider .lab{font-family:var(--font-mono); font-size:10px; letter-spacing:.06em;
+.pop .slider .lab{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); letter-spacing:.06em;
   text-transform:uppercase; color:var(--ink3)}
-.pop .slider .val{font-family:var(--font-mono); font-size:11px; color:var(--ink2); text-align:right}
+.pop .slider .val{font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); color:var(--ink2); text-align:right}
 .pop .slider input[type=range]{grid-column:1 / -1; width:100%; accent-color:var(--red); margin:0}
 .pop .filelinha{display:flex; gap:7px; margin-top:8px; flex-wrap:wrap}
-.pop .filelinha .btn{flex:1 1 auto; padding:6px 10px; font-size:12px}
-.pop .aviso{font-size:12px; color:var(--ink2); margin-top:7px; line-height:1.4}
+.pop .filelinha .btn{flex:1 1 auto; padding:6px 10px; font-size:calc(12px * var(--fs-scale))}
+.pop .aviso{font-size:calc(12px * var(--fs-scale)); color:var(--ink2); margin-top:7px; line-height:1.4}
 .pop .aviso.bad{color:var(--red)}
-.pop .chkline{display:flex; align-items:center; gap:8px; margin-top:9px; font-size:13px; color:var(--ink2); cursor:pointer}
+.pop .chkline{display:flex; align-items:center; gap:8px; margin-top:9px; font-size:calc(13px * var(--fs-scale)); color:var(--ink2); cursor:pointer}
 .pop .chkline input{width:15px; height:15px; accent-color:var(--red); margin:0}
 
 @media (max-width:960px){ .forge{grid-template-columns:1fr} .side{position:static} }
@@ -443,6 +444,26 @@ footer p{margin:0 0 5px}
         <div class="cpick">
           <input type="color" id="c-ink2" aria-label="Cor do texto secundário">
           <span><span class="lab">Texto secundário</span><input type="text" id="h-ink2" maxlength="7" spellcheck="false" aria-label="Hex da cor do texto secundário"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-surf" aria-label="Cor dos painéis">
+          <span><span class="lab">Painéis</span><input type="text" id="h-surf" maxlength="7" spellcheck="false" aria-label="Hex da cor dos painéis"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-surf2" aria-label="Cor dos cabeçalhos e campos">
+          <span><span class="lab">Cabeçalhos e campos</span><input type="text" id="h-surf2" maxlength="7" spellcheck="false" aria-label="Hex da cor dos cabeçalhos e campos"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-bar" aria-label="Cor das barras escuras">
+          <span><span class="lab">Barras escuras</span><input type="text" id="h-bar" maxlength="7" spellcheck="false" aria-label="Hex da cor das barras escuras"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-bar-ink" aria-label="Texto sobre as barras">
+          <span><span class="lab">Texto das barras</span><input type="text" id="h-bar-ink" maxlength="7" spellcheck="false" aria-label="Hex do texto sobre as barras"></span>
+        </div>
+        <div class="cpick">
+          <input type="color" id="c-line" aria-label="Cor das bordas">
+          <span><span class="lab">Bordas e divisórias</span><input type="text" id="h-line" maxlength="7" spellcheck="false" aria-label="Hex da cor das bordas"></span>
         </div>
 
         <h4 class="sec2">Fundo <button type="button" id="btn-reset-fundo">Voltar ao padrão</button></h4>
@@ -555,11 +576,11 @@ footer p{margin:0 0 5px}
                 <select id="f-grau"></select>
               </div>
               <div class="field" id="wrap-forma">
-                <label for="f-forma">Forma</label>
+                <label for="f-forma">Forma adicional</label>
                 <select id="f-forma">
-                  <option value="normal">Normal</option>
-                  <option value="alternativa">Forma Alternativa</option>
-                  <option value="aperfeicoada">Forma Aperfeiçoada</option>
+                  <option value="normal">Nenhuma — só a Técnica</option>
+                  <option value="alternativa">+ Forma Alternativa</option>
+                  <option value="aperfeicoada">+ Forma Aperfeiçoada</option>
                 </select>
               </div>
             </div>
@@ -675,8 +696,53 @@ footer p{margin:0 0 5px}
           </div>
         </div>
 
+        <div class="panel" id="panel-forma" hidden>
+          <div class="ph"><h3 id="forma-titulo">Forma adicional</h3><div class="hint" id="forma-hint">—</div></div>
+          <div class="pb">
+            <p class="small" id="forma-nota" style="margin:0 0 12px"></p>
+            <div class="row2">
+              <div class="field">
+                <label for="fx-nome">Nome da forma</label>
+                <input type="text" id="fx-nome" maxlength="60" placeholder="Gomu-Gomu no Cannon">
+              </div>
+              <div class="field" id="wrap-fx-grau">
+                <label for="fx-grau">Grau da forma</label>
+                <select id="fx-grau"></select>
+              </div>
+            </div>
+            <div class="row3">
+              <div class="field">
+                <label for="fx-dados">Dados de dano</label>
+                <input type="number" id="fx-dados" min="0" max="14" step="1" value="0">
+              </div>
+              <div class="field">
+                <label for="fx-tipodano">Tipo de dano</label>
+                <select id="fx-tipodano"></select>
+              </div>
+              <div class="field">
+                <label for="fx-alcance">Alcance</label>
+                <select id="fx-alcance">
+                  <option value="">Mesmo da Técnica</option>
+                  <option value="toque">Toque</option>
+                  <option value="pessoal">Pessoal</option>
+                  <option value="linha">Linha</option>
+                  <option value="cone">Cone</option>
+                  <option value="esfera">Esfera</option>
+                  <option value="cilindro">Cilindro</option>
+                  <option value="emanacao">Emanação</option>
+                </select>
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label for="fx-texto">O que muda nessa forma</label>
+              <textarea id="fx-texto" spellcheck="true" style="min-height:76px"
+                placeholder="Ex.: No 12º nível, você pode usar essa Técnica como uma Técnica de 5º Grau, seu dano aumenta para 6d10 de dano Contundente, seu alcance se torna 33 metros em Linha e perde seu efeito anterior."></textarea>
+            </div>
+          </div>
+        </div>
+
         <div class="panel">
-          <div class="ph"><h3>4 · Efeitos</h3><div class="hint">Cada efeito soma ou desconta PP</div></div>
+          <div class="ph"><h3>5 · Efeitos</h3><div class="hint">Cada efeito soma ou desconta PP</div></div>
           <div id="efeitos-catalogo"></div>
         </div>
 
@@ -688,7 +754,7 @@ footer p{margin:0 0 5px}
           <div class="ledgerhead">
             <div class="t" id="ledger-title">Orçamento de PP</div>
             <button class="btn ghost" type="button" id="btn-clear"
-              style="padding:4px 9px; font-size:11px; background:transparent; border-color:currentColor; color:inherit">Limpar tudo</button>
+              style="padding:4px 9px; font-size:calc(11px * var(--fs-scale)); background:transparent; border-color:currentColor; color:inherit">Limpar tudo</button>
           </div>
           <div class="gauge">
             <div class="gaugetop"><b id="g-gasto">0</b><span id="g-limite">de 0 PP</span></div>
@@ -723,8 +789,8 @@ footer p{margin:0 0 5px}
             <p class="aviso" id="aviso-drafts" style="margin-top:8px">As técnicas ficam só neste navegador. Copie o código de vez em quando — é ele que sobrevive a trocar de computador ou limpar os dados do site, e dá para mandar pelo Discord.</p>
 
             <div id="export-box" hidden style="margin-top:10px">
-              <label for="export-text" id="export-label" style="display:block; font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px">Código das suas técnicas</label>
-              <textarea id="export-text" readonly spellcheck="false" style="min-height:110px; font-family:var(--font-mono); font-size:11.5px"></textarea>
+              <label for="export-text" id="export-label" style="display:block; font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px">Código das suas técnicas</label>
+              <textarea id="export-text" readonly spellcheck="false" style="min-height:110px; font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale))"></textarea>
               <div class="filelinha">
                 <button class="btn primary" type="button" id="btn-copiar-export">Copiar</button>
                 <button class="btn" type="button" id="btn-so-aberta">Só a técnica aberta</button>
@@ -735,8 +801,8 @@ footer p{margin:0 0 5px}
             </div>
 
             <div id="import-box" hidden style="margin-top:10px">
-              <label for="import-text" style="display:block; font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px">Cole aqui o código recebido</label>
-              <textarea id="import-text" spellcheck="false" placeholder="{&quot;app&quot;:&quot;op-rpg-forja&quot;,…}" style="min-height:96px; font-family:var(--font-mono); font-size:11.5px"></textarea>
+              <label for="import-text" style="display:block; font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px">Cole aqui o código recebido</label>
+              <textarea id="import-text" spellcheck="false" placeholder="{&quot;app&quot;:&quot;op-rpg-forja&quot;,…}" style="min-height:96px; font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale))"></textarea>
               <div class="filelinha">
                 <button class="btn primary" type="button" id="btn-import-ok">Importar</button>
                 <button class="btn" type="button" id="btn-import-cancel">Fechar</button>
@@ -810,7 +876,7 @@ footer p{margin:0 0 5px}
       <div class="card"><h3>Teto absoluto</h3>
         <p class="small" style="margin-bottom:0">O máximo de dados é <strong>o dobro do grau</strong> — e como cada dado custa 1 PP, gastar tudo em dano consome o orçamento inteiro. Todo efeito adicional exige cortar dados ou pagar com um efeito de redução.</p></div>
     </div>
-    <h3 style="font-size:22px; margin-top:34px">Custo por tipo de dano (regra opcional)</h3>
+    <h3 style="font-size:calc(22px * var(--fs-scale)); margin-top:34px">Custo por tipo de dano (regra opcional)</h3>
     <div class="tablebox">
       <table>
         <thead><tr><th class="num">Custo</th><th>Tipos de dano</th></tr></thead>
@@ -978,16 +1044,21 @@ var FONTES_NUM = [
   ["atkinson","Atkinson Hyperlegible",  '"Atkinson Hyperlegible",system-ui,sans-serif']
 ];
 var CORES_LIVRES = [
-  {id:"red",   varname:"--red"},
-  {id:"gold",  varname:"--gold"},
-  {id:"sea",   varname:"--sea"},
-  {id:"ok",    varname:"--ok"},
-  {id:"ink",   varname:"--ink"},
-  {id:"ink2",  varname:"--ink2"},
-  {id:"paper", varname:"--paper"}
+  {id:"red",     varname:"--red"},
+  {id:"gold",    varname:"--gold"},
+  {id:"sea",     varname:"--sea"},
+  {id:"ok",      varname:"--ok"},
+  {id:"ink",     varname:"--ink"},
+  {id:"ink2",    varname:"--ink2"},
+  {id:"paper",   varname:"--paper"},
+  {id:"surf",    varname:"--surf"},
+  {id:"surf2",   varname:"--surf2"},
+  {id:"bar",     varname:"--bar"},
+  {id:"bar-ink", varname:"--bar-ink"},
+  {id:"line",    varname:"--line"}
 ];
 var FORMATACAO = [
-  {id:"tamanho",    varname:"--fs-base",    sel:"f-tamanho",    padrao:"16"},
+  {id:"tamanho",    varname:"--fs-scale",   sel:"f-tamanho",    padrao:"16"},
   {id:"titulos",    varname:"--title-scale",sel:"f-titulos",    padrao:"1"},
   {id:"entrelinha", varname:"--lh",         sel:"f-entrelinha", padrao:"1.6"},
   {id:"densidade",  varname:"--dens",       sel:"f-densidade",  padrao:"1"},
@@ -1103,7 +1174,9 @@ function aplicarAparencia(){
   root.style.setProperty("--font-body", acharFonte(FONTES_CORPO, fontes.corpo)[2]);
   root.style.setProperty("--font-mono", acharFonte(FONTES_NUM, fontes.numeros)[2]);
   root.style.setProperty("--ls-title", fontes.display === "bebas" ? ".03em" : "0em");
-  root.style.setProperty("--fs-base", formatacao.tamanho + "px");
+  /* o tamanho vira uma escala, porque quase todo texto da página tem
+     tamanho próprio em px — sem a escala só o corpo mudaria */
+  root.style.setProperty("--fs-scale", (Number(formatacao.tamanho) / 16).toFixed(4));
   root.style.setProperty("--title-scale", formatacao.titulos);
   root.style.setProperty("--lh", formatacao.entrelinha);
   root.style.setProperty("--dens", formatacao.densidade);
@@ -1638,6 +1711,7 @@ function estadoInicial(){
     alvo:"area-limitada", dados:4, tipoDano:"Contundente", salvAtr:"Destreza",
     regraDano:false, afinidade:"Contundente",
     requisito:"poderosa", alcance:"linha", duracao:"Instantâneo",
+    fx:{nome:"", grau:3, dados:0, tipoDano:"Contundente", alcance:"", texto:""},
     ativos:{}, qtds:{}, escolhas:{}, escolhas2:{}, opts:{}, prolong:{}, prolongMin:{},
     condsPor:{"condicao":[], "efeito-colateral":[]},
     descTocada:false
@@ -1653,6 +1727,14 @@ function specs(){
   if(S.tipo === "auxiliar-desperta") return AUX_DESP;
   if(isMP()) return GRAUS[2];
   return GRAUS[S.grau];
+}
+function temForma(){ return S.tipo === "combate" && S.forma !== "normal"; }
+function grauForma(){
+  if(S.forma === "aperfeicoada"){
+    var g = Number(S.fx.grau) || (S.grau + 1);
+    return Math.max(S.grau + 1, Math.min(g, Math.min(S.grau + 2, 5)));
+  }
+  return S.grau;
 }
 function ehArea(){
   if(["cone","esfera","cilindro","emanacao"].indexOf(S.alcance) >= 0) return true;
@@ -1758,7 +1840,7 @@ function montarCatalogo(){
       if(e.prolongBase){
         extra += '<label class="chk"><input type="checkbox" data-prol="' + e.id + '">'
           + '<span><b>Duração prolongada</b> <span class="cost" id="pc-' + e.id + '"></span><br>'
-          + '<span style="font-size:13px">' + (e.prolongTxt || "") + '</span></span></label>'
+          + '<span style="font-size:calc(13px * var(--fs-scale))">' + (e.prolongTxt || "") + '</span></span></label>'
           + '<div class="opt" id="pm-' + e.id + '" hidden><label for="pmin-' + e.id + '">minutos</label>'
           + '<input type="number" id="pmin-' + e.id + '" data-pmin="' + e.id + '" min="1" max="'
           + (e.prolongMax || 10) + '" step="1" value="1"></div>';
@@ -1867,15 +1949,6 @@ function calcular(){
   var bruto = somaEfeitos - redAplicada;
 
   var extraForma = 0;
-  if(S.tipo === "combate" && S.forma !== "normal"){
-    if(S.origem === "estilo") extraForma = 0;
-    else if(S.forma === "aperfeicoada") extraForma = Math.floor(Math.min(S.grau + 2, 5) / 2);
-    else extraForma = Math.floor(S.grau / 2);
-    if(extraForma > 0){
-      linhas.push({k:"Forma " + (S.forma === "aperfeicoada" ? "Aperfeiçoada" : "Alternativa"), v:"+" + extraForma + " PP"});
-      bruto += extraForma;
-    }
-  }
 
   var descEstilo = 0;
   if(S.origem === "estilo" && !isMP()){
@@ -1974,8 +2047,40 @@ function calcular(){
     if(w){ w.hidden = ok; w.textContent = ok ? "" : e.nm + " " + msg; }
   });
 
+  /* ── forma adicional: técnica à parte, com custo próprio (Cap. 6.5) ── */
+  var fx = null;
+  if(temForma()){
+    var gf = grauForma();
+    var sobretaxa = (S.origem === "estilo") ? 0 : Math.floor(gf / 2);
+    var dadosFx = Math.max(0, Number(S.fx.dados) || 0);
+    var custoFx = Math.max(1, dadosFx + sobretaxa);
+    var maxDadosFx = GRAUS[gf].dados;
+    /* a sobretaxa entra POR CIMA do teto do grau: o Gomu-Gomu no Cannon do
+       livro é 5º grau (teto 10 PP) e custa 12 PP — 10 do grau + 2 da forma */
+    var maxFx = GRAUS[gf].pp + sobretaxa;
+
+    fx = {
+      grau: gf, dados: dadosFx, custo: custoFx, sobretaxa: sobretaxa,
+      limite: maxFx, nome: S.fx.nome || "(sem nome)",
+      rotulo: S.forma === "aperfeicoada" ? "Forma Aperfeiçoada" : "Forma Alternativa"
+    };
+
+    if(dadosFx > maxDadosFx)
+      alertas.push({t:"erro", m:"A forma é de " + gf + "º grau, então o máximo é " + maxDadosFx
+        + " dados de dano — você colocou " + dadosFx + "."});
+    if(custoFx > maxFx)
+      alertas.push({t:"erro", m:"A forma custa " + custoFx + " PP, acima do teto de " + maxFx
+        + " PP (teto do " + gf + "º grau mais a sobretaxa da forma)."});
+    if(S.forma === "aperfeicoada" && S.grau >= 5)
+      alertas.push({t:"warn", m:"A Forma Aperfeiçoada tem teto no 5º grau, então uma Técnica de "
+        + S.grau + "º grau não pode receber uma."});
+    if(S.forma === "aperfeicoada")
+      alertas.push({t:"warn", m:"A Forma Aperfeiçoada só é executável quando você já tiver ao menos uma Técnica de Combate de "
+        + gf + "º grau vinda do mesmo fruto, e o fruto dá uma por grau."});
+  }
+
   return {linhas:linhas, total:total, limite:limite, rotuloLimite:rotuloLimite,
-          alertas:alertas, resumo:resumoEfeitos};
+          alertas:alertas, resumo:resumoEfeitos, fx:fx};
 }
 
 /* ═════════ textos ═════════ */
@@ -2131,7 +2236,30 @@ function opcoesRequisito(){
 
 function render(){
   $("wrap-grau").hidden = S.tipo !== "combate";
-  $("wrap-forma").hidden = S.tipo === "mp";
+  $("wrap-forma").hidden = S.tipo !== "combate";
+  $("panel-forma").hidden = !temForma();
+  if(temForma()){
+    var gf = grauForma(), aperf = S.forma === "aperfeicoada";
+    $("forma-titulo").textContent = aperf ? "Forma Aperfeiçoada" : "Forma Alternativa";
+    $("wrap-fx-grau").hidden = !aperf;
+    var selg = $("fx-grau"), opcoes = [];
+    if(aperf) for(var k = S.grau + 1; k <= Math.min(S.grau + 2, 5); k++) opcoes.push(k);
+    else opcoes.push(S.grau);
+    if(selg.dataset.para !== opcoes.join(",")){
+      selg.dataset.para = opcoes.join(",");
+      selg.innerHTML = opcoes.map(function(n){
+        return '<option value="' + n + '">' + n + 'º grau — ' + GRAUS[n].pp + ' PP · até ' + GRAUS[n].dados + ' dados</option>';
+      }).join("");
+    }
+    selg.value = String(gf);
+    $("forma-hint").textContent = GRAUS[gf].pp + " PP · até " + GRAUS[gf].dados + " dados";
+    $("forma-nota").innerHTML = aperf
+      ? "A Forma Aperfeiçoada é uma Técnica <strong>nova</strong>, de até 2 graus acima da original (teto no 5º grau), com os limites do grau novo. Os efeitos da Técnica original são mantidos, salvo quando o texto disser que deixam de valer."
+      : "A Forma Alternativa fica no <strong>mesmo grau</strong> da Técnica e pode mudar dado, tipo de dano, alcance, efeitos e condições."
+      + (S.origem === "estilo"
+         ? " Como a Técnica vem de um Estilo de Combate, a forma <strong>não custa PP a mais</strong>."
+         : " O acréscimo é de metade do grau, arredondado para baixo.");
+  }
   $("wrap-ativacao").hidden = !isMP();
   $("panel-dano").style.opacity = (isAux() || isMP()) ? ".62" : "1";
   $("afinidade-wrap").hidden = !S.regraDano;
@@ -2191,7 +2319,7 @@ function render(){
   $("sb-grade").textContent = isMP() ? "Manifestação de Poder"
     : (S.tipo === "auxiliar" ? "Técnica Auxiliar"
     : (S.tipo === "auxiliar-desperta" ? "Técnica Auxiliar Desperta"
-    : S.grau + "º Grau" + (S.forma === "aperfeicoada" ? " · Forma Aperfeiçoada" : (S.forma === "alternativa" ? " · Forma Alternativa" : ""))));
+    : S.grau + "º Grau"));
   $("sb-name").textContent = S.nome || "Sem nome";
   $("sb-desc").textContent = $("f-desc").value;
 
@@ -2213,6 +2341,25 @@ function render(){
         }).join("") + '</ul></div>';
   }
   if(S.tipo === "combate") row("Ataque Combinado", ataqueCombinado() ? "Possível" : "Impossível");
+
+  if(r.fx){
+    var partes = [];
+    if(S.fx.texto.trim()) partes.push(S.fx.texto.trim());
+    else if(S.forma === "aperfeicoada")
+      partes.push("No " + GRAUS[r.fx.grau].nivel + " nível, você pode usar essa Técnica como uma Técnica de "
+        + r.fx.grau + "º Grau" + (r.fx.dados ? ", com " + r.fx.dados + "d10 de dano " + S.fx.tipoDano : "")
+        + ", custando " + r.fx.custo + " PP.");
+    else
+      partes.push("Alternativamente: " + (r.fx.dados
+        ? "a Técnica causa " + r.fx.dados + "d10 de dano " + S.fx.tipoDano + ", custando " + r.fx.custo + " PP."
+        : "descreva aqui o que muda."));
+
+    rows += '<div class="sb-cell stack sb-forma"><em>&lt;' + (S.fx.nome || r.fx.rotulo) + '&gt; · '
+      + r.fx.rotulo + (S.forma === "aperfeicoada" ? " · " + r.fx.grau + "º grau" : "") + '</em>'
+      + '<div class="sb-forma-txt">' + partes.join(" ") + '</div></div>';
+    rows += '<div class="sb-cell acc"><em>PP da forma</em><b>' + r.fx.custo + '</b></div>';
+  }
+
   $("sb-rows").innerHTML = rows;
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-condset]"), function(caixa){
@@ -2297,6 +2444,18 @@ function bind(id, key, num){
  "f-alvo|alvo|","f-dados|dados|1","f-tipodano|tipoDano|","f-salvatr|salvAtr|","f-afinidade|afinidade|",
  "f-requisito|requisito|","f-alcance|alcance|","f-duracao|duracao|"].forEach(function(spec){
   var p = spec.split("|"); bind(p[0], p[1], !!p[2]);
+});
+[["fx-nome","nome"],["fx-grau","grau",1],["fx-dados","dados",1],
+ ["fx-tipodano","tipoDano"],["fx-alcance","alcance"],["fx-texto","texto"]].forEach(function(p){
+  $(p[0]).addEventListener("input", function(){
+    S.fx[p[1]] = p[2] ? Number(this.value) : this.value;
+    render();
+  });
+});
+TIPOS_DANO.forEach(function(t){
+  var op = document.createElement("option"); op.value = t; op.textContent = t;
+  if(t === "Contundente") op.selected = true;
+  $("fx-tipodano").appendChild(op);
 });
 $("f-regra-dano").addEventListener("change", function(){ S.regraDano = this.checked; S.descTocada = false; render(); });
 $("f-desc").addEventListener("input", function(){ S.descTocada = true; $("sb-desc").textContent = this.value; });
@@ -2447,6 +2606,7 @@ function enxugar(t){
   var out = {}, ativos = {};
   Object.keys(t.ativos || {}).forEach(function(k){ if(t.ativos[k]) ativos[k] = true; });
 
+  if(t.forma && t.forma !== "normal" && t.fx) out.fx = t.fx;
   CAMPOS_SIMPLES.forEach(function(k){
     var v = t[k];
     if(v === undefined || v === null || v === "" || v === false) return;
