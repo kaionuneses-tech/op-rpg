@@ -314,6 +314,21 @@ input[type=number]{font-family:var(--font-mono); text-align:center}
 .btn.ghost{color:var(--ink2)}
 .toast{font-family:var(--font-mono); font-size:12px; color:var(--ok)}
 
+/* barra de conta — só aparece no site hospedado, com as chaves configuradas */
+.conta{padding:11px 15px; border-bottom:1px solid var(--line); background:var(--seasoft)}
+.conta-fora{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.conta-fora .small{flex:1 1 180px; min-width:0}
+.conta-dentro{display:flex; align-items:center; gap:10px}
+.conta-dentro img{border-radius:50%; background:var(--surf3); flex:none; object-fit:cover}
+.conta-quem{flex:1; min-width:0; line-height:1.25}
+.conta-quem b{display:block; font-family:var(--font-display); font-weight:500; font-size:15px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.conta-quem span{display:block; font-family:var(--font-mono); font-size:10.5px;
+  letter-spacing:.06em; color:var(--ink3)}
+.conta-quem span.ok{color:var(--ok)}
+.conta-quem span.bad{color:var(--red)}
+.conta-dentro .btn{padding:5px 10px; font-size:11.5px}
+
 .drafts{padding:12px 15px}
 .draftlist{display:flex; flex-wrap:wrap; gap:6px; margin-top:9px}
 .draft{display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11.5px;
@@ -369,6 +384,8 @@ footer p{margin:0 0 5px}
 @media (max-width:960px){ .forge{grid-template-columns:1fr} .side{position:static} }
 @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
 </style>
+<script src="app/config.js"></script>
+<script src="app/conta.js"></script>
 </head>
 <body>
 <nav class="topbar">
@@ -694,6 +711,20 @@ footer p{margin:0 0 5px}
 
         <div class="panel" style="margin-top:14px">
           <div class="ph"><h3>Minhas Técnicas</h3><div class="hint" id="draft-count">0 salvas</div></div>
+          <div class="conta" id="conta-barra" hidden>
+            <div class="conta-fora" id="conta-fora">
+              <button class="btn primary" type="button" id="btn-entrar">Entrar com Discord</button>
+              <span class="small">Entrando, suas técnicas te acompanham em qualquer aparelho.</span>
+            </div>
+            <div class="conta-dentro" id="conta-dentro" hidden>
+              <img id="conta-avatar" alt="" width="26" height="26">
+              <div class="conta-quem">
+                <b id="conta-nome">—</b>
+                <span id="conta-status">—</span>
+              </div>
+              <button class="btn" type="button" id="btn-sair">Sair</button>
+            </div>
+          </div>
           <div class="drafts">
             <div class="draftlist" id="draftlist"></div>
             <div class="filelinha" style="margin-top:11px">
@@ -2409,8 +2440,10 @@ $("btn-save").addEventListener("click", function(){
   var d = lerDrafts(), snap = JSON.parse(JSON.stringify(S));
   snap.desc = $("f-desc").value;
   snap.id = novoId();
+  snap.atualizadoEm = Date.now();
   d.unshift(snap);
   var ok = salvarDrafts(d.slice(0, LIMITE_DRAFTS));
+  nuvemGuardar(snap);
   renderDrafts();
   toast(ok ? "Técnica salva." : "Salva só nesta visita.", ok ? "var(--ok)" : "var(--red)");
   if(!ok) avisoDrafts("Este navegador não está guardando dados do site, então a lista some ao recarregar. Exporte o arquivo antes de sair.", "bad");
@@ -2648,8 +2681,10 @@ function importarTexto(texto, origem){
     var chave = x.id || JSON.stringify(x);
     if(chaves[chave]){ repetidas++; return; }
     if(!x.id) x.id = novoId();
+    if(!x.atualizadoEm) x.atualizadoEm = Date.now();
     chaves[chave] = true;
     atuais.push(x);
+    nuvemGuardar(x);
     novas++;
   });
 
@@ -2694,7 +2729,13 @@ $("file-tecnicas").addEventListener("change", function(){
 });
 $("draftlist").addEventListener("click", function(ev){
   var del = ev.target.closest("[data-del]"), load = ev.target.closest("[data-load]"), d = lerDrafts();
-  if(del){ d.splice(Number(del.dataset.del), 1); salvarDrafts(d); renderDrafts(); return; }
+  if(del){
+    var fora = d.splice(Number(del.dataset.del), 1)[0];
+    salvarDrafts(d);
+    if(fora && fora.id) nuvemApagar(fora.id);
+    renderDrafts();
+    return;
+  }
   if(load){
     var guardado = d[Number(load.dataset.load)]; if(!guardado) return;
     // trabalha sempre numa cópia: mexer no objeto guardado apagaria a técnica da lista
@@ -2712,6 +2753,56 @@ $("draftlist").addEventListener("click", function(ev){
     toast("Rascunho carregado.");
   }
 });
+
+/* ═════════ conta (só existe no site hospedado, com chaves configuradas) ═════════ */
+var Conta = window.OPRPGConta || null;
+
+function pintarConta(e){
+  var barra = $("conta-barra");
+  if(!barra) return;
+  barra.hidden = !e.ligado;
+  if(!e.ligado) return;
+  $("conta-fora").hidden = e.logado;
+  $("conta-dentro").hidden = !e.logado;
+  if(!e.logado) return;
+
+  $("conta-nome").textContent = e.usuario.nome;
+  var av = $("conta-avatar");
+  if(e.usuario.avatar){ av.src = e.usuario.avatar; av.hidden = false; } else { av.hidden = true; }
+  var st = $("conta-status");
+  st.textContent = e.sincronizando ? "sincronizando…" : "salvo na sua conta";
+  st.className = e.sincronizando ? "" : "ok";
+}
+function contaErro(err){
+  var st = $("conta-status");
+  if(st){ st.textContent = "nuvem fora do ar — salvo aqui"; st.className = "bad"; }
+  avisoDrafts("A nuvem recusou a gravação (" + ((err && err.message) || "erro desconhecido")
+    + "). As técnicas continuam salvas neste navegador — exporte o código por segurança.", "bad");
+}
+
+if(Conta){
+  Conta.iniciar({
+    tabela: "tecnicas",
+    lerLocal: function(){ return lerDrafts(); },
+    escreverLocal: function(lista){ salvarDrafts(lista.slice(0, LIMITE_DRAFTS)); },
+    aoMudar: renderDrafts,
+    aoErro: contaErro,
+    aoMudarEstado: pintarConta
+  });
+  $("btn-entrar").addEventListener("click", function(){
+    this.disabled = true;
+    avisoDrafts("Abrindo o Discord…");
+    Conta.entrar().then(function(ok){ if(!ok) { this.disabled = false; } }.bind(this));
+  });
+  $("btn-sair").addEventListener("click", function(){
+    Conta.sair().then(function(){
+      avisoDrafts("Você saiu. As técnicas continuam neste navegador.");
+    });
+  });
+}
+/* chamadas seguras: sem conta ligada, viram no-op */
+function nuvemGuardar(item){ if(Conta) Conta.guardar(item); }
+function nuvemApagar(id){ if(Conta) Conta.apagar(id); }
 
 /* boot */
 montarCatalogo();
