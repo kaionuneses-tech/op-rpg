@@ -299,20 +299,17 @@ input[type=number]{font-family:var(--font-mono); text-align:center}
 .btn.ghost{color:var(--ink2)}
 .toast{font-family:var(--font-mono); font-size:12px; color:var(--ok)}
 
-/* barra de conta — só aparece no site hospedado, com as chaves configuradas */
-.conta{padding:11px 15px; border-bottom:1px solid var(--line); background:var(--seasoft)}
-.conta-fora{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
-.conta-fora .small{flex:1 1 180px; min-width:0}
-.conta-dentro{display:flex; align-items:center; gap:10px}
-.conta-dentro img{border-radius:50%; background:var(--surf3); flex:none; object-fit:cover}
-.conta-quem{flex:1; min-width:0; line-height:1.25}
-.conta-quem b{display:block; font-family:var(--font-display); font-weight:500; font-size:15px;
+/* conta na barra do topo — só aparece no site hospedado, com chaves configuradas */
+#btn-conta img{border-radius:50%; background:var(--surf3); object-fit:cover; flex:none}
+#conta-rotulo{max-width:11ch; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.conta-txt{font-size:13.5px; color:var(--ink2); line-height:1.45; margin:0 0 11px}
+.conta-quem{line-height:1.3}
+.conta-quem b{display:block; font-family:var(--font-display); font-weight:500; font-size:17px;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .conta-quem span{display:block; font-family:var(--font-mono); font-size:10.5px;
-  letter-spacing:.06em; color:var(--ink3)}
+  letter-spacing:.06em; color:var(--ink3); margin-top:2px}
 .conta-quem span.ok{color:var(--ok)}
 .conta-quem span.bad{color:var(--red)}
-.conta-dentro .btn{padding:5px 10px; font-size:11.5px}
 
 .drafts{padding:12px 15px}
 .draftlist{display:flex; flex-wrap:wrap; gap:6px; margin-top:9px}
@@ -384,6 +381,28 @@ footer p{margin:0 0 5px}
         <li><a href="#formas">Formas</a></li>
         <li><a href="#mp">Manifestações</a></li>
       </ul>
+    </div>
+    <div class="appearance" id="conta-wrap" hidden>
+      <button class="themebtn" id="btn-conta" type="button" aria-haspopup="true" aria-expanded="false">
+        <img id="conta-avatar" alt="" width="17" height="17" hidden>
+        <span id="conta-rotulo">Entrar</span>
+      </button>
+      <div class="pop" id="pop-conta" hidden role="dialog" aria-label="Sua conta">
+        <div id="conta-fora">
+          <h4>Sua conta</h4>
+          <p class="conta-txt">Entre para suas técnicas acompanharem você em qualquer computador ou celular. Sem cadastro e sem senha — o Discord que você já usa basta.</p>
+          <button class="btn primary" type="button" id="btn-entrar" style="width:100%">Entrar com Discord</button>
+        </div>
+        <div id="conta-dentro" hidden>
+          <h4>Sua conta</h4>
+          <div class="conta-quem">
+            <b id="conta-nome">—</b>
+            <span id="conta-status">—</span>
+          </div>
+          <button class="btn" type="button" id="btn-sincronizar" style="width:100%; margin-top:9px">Sincronizar agora</button>
+          <button class="btn" type="button" id="btn-sair" style="width:100%; margin-top:7px">Sair</button>
+        </div>
+      </div>
     </div>
     <div class="appearance">
       <button class="themebtn" id="themebtn" type="button" aria-haspopup="true" aria-expanded="false">
@@ -693,20 +712,6 @@ footer p{margin:0 0 5px}
 
         <div class="panel" style="margin-top:14px">
           <div class="ph"><h3>Minhas Técnicas</h3><div class="hint" id="draft-count">0 salvas</div></div>
-          <div class="conta" id="conta-barra" hidden>
-            <div class="conta-fora" id="conta-fora">
-              <button class="btn primary" type="button" id="btn-entrar">Entrar com Discord</button>
-              <span class="small">Entrando, suas técnicas te acompanham em qualquer aparelho.</span>
-            </div>
-            <div class="conta-dentro" id="conta-dentro" hidden>
-              <img id="conta-avatar" alt="" width="26" height="26">
-              <div class="conta-quem">
-                <b id="conta-nome">—</b>
-                <span id="conta-status">—</span>
-              </div>
-              <button class="btn" type="button" id="btn-sair">Sair</button>
-            </div>
-          </div>
           <div class="drafts">
             <div class="draftlist" id="draftlist"></div>
             <div class="filelinha" style="margin-top:11px">
@@ -2740,19 +2745,27 @@ $("draftlist").addEventListener("click", function(ev){
 var Conta = window.OPRPGConta || null;
 
 function pintarConta(e){
-  var barra = $("conta-barra");
-  if(!barra) return;
-  barra.hidden = !e.ligado;
+  var wrap = $("conta-wrap");
+  if(!wrap) return;
+  wrap.hidden = !e.ligado;
   if(!e.ligado) return;
+
   $("conta-fora").hidden = e.logado;
   $("conta-dentro").hidden = !e.logado;
-  if(!e.logado) return;
+
+  var av = $("conta-avatar"), rot = $("conta-rotulo");
+  if(!e.logado){
+    av.hidden = true;
+    rot.textContent = "Entrar";
+    return;
+  }
+  var primeiro = String(e.usuario.nome).split(/\s+/)[0] || "Conta";
+  rot.textContent = primeiro;
+  if(e.usuario.avatar){ av.src = e.usuario.avatar; av.hidden = false; } else { av.hidden = true; }
 
   $("conta-nome").textContent = e.usuario.nome;
-  var av = $("conta-avatar");
-  if(e.usuario.avatar){ av.src = e.usuario.avatar; av.hidden = false; } else { av.hidden = true; }
   var st = $("conta-status");
-  st.textContent = e.sincronizando ? "sincronizando…" : "salvo na sua conta";
+  st.textContent = e.sincronizando ? "sincronizando…" : "tudo salvo na sua conta";
   st.className = e.sincronizando ? "" : "ok";
 }
 function contaErro(err){
@@ -2771,13 +2784,45 @@ if(Conta){
     aoErro: contaErro,
     aoMudarEstado: pintarConta
   });
+  $("btn-conta").addEventListener("click", function(ev){
+    ev.stopPropagation();
+    var aberto = !$("pop-conta").hidden;
+    $("pop-conta").hidden = aberto;
+    $("pop").hidden = true;
+    this.setAttribute("aria-expanded", String(!aberto));
+  });
+  document.addEventListener("click", function(ev){
+    if(!$("pop-conta").hidden && !ev.target.closest("#conta-wrap")){
+      $("pop-conta").hidden = true;
+      $("btn-conta").setAttribute("aria-expanded", "false");
+    }
+  });
+  document.addEventListener("keydown", function(ev){
+    if(ev.key === "Escape" && !$("pop-conta").hidden){
+      $("pop-conta").hidden = true;
+      $("btn-conta").setAttribute("aria-expanded", "false");
+      $("btn-conta").focus();
+    }
+  });
   $("btn-entrar").addEventListener("click", function(){
-    this.disabled = true;
-    avisoDrafts("Abrindo o Discord…");
-    Conta.entrar().then(function(ok){ if(!ok) { this.disabled = false; } }.bind(this));
+    var b = this;
+    b.disabled = true; b.textContent = "Abrindo o Discord…";
+    Conta.entrar().then(function(ok){
+      if(!ok){ b.disabled = false; b.textContent = "Entrar com Discord"; }
+    });
+  });
+  $("btn-sincronizar").addEventListener("click", function(){
+    var b = this;
+    b.disabled = true;
+    Conta.sincronizar().then(function(r){
+      b.disabled = false;
+      if(r) avisoDrafts("Sincronizado: " + r.total + (r.total === 1 ? " técnica na conta" : " técnicas na conta")
+        + (r.enviadas ? ", " + r.enviadas + " enviada(s) deste aparelho" : "") + ".", "ok");
+    });
   });
   $("btn-sair").addEventListener("click", function(){
     Conta.sair().then(function(){
+      $("pop-conta").hidden = true;
       avisoDrafts("Você saiu. As técnicas continuam neste navegador.");
     });
   });
