@@ -73,9 +73,13 @@ for (const p of PAGINAS) {
   const corpo = fonte.slice(corte).trim();
   const titulo = (cabeca.match(/<title>([^<]*)<\/title>/) || [, p.saida])[1];
 
-  const scripts = p.conta
-    ? `<script src="app/config.js"></script>\n<script src="app/conta.js"></script>`
-    : "";
+  /* aparencia.js vem primeiro: ele aplica tema e cores ainda no <head>,
+     antes de a página desenhar, para não haver piscada de cor errada. */
+  const scripts = [
+    `<script src="app/aparencia.js"></script>`,
+    p.conta ? `<script src="app/config.js"></script>` : "",
+    p.conta ? `<script src="app/conta.js"></script>` : ""
+  ].filter(Boolean).join("\n");
 
   const html = `<!doctype html>
 <html lang="pt-BR">

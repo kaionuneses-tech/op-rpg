@@ -53,9 +53,9 @@
 [hidden]{display:none!important}
 html,body{height:100%}
 body{margin:0; background:var(--paper); color:var(--ink);
-  font-family:"Spectral",Georgia,serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  font-family:var(--font-body); font-size:calc(16px * var(--fs-scale)); line-height:var(--lh); -webkit-font-smoothing:antialiased;
   display:flex; flex-direction:column}
-h1,h2,h3,h4{font-family:"Oswald","Arial Narrow",Arial,sans-serif; font-weight:600; margin:0; line-height:1.15}
+h1,h2,h3,h4{font-family:var(--font-display); font-weight:600; margin:0; line-height:1.15}
 a{color:var(--sea)}
 :focus-visible{outline:2px solid var(--red); outline-offset:2px; border-radius:2px}
 
@@ -63,18 +63,18 @@ a{color:var(--sea)}
   background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line)}
 .topbar-in{max-width:1180px; margin:0 auto; padding:0 16px; display:flex; align-items:center; gap:14px; min-height:52px}
-.brand{font-family:"Oswald",sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em;
+.brand{font-family:var(--font-display); font-weight:700; font-size:calc(14px * var(--fs-scale)); letter-spacing:.14em;
   text-transform:uppercase; color:var(--red); white-space:nowrap; text-decoration:none}
 .navscroll{flex:1; overflow-x:auto; scrollbar-width:none}
 .navscroll::-webkit-scrollbar{display:none}
 .navlist{display:flex; gap:2px; list-style:none; margin:0; padding:0}
-.navlist a{display:block; padding:7px 10px; font-family:"Oswald",sans-serif; font-weight:500; font-size:12.5px;
+.navlist a{display:block; padding:7px 10px; font-family:var(--font-display); font-weight:500; font-size:calc(12.5px * var(--fs-scale));
   letter-spacing:.09em; text-transform:uppercase; white-space:nowrap; color:var(--ink2); text-decoration:none; border-radius:var(--radius)}
 .navlist a:hover{color:var(--ink); background:var(--surf3)}
 
 .appearance{position:relative; flex:none}
 .themebtn{border:1px solid var(--line); background:var(--surf); color:var(--ink2); border-radius:var(--radius);
-  padding:6px 11px; cursor:pointer; font-family:"Oswald",sans-serif; font-size:12px; font-weight:500;
+  padding:6px 11px; cursor:pointer; font-family:var(--font-display); font-size:calc(12px * var(--fs-scale)); font-weight:500;
   letter-spacing:.09em; text-transform:uppercase; display:flex; align-items:center; gap:7px}
 .themebtn:hover{border-color:var(--line2); color:var(--ink)}
 #btn-conta img{border-radius:50%; background:var(--surf3); object-fit:cover; flex:none}
@@ -82,17 +82,17 @@ a{color:var(--sea)}
 .pop{position:absolute; right:0; top:calc(100% + 8px); width:min(300px, calc(100vw - 32px));
   background:var(--surf); border:1px solid var(--line2); box-shadow:0 12px 34px -14px rgba(0,0,0,.45);
   z-index:70; padding:13px}
-.pop h4{font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.14em;
+.pop h4{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); font-weight:600; letter-spacing:.14em;
   text-transform:uppercase; color:var(--ink3); margin:0 0 7px}
-.conta-txt{font-size:13.5px; color:var(--ink2); line-height:1.45; margin:0 0 11px}
-.conta-quem b{display:block; font-family:"Oswald",sans-serif; font-weight:500; font-size:17px;
+.conta-txt{font-size:calc(13.5px * var(--fs-scale)); color:var(--ink2); line-height:1.45; margin:0 0 11px}
+.conta-quem b{display:block; font-family:var(--font-display); font-weight:500; font-size:calc(17px * var(--fs-scale));
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.conta-quem span{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+.conta-quem span{display:block; font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale));
   letter-spacing:.06em; color:var(--ink3); margin-top:2px}
 .conta-quem span.ok{color:var(--ok)}
 .conta-quem span.bad{color:var(--red)}
 
-.btn{font-family:"Oswald",sans-serif; font-size:13px; font-weight:500; letter-spacing:.06em;
+.btn{font-family:var(--font-display); font-size:calc(13px * var(--fs-scale)); font-weight:500; letter-spacing:.06em;
   text-transform:uppercase; padding:8px 13px; border:1px solid var(--line2); background:var(--surf2);
   color:var(--ink); border-radius:var(--radius); cursor:pointer}
 .btn:hover{border-color:var(--red); color:var(--red)}
@@ -106,46 +106,46 @@ main{flex:1; min-height:0; max-width:1180px; width:100%; margin:0 auto; padding:
 .lista{background:var(--surf); border:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
 .lista-topo{padding:11px 14px; background:var(--surf2); border-bottom:1px solid var(--line);
   display:flex; align-items:center; justify-content:space-between; gap:10px}
-.lista-topo h2{font-size:15px; text-transform:uppercase; letter-spacing:.08em}
-.lista-topo span{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; color:var(--ink3)}
+.lista-topo h2{font-size:calc(15px * var(--fs-scale)); text-transform:uppercase; letter-spacing:.08em}
+.lista-topo span{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); letter-spacing:.08em; color:var(--ink3)}
 .busca{padding:10px 14px; border-bottom:1px solid var(--line)}
-.busca input{width:100%; font-family:"Spectral",serif; font-size:14px; color:var(--ink);
+.busca input{width:100%; font-family:var(--font-body); font-size:calc(14px * var(--fs-scale)); color:var(--ink);
   background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:7px 10px}
 .itens{flex:1; overflow-y:auto; min-height:120px}
 .item{display:block; width:100%; text-align:left; border:0; border-bottom:1px solid var(--line);
-  background:none; padding:11px 14px; cursor:pointer; color:inherit; font-family:inherit}
+  background:none; padding:calc(11px * var(--dens)) 14px; cursor:pointer; color:inherit; font-family:inherit}
 .item:hover{background:var(--surf2)}
 .item[aria-current="true"]{background:var(--redsoft); box-shadow:inset 3px 0 0 var(--red)}
-.item b{display:block; font-family:"Oswald",sans-serif; font-weight:500; font-size:16px;
+.item b{display:block; font-family:var(--font-display); font-weight:500; font-size:calc(16px * var(--fs-scale));
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.item span{display:block; font-size:13px; color:var(--ink2); margin-top:2px;
+.item span{display:block; font-size:calc(13px * var(--fs-scale)); color:var(--ink2); margin-top:2px;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.item i{font-style:normal; font-family:"IBM Plex Mono",monospace; font-size:10px;
+.item i{font-style:normal; font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale));
   letter-spacing:.06em; color:var(--ink3)}
-.vazio{padding:18px 14px; color:var(--ink3); font-size:14px}
+.vazio{padding:18px 14px; color:var(--ink3); font-size:calc(14px * var(--fs-scale))}
 .lista-pe{padding:11px 14px; border-top:1px solid var(--line); display:flex; gap:7px; flex-wrap:wrap}
-.lista-pe .btn{flex:1 1 auto; padding:7px 10px; font-size:12px}
+.lista-pe .btn{flex:1 1 auto; padding:7px 10px; font-size:calc(12px * var(--fs-scale))}
 
 .editor{background:var(--surf); border:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
 .editor-topo{padding:11px 14px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px}
-#a-titulo{flex:1; min-width:0; font-family:"Oswald",sans-serif; font-weight:600; font-size:21px;
+#a-titulo{flex:1; min-width:0; font-family:var(--font-display); font-weight:600; font-size:calc(21px * var(--fs-scale));
   color:var(--ink); background:none; border:0; padding:2px 0}
 #a-titulo::placeholder{color:var(--ink3)}
 #a-texto{flex:1; min-height:240px; width:100%; resize:none; border:0; background:none; color:var(--ink);
-  font-family:"Spectral",Georgia,serif; font-size:16px; line-height:1.68; padding:14px}
+  font-family:var(--font-body); font-size:calc(16px * var(--fs-scale)); line-height:var(--lh); padding:14px}
 #a-texto::placeholder{color:var(--ink3)}
 .editor-pe{padding:10px 14px; border-top:1px solid var(--line); display:flex; align-items:center;
   gap:10px; flex-wrap:wrap}
-.editor-pe .estado{flex:1; font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink3)}
+.editor-pe .estado{flex:1; font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); color:var(--ink3)}
 .editor-pe .estado.ok{color:var(--ok)}
 .editor-pe .estado.bad{color:var(--red)}
 
 .caixa{padding:12px 14px; border-top:1px solid var(--line)}
-.caixa textarea{width:100%; min-height:110px; font-family:"IBM Plex Mono",monospace; font-size:11.5px;
+.caixa textarea{width:100%; min-height:110px; font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale));
   color:var(--ink); background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius);
   padding:8px 10px; resize:vertical; margin-bottom:7px}
 .caixa .filelinha{display:flex; gap:7px; flex-wrap:wrap}
-.caixa .btn{flex:1 1 auto; padding:6px 10px; font-size:12px}
+.caixa .btn{flex:1 1 auto; padding:6px 10px; font-size:calc(12px * var(--fs-scale))}
 
 @media (max-width:820px){
   main{grid-template-columns:1fr; height:auto}
@@ -157,6 +157,7 @@ main{flex:1; min-height:0; max-width:1180px; width:100%; margin:0 auto; padding:
 
 <nav class="topbar">
   <div class="topbar-in">
+    <a class="homebtn" href="index.html" title="Voltar para a página principal"><span aria-hidden="true">◀</span><span class="rot">Início</span></a>
     <a class="brand" href="index.html">OP&nbsp;RPG</a>
     <div class="navscroll">
       <ul class="navlist">
@@ -202,6 +203,7 @@ main{flex:1; min-height:0; max-width:1180px; width:100%; margin:0 auto; padding:
       <button class="btn primary" type="button" id="btn-nova">Nova anotação</button>
       <button class="btn" type="button" id="btn-copiar">Copiar código</button>
       <button class="btn" type="button" id="btn-colar">Colar código</button>
+      <button class="btn" type="button" id="btn-baixar" hidden>Baixar arquivo</button>
     </div>
     <div class="caixa" id="caixa" hidden>
       <textarea id="caixa-texto" spellcheck="false"></textarea>
@@ -230,31 +232,7 @@ main{flex:1; min-height:0; max-width:1180px; width:100%; margin:0 auto; padding:
 "use strict";
 var $ = function(id){ return document.getElementById(id); };
 
-/* ── aparência: usa o que foi escolhido na forja ── */
-var root = document.documentElement;
-function lerPref(k, d){ try{ var v = localStorage.getItem(k); return v === null ? d : v; }catch(e){ return d; } }
-function gravarPref(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
-function aplicarAparencia(){
-  var tema = lerPref("oprpg-theme", "auto");
-  var paleta = lerPref("oprpg-palette", "");
-  if(tema === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", tema);
-  if(paleta) root.setAttribute("data-palette", paleta); else root.removeAttribute("data-palette");
-  [["oprpg-cor-red","--red"],["oprpg-cor-gold","--gold"],["oprpg-cor-sea","--sea"],["oprpg-cor-ok","--ok"],
-   ["oprpg-cor-ink","--ink"],["oprpg-cor-ink2","--ink2"],["oprpg-cor-paper","--paper"],
-   ["oprpg-cor-surf","--surf"],["oprpg-cor-surf2","--surf2"],["oprpg-cor-bar","--bar"],
-   ["oprpg-cor-bar-ink","--bar-ink"],["oprpg-cor-line","--line"]].forEach(function(p){
-    var v = lerPref(p[0], "");
-    if(v) root.style.setProperty(p[1], v); else root.style.removeProperty(p[1]);
-  });
-  root.style.setProperty("--radius", lerPref("oprpg-fmt-cantos", "3px"));
-}
-aplicarAparencia();
-$("themebtn").addEventListener("click", function(){
-  var cur = lerPref("oprpg-theme", "auto");
-  var escuro = cur === "dark" || (cur === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  gravarPref("oprpg-theme", escuro ? "light" : "dark");
-  aplicarAparencia();
-});
+/* O tema e as cores vêm do painel de Aparência, em app/aparencia.js. */
 
 /* ── dados ── */
 var CHAVE = "oprpg-anotacoes";
@@ -382,8 +360,34 @@ $("btn-apagar").addEventListener("click", function(){
 window.addEventListener("beforeunload", salvarSeSujo);
 document.addEventListener("visibilitychange", function(){ if(document.hidden) salvarSeSujo(); });
 
-/* ── copiar e colar ── */
+/* ── copiar, colar e baixar ── */
 function pacote(){ return {app:"op-rpg-anotacoes", versao:1, anotacoes:ler()}; }
+/* o download nativo do navegador funciona no site; dentro do artefato do
+   Claude ele é inerte, então lá o botão nem aparece */
+function nomeArquivo(){
+  var d = new Date();
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  return "diario-" + d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()) + ".json";
+}
+function baixar(dados){
+  try{
+    var blob = new Blob([dados], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = nomeArquivo();
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+    return true;
+  }catch(e){ return false; }
+}
+if(!(window.claude && typeof window.claude.use === "function")) $("btn-baixar").hidden = false;
+$("btn-baixar").addEventListener("click", function(){
+  salvarSeSujo();
+  var d = ler();
+  if(!d.length){ estado("Não há anotações para baixar.", "bad"); return; }
+  if(baixar(JSON.stringify(pacote()))) estado("Arquivo baixado com " + d.length + (d.length === 1 ? " anotação." : " anotações."), "ok");
+  else estado("O navegador bloqueou o download. Use Copiar código.", "bad");
+});
 $("btn-copiar").addEventListener("click", function(){
   salvarSeSujo();
   var d = ler();
