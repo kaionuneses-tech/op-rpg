@@ -395,8 +395,8 @@ footer p{margin:0 0 6px}
     <div class="facts">
       <div class="fact"><b>d20</b><span>Dado principal</span></div>
       <div class="fact"><b>6</b><span>Atributos</span></div>
-      <div class="fact"><b>9</b><span>Espécies</span></div>
-      <div class="fact"><b>12</b><span>Estilos de combate</span></div>
+      <div class="fact"><b>8+1</b><span>Espécies</span></div>
+      <div class="fact"><b>12+5</b><span>Estilos de combate</span></div>
       <div class="fact"><b>20</b><span>Profissões</span></div>
       <div class="fact"><b>900</b><span>PE até o nível 3</span></div>
     </div>
@@ -643,6 +643,7 @@ footer p{margin:0 0 6px}
     <p class="eyebrow">Capítulo 2 · Espécies</p>
     <h2 class="sec">As espécies</h2>
     <p class="lede">Todas ganham o mesmo Ajuste de Atributo (+2 em um ou +1 em dois) e Traços Culturais. O que muda são os PV Base, o deslocamento, o preconceito que enfrentam e os traços próprios.</p>
+    <p class="lede" style="margin-top:10px">Os <strong>Ogros</strong> vêm do suplemento de espécie e estão marcados na tabela. Confirme com o seu Narrador antes de escolher.</p>
 
     <div class="tablebox">
       <table style="min-width:840px">
@@ -675,6 +676,10 @@ footer p{margin:0 0 6px}
             <td><strong>Electro</strong> (+1d10 Elétrico, usos = nível) · <em>Instintos Animalescos: Salvaguarda de Vontade CD 15 diante do seu "gatilho"</em> · Variantes: Ágeis, Meãos, Robustos · Forma Sulong</td>
           </tr>
           <tr>
+            <td><strong>Ogros</strong> <span class="tag g">Suplemento</span></td><td class="num">18</td><td>Grande (3–6 m)</td><td class="num">9 m</td><td class="num">4,5 m</td><td>Débil</td>
+            <td><strong>Superioridade do Ogro</strong> (ganha o Treinamento de Espécie dos gigantes, “Guerreiro Nato”) e <strong>Sangue de Guerreiro</strong> (sobreviver a 0 PV dá +1 PV máximo no descanso longo, 1×) · <em>Fúria Sanguinária: com ⅓ dos PV ou menos, role 1d6 no início do turno — em 6, ataca a criatura mais próxima até recuperar metade dos PV ou gastar uma ação bônus para se acalmar</em></td>
+          </tr>
+          <tr>
             <td><strong>Povo do Mar</strong></td><td class="num">14</td><td>Médio ou Grande</td><td class="num">9 m</td><td class="num">15 m</td><td>Severo</td>
             <td><strong>Força Superior</strong> (proficiência + metade dela em Força) · <em>Criatura do Mar: precisa de 2× água</em> · Variantes: Homem-Peixe, Sireno</td>
           </tr>
@@ -687,6 +692,12 @@ footer p{margin:0 0 6px}
     </div>
 
     <div class="note">
+      <p><b>Ogros têm dois Treinamentos de Espécie próprios</b> (só ogros e mestiços de ogro podem aprendê-los; 5 dias e 1 Ponto de Treinamento cada, sem tutor).</p>
+      <p style="margin-top:10px"><b>Corpo do Ogro</b> <span class="mono">(requer Constituição 15)</span> — seu dado de vida passa a ser sempre <span class="mono">d12</span>, qualquer que seja o Estilo de Combate de cada nível; ao aprender depois da criação, rerrole os dados de vida. Com uma Akuma no Mi Zoan que tenha a forma “Heavy Point”, some 3 PV por nível de personagem.</p>
+      <p style="margin-top:10px"><b>Arma Brutal</b> <span class="mono">(requer Força 16)</span> — some o bônus de proficiência nas jogadas de ataque com kanabos e espadas montantes. O treinamento “Espadachim Negro” passa a custar 2 Pontos de Treinamento e todas as características dele passam a valer para o kanabo também.</p>
+    </div>
+
+    <div class="note">
       <p><b>Traços Culturais valem para todas.</b> Você recebe Pontos de Treinamento iguais ao seu modificador de Sabedoria (mínimo 1) e precisa convertê-los em treinamentos <em>imediatamente</em>, na criação. Com modificador negativo, você não se beneficia até a Sabedoria virar positiva.</p>
     </div>
   </div>
@@ -696,8 +707,9 @@ footer p{margin:0 0 6px}
 <section id="estilos">
   <div class="wrap">
     <p class="eyebrow">Capítulo 3 · Estilos de Combate</p>
-    <h2 class="sec">Os doze estilos, do 1º ao 3º nível</h2>
-    <p class="lede">Cada carta traz os números do estilo e exatamente o que ele entrega em cada um dos três primeiros níveis. Todos aprendem Técnicas no 1º e no 3º nível.</p>
+    <h2 class="sec">Os dezessete estilos, do 1º ao 3º nível</h2>
+    <p class="lede">Cada carta traz os números do estilo e exatamente o que ele entrega em cada um dos três primeiros níveis. Todos aprendem Técnicas no 1º e no 3º nível — menos o Herói e o Usuário Ínsito, que só as conseguem por treinamento.</p>
+    <p class="lede" style="margin-top:10px">Os cinco últimos vêm do suplemento <strong>Estilos de Combate Exclusivos</strong> e estão marcados com <span class="tag g">Exclusivo</span>. Confirme com o seu Narrador antes de escolher um deles.</p>
 
     <div class="grid g2" style="margin-top:26px" id="stylegrid"></div>
 
@@ -1060,6 +1072,7 @@ footer p{margin:0 0 6px}
     "Lunarianos":  {pv:16, desl:9,  nado:3,   sing:"Lunariano"},
     "Mestiços":    {pv:12, desl:9,  nado:4.5, sing:"Mestiço"},
     "Minks":       {pv:12, desl:9,  nado:4.5, sing:"Mink"},
+    "Ogros":       {pv:18, desl:9,  nado:4.5, sing:"Ogro"},
     "Povo do Mar": {pv:14, desl:9,  nado:15,  sing:"Povo do Mar"}
   };
 
@@ -1171,6 +1184,59 @@ footer p{margin:0 0 6px}
       n1:["Armamento Samurai","Crítico 19–20 com Armas de Samurai e +1d6 de dano uma vez por turno. Escolha um estilo — Zansetsu, Okamihyo, Takakaze, Kappasui ou Kitsunebi — que muda o tipo de dano e o efeito."],
       n2:["Juramento","Um voto definitivo: Proteção (Medicina Holística, cura 1d6 por nível), Vingança (Ódio Motivacional, ataque bônus) ou Dever (Ataque Determinado, piso de dano nas Técnicas)."],
       n3:["Bushido","Escolha o Caminho do Vassalo (+2 para acertar), do Ronin (Oportunista, reação ampliada) ou do Shogun (Consciência Expandida do Espadachim). Refeito a cada novo nível de Samurai."]
+    },
+    /* ── Estilos de Combate Exclusivos (suplemento) ──
+       Entram no fim do array de propósito: o montador guarda o índice
+       do estilo, e mexer na ordem trocaria o estilo das fichas salvas. */
+    {
+      nome:"Black Leg", dv:12, prim:["FOR","DES"], salv:["FOR","DES"], exclusivo:true,
+      prereq:"Força ou Destreza 16",
+      pericias:"2 entre Atletismo, Acrobacia, Intuição, Percepção, Prestidigitação", arma:"Corporal",
+      hb:"Corpo de Guerreiro · Perito em Técnicas",
+      equip:"1 roupa de gala, 90.000 ฿ · 15d10 × 1.000 ฿",
+      n1:["Pernas Fortes e Mãos Gentis","Pacto Sagrado: você jura nunca usar as mãos em combate. Quem prova a sua vocação faz Salvaguarda de Vontade ou fica Enfeitiçado por 1 hora, você ganha +10 em Atuação e Persuasão contra ela e ela leva −5 para te acertar nas 24 h seguintes. Atacar com as mãos perde tudo, para sempre. Kicker: gaste PP para destruir objetos e construções conforme o nível, e some +1 no acerto e no dano para cada 4,5 m percorridos no turno."],
+      n2:["Godspeed","Hard Walk: terreno difícil não reduz seu deslocamento e você não provoca reações — nem de quem ignora esse tipo de característica. Os degraus seguintes chegam no 3º (Speed Walk), 4º (Burst Walk), 5º (Blue Walk), 7º (Sky Walk) e 10º nível (Stealth Walk)."],
+      n3:["Diable Jambe + Speed Walk","Por até 1 minuto: resistência a Fogo, +1d4 de Fogo nos ataques desarmados e dados de Fogo extras nas Técnicas iguais à metade do grau (mínimo 1). Acertar todos os ataques do turno dá uma ação bônus ou reação a mais. 3 usos por descanso longo. No mesmo nível, o deslocamento sobe para 12 m."]
+    },
+    {
+      nome:"Esgrimista", dv:10, prim:["PRE"], salv:["DES","PRE"], exclusivo:true,
+      prereq:"Destreza ou Presença 16",
+      pericias:"2 entre Atletismo, Atuação, Persuasão, Intuição, Percepção", arma:"Rapieira, shikomizue ou katana",
+      hb:"Defesa Ofensiva · Superando Limites",
+      equip:"1 rapieira ou katana, 1 roupa de gala · 5d10 × 1.000 ฿ · Kits de abrir cadeado, falsificação e escalada",
+      n1:["Mestre do Duelo","Corte Petulante (use Presença no acerto e no dano com arma cortante), “Eu Sou a Velocidade” (+2 de CR depois de andar 3 m), Passo da Liberdade (deslocamento 12 m e uma reação que ignora qualquer redução), Lâmina Imbatível (vantagem em Salvaguarda de Força com a arma favorita) e “Hoje Não!” (todo 1 natural é rerrolado, e vale o novo resultado)."],
+      n2:["Erro Planejado","Errou uma Técnica instantânea com jogada de ataque? Você não perde PP nenhum. Uma vez por descanso longo — 3 vezes no 5º nível, e todos os erros no 10º."],
+      n3:["Resposta para Tudo","Oito reações a até 6 m, todas no valor do seu nível de Esgrimista: “Ih, Rapaz…” (corta o dano), “Errou!” (encerra os ataques de quem errou), “Acertou, Miserável!” (soma ao acerto), “Receba!” (soma ao dano), “À Sua Esquerda!”, “É o Filho do Vento!” (ação extra para um aliado), “Tá Ganhando ou Tá Perdendo?” e “Vingue-me!” (passa PP a um aliado antes de você cair)."]
+    },
+    {
+      nome:"Herói", dv:8, prim:["FOR","VON"], salv:["CON","VON"], exclusivo:true,
+      prereq:"Presença ou Vontade 16",
+      pericias:"2 entre Atletismo, Acrobacia, Haki, Sorte, Persuasão", arma:"Corporal",
+      hb:"Aprimoramento de Atributo · Perito em Técnicas",
+      equip:"12d10 × 1.000 ฿",
+      n1:["Jornada do Herói · Tipo de Herói · Dados Heroicos","Você não aprende Técnica nenhuma de graça, nem as da Akuma no Mi: tudo vem do treinamento “Genialidade Inusitada”, com 5 Pontos de Treinamento no 1º nível e +2 a cada nível par. Escolha o caminho — Guerreiro do Poder Oculto, Mestre do Harém ou Deus da Arma — e receba 1 Dado Heroico (d10), mais um por nível até o 10º."],
+      n2:["Protagonismo","Você assume uma rolagem qualquer, podendo até definir a CD: só você vê o resultado e diz ao Narrador se passou. Uma vez por descanso. Cada caminho ainda soma um extra — voltar do 0 PV, dobrar a proficiência para convencer alguém, ou somar a proficiência no dano da arma favorita."],
+      n3:["Último a Chegar","Entrando num encontro que já começou, você ganha um turno especial (sem causar dano) e mais: 1 Dado Heroico por rodada que já passou, 10 PV por aliado consciente e 5 PP por aliado caído a 0 PV — tudo podendo passar do seu máximo, até o fim do encontro."]
+    },
+    {
+      nome:"Solfista", dv:8, prim:["DES","PRE"], salv:["DES","PRE"], exclusivo:true,
+      prereq:"Presença 15",
+      pericias:"Escolha 3 quaisquer", arma:"Rapieira, shikomizue ou katana",
+      hb:"Defesa Ofensiva · Sortudo",
+      equip:"1 instrumento musical à escolha, 1 shikomizue · 5d10 × 1.000 ฿",
+      n1:["A Música de Todas as Coisas","Corte Musical (1d8 Trovejante por ponto de proficiência ao fim de um efeito de Técnica com instrumento), Movimento Enganador (ataques contra você com desvantagem até você sofrer dano), Canção de Proteção (imunidade a Amedrontado e Enfeitiçado num raio de 18 m), Sentido Sonoro (localiza qualquer criatura a 6 m, mesmo invisível) e Corte Ecoante (reduz o dado para d6 e marca o alvo: 1 PP nega a reação ou a ação bônus dele)."],
+      n2:["Inspiração","Proficiência em qualquer instrumento. Com uma ação bônus, dê a si ou a um aliado a 9 m um dado de Inspiração (d8) para somar a um Teste, a uma jogada de ataque, ao dano, à CR ou a uma Salvaguarda, nos 10 minutos seguintes. Usos = nível de Solfista + modificador de Presença."],
+      n3:["Repertório","Três canções: I Shot the Sheriff (Enfeitiça e faz o alvo atacar quem você escolher), Fight the Power (reação que interrompe uma Técnica) e Respect (esfera de 6 m em que ninguém consegue mentir). Usar uma delas devolve dados de Inspiração no valor dos PP gastos. Mais três no 6º e no 9º nível."]
+    },
+    {
+      nome:"Usuário Ínsito", dv:10, prim:["FOR","VON"], salv:["CON","VON"], exclusivo:true,
+      prereq:"Constituição ou Vontade 16",
+      pericias:"2 entre Atletismo, Acrobacia, Furtividade, Sobrenatural, Sobrevivência", arma:"Corporal",
+      hb:"Aprimoramento de Atributo · Perito em Técnicas",
+      equip:"12d10 × 1.000 ฿",
+      n1:["Crescimento Imprevisível · Akuma no Chikara","Nada de Técnica automática: tudo vem do treinamento “Genialidade Inusitada”, com 2 Pontos de Treinamento a cada nível par mais 3, 4 ou 6 no 1º nível conforme a Categoria do fruto (S, A, ou B e C). Seu PP máximo sobe +1 por nível, e as Técnicas do fruto saem de graça fora de combate. Cada tipo muda o pacote: Logia e Zoan Mítica somam 1d4 de dano e garantem metade do dano nas Técnicas; Paramecia usa Auxiliares baratas de graça 3×/dia; Zoan Comum e Ancestral troca o dado de vida por d12, dá Corpo de Guerreiro e Prodígio do Combate e sobe o dano desarmado um passo."],
+      n2:["Escolha Diabólica","Escolha uma forma de canalizar o fruto: Objeto Infundido (um item vira arma de 2d8 + Vontade, guarda PP e ajuda a manter Técnicas), Defesa Infundida (Pontos de Defesa = seu nível, trocáveis por CR, cura ou PV máximo) ou Selvageria Infundida (ignora uma resistência, 3 Técnicas de até 3º grau de graça e, sem PP, paga com 5 PV por PP)."],
+      n3:["Técnica Principal","Escolha uma Técnica de Combate de 4º grau ou menor: ela custa metade dos PP (arredondado para cima) 3 vezes por descanso longo, causa 2 dados de dano a mais, ignora resistências e invulnerabilidades e não pode ser descontada de PV temporários. Trocável a cada novo nível de Usuário Ínsito."]
     }
   ];
 
@@ -1193,6 +1259,7 @@ footer p{margin:0 0 6px}
         + '<span class="tag r">Dado de Vida d'+s.dv+'</span>'
         + '<span class="tag s">Primário: '+s.prim.join(" ou ")+'</span>'
         + '<span class="tag">Salv. '+s.salv.join(" · ")+'</span>'
+        + (s.exclusivo ? '<span class="tag g">Exclusivo</span>' : '')
       + '</div></header>'
       + '<div class="body">'
         + lvl(1, s.n1) + lvl(2, s.n2) + lvl(3, s.n3)
@@ -1201,6 +1268,7 @@ footer p{margin:0 0 6px}
           + '<div><em>Arma favorita</em>'+s.arma+'</div>'
           + '<div><em>HB Inata</em>'+s.hb+'</div>'
           + '<div><em>Equipamento</em>'+s.equip+'</div>'
+          + (s.prereq ? '<div><em>Multiestilo</em>'+s.prereq+'</div>' : '')
         + '</div>'
       + '</div></article>';
   }).join("");
@@ -1219,11 +1287,19 @@ footer p{margin:0 0 6px}
     if(k === "Humanos") o.selected = true;
     elEsp.appendChild(o);
   });
-  ESTILOS.forEach(function(s, i){
-    var o = document.createElement("option"); o.value = String(i); o.textContent = s.nome;
-    if(s.nome === "Lutador") o.selected = true;
-    elEst.appendChild(o);
-  });
+  /* dois grupos no seletor, mas o valor continua sendo o índice do array —
+     é ele que as fichas salvas guardam */
+  (function(){
+    var gBase = document.createElement("optgroup"); gBase.label = "Livro do Jogador";
+    var gExtra = document.createElement("optgroup"); gExtra.label = "Estilos Exclusivos (suplemento)";
+    ESTILOS.forEach(function(s, i){
+      var o = document.createElement("option"); o.value = String(i); o.textContent = s.nome;
+      if(s.nome === "Lutador") o.selected = true;
+      (s.exclusivo ? gExtra : gBase).appendChild(o);
+    });
+    elEst.appendChild(gBase);
+    elEst.appendChild(gExtra);
+  })();
 
   // linhas de atributo
   ATTRS.forEach(function(a){
