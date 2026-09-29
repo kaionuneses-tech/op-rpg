@@ -255,6 +255,16 @@ input[type=number]{font-family:var(--font-mono); text-align:center}
 .sb-efx li i{font-style:normal; font-family:var(--font-mono); font-size:calc(11.5px * var(--fs-scale)); color:var(--ink3)}
 .sb-forma{background:var(--goldsoft)}
 .sb-forma em{color:var(--gold)}
+.fxef-add{display:flex; gap:8px; align-items:stretch}
+.fxef-add select{flex:1; min-width:0}
+.fxef{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 64px 30px; gap:8px; align-items:center;
+  padding:7px 0; border-bottom:1px solid var(--line)}
+.fxef .nm{font-family:var(--font-display); font-size:calc(14.5px * var(--fs-scale)); color:var(--ink)}
+.fxef input{padding:4px 6px; font-size:calc(13.5px * var(--fs-scale))}
+.fxef input[type=number]{text-align:right}
+.fxef button{background:none; border:1px solid var(--line); color:var(--ink3); cursor:pointer; height:28px; border-radius:4px}
+.fxef button:hover{border-color:var(--red); color:var(--red)}
+@media (max-width:560px){ .fxef{grid-template-columns:1fr 64px 30px} .fxef .det{grid-column:1 / -1; grid-row:2} }
 .sb-forma-txt{font-size:calc(14px * var(--fs-scale)); color:var(--ink); white-space:pre-wrap}
 .actions{display:flex; gap:9px; padding:13px 15px; border-top:1px solid var(--line); flex-wrap:wrap; align-items:center}
 .btn{font-family:var(--font-display); font-size:calc(13px * var(--fs-scale)); font-weight:500; letter-spacing:.06em; text-transform:uppercase;
@@ -566,6 +576,17 @@ footer p{margin:0 0 5px}
                   <option value="emanacao">Emanação</option>
                 </select>
               </div>
+            </div>
+            <div class="field">
+              <label for="fx-ef-sel">Efeitos da forma</label>
+              <div class="fxef-add">
+                <select id="fx-ef-sel"></select>
+                <button class="btn" type="button" id="fx-ef-add">Adicionar</button>
+              </div>
+              <div id="fx-ef-lista"></div>
+              <label class="chk" id="wrap-fx-perde"><input type="checkbox" id="fx-perde">
+                <span>Esta forma <b>perde os efeitos</b> da Técnica original</span></label>
+              <p class="small" id="fx-ef-nota" style="margin:8px 0 0"></p>
             </div>
             <div class="field" style="margin-bottom:0">
               <label for="fx-texto">O que muda nessa forma</label>
@@ -947,9 +968,10 @@ var EFEITOS = [
   rotulo:function(q){ return "largura " + String(1.5 + 1.5*q).replace(".", ",") + " m"; }},
 
 {id:"condicao-area", cat:"Controle", nm:"Condição / Efeito em Área",
-  ds:"Aplica a mesma condição em todas as criaturas da área. Quem passou na Salvaguarda do dano não é afetado.",
-  custoTxt:"metade do grau (arred. ↑) · grátis no 1º grau", needs:"area",
+  ds:"Aplica a mesma condição em todas as criaturas da área. Quem passou na Salvaguarda do dano não é afetado. A condição em si é escolhida e paga em Adicionar Condição; aqui você paga para ela valer na área inteira.",
+  custoTxt:"metade do grau (arred. ↑) · grátis no 1º grau", needs:"area", condArea:true,
   cost:function(g){ return g === 1 ? 0 : ceil2(g); },
+  rotulo:function(){ var n = condAreaEscolhida(); return n || "nenhuma escolhida"; },
   prolongBase:function(g){ return ceil2(g === 1 ? 0 : ceil2(g)) + 1; },
   prolongMax:1, prolongTxt:"metade do custo (↑) +1 PP · máx. 1 minuto"},
 
@@ -1191,7 +1213,7 @@ function estadoInicial(){
     alvo:"area-limitada", dados:4, tipoDano:"Contundente", salvAtr:"Destreza",
     regraDano:false, afinidade:"Contundente",
     requisito:"poderosa", alcance:"linha", duracao:"Instantâneo",
-    fx:{nome:"", grau:3, dados:0, tipoDano:"Contundente", alcance:"", texto:""},
+    fx:{nome:"", grau:3, dados:0, tipoDano:"Contundente", alcance:"", texto:"", efeitos:[], perde:false},
     ativos:{}, qtds:{}, escolhas:{}, escolhas2:{}, opts:{}, prolong:{}, prolongMin:{},
     condsPor:{"condicao":[], "efeito-colateral":[]},
     descTocada:false
@@ -1234,6 +1256,88 @@ function condsDe(id){
   if(!S.condsPor) S.condsPor = {};
   if(!S.condsPor[id]) S.condsPor[id] = [];
   return S.condsPor[id];
+}
+/* ── efeitos próprios da forma adicional ──
+   Cada item é {v, nm, det, pp}. O PP vem sugerido pelo custo do efeito no
+   grau da forma, com as opções padrão, e o jogador pode corrigir à mão —
+   efeitos com escolhas (quantidade, modo) dependem do que a forma faz.   */
+function efeitosForma(){
+  if(!S.fx.efeitos) S.fx.efeitos = [];
+  return S.fx.efeitos;
+}
+var ctxPadrao = {
+  ppConds: function(){ return 0; }, nomesConds: function(){ return []; },
+  primeiraCondPP: function(){ return 0; }, optSum: function(){ return 0; },
+  escolha: function(id){ var e = MAPA[id]; return e && e.escolha ? e.escolha.val : "0"; },
+  escolha2: function(id){ var e = MAPA[id]; return e && e.escolha2 ? e.escolha2.val : "0"; },
+  areaCura: function(){ return ehArea(); }
+};
+function sugestaoForma(v){
+  var gf = grauForma();
+  if(v.indexOf("cond:") === 0){
+    var n = v.slice(5), c = CONDICOES.filter(function(x){ return x.n === n; })[0];
+    return c ? {nm:"Condição: " + n, pp:c.pp} : null;
+  }
+  var e = MAPA[v.slice(3)];
+  if(!e) return null;
+  var pp = 0;
+  try{ pp = Math.round(e.cost(gf, e.qtd ? e.qtd.val : 0, false, ctxPadrao)) || 0; }catch(err){ pp = 0; }
+  return {nm:e.nm, pp:pp};
+}
+function montarSeletorForma(){
+  var sel = $("fx-ef-sel"), html = '<option value="">— escolha um efeito —</option>';
+  html += '<optgroup label="Adicionar Condição">' + CONDICOES.map(function(c){
+    return '<option value="cond:' + c.n + '">' + c.n + (c.exclusiva ? " ✦" : "") + ' · ' + c.pp + ' PP</option>';
+  }).join("") + '</optgroup>';
+  ["Controle","Ofensivo","Suporte","Redução"].forEach(function(cat){
+    html += '<optgroup label="' + cat + '">' + EFEITOS.filter(function(e){
+      return e.cat === cat && e.id !== "condicao";
+    }).map(function(e){ return '<option value="ef:' + e.id + '">' + e.nm + '</option>'; }).join("") + '</optgroup>';
+  });
+  sel.innerHTML = html;
+}
+function pintarEfeitosForma(){
+  var lista = efeitosForma();
+  $("fx-ef-lista").innerHTML = lista.map(function(x, i){
+    return '<div class="fxef"><span class="nm">' + esc(x.nm) + '</span>'
+      + '<input class="det" type="text" maxlength="80" data-fxdet="' + i + '" placeholder="detalhe (ex.: +2 no acerto)" value="' + esc(x.det || "") + '">'
+      + '<input type="number" step="1" min="-8" max="20" data-fxpp="' + i + '" value="' + (Number(x.pp) || 0) + '" aria-label="PP de ' + esc(x.nm) + '">'
+      + '<button type="button" data-fxdel="' + i + '" aria-label="Tirar ' + esc(x.nm) + '">×</button></div>';
+  }).join("");
+}
+function textoEfeitosForma(fx){
+  var ef = (fx && fx.efeitos) || [], txt = "";
+  if(ef.length) txt = "Efeitos da forma: " + ef.map(function(x){
+    return x.nm + (x.det ? " (" + x.det + ")" : "") + " " + ((Number(x.pp) || 0) >= 0 ? "+" : "") + (Number(x.pp) || 0) + " PP";
+  }).join("; ") + ".";
+  if(S.fx.perde) txt += (txt ? " " : "") + "Perde os efeitos da Técnica original.";
+  return txt;
+}
+function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+
+/* Condição / Efeito em Área espalha UMA das condições de Adicionar Condição
+   (ou um efeito descrito à mão). "" = nada escolhido ainda. */
+function condAreaEscolhida(){
+  var v = S.escolhas["condicao-area"] || "";
+  if(v === "__outro") return "outro efeito da Técnica";
+  if(v && S.ativos["condicao"] && condsDe("condicao").indexOf(v) >= 0) return v;
+  var arr = S.ativos["condicao"] ? condsDe("condicao") : [];
+  return arr.length === 1 && !v ? arr[0] : "";
+}
+function opcoesCondArea(){
+  var sel = $("s-condicao-area");
+  if(!sel) return;
+  var arr = S.ativos["condicao"] ? condsDe("condicao") : [];
+  var opts = [["", arr.length ? "— escolha —" : "— marque Adicionar Condição primeiro —"]]
+    .concat(arr.map(function(n){ return [n, n]; }))
+    .concat([["__outro", "Outro efeito (descreva na Técnica)"]]);
+  var chave = opts.map(function(o){ return o[0]; }).join("|");
+  if(sel.dataset.para !== chave){
+    sel.dataset.para = chave;
+    sel.innerHTML = opts.map(function(o){ return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("");
+  }
+  var atual = condAreaEscolhida();
+  sel.value = atual === "outro efeito da Técnica" ? "__outro" : atual;
 }
 function maxConds(id){ var e = MAPA[id]; return (e && e.conds && e.conds.max) || 3; }
 function temEfeitoNegativo(){
@@ -1293,6 +1397,10 @@ function montarCatalogo(){
                 + (c.exclusiva ? "Condição Exclusiva — " : "") + c.d.replace(/"/g,"&quot;") + '">'
                 + c.n + (c.exclusiva ? " ✦" : "") + ' <span style="opacity:.7">' + c.pp + '</span></button>';
             }).join("") + '</div></div>';
+      }
+      if(e.condArea){
+        extra += '<div class="opt"><label for="s-' + e.id + '">condição que vale na área</label>'
+          + '<select id="s-' + e.id + '" data-sel="' + e.id + '"></select></div>';
       }
       if(e.escolha){
         extra += '<div class="opt"><label for="s-' + e.id + '">' + e.escolha.label + '</label>'
@@ -1473,6 +1581,11 @@ function calcular(){
   if(S.ativos["cura"] && S.tipo === "combate" && S.grau === 1)
     alertas.push({t:"erro", m:"Adicionar Cura não pode ser usado em Técnicas de 1º grau."});
 
+  if(S.ativos["condicao-area"] && !condAreaEscolhida())
+    alertas.push({t:"warn", m:(S.ativos["condicao"] && condsDe("condicao").length
+      ? "Condição / Efeito em Área: escolha qual condição vale na área."
+      : "Condição / Efeito em Área espalha uma condição, mas nenhuma foi escolhida. Marque Adicionar Condição e escolha a condição lá — o custo dela é pago nesse efeito.")});
+
   var exclusivas = [];
   ["condicao","efeito-colateral"].forEach(function(setId){
     if(!S.ativos[setId]) return;
@@ -1533,14 +1646,16 @@ function calcular(){
     var gf = grauForma();
     var sobretaxa = (S.origem === "estilo") ? 0 : Math.floor(gf / 2);
     var dadosFx = Math.max(0, Number(S.fx.dados) || 0);
-    var custoFx = Math.max(1, dadosFx + sobretaxa);
+    var efFx = efeitosForma(), ppEfFx = 0;
+    efFx.forEach(function(x){ ppEfFx += Number(x.pp) || 0; });
+    var custoFx = Math.max(1, dadosFx + sobretaxa + ppEfFx);
     var maxDadosFx = GRAUS[gf].dados;
     /* a sobretaxa entra POR CIMA do teto do grau: o Gomu-Gomu no Cannon do
        livro é 5º grau (teto 10 PP) e custa 12 PP — 10 do grau + 2 da forma */
     var maxFx = GRAUS[gf].pp + sobretaxa;
 
     fx = {
-      grau: gf, dados: dadosFx, custo: custoFx, sobretaxa: sobretaxa,
+      grau: gf, dados: dadosFx, custo: custoFx, sobretaxa: sobretaxa, efeitos: efFx,
       limite: maxFx, nome: S.fx.nome || "(sem nome)",
       rotulo: S.forma === "aperfeicoada" ? "Forma Aperfeiçoada" : "Forma Alternativa"
     };
@@ -1597,7 +1712,12 @@ function gerarDescricao(){
     p.push(pre + " ou receberá " + (cImpostas.length > 1 ? "as condições " : "a condição ")
       + listar(cImpostas) + ", " + dur + ".");
   }
-  if(S.ativos["condicao-area"]) p.push("A condição afeta todas as criaturas dentro da área da Técnica.");
+  if(S.ativos["condicao-area"]){
+    var ca = condAreaEscolhida();
+    p.push(ca && ca !== "outro efeito da Técnica"
+      ? "A condição \"" + ca + "\" afeta todas as criaturas dentro da área da Técnica."
+      : "O efeito afeta todas as criaturas dentro da área da Técnica.");
+  }
   if(S.ativos["controle-cirurgico"]) p.push("Ao realizar esta Técnica você pode escolher um número de criaturas igual ao seu modificador de Destreza (mínimo de uma criatura) dentro da área da Técnica para não sofrer dano.");
   if(S.ativos["dano-insistente"]) p.push("Caso a criatura passe na Salvaguarda e tenha qualquer característica para não sofrer nenhum dano, ela ainda assim receberá metade do dano.");
   if(S.ativos["ataque-cerco"]) p.push("O dano desta Técnica é dobrado em objetos e estruturas.");
@@ -1733,6 +1853,9 @@ function render(){
     }
     selg.value = String(gf);
     $("forma-hint").textContent = GRAUS[gf].pp + " PP · até " + GRAUS[gf].dados + " dados";
+    $("fx-ef-nota").innerHTML = "O PP de cada efeito vem sugerido pelo custo no " + gf + "º grau, com as opções padrão — ajuste se a forma usar quantidade ou modo diferente. "
+      + (aperf ? "Sem marcar a caixa acima, os efeitos da Técnica original continuam valendo na forma."
+               : "Marque a caixa acima se a forma troca os efeitos da Técnica original pelos daqui.");
     $("forma-nota").innerHTML = aperf
       ? "A Forma Aperfeiçoada é uma Técnica <strong>nova</strong>, de até 2 graus acima da original (teto no 5º grau), com os limites do grau novo. Os efeitos da Técnica original são mantidos, salvo quando o texto disser que deixam de valer."
       : "A Forma Alternativa fica no <strong>mesmo grau</strong> da Técnica e pode mudar dado, tipo de dano, alcance, efeitos e condições."
@@ -1744,6 +1867,7 @@ function render(){
   $("panel-dano").style.opacity = (isAux() || isMP()) ? ".62" : "1";
   $("afinidade-wrap").hidden = !S.regraDano;
   opcoesRequisito();
+  opcoesCondArea();
 
   var sp = specs(), g = grauEfetivo();
   $("h-base").textContent = isMP() ? "Regras de 2º grau · 6 pontos virtuais base"
@@ -1833,8 +1957,10 @@ function render(){
       partes.push("Alternativamente: " + (r.fx.dados
         ? "a Técnica causa " + r.fx.dados + "d10 de dano " + S.fx.tipoDano + ", custando " + r.fx.custo + " PP."
         : "descreva aqui o que muda."));
+    var linhaEf = textoEfeitosForma(r.fx);
+    if(linhaEf) partes.push(linhaEf);
 
-    rows += '<div class="sb-cell stack sb-forma"><em>&lt;' + (S.fx.nome || r.fx.rotulo) + '&gt; · '
+    rows +='<div class="sb-cell stack sb-forma"><em>&lt;' + (S.fx.nome || r.fx.rotulo) + '&gt; · '
       + r.fx.rotulo + (S.forma === "aperfeicoada" ? " · " + r.fx.grau + "º grau" : "") + '</em>'
       + '<div class="sb-forma-txt">' + partes.join(" ") + '</div></div>';
     rows += '<div class="sb-cell acc"><em>PP da forma</em><b>' + r.fx.custo + '</b></div>';
@@ -1937,6 +2063,30 @@ TIPOS_DANO.forEach(function(t){
   if(t === "Contundente") op.selected = true;
   $("fx-tipodano").appendChild(op);
 });
+montarSeletorForma();
+$("fx-ef-add").addEventListener("click", function(){
+  var v = $("fx-ef-sel").value;
+  var sug = v ? sugestaoForma(v) : null;
+  if(!sug){ toast("Escolha um efeito na lista.", "var(--red)"); return; }
+  efeitosForma().push({v:v, nm:sug.nm, det:"", pp:sug.pp});
+  $("fx-ef-sel").value = "";
+  pintarEfeitosForma();
+  render();
+});
+$("fx-ef-lista").addEventListener("input", function(ev){
+  var t = ev.target, lista = efeitosForma();
+  if(t.dataset.fxdet != null && lista[t.dataset.fxdet]) lista[t.dataset.fxdet].det = t.value;
+  if(t.dataset.fxpp != null && lista[t.dataset.fxpp]) lista[t.dataset.fxpp].pp = Number(t.value) || 0;
+  render();
+});
+$("fx-ef-lista").addEventListener("click", function(ev){
+  var b = ev.target.closest("[data-fxdel]");
+  if(!b) return;
+  efeitosForma().splice(Number(b.dataset.fxdel), 1);
+  pintarEfeitosForma();
+  render();
+});
+$("fx-perde").addEventListener("change", function(){ S.fx.perde = this.checked; render(); });
 $("f-regra-dano").addEventListener("change", function(){ S.regraDano = this.checked; S.descTocada = false; render(); });
 $("f-desc").addEventListener("input", function(){ S.descTocada = true; $("sb-desc").textContent = this.value; });
 
@@ -1961,6 +2111,15 @@ function textoCompleto(){
     });
   }
   if(S.tipo === "combate") out.push("Ataque Combinado: " + (ataqueCombinado() ? "Possível" : "Impossível"));
+  if(r.fx){
+    out.push("");
+    out.push("<" + (S.fx.nome || r.fx.rotulo) + "> · " + r.fx.rotulo
+      + (S.forma === "aperfeicoada" ? " · " + r.fx.grau + "º grau" : "") + " · " + r.fx.custo + " PP");
+    if(S.fx.texto.trim()) out.push(S.fx.texto.trim());
+    if(r.fx.dados) out.push("Dano: " + r.fx.dados + "d10 de dano " + S.fx.tipoDano);
+    var le = textoEfeitosForma(r.fx);
+    if(le) out.push(le);
+  }
   return out.join("\n");
 }
 function toast(msg, cor){
@@ -2008,6 +2167,15 @@ function aplicarEstado(x){
       if($("pmin-" + e.id)) $("pmin-" + e.id).value = S.prolongMin[e.id] || 1;
     }
   });
+  /* forma adicional: técnicas antigas não têm efeitos/perde — completa */
+  var fx0 = estadoInicial().fx;
+  S.fx = S.fx || fx0;
+  Object.keys(fx0).forEach(function(k){ if(S.fx[k] === undefined) S.fx[k] = fx0[k]; });
+  $("fx-nome").value = S.fx.nome || ""; $("fx-dados").value = S.fx.dados || 0;
+  $("fx-tipodano").value = S.fx.tipoDano || "Contundente"; $("fx-alcance").value = S.fx.alcance || "";
+  $("fx-texto").value = S.fx.texto || ""; $("fx-perde").checked = !!S.fx.perde;
+  $("fx-grau").dataset.para = "";
+  pintarEfeitosForma();
   opcoesRequisito();
 }
 $("btn-clear").addEventListener("click", function(){

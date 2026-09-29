@@ -907,6 +907,17 @@ footer p{margin:0 0 6px}
               <select id="b-estilo"></select>
             </div>
           </div>
+          <div class="row2" id="wrap-mestico" hidden>
+            <div class="field">
+              <label for="b-mest1">Espécie de origem 1</label>
+              <select id="b-mest1"></select>
+            </div>
+            <div class="field">
+              <label for="b-mest2">Espécie de origem 2</label>
+              <select id="b-mest2"></select>
+            </div>
+          </div>
+          <p class="small" id="mestico-nota" style="margin:-4px 0 14px" hidden></p>
           <div class="row2">
             <div class="field">
               <label for="b-nivel">Nível de personagem</label>
@@ -949,7 +960,7 @@ footer p{margin:0 0 6px}
             <span>Ajuste de Espécie: <b id="bud-esp">0/2</b> <span id="bud-esp-ok"></span></span>
             <span>Antecedente: <b id="bud-ant">0/2</b> <span id="bud-ant-ok"></span></span>
           </div>
-          <p class="small" style="margin:10px 0 0">Cada bolsa vale <strong>+2 em um atributo</strong> ou <strong>+1 em dois</strong>. Nenhum total pode passar de 20 na criação.</p>
+          <p class="small" style="margin:10px 0 0">Na criação você ganha dois bônus de atributo: um da <strong>Espécie</strong> (coluna “Espécie”) e um do <strong>Antecedente</strong> (coluna “Antec.”). Cada um deles é <strong>+2 em um atributo</strong> ou <strong>+1 em dois atributos</strong>. Nenhum total pode passar de 20 na criação.</p>
         </div>
       </div>
 
@@ -1287,6 +1298,31 @@ footer p{margin:0 0 6px}
     if(k === "Humanos") o.selected = true;
     elEsp.appendChild(o);
   });
+
+  /* Mestiço: as duas Espécies de origem definem PV Base (média, arred. ↓),
+     deslocamento e nado (o maior dos dois) — Livro do Jogador, p. 27 */
+  var elM1 = document.getElementById("b-mest1");
+  var elM2 = document.getElementById("b-mest2");
+  Object.keys(ESPECIES).forEach(function(k){
+    if(k === "Mestiços") return;
+    [elM1, elM2].forEach(function(sel){
+      var o = document.createElement("option"); o.value = k; o.textContent = k;
+      sel.appendChild(o);
+    });
+  });
+  elM1.value = "Humanos"; elM2.value = "Minks";
+
+  function especieAtual(){
+    if(elEsp.value !== "Mestiços") return ESPECIES[elEsp.value];
+    var a = ESPECIES[elM1.value], b = ESPECIES[elM2.value];
+    var sa = a.sing, sb = b.sing;
+    return {
+      pv: Math.floor((a.pv + b.pv) / 2),
+      desl: Math.max(a.desl, b.desl),
+      nado: Math.max(a.nado, b.nado),
+      sing: "Mestiço" + (sa === sb ? " (" + sa + ")" : " (" + sa + " e " + sb + ")")
+    };
+  }
   /* dois grupos no seletor, mas o valor continua sendo o índice do array —
      é ele que as fichas salvas guardam */
   (function(){
@@ -1347,7 +1383,13 @@ footer p{margin:0 0 6px}
   }
 
   function render(){
-    var esp = ESPECIES[elEsp.value];
+    var mestico = elEsp.value === "Mestiços";
+    var esp = especieAtual();
+    document.getElementById("wrap-mestico").hidden = !mestico;
+    var notaM = document.getElementById("mestico-nota");
+    notaM.hidden = !mestico;
+    if(mestico) notaM.innerHTML = "PV Base <strong>" + esp.pv + "</strong> (média das duas, arredondada para baixo) · deslocamento e nado: o maior das duas. "
+      + "Escolha 1 Benefício de cada Espécie de origem e 1 Dificuldade entre as duas; o Preconceito é o maior entre elas.";
     var style = ESTILOS[parseInt(elEst.value, 10)];
     var nivel = parseInt(elNiv.value, 10);
     var bp = 2;
@@ -1456,7 +1498,7 @@ footer p{margin:0 0 6px}
   var memoria = null;
 
   function camposDaFicha(){
-    var ids = ["b-nome","b-especie","b-estilo","b-nivel","b-primario","b-cr","b-metodo"];
+    var ids = ["b-nome","b-especie","b-mest1","b-mest2","b-estilo","b-nivel","b-primario","b-cr","b-metodo"];
     ATTRS.forEach(function(a){ ids.push("base-" + a.k, "esp-" + a.k, "ant-" + a.k); });
     return ids;
   }
