@@ -356,6 +356,7 @@ footer p{margin:0 0 6px}
         <li><a href="#hb">Hab. Básicas</a></li>
         <li><a href="#progressao">Nível 1→3</a></li>
         <li><a href="#montador">Montador</a></li>
+        <li><a href="ficha.html">Ficha</a></li>
         <li><a href="forja.html">Forja</a></li>
         <li><a href="anotacoes.html">Diário</a></li>
       </ul>
@@ -1010,6 +1011,7 @@ footer p{margin:0 0 6px}
               <button class="btn" type="button" id="btn-colar-fichas">Colar código</button>
               <button class="btn" type="button" id="btn-baixar-fichas" hidden>Baixar arquivo</button>
             </div>
+            <p class="aviso"><a href="ficha.html#guia">Abrir uma ficha salva na Ficha completa →</a> PV, PP, perícias, técnicas e Haki para jogar a campanha toda.</p>
             <p class="aviso" id="aviso-fichas">As fichas ficam neste navegador. Entrando com o Discord, elas passam a te acompanhar em qualquer aparelho.</p>
             <div id="box-fichas" hidden>
               <textarea id="texto-fichas" spellcheck="false"></textarea>
@@ -1727,6 +1729,8 @@ footer p{margin:0 0 6px}
   if(Conta){
     Conta.iniciar({
       tabela: "fichas",
+      /* a Ficha completa usa a mesma tabela; ela marca as dela com formato "ficha" */
+      filtrar: function(q){ return q.is("dados->>formato", null); },
       colunas: function(f){
         return {
           nome: String(f.nome || ""),

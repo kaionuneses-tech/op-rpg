@@ -365,6 +365,7 @@ footer p{margin:0 0 5px}
         <li><a href="#formas">Formas</a></li>
         <li><a href="#mp">Manifestações</a></li>
         <li><a href="guia.html">Guia</a></li>
+        <li><a href="ficha.html">Ficha</a></li>
         <li><a href="anotacoes.html">Diário</a></li>
       </ul>
     </div>
@@ -2254,6 +2255,7 @@ $("btn-save").addEventListener("click", function(){
   snap.desc = $("f-desc").value;
   snap.id = novoId();
   snap.atualizadoEm = Date.now();
+  snap.resumo = resumoParaFicha();
   d.unshift(snap);
   var ok = salvarDrafts(d.slice(0, LIMITE_DRAFTS));
   nuvemGuardar(snap);
@@ -2261,6 +2263,24 @@ $("btn-save").addEventListener("click", function(){
   toast(ok ? "Técnica salva." : "Salva só nesta visita.", ok ? "var(--ok)" : "var(--red)");
   if(!ok) avisoDrafts("Este navegador não está guardando dados do site, então a lista some ao recarregar. Exporte o arquivo antes de sair.", "bad");
 });
+
+/* O que a Ficha completa precisa para usar a técnica sem refazer a conta:
+   custo final, dano já com o dado certo e os textos de alcance e requisito. */
+function resumoParaFicha(){
+  var r = calcular();
+  var ataque = ["ataque-cc","ataque-dist"].indexOf(S.alvo) >= 0;
+  return {
+    pp: r.total,
+    dano: temDano() ? S.dados + "d" + dadoDano() : "",
+    tipoDano: temDano() ? S.tipoDano : "",
+    alcance: textoAlcance(),
+    requisito: textoRequisito(),
+    duracao: S.duracao,
+    ataque: ataque,
+    salva: (!ataque && S.alvo !== "sem-dano") ? S.salvAtr : "",
+    texto: textoCompleto()
+  };
+}
 
 /* ── exportar ──
    O código guarda só o que difere do padrão: campos simples preenchidos e,

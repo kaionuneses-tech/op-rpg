@@ -32,6 +32,14 @@ const PAGINAS = [
     conta: true
   },
   {
+    fonte: "op-rpg-ficha.html",
+    saida: "ficha.html",
+    favicon: "☠️",
+    descricao: "Ficha de personagem completa do OP RPG: calcula PV, PP, CR, CD, perícias e Haki, rola os dados " +
+      "e importa as técnicas da Forja. Com o Discord, cada ficha fica na sua conta.",
+    conta: true
+  },
+  {
     fonte: "op-rpg-anotacoes.html",
     saida: "anotacoes.html",
     favicon: "📜",

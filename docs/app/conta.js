@@ -3,7 +3,8 @@
 
    Expõe window.OPRPGConta com uma API pequena que as páginas usam:
 
-     iniciar({tabela, lerLocal, escreverLocal, aoMudar})
+     iniciar({tabela, lerLocal, escreverLocal, aoMudar, filtrar})
+     lerTabela(tabela, colunas, filtrar)   lê linhas de outra tabela do dono
      entrar()            abre o login do Discord
      sair()
      estado()            {ligado, logado, usuario, sincronizando}
@@ -121,12 +122,20 @@
     return "id," + base + ",atualizado_em";
   }
 
+  /* Duas páginas podem dividir a mesma tabela (o Guia e a Ficha usam "fichas").
+     `filtrar` recebe a consulta e devolve ela restrita ao que é da página,
+     para uma não puxar para o navegador as linhas da outra.               */
+  function consulta(tabela, colunas, filtrar) {
+    var q = cliente.from(tabela).select(colunas);
+    return typeof filtrar === "function" ? (filtrar(q) || q) : q;
+  }
+
   /* Puxa tudo da nuvem, junta com o local, grava o resultado nos dois lados. */
   function sincronizar() {
     if (!cliente || !sessao || !opcoes) return Promise.resolve(null);
     sincronizando = true; avisar();
 
-    return cliente.from(opcoes.tabela).select(selecao())
+    return consulta(opcoes.tabela, selecao(), opcoes.filtrar)
       .then(function (r) {
         if (r.error) throw r.error;
         var locais = opcoes.lerLocal() || [];
@@ -175,6 +184,16 @@
         if (r.error) { if (opcoes.aoErro) opcoes.aoErro(r.error); return false; }
         return true;
       }, function (err) { if (opcoes.aoErro) opcoes.aoErro(err); return false; });
+  }
+
+  /* Leitura avulsa de outra tabela do mesmo dono — a Ficha usa para listar
+     as técnicas da Forja. Sem login devolve lista vazia.                   */
+  function lerTabela(tabela, colunas, filtrar) {
+    if (!cliente || !sessao) return Promise.resolve([]);
+    return consulta(tabela, colunas || "id,dados,atualizado_em", filtrar).then(function (r) {
+      if (r.error) { if (opcoes && opcoes.aoErro) opcoes.aoErro(r.error); return []; }
+      return r.data || [];
+    }, function () { return []; });
   }
 
   /* ────────────────────────────── entrada ─────────────────────────── */
@@ -238,6 +257,7 @@
     estado: estado,
     sincronizar: sincronizar,
     guardar: guardar,
-    apagar: apagar
+    apagar: apagar,
+    lerTabela: lerTabela
   };
 })();

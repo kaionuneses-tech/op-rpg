@@ -1,0 +1,2375 @@
+<title>Ficha de Personagem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Rye&display=swap">
+
+<style>
+:root{
+  --ink:#101E29; --ink2:#41535F; --ink3:#71838F;
+  --paper:#E9EDEF; --surf:#FFFFFF; --surf2:#F3F6F7; --surf3:#E2E8EB;
+  --line:#CBD5DB; --line2:#A6B6C0;
+  --red:#B8372C; --gold:#96660C; --sea:#1C6478; --ok:#25705A;
+  --bar:#101E29; --bar-ink:#E9EDEF;
+  --redsoft:color-mix(in srgb, var(--red) 11%, transparent);
+  --goldsoft:color-mix(in srgb, var(--gold) 13%, transparent);
+  --seasoft:color-mix(in srgb, var(--sea) 11%, transparent);
+  --oksoft:color-mix(in srgb, var(--ok) 11%, transparent);
+  --onaccent:#FFFFFF;
+  --radius:3px;
+}
+:root[data-palette="grandline"]{ --red:#0F7A6E; --gold:#8A6100; --sea:#1E5F8A; --ok:#2C6A45; }
+:root[data-palette="porsol"]  { --red:#C05A16; --gold:#8C6A00; --sea:#8A4A6E; --ok:#3F7046; }
+:root[data-palette="yonko"]   { --red:#6E3A9E; --gold:#96660C; --sea:#2E6B8F; --ok:#25705A; }
+:root[data-palette="kairoseki"]{ --red:#2B5C7A; --gold:#6E7A2E; --sea:#4A6070; --ok:#2E6B5B; }
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+    --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+    --line:#263B4C; --line2:#3A5468;
+    --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+    --bar:#1D3341; --bar-ink:#DDE6EC; --onaccent:#0A131A;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#DDE6EC; --ink2:#A2B3BF; --ink3:#778B99;
+  --paper:#0A131A; --surf:#111E28; --surf2:#162733; --surf3:#1D3341;
+  --line:#263B4C; --line2:#3A5468;
+  --red:#EA6E63; --gold:#DFA845; --sea:#54AEC3; --ok:#4FB58D;
+  --bar:#1D3341; --bar-ink:#DDE6EC; --onaccent:#0A131A;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-palette="grandline"]:not([data-theme="light"]){ --red:#4FC0B0; --gold:#DFA845; --sea:#6BADE0; --ok:#5FBE92; }
+  :root[data-palette="porsol"]:not([data-theme="light"])  { --red:#F0904A; --gold:#D9B34A; --sea:#D98BB8; --ok:#6FBE7E; }
+  :root[data-palette="yonko"]:not([data-theme="light"])   { --red:#B292E8; --gold:#DFA845; --sea:#6FB3D6; --ok:#4FB58D; }
+  :root[data-palette="kairoseki"]:not([data-theme="light"]){ --red:#6FB0D4; --gold:#BFC96B; --sea:#9AB0C0; --ok:#5FC0A8; }
+}
+:root[data-palette="grandline"][data-theme="dark"]{ --red:#4FC0B0; --gold:#DFA845; --sea:#6BADE0; --ok:#5FBE92; }
+:root[data-palette="porsol"][data-theme="dark"]  { --red:#F0904A; --gold:#D9B34A; --sea:#D98BB8; --ok:#6FBE7E; }
+:root[data-palette="yonko"][data-theme="dark"]   { --red:#B292E8; --gold:#DFA845; --sea:#6FB3D6; --ok:#4FB58D; }
+:root[data-palette="kairoseki"][data-theme="dark"]{ --red:#6FB0D4; --gold:#BFC96B; --sea:#9AB0C0; --ok:#5FC0A8; }
+
+/* ── Ficha completa: componentes, sobre os tokens do site (--ink, --surf, --red, --gold…) ── */
+:root{
+  --font-display:"Oswald","Arial Narrow",Arial,sans-serif;
+  --font-body:"Spectral",Georgia,"Times New Roman",serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --font-poster:"Rye",Georgia,serif;
+  --fs-scale:1; --lh:1.5;
+  --poster:#E8D6A8; --poster2:#D2B57A; --poster-ink:#3B2412;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-body);
+  font-size:calc(16px * var(--fs-scale)); line-height:var(--lh); -webkit-font-smoothing:antialiased}
+h3,h4{font-family:var(--font-display); font-weight:600; margin:0 0 10px; line-height:1.15}
+h3{font-size:calc(15px * var(--fs-scale)); text-transform:uppercase; letter-spacing:.08em; color:var(--ink)}
+h4{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink3); margin:12px 0 7px}
+a{color:var(--sea)}
+:focus-visible{outline:2px solid var(--red); outline-offset:2px}
+.muted{color:var(--ink3)}
+.small{font-size:calc(13px * var(--fs-scale))}
+.hint{color:var(--ink3); font-size:calc(13px * var(--fs-scale)); margin:8px 0 0}
+.center{text-align:center}
+
+/* campos */
+input:not([type=checkbox]), select, textarea{width:100%; min-width:0; font-family:var(--font-body);
+  font-size:calc(15px * var(--fs-scale)); color:var(--ink); background:var(--surf2); border:1px solid var(--line);
+  border-radius:var(--radius); padding:6px 9px; outline:none}
+input:focus, select:focus, textarea:focus{border-color:var(--red)}
+textarea{resize:vertical}
+input[type=number]{font-family:var(--font-mono); -moz-appearance:textfield}
+.chk{appearance:none; width:18px; height:18px; border:1.5px solid var(--line2); border-radius:var(--radius);
+  background:var(--surf); cursor:pointer; display:inline-grid; place-content:center; margin:0; flex:none}
+.chk:checked{background:var(--red); border-color:var(--red)}
+.chk:checked::after{content:"✔"; color:var(--onaccent); font-size:11px; font-weight:700}
+.chk.star:checked{background:var(--gold); border-color:var(--gold)}
+.chk.star:checked::after{content:"★"}
+.chk:disabled{opacity:.4; cursor:default}
+
+/* botões: .btn e .btn.primary vêm da barra do site; aqui só as variações da ficha */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap; text-decoration:none}
+.btn.small{padding:5px 9px; font-size:calc(11.5px * var(--fs-scale))}
+.btn.accent{background:var(--red); border-color:var(--red); color:var(--onaccent)}
+.btn.accent:hover{opacity:.88; color:var(--onaccent)}
+.btn.red{background:var(--redsoft); border-color:var(--red); color:var(--red)}
+.btn.green{background:var(--oksoft); border-color:var(--ok); color:var(--ok)}
+.btn.blue{background:var(--seasoft); border-color:var(--sea); color:var(--sea)}
+.btn.danger:hover{background:var(--redsoft)}
+.link{background:none; border:0; color:var(--sea); cursor:pointer; padding:0; font-family:var(--font-mono);
+  font-size:calc(11px * var(--fs-scale)); letter-spacing:.04em}
+.link:hover{text-decoration:underline}
+.x{background:none; border:0; color:var(--ink3); cursor:pointer; padding:4px 6px; flex:none; font-size:14px}
+.x:hover{color:var(--red)}
+
+/* estrutura */
+.wrap{max-width:1180px; margin:0 auto; padding:16px}
+.card{background:var(--surf); border:1px solid var(--line); padding:14px}
+.card-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap}
+.grid{display:grid; gap:10px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))} .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))} .g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.g6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.grid.tight{gap:6px}
+.field{display:flex; flex-direction:column; gap:3px; margin-bottom:8px; min-width:0}
+.grid .field{margin-bottom:0}
+.field > span{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); text-transform:uppercase;
+  letter-spacing:.1em; color:var(--ink3); font-weight:600}
+.field output, output.big{font-family:var(--font-mono); font-size:calc(20px * var(--fs-scale)); font-weight:600;
+  color:var(--gold); padding:2px 0; font-variant-numeric:tabular-nums}
+.cols2{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:14px; margin-bottom:14px; align-items:start}
+.cols3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-bottom:14px}
+.col{display:flex; flex-direction:column; gap:14px; min-width:0}
+.stack{display:flex; flex-direction:column; gap:7px; margin-bottom:10px}
+.row{display:flex; gap:6px; align-items:center}
+.row.head{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); color:var(--ink3); text-transform:uppercase; letter-spacing:.08em}
+.grow{flex:1; min-width:0}
+.strong{font-weight:600}
+.w24{width:24px; flex:none} .w60{width:64px!important; flex:none} .w80{width:84px!important; flex:none} .w100{width:112px!important; flex:none}
+.tag{font-family:var(--font-mono); font-size:calc(9.5px * var(--fs-scale)); text-transform:uppercase; letter-spacing:.08em;
+  border:1px solid var(--line); color:var(--ink3); padding:3px 6px; width:76px; text-align:center; flex:none}
+.check{display:flex; align-items:center; gap:8px; cursor:pointer}
+
+/* barra de personagens (abaixo da barra do site) */
+.fichabar{display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:14px}
+.fichabar select{width:auto; max-width:280px; flex:1 1 180px; font-family:var(--font-display); letter-spacing:.03em}
+.fichabar .sep{flex:1}
+
+/* cabeçalho: cartaz + identidade */
+.hero{display:grid; grid-template-columns:270px minmax(0,1fr); gap:14px; margin-bottom:14px}
+.wanted{background:linear-gradient(135deg, var(--poster), var(--poster2)); color:var(--poster-ink);
+  padding:14px 18px 10px; text-align:center; box-shadow:inset 0 0 40px rgba(110,60,15,.35); transform:rotate(-1deg); position:relative}
+.wanted::before{content:""; position:absolute; top:6px; left:50%; width:10px; height:10px; margin-left:-5px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #ff8a8a, #8b1a1a)}
+.wanted-title{font-family:var(--font-poster); font-size:44px; line-height:1; margin-top:4px}
+.wanted-photo{display:block; position:relative; aspect-ratio:4/3.4; max-width:100%; margin:8px 0 6px; cursor:pointer;
+  border:3px solid var(--poster-ink); background:rgba(59,36,18,.1); overflow:hidden}
+.wanted-photo img{width:100%; height:100%; object-fit:cover; display:none; filter:sepia(.25) contrast(1.05)}
+.wanted-photo.has img{display:block}
+.wanted-photo-hint{position:absolute; inset:0; display:grid; place-content:center; font-size:12px; opacity:.65; font-weight:600}
+.wanted-photo.has .wanted-photo-hint{display:none}
+.wanted-dor{font-family:var(--font-poster); font-size:17px}
+.wanted input{background:transparent!important; border:0!important; color:var(--poster-ink)!important; text-align:center; padding:2px; border-radius:0}
+.wanted input::placeholder{color:rgba(59,36,18,.45)}
+.wanted-name{font-family:var(--font-poster)!important; font-size:21px!important; text-transform:uppercase; border-bottom:1px dashed rgba(59,36,18,.3)!important}
+.wanted-bounty{display:flex; align-items:center; gap:4px; font-family:var(--font-poster); font-size:23px}
+.wanted-bounty input{font-family:var(--font-poster)!important; font-size:23px!important; text-align:right; flex:1}
+.wanted-foot{font-family:var(--font-poster); font-size:11px; letter-spacing:.3em; opacity:.7; text-align:right}
+.identity{display:flex; flex-direction:column; gap:12px}
+.xpbar{position:relative; height:20px; background:var(--surf2); border:1px solid var(--line)}
+.xpfill{height:100%; background:var(--goldsoft); border-right:2px solid var(--gold); transition:width .4s}
+.xpbar span{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-mono);
+  font-size:calc(11px * var(--fs-scale)); color:var(--ink2)}
+.xpbar.ready{border-color:var(--gold)}
+.xpbar.ready span::after{content:" — pode subir de nível!"; color:var(--gold); font-weight:600}
+.mestico{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.mestico select{width:auto}
+
+/* vitais */
+.vitals{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-bottom:14px}
+.vital-head{display:flex; justify-content:space-between; align-items:baseline}
+.bar{position:relative; height:34px; background:var(--surf2); border:1px solid var(--line); display:flex; overflow:hidden}
+.bar.thin{height:10px; flex:1}
+.fill{height:100%; transition:width .35s ease}
+.fill.hp{background:var(--red)}
+.fill.shield{background:repeating-linear-gradient(45deg, var(--sea), var(--sea) 6px, transparent 6px, transparent 12px)}
+.fill.pp{background:var(--sea)}
+.fill.carga{background:var(--ok)}
+.carga.over .fill.carga{background:var(--red)}
+.bar-label{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:5px;
+  font-family:var(--font-mono); font-size:calc(15px * var(--fs-scale)); color:var(--ink); font-variant-numeric:tabular-nums}
+.bar-label b{font-size:calc(19px * var(--fs-scale)); background:var(--surf); padding:0 5px}
+.vital.critico .bar{border-color:var(--red); box-shadow:0 0 0 1px var(--red)}
+.vital-row{display:flex; gap:8px; margin-top:10px; align-items:flex-end; flex-wrap:wrap}
+.mini{display:flex; flex-direction:column; gap:2px; width:74px}
+.mini span{font-family:var(--font-mono); font-size:calc(9.5px * var(--fs-scale)); text-transform:uppercase; color:var(--ink3); letter-spacing:.08em}
+.dmg{display:flex; gap:6px; margin-left:auto; flex:1; min-width:220px; justify-content:flex-end}
+.dmg input{width:80px!important}
+.stats{grid-column:1/-1; display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px}
+.stat{text-align:center; padding:10px 6px; display:flex; flex-direction:column; gap:1px}
+.stat span{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); text-transform:uppercase; color:var(--ink3); letter-spacing:.1em}
+.stat b{font-family:var(--font-display); font-size:calc(30px * var(--fs-scale)); line-height:1.1; color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums}
+.stat small{font-size:calc(12px * var(--fs-scale)); color:var(--ink3)}
+.clickable{cursor:pointer}
+.clickable:hover{border-color:var(--red)}
+.clickable:hover b{color:var(--red)}
+.condition{grid-column:1/-1; display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start}
+.cond-block h4{margin-top:0}
+.pips{display:flex; gap:5px}
+.pip{width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line2); background:var(--surf); cursor:pointer;
+  font-family:var(--font-mono); font-size:12px; color:var(--ink3)}
+.pip.on{background:var(--gold); border-color:var(--gold); color:var(--onaccent)}
+.pip.last.on{background:var(--red); border-color:var(--red)}
+.hd{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.hd b{font-family:var(--font-mono); font-size:calc(17px * var(--fs-scale)); color:var(--gold)}
+.seg{display:inline-flex; border:1px solid var(--line2)}
+.seg button{background:var(--surf); border:0; padding:6px 12px; cursor:pointer; color:var(--ink2);
+  font-family:var(--font-display); text-transform:uppercase; letter-spacing:.06em; font-size:calc(12px * var(--fs-scale))}
+.seg button+button{border-left:1px solid var(--line2)}
+.seg button.on{background:var(--ink); color:var(--paper)}
+.seg button[data-modo=des].on{background:var(--red); color:var(--onaccent)}
+.seg button[data-modo=van].on{background:var(--ok); color:var(--onaccent)}
+
+/* abas */
+.tabs{display:flex; gap:2px; overflow-x:auto; margin-bottom:14px; border-bottom:1px solid var(--line); scrollbar-width:thin}
+.tabs button{background:none; border:0; padding:9px 12px; cursor:pointer; color:var(--ink2); white-space:nowrap;
+  font-family:var(--font-display); font-weight:500; font-size:calc(13px * var(--fs-scale)); letter-spacing:.08em; text-transform:uppercase;
+  border-bottom:2px solid transparent; margin-bottom:-1px}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--red); border-bottom-color:var(--red)}
+.tab{display:none}
+.tab.on{display:block}
+
+/* atributos e perícias */
+.attrs{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px; margin-bottom:14px}
+.attr{display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px}
+.attr-name{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); text-transform:uppercase; letter-spacing:.12em; color:var(--ink3); font-weight:600}
+.attr-mod{width:66px; height:66px; border-radius:50%; border:2px solid var(--red); background:var(--surf);
+  font-family:var(--font-display); font-size:calc(28px * var(--fs-scale)); font-weight:600; color:var(--ink); cursor:pointer}
+.attr-mod:hover{background:var(--redsoft); color:var(--red)}
+.attr-val{width:64px!important; text-align:center; font-weight:600}
+.attr-val.ro{display:block; padding:6px; color:var(--ink3); font-family:var(--font-mono)}
+.mini-attrs{margin:12px 0}
+.mini-attrs .attr{padding:8px}
+.tbl{overflow-x:auto}
+table{width:100%; border-collapse:collapse}
+.skills th{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); color:var(--ink3); text-transform:uppercase;
+  text-align:left; font-weight:600; padding:4px; letter-spacing:.08em}
+.skills td{padding:3px 4px; border-top:1px solid var(--line)}
+.tiny{width:56px!important; padding:3px 5px!important; text-align:center}
+.roll-chip{min-width:52px; padding:3px 8px; background:var(--surf2); border:1px solid var(--line); cursor:pointer;
+  font-family:var(--font-mono); font-weight:600; color:var(--ink); border-radius:var(--radius)}
+.roll-chip:hover{border-color:var(--red); color:var(--red)}
+.roll-btn{width:100%; margin-top:10px}
+.free-roll{display:flex; gap:6px}
+.quick-dice{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px}
+.die{flex:1; min-width:44px; padding:7px 0; background:var(--surf2); border:1px solid var(--line); cursor:pointer;
+  font-family:var(--font-mono); font-weight:600; color:var(--ink); border-radius:var(--radius)}
+.die:hover{border-color:var(--red); color:var(--red)}
+
+/* técnicas e itens */
+.tech-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr)); gap:10px}
+.tech{background:var(--surf2); border:1px solid var(--line); border-top:3px solid var(--red); padding:11px;
+  display:flex; flex-direction:column; gap:8px; min-width:0}
+.tech.aux{border-top-color:var(--sea)}
+.tech-head{display:flex; gap:6px}
+.tech .field{margin-bottom:0}
+.tech input,.tech select,.tech textarea,.item-card input{background:var(--surf)}
+.tech-foot{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap}
+.item-card{background:var(--surf2); border:1px solid var(--line); padding:10px; display:flex; flex-direction:column; gap:8px}
+.sub{font-size:calc(13px * var(--fs-scale)); margin-top:-3px}
+.carga{display:flex; align-items:center; gap:10px; margin-bottom:12px; font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); color:var(--ink3)}
+.carga b{color:var(--ink)}
+.carga.over b{color:var(--red)}
+.warn{color:var(--red)}
+.notes{font-size:calc(16px * var(--fs-scale)); line-height:1.6}
+
+/* haki */
+.haki-top{margin-bottom:14px}
+.haki-cols{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; align-items:start}
+.haki-table th{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); color:var(--ink3); text-align:left; padding:4px}
+.haki-table td{padding:5px 4px; border-top:1px solid var(--line); vertical-align:middle}
+.haki-table td small{display:block; color:var(--ink3); font-size:calc(12px * var(--fs-scale))}
+.haki-table tr.locked td:first-child{opacity:.45}
+.haki-table tr.owned td:first-child b{color:var(--red)}
+
+/* diálogos */
+dialog{background:var(--surf); color:var(--ink); border:1px solid var(--line2); padding:0;
+  width:min(720px, calc(100vw - 32px)); box-shadow:0 20px 60px -20px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(5,10,16,.55)}
+.dlg{padding:16px; display:flex; flex-direction:column; gap:12px}
+.dlg-actions{display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap}
+#dlgPergunta{width:min(420px, calc(100vw - 32px))}
+.codigo{font-family:var(--font-mono)!important; font-size:calc(12px * var(--fs-scale))!important; word-break:break-all}
+.rolls-grid{display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:6px}
+.rolls-grid label{display:flex; flex-direction:column; font-family:var(--font-mono); font-size:11px; color:var(--ink3); text-align:center}
+.rolls-grid input{text-align:center; padding:5px 2px}
+.rolls-grid .dim{opacity:.35}
+.breakdown{list-style:none; margin:0; padding:0}
+.breakdown li{display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px dashed var(--line)}
+.breakdown li b{font-family:var(--font-mono)}
+.breakdown li.total{border-bottom:0; font-family:var(--font-display); font-size:calc(17px * var(--fs-scale)); color:var(--red)}
+.pick-list{max-height:min(55vh,460px); overflow-y:auto}
+.pick{display:flex; align-items:center; gap:10px; padding:9px 10px; border:1px solid var(--line); background:var(--surf2);
+  cursor:pointer; text-align:left; color:inherit; font:inherit; width:100%}
+.pick:hover{border-color:var(--red)}
+.pick b{display:block; font-family:var(--font-display); font-weight:500; font-size:calc(16px * var(--fs-scale))}
+.pick span span{display:block; font-size:calc(13px * var(--fs-scale)); color:var(--ink3)}
+.pick i{font-style:normal; font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); color:var(--gold); min-width:30px}
+.guia-bloco{border:1px solid var(--line); background:var(--goldsoft); padding:10px 12px}
+.guia-bloco h4{margin-top:0}
+
+/* histórico de rolagens e avisos */
+.log{position:fixed; top:0; right:0; bottom:0; width:340px; max-width:100vw; z-index:80;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  background:var(--surf); border-left:1px solid var(--line2); box-shadow:-10px 0 40px -20px rgba(0,0,0,.5);
+  transform:translateX(105%); transition:transform .25s ease; display:flex; flex-direction:column}
+.log.open{transform:none}
+.log-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px 6px}
+.log ol{list-style:none; margin:0; padding:0 12px 16px; overflow-y:auto; flex:1}
+.log li{display:flex; justify-content:space-between; gap:10px; align-items:center; padding:9px 10px; background:var(--surf2); margin-top:7px; border:1px solid var(--line)}
+.log li small{display:block; color:var(--ink3); font-size:calc(12px * var(--fs-scale)); word-break:break-word}
+.log li .total{font-family:var(--font-display); font-size:calc(26px * var(--fs-scale)); font-weight:600; color:var(--ink); white-space:nowrap}
+.log li.crit{border-color:var(--gold)} .log li.crit .total{color:var(--gold)}
+.log li.fail .total,.log li.dmg .total{color:var(--red)}
+.log li.heal .total{color:var(--ok)}
+.log li.empty{color:var(--ink3); justify-content:center}
+.toasts{position:fixed; bottom:calc(20px + env(safe-area-inset-bottom,0px)); left:50%; transform:translateX(-50%); z-index:90;
+  display:flex; flex-direction:column; gap:8px; align-items:center; pointer-events:none; width:max-content; max-width:calc(100vw - 32px)}
+.toast{background:var(--surf); border:1px solid var(--line2); border-left:3px solid var(--sea); padding:9px 14px;
+  box-shadow:0 12px 34px -14px rgba(0,0,0,.45); display:flex; align-items:center; gap:10px; flex-wrap:wrap; transition:opacity .4s, transform .4s}
+.toast small{color:var(--ink3); font-size:calc(12px * var(--fs-scale)); width:100%}
+.toast-total{font-family:var(--font-display); font-size:calc(26px * var(--fs-scale)); font-weight:600; line-height:1}
+.toast.crit{border-left-color:var(--gold)} .toast.crit .toast-total{color:var(--gold)}
+.toast.crit::after{content:"CRÍTICO!"; font-family:var(--font-mono); font-weight:600; color:var(--gold); font-size:11px; letter-spacing:.1em}
+.toast.fail,.toast.bad,.toast.dmg{border-left-color:var(--red)}
+.toast.fail::after{content:"FALHA CRÍTICA"; font-family:var(--font-mono); font-weight:600; color:var(--red); font-size:11px; letter-spacing:.1em}
+.toast.dmg .toast-total{color:var(--red)}
+.toast.heal{border-left-color:var(--ok)} .toast.heal .toast-total{color:var(--ok)}
+.toast.out{opacity:0; transform:translateY(8px)}
+.foot{color:var(--ink3); font-size:calc(13px * var(--fs-scale)); text-align:center; padding:22px 0 8px}
+
+@media (max-width:1100px){
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .haki-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .attrs{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .wanted{width:100%; max-width:290px; margin:0 auto}
+  .vitals,.cols2,.cols3,.haki-cols{grid-template-columns:1fr}
+  .g3,.g4,.g5,.g6{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rolls-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .stats,.attrs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:1fr}
+  .dmg{min-width:100%}
+  .condition{gap:14px}
+  .skills td:nth-child(3),.skills th:nth-child(3){display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+
+/* ── barra do topo e conta (iguais às outras páginas) ── */
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:60; flex:none;
+  background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1180px; margin:0 auto; padding:0 16px; display:flex; align-items:center; gap:14px; min-height:52px}
+.brand{font-family:var(--font-display); font-weight:700; font-size:calc(14px * var(--fs-scale)); letter-spacing:.14em;
+  text-transform:uppercase; color:var(--red); white-space:nowrap; text-decoration:none}
+.navscroll{flex:1; overflow-x:auto; scrollbar-width:none}
+.navscroll::-webkit-scrollbar{display:none}
+.navlist{display:flex; gap:2px; list-style:none; margin:0; padding:0}
+.navlist a{display:block; padding:7px 10px; font-family:var(--font-display); font-weight:500; font-size:calc(12.5px * var(--fs-scale));
+  letter-spacing:.09em; text-transform:uppercase; white-space:nowrap; color:var(--ink2); text-decoration:none; border-radius:var(--radius)}
+.navlist a:hover{color:var(--ink); background:var(--surf3)}
+
+.appearance{position:relative; flex:none}
+.themebtn{border:1px solid var(--line); background:var(--surf); color:var(--ink2); border-radius:var(--radius);
+  padding:6px 11px; cursor:pointer; font-family:var(--font-display); font-size:calc(12px * var(--fs-scale)); font-weight:500;
+  letter-spacing:.09em; text-transform:uppercase; display:flex; align-items:center; gap:7px}
+.themebtn:hover{border-color:var(--line2); color:var(--ink)}
+#btn-conta img{border-radius:50%; background:var(--surf3); object-fit:cover; flex:none}
+#conta-rotulo{max-width:11ch; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pop{position:absolute; right:0; top:calc(100% + 8px); width:min(300px, calc(100vw - 32px));
+  background:var(--surf); border:1px solid var(--line2); box-shadow:0 12px 34px -14px rgba(0,0,0,.45);
+  z-index:70; padding:13px}
+.pop h4{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink3); margin:0 0 7px}
+.conta-txt{font-size:calc(13.5px * var(--fs-scale)); color:var(--ink2); line-height:1.45; margin:0 0 11px}
+.conta-quem b{display:block; font-family:var(--font-display); font-weight:500; font-size:calc(17px * var(--fs-scale));
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.conta-quem span{display:block; font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale));
+  letter-spacing:.06em; color:var(--ink3); margin-top:2px}
+.conta-quem span.ok{color:var(--ok)}
+.conta-quem span.bad{color:var(--red)}
+
+.btn{font-family:var(--font-display); font-size:calc(13px * var(--fs-scale)); font-weight:500; letter-spacing:.06em;
+  text-transform:uppercase; padding:8px 13px; border:1px solid var(--line2); background:var(--surf2);
+  color:var(--ink); border-radius:var(--radius); cursor:pointer}
+.btn:hover{border-color:var(--red); color:var(--red)}
+.btn.primary{background:var(--red); border-color:var(--red); color:var(--onaccent)}
+.btn.primary:hover{opacity:.88; color:var(--onaccent)}
+</style>
+
+<nav class="topbar">
+  <div class="topbar-in">
+    <a class="homebtn" href="index.html" title="Voltar para a página principal"><span aria-hidden="true">◀</span><span class="rot">Início</span></a>
+    <a class="brand" href="index.html">OP&nbsp;RPG</a>
+    <div class="navscroll">
+      <ul class="navlist">
+        <li><a href="guia.html">Guia</a></li>
+        <li><a href="ficha.html" aria-current="page">Ficha</a></li>
+        <li><a href="forja.html">Forja</a></li>
+        <li><a href="anotacoes.html">Diário</a></li>
+      </ul>
+    </div>
+    <div class="appearance" id="conta-wrap" hidden>
+      <button class="themebtn" id="btn-conta" type="button" aria-haspopup="true" aria-expanded="false">
+        <img id="conta-avatar" alt="" width="17" height="17" hidden>
+        <span id="conta-rotulo">Entrar</span>
+      </button>
+      <div class="pop" id="pop-conta" hidden role="dialog" aria-label="Sua conta">
+        <div id="conta-fora">
+          <h4>Sua conta</h4>
+          <p class="conta-txt">Entre para suas fichas acompanharem você em qualquer computador ou celular. Sem cadastro e sem senha — o Discord que você já usa basta.</p>
+          <button class="btn primary" type="button" id="btn-entrar" style="width:100%">Entrar com Discord</button>
+        </div>
+        <div id="conta-dentro" hidden>
+          <h4>Sua conta</h4>
+          <div class="conta-quem"><b id="conta-nome">—</b><span id="conta-status">—</span></div>
+          <button class="btn" type="button" id="btn-sincronizar" style="width:100%; margin-top:9px">Sincronizar agora</button>
+          <button class="btn" type="button" id="btn-sair" style="width:100%; margin-top:7px">Sair</button>
+        </div>
+      </div>
+    </div>
+    <button class="themebtn" id="themebtn" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <div class="fichabar" aria-label="Seus personagens">
+    <select id="charSelect" aria-label="Personagem aberto"></select>
+    <button class="btn small" id="btnNovo">＋ Novo</button>
+    <button class="btn small" id="btnDuplicar">Duplicar</button>
+    <button class="btn small" id="btnExportar">Exportar</button>
+    <button class="btn small" id="btnImportar">Importar</button>
+    <button class="btn small danger" id="btnExcluir">Excluir</button>
+    <span class="sep"></span>
+    <button class="btn small primary" id="btnLog">Rolagens · <span id="logCount">0</span></button>
+  </div>
+
+  <!-- ============ CABEÇALHO: CARTAZ + IDENTIDADE ============ -->
+  <section class="hero">
+    <div class="wanted">
+      <div class="wanted-title">WANTED</div>
+      <label class="wanted-photo" title="Clique para escolher um retrato">
+        <img id="retrato" alt="">
+        <span class="wanted-photo-hint">Clique para<br>adicionar retrato</span>
+        <input type="file" id="inpRetrato" accept="image/*" hidden>
+      </label>
+      <div class="wanted-dor">DEAD OR ALIVE</div>
+      <input class="wanted-name" data-bind="nome" placeholder="NOME DO PERSONAGEM">
+      <div class="wanted-bounty">
+        <span class="berry">฿</span>
+        <input data-bind="recompensa" type="text" inputmode="numeric" placeholder="0" id="inpRecompensa">
+        <span class="dash">-</span>
+      </div>
+      <div class="wanted-foot">MARINE</div>
+    </div>
+
+    <div class="identity card">
+      <div class="grid g4">
+        <label class="field"><span>Nível</span>
+          <select data-bind="nivel" data-num id="selNivel"></select></label>
+        <label class="field"><span>Experiência (PE)</span>
+          <input data-bind="xp" type="number" min="0"></label>
+        <div class="field"><span>Proficiência</span><output class="big" data-calc="prof"></output></div>
+        <div class="field"><span>Grau máx. de Técnica</span><output class="big" data-calc="grauMax"></output></div>
+      </div>
+      <div class="xpbar"><div class="xpfill" data-calc-style="xpPct"></div><span data-calc="xpLabel"></span></div>
+
+      <div class="grid g3">
+        <label class="field"><span>Espécie</span>
+          <select data-bind="especie" id="selEspecie"></select></label>
+        <label class="field"><span>Estilo de Combate</span>
+          <input data-bind="estilo" list="dlEstilos" placeholder="Escolha…"></label>
+        <label class="field"><span>Profissão</span>
+          <input data-bind="profissao" list="dlProfissoes" placeholder="Escolha…"></label>
+        <label class="field"><span>Antecedente</span>
+          <input data-bind="antecedente" list="dlAntecedentes" placeholder="Escolha…"></label>
+        <label class="field"><span>Akuma no Mi</span>
+          <input data-bind="akuma.nome" placeholder="Nenhuma"></label>
+        <label class="field"><span>Alcunha</span>
+          <input data-bind="pers.alcunha" placeholder="ex.: Chapéu de Palha"></label>
+        <label class="field"><span>Tripulação</span>
+          <input data-bind="pers.tripulacao"></label>
+        <label class="field"><span>Sonho</span>
+          <input data-bind="pers.sonho"></label>
+        <label class="field"><span>Jogador(a)</span>
+          <input data-bind="jogador"></label>
+      </div>
+      <div class="mestico" data-show="isMestico">
+        <span class="muted">Mestiço — escolha as duas espécies de origem:</span>
+        <select data-bind="mestico.0" class="selEspecieBase"></select>
+        <select data-bind="mestico.1" class="selEspecieBase"></select>
+      </div>
+      <p class="hint" data-calc="estiloInfo"></p>
+    </div>
+  </section>
+
+  <!-- ============ STATUS VITAIS ============ -->
+  <section class="vitals">
+    <div class="card vital hp">
+      <div class="vital-head">
+        <h3>Pontos de Vida</h3>
+        <button class="link" data-open="dlgVida">calcular ⚙</button>
+      </div>
+      <div class="bar"><div class="fill hp" data-calc-style="hpPct"></div><div class="fill shield" data-calc-style="shieldPct"></div>
+        <span class="bar-label"><b data-calc="hpAtual"></b> / <span data-calc="hpMax"></span></span></div>
+      <div class="vital-row">
+        <label class="mini"><span>Temp.</span><input data-bind="hp.temp" type="number" min="0"></label>
+        <label class="mini"><span>Escudo</span><input data-bind="hp.escudo" type="number" min="0"></label>
+        <div class="dmg">
+          <input type="number" id="inpDano" placeholder="valor" min="0">
+          <button class="btn red" id="btnDano">Dano</button>
+          <button class="btn green" id="btnCura">Cura</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card vital pp">
+      <div class="vital-head"><h3>Pontos de Poder</h3><span class="muted small" data-calc="ppInfo"></span></div>
+      <div class="bar"><div class="fill pp" data-calc-style="ppPct"></div>
+        <span class="bar-label"><b data-calc="ppAtual"></b> / <span data-calc="ppMax"></span></span></div>
+      <div class="vital-row">
+        <label class="mini"><span>Temp.</span><input data-bind="pp.temp" type="number" min="0"></label>
+        <label class="mini"><span>Bônus máx.</span><input data-bind="pp.extraMax" type="number"></label>
+        <div class="dmg">
+          <input type="number" id="inpPP" placeholder="valor" min="0">
+          <button class="btn blue" id="btnGastarPP">Gastar</button>
+          <button class="btn green" id="btnRecPP">Recuperar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat card" title="Classe de Resistência"><span>CR</span><b data-calc="cr"></b><small data-calc="crFonte"></small></div>
+      <div class="stat card clickable" data-roll="iniciativa" title="Rolar iniciativa"><span>Iniciativa</span><b data-calc="iniciativa"></b><small>clique p/ rolar</small></div>
+      <div class="stat card" title="Classe de Dificuldade das Técnicas"><span>CD</span><b data-calc="cd"></b><small>técnicas</small></div>
+      <div class="stat card clickable" data-roll="ataqueTecnica" title="Rolar ataque de técnica"><span>Atq. Técnica</span><b data-calc="atkTec"></b><small>prof + primário</small></div>
+      <div class="stat card"><span>Deslocamento</span><b data-calc="desloc"></b><small data-calc="deslocOutros"></small></div>
+      <div class="stat card"><span>Perc. Passiva</span><b data-calc="percPassiva"></b><small>10 + Percepção</small></div>
+    </div>
+
+    <div class="card condition">
+      <div class="cond-block">
+        <h4>Exaustão <span class="muted small" data-calc="exaustaoInfo"></span></h4>
+        <div class="pips" id="pipsExaustao"></div>
+      </div>
+      <div class="cond-block">
+        <h4>Dados de Vida</h4>
+        <div class="hd"><b data-calc="dvDisp"></b> <span class="muted">disponíveis</span>
+          <button class="btn small" id="btnDescCurto">Descanso Curto</button>
+          <button class="btn small" id="btnDescLongo">Descanso Longo</button></div>
+      </div>
+      <div class="cond-block">
+        <h4>Rolagem</h4>
+        <div class="seg" id="segModo">
+          <button data-modo="des">Desvant.</button><button data-modo="normal" class="on">Normal</button><button data-modo="van">Vantagem</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABAS ============ -->
+  <nav class="tabs" id="tabs">
+    <button data-tab="atributos" class="on">Atributos & Perícias</button>
+    <button data-tab="combate">Combate & Técnicas</button>
+    <button data-tab="akuma">Akuma no Mi</button>
+    <button data-tab="haki">Haki</button>
+    <button data-tab="personagem">Personagem</button>
+    <button data-tab="inventario">Inventário</button>
+    <button data-tab="profissao">Profissão</button>
+    <button data-tab="notas">Notas</button>
+  </nav>
+
+  <!-- ATRIBUTOS -->
+  <section class="tab on" id="tab-atributos">
+    <div class="attrs" id="attrs"></div>
+    <div class="cols2">
+      <div class="card">
+        <div class="card-head"><h3>Perícias</h3><span class="muted small">✔ proficiente · ★ vantagem · clique no total para rolar</span></div>
+        <table class="skills"><thead><tr><th></th><th>Perícia</th><th>Atr.</th><th>Outros</th><th>Total</th><th>★</th></tr></thead>
+          <tbody id="skills"></tbody></table>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-head"><h3>Salvaguardas</h3><span class="muted small" data-calc="savesHint"></span></div>
+          <table class="skills"><thead><tr><th></th><th>Atributo</th><th>Extra</th><th>Total</th><th>★</th></tr></thead>
+            <tbody id="saves"></tbody></table>
+        </div>
+        <div class="card">
+          <h3>Ofício</h3>
+          <div class="grid g2">
+            <div class="field"><span>Profissão</span><output data-calc="oficioNome"></output></div>
+            <label class="field"><span>Atributo do teste</span><select data-bind="oficioAttr" class="selAttr"></select></label>
+          </div>
+          <button class="btn roll-btn" data-roll="oficio">Rolar Ofício <b data-calc="oficioTotal"></b></button>
+        </div>
+        <div class="card">
+          <h3>Rolagem livre</h3>
+          <div class="free-roll">
+            <input id="inpExpr" placeholder="ex.: 2d6+3, 1d20+5, 4d6">
+            <button class="btn accent" id="btnExpr">Rolar</button>
+          </div>
+          <div class="quick-dice" id="quickDice"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBATE -->
+  <section class="tab" id="tab-combate">
+    <div class="cols2">
+      <div class="col">
+        <div class="card">
+          <h3>Estilo de Combate</h3>
+          <div class="grid g2">
+            <div class="field"><span>Dado de Vida</span><output class="big" data-calc="dadoVida"></output></div>
+            <label class="field"><span>Atributo Primário</span><select data-bind="primario" id="selPrimario"></select></label>
+            <label class="field"><span>Proficiência em armas</span><input data-bind="combate.armas"></label>
+            <label class="field"><span>Arma favorita</span><input data-bind="combate.armaFavorita"></label>
+            <label class="field"><span>Bônus extra de CR</span><input data-bind="cr.extra" type="number"></label>
+            <label class="field"><span>Bônus extra de CD</span><input data-bind="cd.extra" type="number"></label>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Habilidades Básicas</h3><span class="muted small">1 inata + 1 no 1º, 2º e 3º nível</span></div>
+          <div id="habilidades" class="stack"></div>
+          <button class="btn small" data-add="habilidades">＋ Habilidade</button>
+          <p class="hint">Corpo de Guerreiro, Defesa Ofensiva, Robusto, Dificuldade Inefável e Quebrador de Regras são calculados automaticamente.</p>
+        </div>
+        <div class="card">
+          <h3>Maestria</h3>
+          <label class="field"><span>Maestria</span><input data-bind="maestria.nome" list="dlMaestrias" placeholder="Nenhuma"></label>
+          <div id="maestriaTracos" class="stack"></div>
+          <label class="field"><span>Técnica Especial de Maestria</span><textarea data-bind="maestria.especial" rows="2"></textarea></label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-head"><h3>Equipamentos / Ataques</h3><button class="btn small" data-add="equipamentos">＋ Arma</button></div>
+          <div id="equipamentos" class="stack"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Munição</h3><button class="btn small" data-add="municao">＋</button></div>
+          <div id="municao" class="stack"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>Técnicas de Combate & Auxiliares</h3>
+        <div class="row"><button class="btn small" data-forja="tecnicas">⚒ Importar da Forja</button><button class="btn small" data-add="tecnicas">＋ Técnica</button></div></div>
+      <div id="tecnicas" class="tech-grid"></div>
+    </div>
+  </section>
+
+  <!-- AKUMA -->
+  <section class="tab" id="tab-akuma">
+    <div class="cols2">
+      <div class="card">
+        <h3>Akuma no Mi</h3>
+        <div class="grid g2">
+          <label class="field"><span>Nome</span><input data-bind="akuma.nome"></label>
+          <label class="field"><span>Categoria</span><input data-bind="akuma.categoria" list="dlAkuma"></label>
+          <label class="field"><span>Tipo de Usuário</span><input data-bind="akuma.tipoUsuario"></label>
+          <label class="field"><span>Tipo de Despertar</span><input data-bind="akuma.tipoDespertar"></label>
+        </div>
+        <label class="field"><span>Estágio Desperto</span><textarea data-bind="akuma.desperto" rows="3"></textarea></label>
+      </div>
+      <div class="card">
+        <label class="field"><span>Manifestações de Poder</span><textarea data-bind="akuma.manifestacoes" rows="5"></textarea></label>
+        <label class="field"><span>Traços Comuns / Aspectos Inatos</span><textarea data-bind="akuma.tracos" rows="5"></textarea></label>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>Técnicas de Akuma</h3><div class="row"><button class="btn small" data-forja="akuma.tecnicas">⚒ Importar da Forja</button><button class="btn small" data-add="akuma.tecnicas">＋ Técnica</button></div></div>
+      <div id="akumaTecnicas" class="tech-grid"></div>
+    </div>
+  </section>
+
+  <!-- HAKI -->
+  <section class="tab" id="tab-haki">
+    <div class="card haki-top">
+      <div class="grid g6">
+        <label class="field"><span>Aptidão</span><select data-bind="haki.aptidao" class="selHaki"></select></label>
+        <label class="field"><span>Principal</span><select data-bind="haki.principal" class="selHaki"></select></label>
+        <label class="field"><span>PA recebidos (total)</span><input data-bind="haki.paTotal" type="number" min="0"></label>
+        <div class="field"><span>PA gastos</span><output class="big" data-calc="paGastos"></output></div>
+        <div class="field"><span>PA ociosos</span><output class="big" data-calc="paOciosos"></output></div>
+        <div class="field"><span>Estágio · CD</span><output class="big" data-calc="hakiEstagio"></output></div>
+      </div>
+      <p class="hint">Estágio: 1–20 PA Inexperiente · 21–70 Treinado · 71+ Perito. CD de Haki = 8 + Proficiência + Vontade. Cada forma (Possui / Dominado / Aprimorado) custa o valor do talento.</p>
+    </div>
+    <div class="haki-cols" id="haki"></div>
+  </section>
+
+  <!-- PERSONAGEM -->
+  <section class="tab" id="tab-personagem">
+    <div class="cols2">
+      <div class="col">
+        <div class="card">
+          <h3>Aparência & Físico</h3>
+          <div class="grid g4">
+            <label class="field"><span>Tamanho</span><select data-bind="pers.tamanho" id="selTamanho"></select></label>
+            <label class="field"><span>Altura</span><input data-bind="pers.altura"></label>
+            <label class="field"><span>Peso</span><input data-bind="pers.peso"></label>
+            <label class="field"><span>Idade</span><input data-bind="pers.idade"></label>
+          </div>
+          <label class="field"><span>Aparência</span><textarea data-bind="pers.aparencia" rows="3"></textarea></label>
+          <label class="field"><span>Físico</span><input data-bind="pers.fisico"></label>
+        </div>
+        <div class="card">
+          <h3>Social</h3>
+          <label class="field"><span>Caminho</span><input data-bind="pers.caminho" list="dlCaminhos"></label>
+          <label class="field"><span>História / Personalidade</span><textarea data-bind="pers.historia" rows="5"></textarea></label>
+        </div>
+        <div class="card">
+          <h3>Antecedente</h3>
+          <div class="grid g2">
+            <label class="field"><span>Nome</span><input data-bind="antecedente" list="dlAntecedentes"></label>
+            <label class="field"><span>Atributo</span><input data-bind="pers.antAtributo"></label>
+          </div>
+          <label class="field"><span>Característica Especial</span><textarea data-bind="pers.antEspecial" rows="3"></textarea></label>
+        </div>
+        <div class="card">
+          <h3>Código de Honra</h3>
+          <label class="field"><span>Nome</span><input data-bind="pers.honraNome"></label>
+          <label class="field"><span>Efeito</span><textarea data-bind="pers.honraEfeito" rows="2"></textarea></label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-head"><h3>Individualidades</h3><span class="small" data-calc="indivInfo"></span></div>
+          <p class="hint">5 espaços: Suave = 1, Média = 3, Forte = 4. Cada Singularidade exige um Defeito do mesmo nível.</p>
+          <h4>Singularidades</h4>
+          <div id="singularidades" class="stack"></div>
+          <button class="btn small" data-add="pers.singularidades">＋ Singularidade</button>
+          <h4>Defeitos</h4>
+          <div id="defeitos" class="stack"></div>
+          <button class="btn small" data-add="pers.defeitos">＋ Defeito</button>
+        </div>
+        <div class="card">
+          <h3>Espécie</h3>
+          <label class="field"><span>Traços da Espécie</span><textarea data-bind="pers.tracosEspecie" rows="4"></textarea></label>
+          <label class="field"><span>Ancestralidade</span><textarea data-bind="pers.ancestralidade" rows="2"></textarea></label>
+          <label class="field"><span>Variação Rara</span><input data-bind="pers.variacaoRara" list="dlVariacoes"></label>
+          <div class="grid g3">
+            <label class="field"><span>Terra (m)</span><input data-bind="desloc.terra" type="number" step="1.5"></label>
+            <label class="field"><span>Nado (m)</span><input data-bind="desloc.nado" type="number" step="1.5"></label>
+            <label class="field"><span>Voo (m)</span><input data-bind="desloc.voo" type="number" step="1.5"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVENTÁRIO -->
+  <section class="tab" id="tab-inventario">
+    <div class="cols2">
+      <div class="card">
+        <div class="card-head"><h3>Inventário</h3><button class="btn small" data-add="inventario">＋ Item</button></div>
+        <div class="carga"><span>Carga</span><div class="bar thin"><div class="fill carga" data-calc-style="cargaPct"></div></div><b data-calc="cargaLabel"></b></div>
+        <div id="inventario" class="stack"></div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>Dinheiro</h3>
+          <label class="field"><span>Bellys (฿)</span><input data-bind="dinheiro" type="number"></label>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Treinamentos</h3><button class="btn small" data-add="treinamentos">＋</button></div>
+          <div class="grid g3">
+            <div class="field"><span>Pontos de Treinamento</span><output class="big" data-calc="ptTotal"></output></div>
+            <div class="field"><span>Gastos</span><output class="big" data-calc="ptGasto"></output></div>
+            <label class="field"><span>Extra</span><input data-bind="ptExtra" type="number"></label>
+          </div>
+          <div id="treinamentos" class="stack"></div>
+          <p class="hint">TT = tempo de treino · PT = pontos de treinamento. "Guerreiro Treinado" e "Resistência dos Gigantes / Corpo do Ogro" afetam a vida automaticamente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFISSÃO -->
+  <section class="tab" id="tab-profissao">
+    <div class="cols3" id="profissoes"></div>
+    <div class="card">
+      <div class="card-head"><h3>Animal Vinculado</h3><span class="muted small">PV = metade da vida máxima do personagem</span></div>
+      <div class="grid g4">
+        <label class="field"><span>Tipo</span><input data-bind="animal.tipo"></label>
+        <label class="field"><span>Tamanho</span><input data-bind="animal.tamanho"></label>
+        <label class="field"><span>Deslocamento</span><input data-bind="animal.desloc"></label>
+        <div class="field"><span>PV</span><output class="big" data-calc="animalPV"></output></div>
+        <label class="field"><span>Dano recebido</span><input data-bind="animal.dano" type="number" min="0"></label>
+      </div>
+      <div class="attrs mini-attrs" id="animalAttrs"></div>
+      <label class="field"><span>Aparência / Treinamento</span><textarea data-bind="animal.notas" rows="3"></textarea></label>
+    </div>
+  </section>
+
+  <!-- NOTAS -->
+  <section class="tab" id="tab-notas">
+    <div class="card">
+      <h3>Anotações</h3>
+      <textarea data-bind="notas" rows="22" class="notes" placeholder="Pistas, NPCs, ilhas visitadas, dívidas com a Marinha…"></textarea>
+    </div>
+  </section>
+
+  <footer class="foot">Ficha do <b>OP RPG 2.1</b> (Brendo Neves), a partir da ficha da comunidade por Lucco. Sem entrar, as fichas ficam neste navegador; entrando com o Discord, elas vão para a sua conta.</footer>
+</main>
+
+<!-- ======= DIÁLOGO: CÁLCULO DE VIDA ======= -->
+<dialog id="dlgVida">
+  <form method="dialog" class="dlg">
+    <div class="card-head"><h3>Cálculo de Vida</h3><button class="link" value="close">✕</button></div>
+    <div class="grid g3">
+      <label class="field"><span>Modo</span>
+        <select data-bind="hp.modo"><option value="media">Média (fixo)</option><option value="rolagem">Rolagem</option><option value="manual">Manual</option></select></label>
+      <label class="field"><span>Dado de vida (forçar)</span><input data-bind="hp.dadoOverride" type="number" min="0" placeholder="auto"></label>
+      <label class="field"><span>Vida base da espécie (forçar)</span><input data-bind="hp.especieOverride" type="number" min="0" placeholder="auto"></label>
+      <label class="field"><span>Vida extra</span><input data-bind="hp.extra" type="number"></label>
+      <label class="field" data-show="hpManual"><span>Vida máxima manual</span><input data-bind="hp.manual" type="number" min="0"></label>
+    </div>
+    <div data-show="hpRolagem">
+      <p class="hint">Digite o resultado do dado em cada nível (sem o modificador de CON — ele é somado sozinho). No 1º nível, use o valor máximo do dado.</p>
+      <div class="rolls-grid" id="hpRolls"></div>
+    </div>
+    <h4>Composição</h4>
+    <ul class="breakdown" id="hpBreakdown"></ul>
+  </form>
+</dialog>
+
+<!-- ======= DIÁLOGO: PERGUNTA / CONFIRMAÇÃO ======= -->
+<dialog id="dlgPergunta">
+  <form method="dialog" class="dlg" id="formPergunta">
+    <h3 id="perguntaTitulo"></h3>
+    <p id="perguntaTexto" class="muted"></p>
+    <input id="perguntaInput" type="number" min="0" hidden>
+    <div class="dlg-actions">
+      <button class="btn" value="cancel" id="perguntaCancelar">Cancelar</button>
+      <button class="btn accent" value="ok" id="perguntaOk">Confirmar</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ======= DIÁLOGO: EXPORTAR / IMPORTAR ======= -->
+<dialog id="dlgTransfer">
+  <form method="dialog" class="dlg">
+    <div class="card-head"><h3 id="transferTitulo"></h3><button class="link" value="close">✕</button></div>
+    <p class="muted small" id="transferTexto"></p>
+    <div id="guiaBloco" class="guia-bloco" hidden>
+      <h4>Fichas montadas no Guia</h4>
+      <div id="guiaLista" class="stack"></div>
+      <p class="hint">Ou cole o código de uma ficha completa:</p>
+    </div>
+    <textarea id="transferCodigo" rows="10" spellcheck="false" class="codigo"></textarea>
+    <div class="dlg-actions">
+      <label class="btn" id="transferArquivo">Escolher arquivo .json<input type="file" id="inpImportar" accept=".json,application/json" hidden></label>
+      <button type="button" class="btn" id="transferBaixar">Baixar arquivo</button>
+      <button type="button" class="btn accent" id="transferAcao"></button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ======= DIÁLOGO: TÉCNICAS DA FORJA ======= -->
+<dialog id="dlgForja">
+  <form method="dialog" class="dlg">
+    <div class="card-head"><h3>Técnicas da Forja</h3><button class="link" value="close">✕</button></div>
+    <p class="muted small">Marque as técnicas para trazer para esta ficha. Custo em PP, dano, alcance e requisito vêm prontos da Forja.</p>
+    <div id="forjaLista" class="stack pick-list"></div>
+    <div class="dlg-actions">
+      <a class="btn" href="forja.html">Criar nova na Forja</a>
+      <button type="button" class="btn accent" id="forjaImportar">Importar selecionadas</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ======= HISTÓRICO DE ROLAGENS ======= -->
+<aside class="log" id="log">
+  <div class="log-head"><h3>Rolagens</h3><div><button class="link" id="btnLimparLog">limpar</button> <button class="link" id="btnFecharLog">✕</button></div></div>
+  <ol id="logList"></ol>
+</aside>
+<div class="toasts" id="toasts"></div>
+
+<datalist id="dlEstilos"></datalist>
+<datalist id="dlProfissoes"></datalist>
+<datalist id="dlAntecedentes"></datalist>
+<datalist id="dlMaestrias"></datalist>
+<datalist id="dlHabilidades"></datalist>
+<datalist id="dlCaminhos"></datalist>
+<datalist id="dlVariacoes"></datalist>
+<datalist id="dlAkuma"></datalist>
+
+<script>
+// Dados de regras do OP RPG 2.1 (Livro do Jogador) + homebrews presentes na ficha do Lucco.
+const ATRIBUTOS = [
+  { key: 'FOR', nome: 'Força' },
+  { key: 'DES', nome: 'Destreza' },
+  { key: 'CON', nome: 'Constituição' },
+  { key: 'SAB', nome: 'Sabedoria' },
+  { key: 'PRE', nome: 'Presença' },
+  { key: 'VON', nome: 'Vontade' },
+];
+
+const PERICIAS = [
+  { nome: 'Atletismo', attr: 'FOR' },
+  { nome: 'Acrobacia', attr: 'DES' },
+  { nome: 'Furtividade', attr: 'DES' },
+  { nome: 'Prestidigitação', attr: 'DES' },
+  { nome: 'História', attr: 'SAB' },
+  { nome: 'Investigação', attr: 'SAB' },
+  { nome: 'Medicina', attr: 'SAB' },
+  { nome: 'Natureza', attr: 'SAB' },
+  { nome: 'Sobrevivência', attr: 'SAB' },
+  { nome: 'Atuação', attr: 'PRE' },
+  { nome: 'Enganação', attr: 'PRE' },
+  { nome: 'Intimidação', attr: 'PRE' },
+  { nome: 'Persuasão', attr: 'PRE' },
+  { nome: 'Provocação', attr: 'PRE' },
+  { nome: 'Haki', attr: 'VON' },
+  { nome: 'Intuição', attr: 'VON' },
+  { nome: 'Percepção', attr: 'VON' },
+  { nome: 'Sobrenatural', attr: 'VON' },
+  { nome: 'Sorte', attr: 'VON' },
+];
+
+const ESPECIES = {
+  'Anões':       { hp: 8,  terra: 9,  nado: 4.5, tamanho: 'Miúdo',  preconceito: 'Débil' },
+  'Celestiais':  { hp: 10, terra: 12, nado: 3,   tamanho: 'Médio',  preconceito: 'Débil' },
+  'Gigantes':    { hp: 20, terra: 9,  nado: 3,   tamanho: 'Enorme', preconceito: 'Inexistente' },
+  'Humanos':     { hp: 10, terra: 9,  nado: 4.5, tamanho: 'Médio',  preconceito: 'Inexistente' },
+  'Lunarianos':  { hp: 16, terra: 9,  nado: 3,   tamanho: 'Médio',  preconceito: 'Medíocre' },
+  'Minks':       { hp: 12, terra: 9,  nado: 4.5, tamanho: 'Médio',  preconceito: 'Medíocre', semPTSab: true },
+  'Povo do Mar': { hp: 14, terra: 9,  nado: 15,  tamanho: 'Médio',  preconceito: 'Severo', semPTSab: true },
+  'Ogros':       { hp: 18, terra: 9,  nado: 4.5, tamanho: 'Grande', preconceito: '—', homebrew: true },
+  'Mestiços':    { mestico: true },
+};
+
+// dado: dado de vida | prim: atributos primários possíveis | saves | pericias: [qtd, opções|null=quaisquer]
+const ESTILOS = {
+  'Atirador':                    { dado: 8,  prim: ['DES'],        saves: ['DES', 'SAB'], pericias: [3, null] },
+  'Aventureiro':                 { dado: 10, prim: ['DES'],        saves: ['DES', 'CON'], pericias: [3, null] },
+  'Brutamontes (Guerreiro-Oni)': { dado: 12, prim: ['FOR'],        saves: ['FOR', 'CON'], pericias: [2, ['Atletismo', 'Intimidação', 'Provocação', 'Sobrevivência']] },
+  'Carateca Homem-Peixe':        { dado: 12, prim: ['FOR'],        saves: ['FOR', 'CON'], pericias: [2, ['Acrobacia', 'Atletismo', 'Atuação', 'Intimidação']] },
+  'Ciborgue':                    { dado: 12, prim: ['SAB', 'FOR'], saves: ['FOR', 'SAB'], pericias: [2, ['Atletismo', 'Investigação', 'Prestidigitação', 'Sobrevivência']] },
+  'Espadachim':                  { dado: 10, prim: ['FOR', 'DES'], saves: ['DES', 'VON'], pericias: [2, ['Atletismo', 'Intimidação', 'Intuição', 'Percepção']] },
+  'Guerrilheiro':                { dado: 10, prim: ['FOR', 'SAB'], saves: ['FOR', 'DES'], pericias: [2, ['Acrobacia', 'Atletismo', 'Furtividade', 'História', 'Sobrevivência']] },
+  'Lutador':                     { dado: 12, prim: ['FOR'],        saves: ['FOR', 'CON'], pericias: [2, ['Atletismo', 'Intimidação', 'Provocação', 'Sobrevivência']] },
+  'Ninja':                       { dado: 8,  prim: ['DES'],        saves: ['DES', 'SAB'], pericias: [2, ['Acrobacia', 'Enganação', 'Furtividade', 'Prestidigitação']] },
+  'Okama Kenpo':                 { dado: 10, prim: ['FOR', 'PRE'], saves: ['DES', 'PRE'], pericias: [3, ['Acrobacia', 'Atletismo', 'Atuação', 'Enganação', 'Intimidação', 'Intuição', 'Provocação']] },
+  'Usuário de Rokushiki':        { dado: 10, prim: ['FOR', 'DES'], saves: ['FOR', 'DES'], pericias: [2, ['Acrobacia', 'Atletismo', 'Enganação', 'Furtividade', 'História', 'Investigação']] },
+  'Samurai':                     { dado: 10, prim: ['FOR', 'DES'], saves: ['CON', 'VON'], pericias: [2, ['Intimidação', 'Intuição', 'Percepção', 'Sobrevivência']] },
+  // Estilos de Combate Exclusivos (suplemento)
+  'Black Leg':                   { dado: 12, prim: ['FOR', 'DES'], saves: ['FOR', 'DES'], pericias: [2, ['Atletismo', 'Acrobacia', 'Intuição', 'Percepção', 'Prestidigitação']], homebrew: true, armas: 'Corporal' },
+  'Esgrimista':                  { dado: 10, prim: ['PRE'],        saves: ['DES', 'PRE'], pericias: [2, ['Atletismo', 'Atuação', 'Persuasão', 'Intuição', 'Percepção']], homebrew: true, armas: 'Rapieira, shikomizue ou katana' },
+  'Solfista':                    { dado: 8,  prim: ['DES', 'PRE'], saves: ['DES', 'PRE'], pericias: [3, null], homebrew: true, armas: 'Rapieira, shikomizue ou katana' },
+  'Usuário Ínsito':              { dado: 10, prim: ['FOR', 'VON'], saves: ['CON', 'VON'], pericias: [2, ['Atletismo', 'Acrobacia', 'Furtividade', 'Sobrenatural', 'Sobrevivência']], homebrew: true, ppMult: 5, armas: 'Corporal' },
+  'Herói':                       { dado: 8,  prim: ['FOR', 'VON'], saves: ['CON', 'VON'], pericias: [2, ['Atletismo', 'Acrobacia', 'Haki', 'Sorte', 'Persuasão']], homebrew: true, armas: 'Corporal' },
+};
+
+const PROFISSOES = ['Adestrador', 'Arqueólogo', 'Botânico', 'Caçador de Recompensas', 'Carpinteiro', 'Cientista',
+  'Contrabandista', 'Cozinheiro', 'Engenheiro', 'Espião', 'Farmacêutico', 'Ferreiro', 'Informante', 'Inventor',
+  'Jornalista', 'Médico', 'Músico', 'Navegador', 'Psiquiatra', 'Timoneiro', 'Sem Profissão'];
+
+const ANTECEDENTES = ['Amnésia', 'Artista', 'Criminoso', 'Derrotado', 'Erudito', 'Escravo', 'Exilado', 'Família D.',
+  'Marinheiro', 'Mercador', 'Mercenário', 'Nobre', 'Órfão', 'Pescador', 'Político', 'Predestinado', 'Revolucionário',
+  'Sacerdote', 'Sobrevivente', 'Tenryuubito'];
+
+const CAMINHOS = ['Conhecimento pelo Companheirismo (C/C)', 'Liberdade pelo Companheirismo (L/C)', 'Poder pelo Companheirismo (P/C)',
+  'Conhecimento pela Força (C/F)', 'Liberdade pela Força (L/F)', 'Poder pela Força (P/F)',
+  'Conhecimento pela Enganação (C/E)', 'Liberdade pela Enganação (L/E)', 'Poder pela Enganação (P/E)'];
+
+const TAMANHOS = { 'Miúdo': 0.5, 'Pequeno': 1, 'Médio': 1, 'Grande': 2, 'Enorme': 4, 'Imenso': 6 };
+
+const HABILIDADES_BASICAS = ['Aprendizado Excepcional', 'Aprimoramento de Atributo', 'Concentração Inabalável',
+  'Corpo de Guerreiro', 'Defesa Ofensiva', 'Dificuldade Inefável', 'Gerenciamento de Energia', 'Mente e Corpo',
+  'Mira Treinada', 'Perito em Técnicas', 'Preparação Para a Batalha', 'Primeiros Socorros', 'Prodígio do Combate',
+  'Recuo Estratégico', 'Reflexo Afiado', 'Retomar o Fôlego', 'Robusto', 'Sortudo', 'Superando Limites',
+  'Superioridade Absoluta', 'Quebrador de Regras - Vitalidade Exuberante', 'Quebrador de Regras - Força Magnífica',
+  'Quebrador de Regras - Aprimoramento Inato'];
+
+const MAESTRIAS = {
+  'Ambição Suprema': ['Liberação Magnífica', 'Emissão Deífica', 'Voz Soberana'],
+  'Armamento Máximo': ['All Might', 'Alcance Galático', 'Força Lendária'],
+  'Arqueiro': ['Ataque Triplo', 'Focus Fire', 'Powershot'],
+  'Bárbaro': ['Devorador de Montanhas', 'Fúria', 'Ira'],
+  'Capitão Implacável': ['Confiança Merecida', 'Nakama', 'Desigualdade Soberana'],
+  'Deus do Fogo': ['Corpo Forjado: Ignição', 'Corpo Forjado: Labareda', 'Fogo Inato'],
+  'Estilingueiro': ['Atirador Imprevisível', 'Mira Elástica', 'Arsenal do Estilingueiro'],
+  'Hasshoken': ['Golpe Ressoante', 'Impacto Puro', 'Resistência Vibrante'],
+  'Imaculado': ['Corpo Espirituoso', 'Energia Impetuosa', 'Estratégias do Imaculado'],
+  'Kung Fu': ['Domínio dos Cem Punhos', 'Seja como a Água', 'Wire Fu'],
+  'Lâmina Cega': ['Percepção Verdadeira', 'Aptidão Sensorial', 'Força Interior'],
+  'Olhos de Gavião': ['Finesse Suprema', 'Olhar Perfurante', 'Visão Perseguidora'],
+  'Patife': ['Malandragem', 'Carta na Manga', 'Twist the Knife'],
+  'Profeta': ['Mente Espirituosa', 'Batalha Premeditada', 'Visão Mística'],
+  'Rei do Inferno': ['Estado Infernal', 'Aura Abissal', 'De Volta do Inferno'],
+  'Retalhador': ['Killer Instinct', 'Ceifeiro Macabro', 'Balanço da Morte'],
+  'Ryusoken': ['Destruição de Núcleo', 'Garra de Dragão', 'Lança e Escudo'],
+  'Soberano': ['Rei do Mundo', 'Devoto de Davy Jones', 'Eclipse'],
+  'Sulong': ['Amado pela Lua', 'Voltagem Máxima', 'Corpo Carregado'],
+  'Sumô': ['Oni Muso', 'Retsu Harite', 'Jigoku Dohyo'],
+};
+
+// Individualidades: Suave = 1 espaço, Média = 3, Forte = 4
+const PESO_INDIVIDUALIDADE = { 'Suave': 1, 'Média': 3, 'Forte': 4 };
+const SINGULARIDADES = {
+  'Suave': ['Amante', 'Ambiente Familiar', 'Armadura de Músculos', 'Beleza Natural', 'Bom Senso', 'Chefe', 'Corpo Fechado',
+    'Corpo Vigoroso', 'Determinação', 'Disciplinado', 'Equilíbrio Perfeito', 'Forasteiro', 'Indomável', 'Instintos Animais',
+    'Integrante Fantasma', 'Má Fama', 'Metabolismo Anormal', 'Rotina Tranquila', 'Sono Seguro', 'Tesouro Precioso'],
+  'Média': ['Álter Ego Heroico', 'Aparência Inofensiva', 'Ator', 'Aura Assassina', 'Estudioso', 'Físico Perfeito', 'Negativo', 'Vocação'],
+  'Forte': ['Ambição do Rei', 'Grande Planejador', 'Haki da Observação Inato', 'Pau-Para-Toda-Obra', 'Recuperação Espantosa',
+    'Voz de Todas as Coisas', 'Zona'],
+};
+const DEFEITOS = {
+  'Suave': ['Casamento Marcado', 'Chantagem', 'Churriado', 'Dupla Personalidade', 'Falta de Higiene', 'Falta de Sorte',
+    'Hipocondríaco', 'Medroso', 'Monstruoso', 'Mudo', 'Narcisista', 'Orgulho Cego', 'Rosto Debochado', 'Sedutor Incorrigível',
+    'Senso de Direção Ruim', 'Sinceridade Excessiva', 'Vício', 'Voz Fina', 'Teimoso', 'Trapalhão'],
+  'Média': ['Coração Mole', 'Dependente', 'Dívida de Jogo', 'Ferida Fantasma', 'Ganancioso', 'Linhagem Demoníaca', 'Paranoico', 'Preguiçoso'],
+  'Forte': ['Consumidor Compulsivo', 'Doença Terminal', 'Ignorante', 'Medíocre', 'Pacifista', 'Sonolência', 'Trauma Profundo/Fobia'],
+};
+
+const VARIACOES_RARAS = ['Bucaneiro', 'Experimento Científico', 'Filho da Noite', 'Sangue Ancestral', 'Clone'];
+
+const AKUMA_CATEGORIAS = ['Paramecia', 'Logia', 'Zoan Comum', 'Zoan Ancestral', 'Zoan Mítica', 'Zoan Artificial (SMILE)'];
+
+// Talentos de Haki: [nome, estágio, custo PA, requisitos]
+const HAKI = {
+  'Observação': [
+    ['Perceber Emoção', 'Inexperiente', 2, []],
+    ['Antecipação', 'Inexperiente', 5, []],
+    ['Antevisão', 'Inexperiente', 4, []],
+    ['Previsão', 'Inexperiente', 3, []],
+    ['Perceber Presença', 'Treinado', 2, ['Perceber Emoção']],
+    ['Clarividência', 'Treinado', 2, ['Antecipação']],
+    ['Passo Antecipado', 'Treinado', 2, ['Antevisão']],
+    ['Antevisão Sobrenatural', 'Treinado', 3, ['Antevisão']],
+    ['Previsão Sobrenatural', 'Treinado', 2, ['Previsão']],
+    ['Perceber Desafio', 'Treinado', 1, ['Perceber Presença']],
+    ['Vidente', 'Treinado', 2, ['Clarividência']],
+    ['Perceber o Futuro', 'Perito', 4, ['Perceber Desafio']],
+    ['Premonição', 'Perito', 2, ['Vidente']],
+    ['Ver o Futuro', 'Perito', 5, ['Vidente']],
+    ['Antecipar Movimentos', 'Perito', 4, ['Passo Antecipado']],
+    ['Antevisão Especial', 'Perito', 5, ['Antevisão Sobrenatural']],
+    ['Ímpeto Antecipado', 'Perito', 5, ['Previsão Sobrenatural']],
+    ['Previsão Especial', 'Perito', 5, ['Previsão Sobrenatural']],
+    ['Antevisão Profética', 'Perito', 5, ['Antecipar Movimentos', 'Antevisão Especial']],
+    ['Previsão Profética', 'Perito', 5, ['Ímpeto Antecipado', 'Previsão Especial']],
+  ],
+  'Armamento': [
+    ['Ataque Infuso', 'Inexperiente', 5, []],
+    ['Endurecimento Defensivo', 'Inexperiente', 5, []],
+    ['Endurecimento Ofensivo', 'Treinado', 4, ['Ataque Infuso']],
+    ['Chama do Armamento', 'Treinado', 2, ['Ataque Infuso', 'Endurecimento Ofensivo']],
+    ['Emissão Defensiva', 'Treinado', 4, ['Endurecimento Defensivo']],
+    ['Escudo de Vontade', 'Treinado', 4, ['Endurecimento Defensivo']],
+    ['Emissão Ofensiva', 'Treinado', 3, ['Endurecimento Ofensivo']],
+    ['Corpo Armadurado', 'Treinado', 4, ['Escudo de Vontade']],
+    ['Destruição Interna', 'Perito', 5, ['Emissão Ofensiva']],
+    ['Armadura Suprema', 'Perito', 6, ['Emissão Defensiva']],
+    ['Defesa Suprema', 'Perito', 3, ['Emissão Defensiva', 'Corpo Armadurado']],
+  ],
+  'Rei': [
+    ['Rei', 'Inexperiente', 0, []],
+    ['Autoridade do Rei', 'Treinado', 3, ['Rei']],
+    ['Superação Majestosa', 'Treinado', 6, ['Rei']],
+    ['Imposição do Rei', 'Treinado', 4, ['Rei']],
+    ['Vontade do Rei', 'Treinado', 6, ['Rei']],
+    ['Soberania do Rei', 'Treinado', 3, ['Autoridade do Rei']],
+    ['Presença Esmagadora', 'Perito', 5, ['Soberania do Rei', 'Superação Majestosa']],
+    ['Armamento do Rei', 'Perito', 7, ['Imposição do Rei']],
+    ['Emissão de Autoridade', 'Perito', 5, ['Imposição do Rei', 'Vontade do Rei']],
+  ],
+};
+
+const XP_TABELA = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
+
+const GRAU_POR_NIVEL = [[1, 1], [3, 2], [6, 3], [9, 4], [12, 5], [16, 6], [20, 7]];
+
+// Proficiência em armas por estilo (tabela "Estilos de Combate", cap. 3)
+Object.entries({
+  'Atirador': 'Armas de Fogo, Lançador de Arpão, Bazuca, Canhão e Armas de Navio',
+  'Aventureiro': 'Armas Cortantes, Armas de Fogo, Armas Especiais e Armas Marciais',
+  'Brutamontes (Guerreiro-Oni)': 'Kanabo',
+  'Carateca Homem-Peixe': 'Armas Marciais e Tridente',
+  'Ciborgue': 'Nenhuma',
+  'Espadachim': 'Armas Cortantes',
+  'Guerrilheiro': 'Armas Cortantes, Armas de Fogo, Armas Especiais e Armas Marciais',
+  'Lutador': 'Armas Marciais',
+  'Ninja': 'Katana, Kunai, Adaga, Shuriken, Foice e Arco',
+  'Okama Kenpo': 'Armas Marciais',
+  'Usuário de Rokushiki': 'Armas Marciais',
+  'Samurai': 'Armas Cortantes',
+}).forEach(([k, v]) => { ESTILOS[k].armas = v; });
+
+</script>
+<script>
+/* Ficha OP RPG — estado, cálculos, rolagens e interface. */
+(() => {
+'use strict';
+
+const STORE_KEY = 'oprpg.fichas.v1';
+const LOG_KEY = 'oprpg.log.v1';
+const TAB_KEY = 'oprpg.aba';
+
+// ---------- utilidades ----------
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const num = v => { const n = Number(v); return Number.isFinite(n) ? n : 0; };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const sgn = n => (n >= 0 ? '+' : '') + n;
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const fmtNum = n => Number(n || 0).toLocaleString('pt-BR');
+
+function getPath(obj, path) {
+  return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+}
+function setPath(obj, path, val) {
+  const ks = path.split('.');
+  let o = obj;
+  ks.slice(0, -1).forEach((k, i) => {
+    if (o[k] == null) o[k] = /^\d+$/.test(ks[i + 1]) ? [] : {};
+    o = o[k];
+  });
+  o[ks[ks.length - 1]] = val;
+}
+function deepMerge(base, over) {
+  if (Array.isArray(base)) return Array.isArray(over) ? over : base;
+  if (base && typeof base === 'object') {
+    const out = { ...base };
+    if (over && typeof over === 'object') for (const k of Object.keys(over)) out[k] = k in base ? deepMerge(base[k], over[k]) : over[k];
+    return out;
+  }
+  return over === undefined ? base : over;
+}
+
+// ---------- modelo ----------
+function novoPersonagem() {
+  const skills = {};
+  PERICIAS.forEach(p => { skills[p.nome] = { prof: false, outros: 0, adv: false }; });
+  const saves = {}, savesExtra = {}, savesAdv = {};
+  ATRIBUTOS.forEach(a => { saves[a.key] = false; savesExtra[a.key] = 0; savesAdv[a.key] = false; });
+  return {
+    id: uid(), nome: '', jogador: '', nivel: 1, xp: 0, recompensa: '',
+    especie: '', mestico: ['', ''], estilo: '', profissao: '', antecedente: '', primario: '', oficioAttr: 'SAB',
+    retrato: '',
+    attrs: { FOR: 10, DES: 10, CON: 10, SAB: 10, PRE: 10, VON: 10 },
+    saves, savesExtra, savesAdv, skills,
+    desloc: { terra: 9, nado: 4.5, voo: 0 },
+    hp: { modo: 'media', rolagens: Array(20).fill(''), extra: 0, dadoOverride: '', especieOverride: '', manual: '', dano: 0, temp: 0, escudo: 0 },
+    pp: { gasto: 0, temp: 0, extraMax: 0 },
+    cr: { extra: 0 }, cd: { extra: 0 },
+    exaustao: 0, dvGastos: 0,
+    combate: { armas: '', armaFavorita: '' },
+    habilidades: ['', '', '', ''],
+    maestria: { nome: '', tracos: {}, especial: '' },
+    tecnicas: [],
+    akuma: { nome: '', categoria: '', tipoUsuario: '', tipoDespertar: '', desperto: '', manifestacoes: '', tracos: '', tecnicas: [] },
+    haki: { aptidao: '', principal: '', paTotal: 0, talentos: {} },
+    pers: {
+      alcunha: '', tripulacao: '', sonho: '', caminho: '', historia: '', aparencia: '', fisico: '',
+      tamanho: 'Médio', altura: '', peso: '', idade: '',
+      singularidades: [], defeitos: [],
+      tracosEspecie: '', ancestralidade: '', variacaoRara: '',
+      antAtributo: '', antEspecial: '', honraNome: '', honraEfeito: '',
+    },
+    equipamentos: [], municao: [], inventario: [], dinheiro: 0,
+    treinamentos: [], ptExtra: 0,
+    profissoesExtras: [{ nome: '', grad: '-', conhecimentos: '' }, { nome: '', grad: '-', conhecimentos: '' }],
+    profGrad: '-', profConhecimentos: '',
+    animal: { tipo: '', tamanho: '', desloc: '', dano: 0, notas: '', attrs: { FOR: 10, DES: 10, CON: 10 } },
+    notas: '',
+  };
+}
+
+// ---------- persistência ----------
+let db = loadDb();
+let S = db.chars[db.atual];
+let rollLog = loadLog();
+let modoRolagem = 'normal';
+
+function loadDb() {
+  let d;
+  try { d = JSON.parse(localStorage.getItem(STORE_KEY)); } catch { d = null; }
+  if (!d || !d.chars || !Object.keys(d.chars).length) {
+    const p = novoPersonagem();
+    d = { chars: { [p.id]: p }, atual: p.id };
+  }
+  for (const id of Object.keys(d.chars)) d.chars[id] = deepMerge(novoPersonagem(), d.chars[id]);
+  if (!d.chars[d.atual]) d.atual = Object.keys(d.chars)[0];
+  return d;
+}
+// Conta do Discord (só no site op-rpg, onde conta.js é carregado antes desta página).
+const Conta = window.OPRPGConta || null;
+const pendentesNuvem = new Set();
+let nuvemTimer;
+
+let saveTimer;
+function persistir() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(db)); }
+    catch (e) { toast('Não foi possível salvar (armazenamento cheio?). Exporte a ficha!', 'bad'); }
+  }, 250);
+}
+// Carimba a ficha como alterada e agenda o envio para a conta.
+function marcar(p = S) {
+  p.atualizadoEm = Date.now();
+  p.formato = 'ficha';
+  if (!Conta) return;
+  pendentesNuvem.add(p.id);
+  clearTimeout(nuvemTimer);
+  nuvemTimer = setTimeout(enviarNuvem, 1500);
+}
+function enviarNuvem() {
+  if (!Conta) return;
+  pendentesNuvem.forEach(id => { if (db.chars[id]) Conta.guardar(db.chars[id]); });
+  pendentesNuvem.clear();
+}
+function save() { marcar(S); persistir(); }
+function loadLog() { try { return JSON.parse(localStorage.getItem(LOG_KEY)) || []; } catch { return []; } }
+function saveLog() { try { localStorage.setItem(LOG_KEY, JSON.stringify(rollLog.slice(0, 60))); } catch {} }
+
+// ---------- cálculos ----------
+let C = {};
+const mod = k => Math.floor((num(S.attrs[k]) - 10) / 2);
+const habTem = nome => S.habilidades.some(h => norm(h).includes(norm(nome)));
+const singTem = nome => S.pers.singularidades.some(s => norm(s.nome).includes(norm(nome)));
+const treinadoTem = nome => S.treinamentos.some(t => t.status === 'treinado' && norm(t.nome).includes(norm(nome)));
+const tracoMaestria = nome => Object.entries(S.maestria.tracos || {}).some(([k, v]) => v && norm(k).includes(norm(nome)));
+const estiloAtual = () => ESTILOS[S.estilo] || null;
+
+function profBonus(lvl) { return lvl <= 4 ? 2 : lvl <= 8 ? 3 : lvl <= 12 ? 4 : lvl <= 16 ? 5 : 6; }
+
+function primarioKey() {
+  if (S.primario) return S.primario;
+  const est = estiloAtual();
+  if (!est) return 'FOR';
+  return est.prim.reduce((best, k) => (mod(k) > mod(best) ? k : best), est.prim[0]);
+}
+
+function vidaBaseEspecie() {
+  if (num(S.hp.especieOverride) > 0) return { v: num(S.hp.especieOverride), src: 'definida manualmente' };
+  if (S.especie === 'Mestiços') {
+    const [a, b] = S.mestico.map(e => ESPECIES[e]?.hp || 0);
+    return { v: Math.floor((a + b) / 2), src: `média de ${S.mestico.filter(Boolean).join(' e ') || '—'}` };
+  }
+  return { v: ESPECIES[S.especie]?.hp || 0, src: S.especie || 'sem espécie' };
+}
+
+function dadoDeVida() {
+  const est = estiloAtual();
+  if (num(S.hp.dadoOverride) > 0) return { dado: num(S.hp.dadoOverride), quebrador12: false };
+  let dado = est ? est.dado : 0;
+  const base = dado;
+  if (treinadoTem('Resistência dos Gigantes') || treinadoTem('Corpo de Ogro') || treinadoTem('Corpo do Ogro')) dado = 12;
+  else if (habTem('Vitalidade Exuberante')) dado = Math.min(12, dado + 2);
+  return { dado, quebrador12: base === 12 && habTem('Vitalidade Exuberante') };
+}
+
+function compute() {
+  C = {};
+  const lvl = clamp(num(S.nivel), 1, 30);
+  const lv20 = Math.min(lvl, 20);
+  const prof = profBonus(lvl);
+  const est = estiloAtual();
+  const pk = primarioKey();
+  const pm = mod(pk);
+  const con = mod('CON');
+  C.prof = sgn(prof);
+  C.lvl = lvl;
+  C.grauMax = GRAU_POR_NIVEL.filter(([n]) => lvl >= n).pop()[1] + 'º';
+
+  // XP
+  if (lvl < 20) {
+    const ini = XP_TABELA[lvl - 1], prox = XP_TABELA[lvl];
+    C.xpPct = clamp((num(S.xp) - ini) / (prox - ini) * 100, 0, 100);
+    C.xpLabel = `${fmtNum(S.xp)} / ${fmtNum(prox)} PE para o ${lvl + 1}º nível`;
+    C.xpPronto = num(S.xp) >= prox;
+  } else { C.xpPct = 100; C.xpLabel = `${fmtNum(S.xp)} PE — nível máximo de progressão`; }
+
+  // atributos
+  ATRIBUTOS.forEach(a => { C['mod.' + a.key] = sgn(mod(a.key)); });
+  C.primarioNome = ATRIBUTOS.find(a => a.key === pk).nome;
+
+  // vida
+  const base = vidaBaseEspecie();
+  const { dado, quebrador12 } = dadoDeVida();
+  const linhas = [];
+  let hpMax = 0;
+  if (S.hp.modo === 'manual') {
+    hpMax = num(S.hp.manual);
+    linhas.push(['Vida máxima manual', hpMax]);
+  } else {
+    hpMax += base.v; linhas.push([`Vida base da espécie (${base.src})`, base.v]);
+    if (S.hp.modo === 'rolagem') {
+      const soma = S.hp.rolagens.slice(0, lv20).reduce((a, b) => a + num(b), 0);
+      const conTot = Math.max(1, con) * lv20;
+      hpMax += soma + conTot;
+      linhas.push([`Dados rolados (${lv20} níveis)`, soma], [`Constituição × nível (mín. 1)`, conTot]);
+    } else if (dado) {
+      const n1 = Math.max(1, dado + con);
+      const nx = Math.max(1, Math.floor(dado / 2) + 1 + con) * (lv20 - 1);
+      hpMax += n1 + nx;
+      linhas.push([`1º nível: d${dado} máximo + CON`, n1]);
+      if (lv20 > 1) linhas.push([`Níveis 2–${lv20}: média (${Math.floor(dado / 2) + 1}) + CON`, nx]);
+    }
+    const extras = [
+      [tracoMaestria('Lança e Escudo'), 'Maestria: Lança e Escudo (10 × prof.)', 10 * prof],
+      [S.estilo === 'Brutamontes (Guerreiro-Oni)' && lvl >= 6, 'Brutamontes: Corpo de Criatura', 60],
+      [treinadoTem('Guerreiro Treinado'), 'Treinamento: Guerreiro Treinado (3 × prof.)', 3 * prof],
+      [habTem('Robusto'), 'HB Robusto (3 × nível)', 3 * lvl],
+      [quebrador12, 'Quebrador de Regras com d12 (+ nível)', lvl],
+      [lvl >= 21, 'Níveis épicos (+20 nos níveis 21, 23, 25, 27, 29)', 20 * [21, 23, 25, 27, 29].filter(n => lvl >= n).length],
+      [num(S.hp.extra) !== 0, 'Vida extra', num(S.hp.extra)],
+    ];
+    extras.forEach(([ok, nome, v]) => { if (ok) { hpMax += v; linhas.push([nome, v]); } });
+  }
+  C.hpMaxN = hpMax;
+  C.hpBreakdown = linhas;
+  const hpAtual = Math.max(0, hpMax - num(S.hp.dano));
+  const extraHp = num(S.hp.temp) + num(S.hp.escudo);
+  C.hpAtual = hpAtual + (extraHp ? ` +${extraHp}` : '');
+  C.hpMax = hpMax;
+  C.hpPct = hpMax ? clamp(hpAtual / hpMax * 100, 0, 100) : 0;
+  C.shieldPct = hpMax ? clamp(extraHp / hpMax * 100, 0, 100 - C.hpPct) : 0;
+  C.hpCritico = hpMax && hpAtual <= hpMax / 4;
+  C.dadoVida = dado ? `d${dado}` : '—';
+  C.dvDisp = `${Math.max(0, lvl - num(S.dvGastos))}/${lvl} ${dado ? 'd' + dado : ''}`;
+  C.animalPV = Math.max(0, Math.floor(hpMax / 2) - num(S.animal.dano)) + ' / ' + Math.floor(hpMax / 2);
+
+  // poder
+  const ppMax = (est?.ppMult || 4) * lvl + num(S.pp.extraMax);
+  const ppAtual = Math.max(0, ppMax - num(S.pp.gasto));
+  C.ppMaxN = ppMax;
+  C.ppMax = ppMax;
+  C.ppAtual = ppAtual + (num(S.pp.temp) ? ` +${num(S.pp.temp)}` : '');
+  C.ppPct = ppMax ? clamp(ppAtual / ppMax * 100, 0, 100) : 0;
+  C.ppInfo = `limite por turno: ${10 + lvl}`;
+
+  // CR
+  const guarda = lvl >= 13 ? 2 : lvl >= 5 ? 1 : 0;
+  let cr, fonte;
+  if (habTem('Defesa Ofensiva')) { cr = 10 + pm + Math.floor(prof / 2) + guarda; fonte = 'Defesa Ofensiva'; }
+  else if (habTem('Corpo de Guerreiro')) { cr = 10 + Math.max(1, pm) + Math.min(con, Math.max(1, Math.floor(lvl / 2))); fonte = 'Corpo de Guerreiro'; }
+  else if (singTem('Armadura de Músculos')) { cr = 10 + Math.max(mod('FOR'), mod('DES')); fonte = 'Armadura de Músculos'; }
+  else { cr = 10 + mod('DES'); fonte = '10 + Destreza'; }
+  cr += num(S.cr.extra);
+  if (num(S.cr.extra)) fonte += ` ${sgn(num(S.cr.extra))}`;
+  C.cr = cr; C.crFonte = fonte;
+
+  // CD e ataque de técnica
+  let cd = 8 + prof + pm;
+  if (habTem('Dificuldade Inefável')) cd += Math.floor(prof / 2) + (lvl >= 9 ? 3 : lvl >= 6 ? 2 : 0);
+  cd += num(S.cd.extra);
+  C.cd = cd;
+  C.atkTecN = prof + pm;
+  C.atkTec = sgn(prof + pm);
+
+  // iniciativa, deslocamento
+  C.iniciativaN = mod('DES');
+  C.iniciativa = sgn(mod('DES'));
+  const ex = num(S.exaustao);
+  const terra = Math.max(0, num(S.desloc.terra) - 1.5 * ex);
+  C.desloc = `${terra.toLocaleString('pt-BR')} m`;
+  const outros = [];
+  if (num(S.desloc.nado)) outros.push(`nado ${num(S.desloc.nado).toLocaleString('pt-BR')}`);
+  if (num(S.desloc.voo)) outros.push(`voo ${num(S.desloc.voo).toLocaleString('pt-BR')}`);
+  C.deslocOutros = outros.join(' · ') || 'terra';
+  C.exaustaoInfo = ex ? (ex >= 6 ? '— desmaiado!' : `— −${2 * ex} no d20, −${(1.5 * ex).toLocaleString('pt-BR')} m`) : '';
+
+  // perícias e salvaguardas
+  PERICIAS.forEach(p => {
+    const sk = S.skills[p.nome];
+    C['skill.' + p.nome + 'N'] = mod(p.attr) + (sk.prof ? prof : 0) + num(sk.outros);
+    C['skill.' + p.nome] = sgn(C['skill.' + p.nome + 'N']);
+  });
+  ATRIBUTOS.forEach(a => {
+    C['save.' + a.key + 'N'] = mod(a.key) + (S.saves[a.key] ? prof : 0) + num(S.savesExtra[a.key]);
+    C['save.' + a.key] = sgn(C['save.' + a.key + 'N']);
+  });
+  C.percPassiva = 10 + C['skill.PercepçãoN'];
+  C.savesHint = est && est.saves.length ? `${S.estilo}: ${est.saves.join(' e ')}` : '';
+
+  // ofício
+  C.oficioNome = S.profissao || '—';
+  C.oficioTotalN = prof + mod(S.oficioAttr || 'SAB');
+  C.oficioTotal = S.profissao === 'Sem Profissão' ? '¯\\_(ツ)_/¯' : sgn(C.oficioTotalN);
+
+  // info do estilo
+  if (est) {
+    const [q, ops] = est.pericias;
+    const per = q ? ` · Perícias: escolha ${q}${ops ? ' entre ' + ops.join(', ') : ' quaisquer'}` : '';
+    C.estiloInfo = `${S.estilo}: d${est.dado} · Primário ${est.prim.join(' ou ')}${est.saves.length ? ' · Salvaguardas ' + est.saves.join(' e ') : ''}${per}${est.homebrew ? ' · (homebrew)' : ''}`;
+  } else C.estiloInfo = S.estilo ? `${S.estilo} (estilo personalizado — ajuste dado de vida no cálculo de vida)` : '';
+  C.isMestico = S.especie === 'Mestiços';
+  C.hpRolagem = S.hp.modo === 'rolagem';
+  C.hpManual = S.hp.modo === 'manual';
+
+  // carga
+  const cargaMax = 10 * num(S.attrs.FOR) * (TAMANHOS[S.pers.tamanho] || 1);
+  const carga = S.inventario.reduce((a, i) => a + num(i.qt) * num(i.peso), 0);
+  C.cargaLabel = `${carga.toLocaleString('pt-BR')} / ${cargaMax.toLocaleString('pt-BR')} kg`;
+  C.cargaPct = cargaMax ? clamp(carga / cargaMax * 100, 0, 100) : 0;
+  C.cargaExcedida = carga > cargaMax;
+
+  // treinamento
+  const semSab = S.especie === 'Mestiços' ? S.mestico.some(e => ESPECIES[e]?.semPTSab) : ESPECIES[S.especie]?.semPTSab;
+  const pt = Math.min(15, 3 * Math.floor(lvl / 2)) + (semSab ? 0 : Math.max(0, mod('SAB'))) + num(S.ptExtra)
+    + (singTem('Disciplinado') ? Math.floor(lvl / 2) : 0);
+  C.ptTotal = pt;
+  C.ptGasto = S.treinamentos.reduce((a, t) => a + num(t.pt), 0);
+
+  // haki
+  let gastos = 0;
+  Object.values(HAKI).flat().forEach(([nome, , custo]) => {
+    const t = S.haki.talentos[nome];
+    if (t) gastos += custo * ((t.possui ? 1 : 0) + (t.dominado ? 1 : 0) + (t.aprimorado ? 1 : 0));
+  });
+  C.paGastosN = gastos;
+  C.paGastos = gastos;
+  C.paOciosos = num(S.haki.paTotal) - gastos;
+  C.hakiEstagioNome = gastos >= 71 ? 'Perito' : gastos >= 21 ? 'Treinado' : gastos >= 1 ? 'Inexperiente' : 'Latente';
+  C.hakiEstagio = `${C.hakiEstagioNome} · ${8 + prof + mod('VON')}`;
+
+  // individualidades
+  const esp = S.pers.singularidades.reduce((a, s) => a + (PESO_INDIVIDUALIDADE[s.tier] || 0), 0);
+  const cont = arr => arr.reduce((m, s) => (m[s.tier] = (m[s.tier] || 0) + 1, m), {});
+  const cs = cont(S.pers.singularidades), cdf = cont(S.pers.defeitos);
+  const ok = esp <= 5 && ['Suave', 'Média', 'Forte'].every(t => (cs[t] || 0) === (cdf[t] || 0));
+  C.indivInfo = `${esp}/5 espaços ${ok ? '✔' : '⚠ singularidades e defeitos não batem'}`;
+  C.indivOk = ok;
+}
+
+// ---------- renderização ----------
+function opt(v, label = v, sel = false) { return `<option value="${esc(v)}"${sel ? ' selected' : ''}>${esc(label)}</option>`; }
+
+function renderStatic() {
+  $('#selNivel').innerHTML = Array.from({ length: 30 }, (_, i) => opt(i + 1)).join('');
+  const especies = Object.keys(ESPECIES);
+  $('#selEspecie').innerHTML = opt('', '—') + especies.map(e => opt(e, e + (ESPECIES[e].homebrew ? ' (homebrew)' : ''))).join('');
+  $$('.selEspecieBase').forEach(s => { s.innerHTML = opt('', '—') + especies.filter(e => e !== 'Mestiços').map(e => opt(e)).join(''); });
+  $('#selTamanho').innerHTML = Object.keys(TAMANHOS).map(t => opt(t)).join('');
+  $$('.selAttr').forEach(s => { s.innerHTML = ATRIBUTOS.map(a => opt(a.key, a.nome)).join(''); });
+  $$('.selHaki').forEach(s => { s.innerHTML = opt('', '—') + ['Armamento', 'Observação', 'Conquistador'].map(h => opt(h)).join(''); });
+  const dl = (id, arr) => { $('#' + id).innerHTML = arr.map(v => opt(v)).join(''); };
+  dl('dlEstilos', Object.keys(ESTILOS));
+  dl('dlProfissoes', PROFISSOES);
+  dl('dlAntecedentes', ANTECEDENTES);
+  dl('dlMaestrias', Object.keys(MAESTRIAS));
+  dl('dlHabilidades', HABILIDADES_BASICAS);
+  dl('dlCaminhos', CAMINHOS);
+  dl('dlVariacoes', VARIACOES_RARAS);
+  dl('dlAkuma', AKUMA_CATEGORIAS);
+  // datalists das individualidades por nível
+  const frag = Object.keys(PESO_INDIVIDUALIDADE).map(t =>
+    `<datalist id="dlSing-${t}">${SINGULARIDADES[t].map(v => opt(v)).join('')}</datalist>` +
+    `<datalist id="dlDef-${t}">${DEFEITOS[t].map(v => opt(v)).join('')}</datalist>`).join('');
+  document.body.insertAdjacentHTML('beforeend', frag);
+  $('#quickDice').innerHTML = [4, 6, 8, 10, 12, 20, 100].map(d => `<button class="die" data-expr="1d${d}">d${d}</button>`).join('');
+}
+
+function renderPrimario() {
+  const est = estiloAtual();
+  const auto = est ? `Auto (${est.prim.join('/')})` : 'Auto';
+  $('#selPrimario').innerHTML = opt('', auto) + ATRIBUTOS.map(a => opt(a.key, a.nome)).join('');
+}
+
+function renderAttrs() {
+  $('#attrs').innerHTML = ATRIBUTOS.map(a => `
+    <div class="attr card">
+      <span class="attr-name">${a.nome}</span>
+      <button class="attr-mod" data-roll="attr:${a.key}" title="Rolar teste de ${a.nome}" data-calc="mod.${a.key}"></button>
+      <input class="attr-val" data-bind="attrs.${a.key}" type="number" min="1" max="30" aria-label="Valor de ${a.nome}">
+    </div>`).join('');
+  $('#animalAttrs').innerHTML = ['FOR', 'DES', 'CON'].map(k => `
+    <label class="attr card"><span class="attr-name">${k}</span><input class="attr-val" data-bind="animal.attrs.${k}" type="number"></label>`).join('')
+    + ['SAB', 'PRE', 'VON'].map(k => `<div class="attr card"><span class="attr-name">${k}</span><span class="attr-val ro" data-calc="attrVal.${k}"></span></div>`).join('');
+}
+
+function renderSkills() {
+  $('#skills').innerHTML = PERICIAS.map(p => `
+    <tr>
+      <td><input type="checkbox" class="chk prof" data-bind="skills.${p.nome}.prof" title="Proficiente"></td>
+      <td>${p.nome}</td>
+      <td class="muted">${p.attr}</td>
+      <td><input class="tiny" type="number" data-bind="skills.${p.nome}.outros"></td>
+      <td><button class="roll-chip" data-roll="skill:${p.nome}" data-calc="skill.${p.nome}"></button></td>
+      <td><input type="checkbox" class="chk star" data-bind="skills.${p.nome}.adv" title="Sempre com vantagem"></td>
+    </tr>`).join('');
+  $('#saves').innerHTML = ATRIBUTOS.map(a => `
+    <tr>
+      <td><input type="checkbox" class="chk prof" data-bind="saves.${a.key}" title="Proficiente"></td>
+      <td>${a.nome}</td>
+      <td><input class="tiny" type="number" data-bind="savesExtra.${a.key}"></td>
+      <td><button class="roll-chip" data-roll="save:${a.key}" data-calc="save.${a.key}"></button></td>
+      <td><input type="checkbox" class="chk star" data-bind="savesAdv.${a.key}" title="Sempre com vantagem"></td>
+    </tr>`).join('');
+}
+
+const delBtn = (path, i) => `<button class="x" data-del="${path}" data-i="${i}" title="Remover">✕</button>`;
+
+function renderHabilidades() {
+  $('#habilidades').innerHTML = S.habilidades.map((h, i) => `
+    <div class="row">
+      <span class="tag">${i === 0 ? 'Inata' : i <= 3 ? i + 'º nível' : 'Extra'}</span>
+      <input data-bind="habilidades.${i}" list="dlHabilidades" placeholder="Escolha uma Habilidade Básica">
+      ${delBtn('habilidades', i)}
+    </div>`).join('');
+}
+
+function renderMaestria() {
+  const tr = MAESTRIAS[S.maestria.nome];
+  $('#maestriaTracos').innerHTML = tr
+    ? tr.map(t => `<label class="check"><input type="checkbox" class="chk" data-bind="maestria.tracos.${t}"> ${t}</label>`).join('')
+    : '<p class="hint">Escolha uma maestria da lista para marcar os traços obtidos.</p>';
+}
+
+function renderEquip() {
+  $('#equipamentos').innerHTML = S.equipamentos.map((e, i) => `
+    <div class="item-card">
+      <div class="row">
+        <input data-bind="equipamentos.${i}.nome" placeholder="Arma / ataque" class="grow strong">
+        <button class="btn small accent" data-atk="${i}" title="Rolar ataque">⚔ ${esc(sgn(num(e.bonus)))}</button>
+        <button class="btn small red" data-dmg="${i}" title="Rolar dano">💥 Dano</button>
+        ${delBtn('equipamentos', i)}
+      </div>
+      <div class="grid g5 tight">
+        <label class="field"><span>Bônus atq.</span><input type="number" data-bind="equipamentos.${i}.bonus" data-rerender="equip"></label>
+        <label class="field"><span>Dano</span><input data-bind="equipamentos.${i}.dano" placeholder="1d8+3"></label>
+        <label class="field"><span>Alcance</span><input data-bind="equipamentos.${i}.alcance"></label>
+        <label class="field"><span>Tipo</span><input data-bind="equipamentos.${i}.tipo" placeholder="Cortante"></label>
+        <label class="field"><span>Propriedades</span><input data-bind="equipamentos.${i}.props"></label>
+      </div>
+    </div>`).join('') || '<p class="hint">Nenhuma arma. Ataque desarmado padrão: 1d4 (Corpo de Guerreiro aumenta).</p>';
+}
+
+function renderMunicao() {
+  $('#municao').innerHTML = S.municao.map((m, i) => `
+    <div class="row">
+      <input data-bind="municao.${i}.nome" placeholder="Munição" class="grow">
+      <input data-bind="municao.${i}.dano" placeholder="Dano" class="w80">
+      <input data-bind="municao.${i}.tipo" placeholder="Tipo" class="w100">
+      <button class="btn small" data-step="municao.${i}.qt" data-d="-1">−</button>
+      <input type="number" data-bind="municao.${i}.qt" class="w60 center">
+      <button class="btn small" data-step="municao.${i}.qt" data-d="1">＋</button>
+      ${delBtn('municao', i)}
+    </div>`).join('');
+}
+
+function renderTecnicas(path, containerId) {
+  const list = getPath(S, path);
+  $('#' + containerId).innerHTML = list.map((t, i) => {
+    const p = `${path}.${i}`;
+    return `
+    <div class="tech ${t.tipo === 'Auxiliar' ? 'aux' : ''}">
+      <div class="tech-head">
+        <input data-bind="${p}.nome" placeholder="Nome da técnica" class="strong grow">
+        ${delBtn(path, i)}
+      </div>
+      <div class="grid g4 tight">
+        <label class="field"><span>Tipo</span><select data-bind="${p}.tipo" data-rerender="tecnicas">
+          ${opt('Combate', 'Combate', t.tipo === 'Combate')}${opt('Auxiliar', 'Auxiliar', t.tipo === 'Auxiliar')}</select></label>
+        <label class="field"><span>Grau</span><input type="number" min="1" max="7" data-bind="${p}.grau"></label>
+        <label class="field"><span>Custo PP</span><input type="number" min="0" data-bind="${p}.pp"></label>
+        <label class="field"><span>Ação</span><input data-bind="${p}.acao" placeholder="Ação Poderosa"></label>
+        <label class="field"><span>Alcance</span><input data-bind="${p}.alcance"></label>
+        <label class="field"><span>Duração</span><input data-bind="${p}.duracao" placeholder="Instantâneo"></label>
+        <label class="field"><span>Dano</span><input data-bind="${p}.dano" placeholder="2d8+3"></label>
+        <label class="field"><span>Salvaguarda</span><input data-bind="${p}.salva" placeholder="DES / —"></label>
+      </div>
+      <label class="field"><span>Requisito / Efeito</span><textarea rows="2" data-bind="${p}.desc"></textarea></label>
+      <div class="tech-foot">
+        <label class="check small"><input type="checkbox" class="chk" data-bind="${p}.ataque"> rola ataque</label>
+        <button class="btn accent" data-use="${path}" data-i="${i}">Usar técnica</button>
+      </div>
+    </div>`;
+  }).join('') || '<p class="hint">Nenhuma técnica ainda. Use “＋ Técnica”. O botão “Usar” desconta PP e rola ataque/dano.</p>';
+}
+
+function renderHaki() {
+  const titulos = { 'Observação': 'Haki da Observação', 'Armamento': 'Haki do Armamento', 'Rei': 'Haki do Rei' };
+  const ordem = { 'Latente': 0, 'Inexperiente': 1, 'Treinado': 2, 'Perito': 3 };
+  const estagioAtual = ordem[C.hakiEstagioNome] || 0;
+  const possui = n => S.haki.talentos[n]?.possui;
+  $('#haki').innerHTML = Object.entries(HAKI).map(([tipo, tal]) => `
+    <div class="card">
+      <h3>${titulos[tipo]}</h3>
+      <table class="haki-table"><thead><tr><th>Talento</th><th>PA</th><th title="Possui">P</th><th title="Dominado">D</th><th title="Aprimorado">A</th></tr></thead><tbody>
+      ${tal.map(([nome, est, custo, req]) => {
+        const reqOk = req.every(possui);
+        const estOk = (ordem[est] || 0) <= Math.max(1, estagioAtual) || possui(nome);
+        const bloqueado = !(reqOk && estOk);
+        const k = `haki.talentos.${nome}`;
+        return `<tr class="${bloqueado ? 'locked' : ''} ${possui(nome) ? 'owned' : ''}">
+          <td><b>${nome}</b><small>${est}${req.length ? ' · req: ' + req.join(', ') : ''}</small></td>
+          <td class="center">${custo}</td>
+          <td><input type="checkbox" class="chk" data-bind="${k}.possui" data-rerender="haki"></td>
+          <td><input type="checkbox" class="chk" data-bind="${k}.dominado" data-rerender="haki"></td>
+          <td><input type="checkbox" class="chk" data-bind="${k}.aprimorado" data-rerender="haki"></td>
+        </tr>`;
+      }).join('')}
+      </tbody></table>
+    </div>`).join('');
+}
+
+function renderIndividualidades() {
+  const linha = (path, dlPrefix) => getPath(S, path).map((s, i) => `
+    <div class="row">
+      <select data-bind="${path}.${i}.tier" data-rerender="indiv" class="w100">
+        ${Object.keys(PESO_INDIVIDUALIDADE).map(t => opt(t, t, s.tier === t)).join('')}</select>
+      <input data-bind="${path}.${i}.nome" list="${dlPrefix}-${s.tier}" class="grow" placeholder="Nome">
+      ${delBtn(path, i)}
+    </div>
+    <textarea data-bind="${path}.${i}.desc" rows="1" class="sub" placeholder="Efeito (opcional)"></textarea>`).join('');
+  $('#singularidades').innerHTML = linha('pers.singularidades', 'dlSing');
+  $('#defeitos').innerHTML = linha('pers.defeitos', 'dlDef');
+}
+
+function renderInventario() {
+  $('#inventario').innerHTML = (S.inventario.length ? `<div class="row head"><span class="grow">Item</span><span class="w60">Qt.</span><span class="w80">Peso (kg)</span><span class="w24"></span></div>` : '')
+    + S.inventario.map((it, i) => `
+    <div class="row">
+      <input data-bind="inventario.${i}.item" class="grow" placeholder="Item">
+      <input type="number" data-bind="inventario.${i}.qt" class="w60 center" min="0">
+      <input type="number" data-bind="inventario.${i}.peso" class="w80" step="0.1" min="0">
+      ${delBtn('inventario', i)}
+    </div>`).join('');
+}
+
+function renderTreinamentos() {
+  $('#treinamentos').innerHTML = S.treinamentos.map((t, i) => `
+    <div class="row">
+      <input data-bind="treinamentos.${i}.nome" class="grow" placeholder="Treinamento">
+      <select data-bind="treinamentos.${i}.status" class="w100">
+        ${opt('treinando', 'Treinando', t.status === 'treinando')}${opt('treinado', 'Treinado', t.status === 'treinado')}</select>
+      <input data-bind="treinamentos.${i}.tt" class="w60" placeholder="TT">
+      <input type="number" data-bind="treinamentos.${i}.pt" class="w60" placeholder="PT">
+      ${delBtn('treinamentos', i)}
+    </div>`).join('');
+}
+
+function renderProfissoes() {
+  const grad = sel => ['-', 'Especialista', 'Mestre', 'Grão-Mestre'].map(g => opt(g, g, sel === g)).join('');
+  const card = (titulo, nomeBind, gradBind, conhBind, gradVal) => `
+    <div class="card">
+      <h3>${titulo}</h3>
+      <label class="field"><span>Profissão</span><input data-bind="${nomeBind}" list="dlProfissoes"></label>
+      <label class="field"><span>Graduação</span><select data-bind="${gradBind}">${grad(gradVal)}</select></label>
+      <label class="field"><span>Conhecimentos do Trabalho</span><textarea data-bind="${conhBind}" rows="8"></textarea></label>
+    </div>`;
+  $('#profissoes').innerHTML = card('Profissão Inicial', 'profissao', 'profGrad', 'profConhecimentos', S.profGrad)
+    + S.profissoesExtras.map((p, i) => card('Profissão Extra', `profissoesExtras.${i}.nome`, `profissoesExtras.${i}.grad`, `profissoesExtras.${i}.conhecimentos`, p.grad)).join('');
+}
+
+function renderHpRolls() {
+  const lvl = Math.min(20, num(S.nivel));
+  $('#hpRolls').innerHTML = S.hp.rolagens.map((r, i) => `
+    <label class="${i < lvl ? '' : 'dim'}"><span>${i + 1}º</span><input type="number" min="0" data-bind="hp.rolagens.${i}"></label>`).join('');
+}
+
+function renderPips() {
+  const ex = num(S.exaustao);
+  $('#pipsExaustao').innerHTML = [1, 2, 3, 4, 5, 6].map(n =>
+    `<button class="pip ${n <= ex ? 'on' : ''} ${n === 6 ? 'last' : ''}" data-ex="${n}" title="Nível ${n}">${n}</button>`).join('');
+}
+
+function renderCharSelect() {
+  $('#charSelect').innerHTML = Object.values(db.chars).map(c =>
+    opt(c.id, (c.nome || 'Sem nome') + (c.estilo ? ` — ${c.estilo}` : '') + ` (nv ${c.nivel})`, c.id === db.atual)).join('');
+}
+
+function renderRetrato() {
+  const img = $('#retrato');
+  img.src = S.retrato || '';
+  img.parentElement.classList.toggle('has', !!S.retrato);
+}
+
+function renderBounty() {
+  const raw = String(S.recompensa || '').replace(/\D/g, '');
+  $('#inpRecompensa').value = raw ? Number(raw).toLocaleString('pt-BR') : '';
+}
+
+function renderLists() {
+  renderPrimario(); renderHabilidades(); renderMaestria(); renderEquip(); renderMunicao();
+  renderTecnicas('tecnicas', 'tecnicas'); renderTecnicas('akuma.tecnicas', 'akumaTecnicas');
+  renderIndividualidades(); renderInventario(); renderTreinamentos(); renderProfissoes(); renderHpRolls(); renderPips();
+}
+
+function fillBindings(root = document) {
+  $$('[data-bind]', root).forEach(el => {
+    if (el.id === 'inpRecompensa') return;
+    const v = getPath(S, el.dataset.bind);
+    if (el.type === 'checkbox') el.checked = !!v;
+    else if (document.activeElement !== el) el.value = v ?? '';
+  });
+}
+
+function updateOutputs() {
+  compute();
+  $$('[data-calc]').forEach(el => { const v = C[el.dataset.calc]; el.textContent = v ?? ''; });
+  $$('[data-calc-style]').forEach(el => { el.style.width = (C[el.dataset.calcStyle] || 0) + '%'; });
+  $$('[data-show]').forEach(el => { el.hidden = !C[el.dataset.show]; });
+  ATRIBUTOS.forEach(a => { const e = $(`[data-calc="attrVal.${a.key}"]`); if (e) e.textContent = S.attrs[a.key]; });
+  $('.vital.hp').classList.toggle('critico', !!C.hpCritico);
+  $('.carga').classList.toggle('over', !!C.cargaExcedida);
+  $('[data-calc="indivInfo"]').classList.toggle('warn', !C.indivOk);
+  $('.xpbar').classList.toggle('ready', !!C.xpPronto);
+  $('#hpBreakdown').innerHTML = C.hpBreakdown.map(([n, v]) => `<li><span>${esc(n)}</span><b>${sgn(v)}</b></li>`).join('')
+    + `<li class="total"><span>Vida máxima</span><b>${C.hpMaxN}</b></li>`;
+  document.title = (S.nome ? S.nome + ' · ' : '') + 'Ficha de Personagem';
+}
+
+function renderAll() {
+  renderLists();
+  renderRetrato();
+  renderBounty();
+  renderCharSelect();
+  fillBindings();
+  updateOutputs();
+  renderHaki();
+  fillBindings($('#haki'));
+}
+
+// ---------- dados ----------
+function rollDie(f) { return 1 + Math.floor(Math.random() * f); }
+
+function rollExpr(expr) {
+  const src = String(expr || '').replace(/\s+/g, '').toLowerCase();
+  if (!src) return null;
+  const re = /([+-]?)(\d*)d(\d+)|([+-]?)(\d+)/g;
+  let m, total = 0, partes = [], consumed = 0;
+  while ((m = re.exec(src))) {
+    if (m.index !== consumed) return null;
+    consumed = re.lastIndex;
+    if (m[3]) {
+      const s = m[1] === '-' ? -1 : 1, n = Math.min(100, Number(m[2] || 1)), f = Number(m[3]);
+      if (!f) return null;
+      const rolls = Array.from({ length: n }, () => rollDie(f));
+      total += s * rolls.reduce((a, b) => a + b, 0);
+      partes.push(`${s < 0 ? '−' : partes.length ? '+' : ''}${n}d${f}[${rolls.join(', ')}]`);
+    } else {
+      const s = m[4] === '-' ? -1 : 1, v = Number(m[5]);
+      total += s * v;
+      partes.push(`${s < 0 ? '−' : '+'}${v}`);
+    }
+  }
+  if (consumed !== src.length || !partes.length) return null;
+  return { total, detalhe: partes.join(' ') };
+}
+
+function rollD20(label, bonus, { adv = false, extra = '' } = {}) {
+  let modo = modoRolagem;
+  if (adv) modo = modo === 'des' ? 'normal' : 'van';
+  const a = rollDie(20), b = rollDie(20);
+  const nat = modo === 'van' ? Math.max(a, b) : modo === 'des' ? Math.min(a, b) : a;
+  const ex = num(S.exaustao) * 2;
+  const total = nat + bonus - ex;
+  const dados = modo === 'normal' ? `${a}` : `${a} | ${b} → ${nat}`;
+  const det = `d20(${dados}) ${sgn(bonus)}${ex ? ` −${ex} exaustão` : ''}${extra}`;
+  const tipo = nat === 20 ? 'crit' : nat === 1 ? 'fail' : '';
+  pushLog({ label: label + (modo === 'van' ? ' (vant.)' : modo === 'des' ? ' (desv.)' : ''), total, det, tipo });
+  return { total, nat };
+}
+
+function pushLog(entry) {
+  entry.t = Date.now();
+  entry.quem = S.nome || 'Sem nome';
+  rollLog.unshift(entry);
+  rollLog = rollLog.slice(0, 60);
+  saveLog();
+  renderLog();
+  toast(`<b>${esc(entry.label)}</b> <span class="toast-total">${entry.total}</span><small>${esc(entry.det)}</small>`, entry.tipo);
+}
+
+function renderLog() {
+  $('#logCount').textContent = rollLog.length;
+  $('#logList').innerHTML = rollLog.map(e => `
+    <li class="${e.tipo || ''}"><div><b>${esc(e.label)}</b><small>${esc(e.quem)} · ${new Date(e.t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</small><small>${esc(e.det)}</small></div><span class="total">${e.total}</span></li>`).join('')
+    || '<li class="empty">Nenhuma rolagem ainda. Clique em qualquer modificador!</li>';
+}
+
+function toast(html, tipo = '') {
+  const el = document.createElement('div');
+  el.className = 'toast ' + (tipo || '');
+  el.innerHTML = html;
+  $('#toasts').appendChild(el);
+  setTimeout(() => el.classList.add('out'), 3200);
+  setTimeout(() => el.remove(), 3700);
+}
+
+function doRoll(key) {
+  const [tipo, arg] = key.split(':');
+  if (tipo === 'attr') return rollD20(`Teste de ${ATRIBUTOS.find(a => a.key === arg).nome}`, mod(arg));
+  if (tipo === 'skill') return rollD20(arg, C['skill.' + arg + 'N'], { adv: S.skills[arg].adv });
+  if (tipo === 'save') return rollD20(`Salvaguarda de ${ATRIBUTOS.find(a => a.key === arg).nome}`, C['save.' + arg + 'N'], { adv: S.savesAdv[arg] });
+  if (tipo === 'iniciativa') return rollD20('Iniciativa', C.iniciativaN);
+  if (tipo === 'ataqueTecnica') return rollD20('Ataque de Técnica', C.atkTecN);
+  if (tipo === 'oficio') return rollD20(`Ofício (${S.profissao || '—'})`, C.oficioTotalN);
+}
+
+// ---------- ações de vida/poder ----------
+function aplicarDano(v) {
+  let resto = v;
+  const usar = campo => { const t = Math.min(num(S.hp[campo]), resto); S.hp[campo] = num(S.hp[campo]) - t; resto -= t; };
+  usar('escudo'); usar('temp');
+  S.hp.dano = Math.min(C.hpMaxN, num(S.hp.dano) + resto);
+}
+function aplicarCura(v) { S.hp.dano = Math.max(0, num(S.hp.dano) - v); }
+function gastarPP(v) {
+  let resto = v;
+  const t = Math.min(num(S.pp.temp), resto); S.pp.temp = num(S.pp.temp) - t; resto -= t;
+  const disp = C.ppMaxN - num(S.pp.gasto);
+  if (resto > disp) toast(`PP insuficientes! Faltaram ${resto - disp}. Considere a Sobrecarga.`, 'bad');
+  S.pp.gasto = num(S.pp.gasto) + Math.min(resto, disp);
+  return resto <= disp;
+}
+
+function usarTecnica(path, i) {
+  const t = getPath(S, path)[i];
+  const nome = t.nome || 'Técnica';
+  const custo = num(t.pp);
+  if (custo && !gastarPP(custo)) { commit(); return; }
+  if (t.ataque) rollD20(`${nome} — ataque`, C.atkTecN);
+  if (t.dano) {
+    const r = rollExpr(t.dano);
+    if (r) pushLog({ label: `${nome} — dano`, total: r.total, det: r.detalhe, tipo: 'dmg' });
+    else toast(`Expressão de dano inválida: ${esc(t.dano)}`, 'bad');
+  }
+  if (!t.ataque && !t.dano) pushLog({ label: nome, total: `−${custo} PP`, det: t.salva ? `Salvaguarda de ${t.salva} · CD ${C.cd}` : 'Técnica usada' });
+  else if (t.salva) toast(`Alvo faz Salvaguarda de ${esc(t.salva)} — CD ${C.cd}`);
+  commit();
+}
+
+function descansoCurto() {
+  const lvl = num(S.nivel), disp = lvl - num(S.dvGastos);
+  const { dado } = dadoDeVida();
+  if (!dado) return toast('Defina um estilo de combate para ter Dado de Vida.', 'bad');
+  if (disp <= 0) return toast('Sem Dados de Vida disponíveis.', 'bad');
+  perguntar({
+    titulo: 'Descanso curto',
+    texto: `Quantos Dados de Vida (d${dado}) gastar? Disponíveis: ${disp}.`,
+    numero: { valor: 1, max: disp },
+    ok: 'Rolar e curar',
+  }).then(q => {
+    const n = clamp(Math.floor(num(q)), 0, disp);
+    if (n) gastarDadosDeVida(n, dado);
+  });
+}
+
+function gastarDadosDeVida(n, dado) {
+  const con = mod('CON');
+  const rolls = Array.from({ length: n }, () => rollDie(dado));
+  const cura = rolls.reduce((a, r) => a + Math.max(0, r + con), 0);
+  aplicarCura(cura);
+  S.dvGastos = num(S.dvGastos) + n;
+  pushLog({ label: `Descanso curto (${n}d${dado})`, total: `+${cura} PV`, det: `[${rolls.join(', ')}] ${sgn(con)} CON cada`, tipo: 'heal' });
+  commit();
+}
+
+async function descansoLongo() {
+  if (!await perguntar({ titulo: 'Descanso longo', texto: 'Recupera PV e PP, metade dos Dados de Vida e reduz 1 nível de exaustão.', ok: 'Descansar' })) return;
+  const lvl = num(S.nivel);
+  const exausto = num(S.exaustao) > 0;
+  S.hp.dano = 0;
+  S.pp.gasto = exausto ? Math.max(0, num(S.pp.gasto) - Math.floor(C.ppMaxN / 2)) : 0;
+  S.dvGastos = Math.max(0, num(S.dvGastos) - Math.max(1, Math.floor(lvl / 2)));
+  S.exaustao = Math.max(0, num(S.exaustao) - 1);
+  pushLog({ label: 'Descanso longo', total: '✓', det: exausto ? 'Exausto: recuperou só metade dos PP' : 'PV e PP restaurados', tipo: 'heal' });
+  commit();
+  renderPips();
+}
+
+// ---------- ciclo ----------
+function commit() { save(); fillBindings(); updateOutputs(); renderCharSelectDebounced(); }
+let csTimer;
+function renderCharSelectDebounced() { clearTimeout(csTimer); csTimer = setTimeout(renderCharSelect, 400); }
+
+function trocarPersonagem(id) {
+  db.atual = id; S = db.chars[id]; persistir(); renderAll();
+}
+
+function onBindInput(e) {
+  const el = e.target.closest('[data-bind]');
+  if (!el) return;
+  const path = el.dataset.bind;
+  let v;
+  if (el.type === 'checkbox') v = el.checked;
+  else if (el.type === 'number' || el.hasAttribute('data-num')) v = el.value === '' ? '' : Number(el.value);
+  else v = el.value;
+  if (el.id === 'inpRecompensa') {
+    const raw = el.value.replace(/\D/g, '');
+    v = raw;
+    if (e.type === 'change' || e.type === 'input') {
+      const pos = el.value.length - el.selectionStart;
+      el.value = raw ? Number(raw).toLocaleString('pt-BR') : '';
+      try { el.setSelectionRange(el.value.length - pos, el.value.length - pos); } catch {}
+    }
+  }
+  setPath(S, path, v);
+  save();
+  updateOutputs();
+  renderCharSelectDebounced();
+  if (e.type !== 'change') return;
+  // mudanças estruturais
+  const r = el.dataset.rerender;
+  if (path === 'estilo') aoMudarEstilo();
+  if (path === 'especie' || path.startsWith('mestico')) aoMudarEspecie(path === 'especie');
+  if (path === 'maestria.nome') renderMaestria(), fillBindings($('#maestriaTracos'));
+  if (path === 'nivel') renderHpRolls(), fillBindings($('#hpRolls'));
+  if (path.startsWith('haki') || path.startsWith('attrs')) { renderHaki(); fillBindings($('#haki')); }
+  if (r === 'equip') renderEquip(), fillBindings($('#equipamentos'));
+  if (r === 'tecnicas') { renderTecnicas('tecnicas', 'tecnicas'); renderTecnicas('akuma.tecnicas', 'akumaTecnicas'); fillBindings(); }
+  if (r === 'indiv') renderIndividualidades(), fillBindings($('#tab-personagem'));
+}
+
+function aoMudarEstilo() {
+  const est = estiloAtual();
+  renderPrimario(); fillBindings($('#selPrimario').parentElement);
+  if (est && est.saves.length) {
+    ATRIBUTOS.forEach(a => { S.saves[a.key] = est.saves.includes(a.key); });
+    toast(`Salvaguardas de ${est.saves.join(' e ')} marcadas para ${S.estilo}.`);
+  }
+  if (est && est.armas && !S.combate.armas) S.combate.armas = est.armas;
+  commit();
+}
+
+function aoMudarEspecie(principal) {
+  const e = S.especie === 'Mestiços'
+    ? (() => { const [a, b] = S.mestico.map(x => ESPECIES[x]).filter(Boolean); if (!a) return null;
+        return { terra: Math.max(a.terra, b?.terra || 0), nado: Math.max(a.nado, b?.nado || 0) }; })()
+    : ESPECIES[S.especie];
+  if (e) {
+    S.desloc.terra = e.terra; S.desloc.nado = e.nado;
+    if (principal && e.tamanho) S.pers.tamanho = e.tamanho;
+    if (principal && e.preconceito) toast(`${S.especie}: ${e.hp} PV base · ${e.terra} m · Preconceito ${e.preconceito}`);
+  }
+  commit();
+}
+
+function adicionar(path) {
+  const list = getPath(S, path);
+  const novos = {
+    'habilidades': '',
+    'tecnicas': { nome: '', tipo: 'Combate', grau: 1, pp: 0, acao: 'Ação Poderosa', alcance: '', duracao: 'Instantâneo', dano: '', salva: '', desc: '', ataque: true },
+    'akuma.tecnicas': { nome: '', tipo: 'Combate', grau: 1, pp: 0, acao: 'Ação Poderosa', alcance: '', duracao: 'Instantâneo', dano: '', salva: '', desc: '', ataque: true },
+    'equipamentos': { nome: '', bonus: C.atkTecN || 0, dano: '', alcance: '', tipo: '', props: '' },
+    'municao': { nome: '', dano: '', tipo: '', qt: 10 },
+    'inventario': { item: '', qt: 1, peso: 0 },
+    'treinamentos': { nome: '', status: 'treinando', tt: '', pt: 0 },
+    'pers.singularidades': { tier: 'Suave', nome: '', desc: '' },
+    'pers.defeitos': { tier: 'Suave', nome: '', desc: '' },
+  };
+  list.push(structuredClone(novos[path]));
+  renderLists(); fillBindings(); updateOutputs(); save();
+  const cont = { 'tecnicas': '#tecnicas', 'akuma.tecnicas': '#akumaTecnicas', 'equipamentos': '#equipamentos', 'municao': '#municao',
+    'inventario': '#inventario', 'treinamentos': '#treinamentos', 'pers.singularidades': '#singularidades', 'pers.defeitos': '#defeitos', 'habilidades': '#habilidades' }[path];
+  const ins = $$(`${cont} input:not([type=checkbox])`);
+  const alvo = path === 'pers.singularidades' || path === 'pers.defeitos' ? ins[ins.length - 1] : $$(`${cont} input[data-bind$=".nome"], ${cont} input[data-bind$=".item"], ${cont} input[data-bind^="habilidades."]`).pop();
+  alvo?.focus();
+}
+
+async function remover(path, i) {
+  const list = getPath(S, path);
+  const it = list[i];
+  const vazio = !it || (typeof it === 'string' ? !it : !Object.values(it).some(v => v && v !== 0 && v !== 'Combate' && v !== 'Suave' && v !== 'treinando'));
+  if (!vazio && !await perguntar({ titulo: 'Remover item', texto: 'Este item tem informações preenchidas. Remover mesmo assim?', ok: 'Remover', perigo: true })) return;
+  list.splice(i, 1);
+  renderLists(); fillBindings(); updateOutputs(); save();
+}
+
+function retratoDeArquivo(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const max = 480, k = Math.min(1, max / Math.max(img.width, img.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      S.retrato = cv.toDataURL('image/jpeg', 0.85);
+      renderRetrato(); save();
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// Janela de confirmação própria: o link compartilhado não mostra confirm()/prompt() do navegador.
+function perguntar({ titulo, texto, ok = 'Confirmar', perigo = false, numero = null }) {
+  const dlg = $('#dlgPergunta'), inp = $('#perguntaInput'), btn = $('#perguntaOk');
+  $('#perguntaTitulo').textContent = titulo;
+  $('#perguntaTexto').textContent = texto;
+  btn.textContent = ok;
+  btn.classList.toggle('accent', !perigo);
+  btn.classList.toggle('red', perigo);
+  inp.hidden = !numero;
+  if (numero) { inp.value = numero.valor; inp.max = numero.max; }
+  dlg.returnValue = '';
+  dlg.showModal();
+  if (numero) { inp.select(); inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); dlg.close('ok'); } }; }
+  return new Promise(res => {
+    dlg.addEventListener('close', () => {
+      const confirmou = dlg.returnValue === 'ok';
+      res(numero ? (confirmou ? inp.value : null) : confirmou);
+    }, { once: true });
+  });
+}
+
+let modoTransfer = 'exportar';
+function abrirTransfer(modo) {
+  modoTransfer = modo;
+  const exp = modo === 'exportar';
+  $('#transferTitulo').textContent = exp ? 'Exportar ficha' : 'Importar ficha';
+  $('#transferTexto').textContent = exp
+    ? 'Copie o código abaixo e guarde ou mande para alguém. Para abrir em outro navegador, use Importar e cole o código.'
+    : 'Cole o código de uma ficha exportada, ou escolha um arquivo .json salvo antes.';
+  $('#transferCodigo').value = exp ? JSON.stringify(S) : '';
+  $('#transferCodigo').readOnly = exp;
+  $('#transferAcao').textContent = exp ? 'Copiar código' : 'Importar';
+  // Dentro do link compartilhado (iframe) downloads são bloqueados; só mostra no site local.
+  $('#transferBaixar').hidden = !exp || window.self !== window.top;
+  $('#transferArquivo').hidden = exp;
+  $('#guiaBloco').hidden = true;
+  if (!exp) listarFichasGuia();
+  $('#dlgTransfer').showModal();
+  if (!exp) $('#transferCodigo').focus();
+}
+
+function acaoTransfer() {
+  const ta = $('#transferCodigo');
+  if (modoTransfer === 'importar') return importarTexto(ta.value);
+  const copiado = () => toast('Código copiado! Cole onde quiser guardar.', 'heal');
+  const manual = () => { ta.focus(); ta.select(); toast('Selecionei o código — copie com Ctrl+C.'); };
+  try { navigator.clipboard.writeText(ta.value).then(copiado, manual); } catch { manual(); }
+}
+
+function baixarArquivo() {
+  const blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `ficha-${norm(S.nome || 'personagem').replace(/[^a-z0-9]+/g, '-')}.json`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function importarTexto(txt) {
+  try {
+    const data = JSON.parse(txt);
+    if (typeof data !== 'object' || !data.attrs) throw new Error('formato');
+    const p = deepMerge(novoPersonagem(), data);
+    p.id = uid();
+    db.chars[p.id] = p;
+    marcar(p);
+    trocarPersonagem(p.id);
+    $('#dlgTransfer').close();
+    toast(`Ficha de ${esc(p.nome || 'personagem')} importada!`, 'heal');
+  } catch { toast('Código inválido. Use o código gerado em Exportar.', 'bad'); }
+}
+
+function importar(file) {
+  const r = new FileReader();
+  r.onload = () => importarTexto(r.result);
+  r.readAsText(file);
+}
+
+// ---------- integração com o Guia e a Forja (mesmo site) ----------
+const CHAVE_GUIA = 'oprpg-fichas';
+const CHAVE_FORJA = 'oprpg-forja-rascunhos';
+const lerLocalJSON = k => { try { const v = JSON.parse(localStorage.getItem(k) || '[]'); return Array.isArray(v) ? v : []; } catch { return []; } };
+
+// Junta o que está neste navegador com o que está na conta, sem repetir.
+async function lerDeOutraPagina(chave, tabela, filtrar) {
+  const mapa = new Map();
+  lerLocalJSON(chave).forEach(x => { if (x && x.id) mapa.set(x.id, x); });
+  if (Conta && Conta.estado().logado) {
+    const linhas = await Conta.lerTabela(tabela, 'id,dados,atualizado_em', filtrar);
+    linhas.forEach(l => {
+      const x = Object.assign({}, l.dados, { id: l.id });
+      const atual = mapa.get(l.id);
+      if (!atual || (Date.parse(l.atualizado_em) || 0) > (Number(atual.atualizadoEm) || 0)) mapa.set(l.id, x);
+    });
+  }
+  return [...mapa.values()].sort((a, b) => (Number(b.atualizadoEm) || 0) - (Number(a.atualizadoEm) || 0));
+}
+
+const ESTILO_DO_GUIA = { 'Brutamontes': 'Brutamontes (Guerreiro-Oni)', 'Rokushiki': 'Usuário de Rokushiki' };
+
+// Ficha do Guia (Rota do Novato) -> ficha completa.
+function deGuia(f) {
+  const d = f.dados || {};
+  const p = novoPersonagem();
+  p.nome = f.nome || d['b-nome'] || '';
+  p.nivel = clamp(Number(f.nivel || d['b-nivel']) || 1, 1, 30);
+  p.especie = f.especie || d['b-especie'] || '';
+  if (p.especie === 'Mestiços') p.mestico = [d['b-mest1'] || '', d['b-mest2'] || ''];
+  p.estilo = ESTILO_DO_GUIA[f.estilo] || f.estilo || '';
+  ATRIBUTOS.forEach(a => {
+    const base = d['base-' + a.key];
+    p.attrs[a.key] = (base === undefined || base === '' ? 10 : num(base)) + num(d['esp-' + a.key]) + num(d['ant-' + a.key]);
+  });
+  if (ATRIBUTOS.some(a => a.key === d['b-primario'])) p.primario = d['b-primario'];
+  if (d['b-cr'] === 'corpo') p.habilidades[0] = 'Corpo de Guerreiro';
+  if (d['b-cr'] === 'ofensiva') p.habilidades[0] = 'Defesa Ofensiva';
+  const est = ESTILOS[p.estilo];
+  if (est) {
+    ATRIBUTOS.forEach(a => { p.saves[a.key] = est.saves.includes(a.key); });
+    if (est.armas) p.combate.armas = est.armas;
+  }
+  const esp = p.especie === 'Mestiços' ? null : ESPECIES[p.especie];
+  if (esp) { p.desloc.terra = esp.terra; p.desloc.nado = esp.nado; p.pers.tamanho = esp.tamanho; }
+  p.origemGuia = f.id;
+  return p;
+}
+
+async function listarFichasGuia() {
+  const lista = await lerDeOutraPagina(CHAVE_GUIA, 'fichas', q => q.is('dados->>formato', null));
+  const bloco = $('#guiaBloco');
+  bloco.hidden = !lista.length;
+  $('#guiaLista').innerHTML = lista.map(f => `
+    <button type="button" class="pick" data-guia="${esc(f.id)}">
+      <span class="grow"><b>${esc(f.nome || 'Sem nome')}</b><span>${f.nivel || 1}º nível · ${esc(f.especie || '—')} · ${esc(f.estilo || '—')}</span></span>
+      <i>abrir →</i>
+    </button>`).join('');
+  bloco._lista = lista;
+}
+
+function importarDoGuia(id) {
+  const f = ($('#guiaBloco')._lista || []).find(x => x.id === id);
+  if (!f) return;
+  const p = deGuia(f);
+  db.chars[p.id] = p;
+  marcar(p);
+  trocarPersonagem(p.id);
+  $('#dlgTransfer').close();
+  toast(`${esc(p.nome || 'Personagem')} veio do Guia. Confira perícias e equipamento.`, 'heal');
+}
+
+// Técnica salva na Forja -> técnica da ficha.
+function deForja(x) {
+  const r = x.resumo || {};
+  const dadoPorAlvo = { 'ataque-cc': 10, 'ataque-dist': 10, 'salv-nenhum': 10, 'salv-metade': 8, 'area-limitada': 8, 'area': 6 };
+  const ataque = r.ataque ?? ['ataque-cc', 'ataque-dist'].includes(x.alvo);
+  const dano = r.dano ?? (x.alvo !== 'sem-dano' && num(x.dados) > 0 && dadoPorAlvo[x.alvo] ? `${x.dados}d${dadoPorAlvo[x.alvo]}` : '');
+  const tipoDano = r.tipoDano ?? (dano ? x.tipoDano : '');
+  return {
+    nome: x.nome || 'Técnica da Forja',
+    tipo: x.tipo === 'combate' ? 'Combate' : 'Auxiliar',
+    grau: x.tipo === 'combate' ? num(x.grau) || 1 : '',
+    pp: r.pp ?? '',
+    acao: r.requisito || '',
+    alcance: r.alcance || '',
+    duracao: r.duracao || x.duracao || '',
+    dano,
+    salva: r.salva ?? (!ataque && x.alvo !== 'sem-dano' ? x.salvAtr || '' : ''),
+    desc: [tipoDano ? `Dano ${tipoDano}.` : '', x.tipo === 'mp' ? 'Manifestação de Poder.' : '', x.desc || ''].filter(Boolean).join(' '),
+    ataque,
+    forjaId: x.id,
+  };
+}
+
+let destinoForja = 'tecnicas';
+async function abrirForja(destino) {
+  destinoForja = destino;
+  $('#forjaLista').innerHTML = '<p class="hint">Carregando suas técnicas…</p>';
+  $('#dlgForja').showModal();
+  const lista = await lerDeOutraPagina(CHAVE_FORJA, 'tecnicas');
+  $('#forjaLista')._lista = lista;
+  const jaTem = new Set(getPath(S, destino).map(t => t.forjaId).filter(Boolean));
+  const rotulo = x => x.tipo === 'mp' ? 'MP' : x.tipo === 'combate' ? (x.grau || 1) + 'º' : 'Aux';
+  const detalhe = x => (x.resumo ? x.resumo.pp + ' PP' + (x.resumo.dano ? ' · ' + x.resumo.dano : '') : 'custo não salvo; salve de novo na Forja')
+    + (jaTem.has(x.id) ? ' · já está na ficha' : '');
+  const semConta = Conta && !Conta.estado().logado ? ' neste navegador. Entre com o Discord para ver as da sua conta' : '';
+  $('#forjaLista').innerHTML = lista.length ? lista.map(x => `
+    <label class="pick">
+      <input type="checkbox" class="chk" value="${esc(x.id)}" ${jaTem.has(x.id) ? 'disabled' : ''}>
+      <i>${rotulo(x)}</i>
+      <span class="grow"><b>${esc(x.nome || 'Sem nome')}</b><span>${esc(detalhe(x))}</span></span>
+    </label>`).join('')
+    : `<p class="hint">Nenhuma técnica salva na Forja${semConta}. <a href="forja.html">Abrir a Forja →</a></p>`;
+}
+
+function importarDaForja() {
+  const lista = $('#forjaLista')._lista || [];
+  const ids = $$('#forjaLista input:checked').map(i => i.value);
+  if (!ids.length) return toast('Marque pelo menos uma técnica.', 'bad');
+  const destino = getPath(S, destinoForja);
+  ids.forEach(id => { const x = lista.find(t => t.id === id); if (x) destino.push(deForja(x)); });
+  $('#dlgForja').close();
+  renderTecnicas('tecnicas', 'tecnicas');
+  renderTecnicas('akuma.tecnicas', 'akumaTecnicas');
+  fillBindings();
+  commit();
+  toast(`${ids.length} ${ids.length > 1 ? 'técnicas importadas' : 'técnica importada'} da Forja.`, 'heal');
+}
+
+// ---------- conta ----------
+function pintarConta(e) {
+  const wrap = $('#conta-wrap');
+  if (!wrap) return;
+  wrap.hidden = !e.ligado;
+  if (!e.ligado) return;
+  $('#conta-fora').hidden = e.logado;
+  $('#conta-dentro').hidden = !e.logado;
+  const av = $('#conta-avatar'), rot = $('#conta-rotulo');
+  if (!e.logado) { av.hidden = true; rot.textContent = 'Entrar'; return; }
+  rot.textContent = String(e.usuario.nome).split(/\s+/)[0] || 'Conta';
+  if (e.usuario.avatar) { av.src = e.usuario.avatar; av.hidden = false; } else av.hidden = true;
+  $('#conta-nome').textContent = e.usuario.nome;
+  const st = $('#conta-status');
+  st.textContent = e.sincronizando ? 'sincronizando…' : 'fichas salvas na sua conta';
+  st.className = e.sincronizando ? '' : 'ok';
+}
+
+// Ficha recém-criada e nunca editada: não vale a pena mandar para a conta.
+const intocada = p => !p.atualizadoEm && !p.nome;
+
+function iniciarConta() {
+  if (!Conta || !$('#conta-wrap')) return;
+  Conta.iniciar({
+    tabela: 'fichas',
+    filtrar: q => q.eq('dados->>formato', 'ficha'),
+    colunas: f => ({
+      nome: String(f.nome || ''), especie: String(f.especie || ''), estilo: String(f.estilo || ''),
+      nivel: Number.isFinite(Number(f.nivel)) ? Number(f.nivel) : null, dados: f,
+    }),
+    lerLocal: () => Object.values(db.chars).filter(p => !intocada(p)),
+    escreverLocal: lista => {
+      const novos = {};
+      lista.forEach(p => { novos[p.id] = deepMerge(novoPersonagem(), p); });
+      // a ficha em branco aberta só fica se a conta não trouxe nenhuma
+      if (!lista.length && intocada(S)) novos[S.id] = S;
+      if (!Object.keys(novos).length) { const p = novoPersonagem(); novos[p.id] = p; }
+      db.chars = novos;
+      if (!db.chars[db.atual]) db.atual = Object.keys(db.chars)[0];
+      S = db.chars[db.atual];
+      persistir();
+    },
+    aoMudar: () => renderAll(),
+    aoErro: err => {
+      const st = $('#conta-status');
+      if (st) { st.textContent = 'nuvem fora do ar — salvo aqui'; st.className = 'bad'; }
+      toast(`A conta recusou a gravação (${esc((err && err.message) || 'erro')}). A ficha continua salva neste navegador.`, 'bad');
+    },
+    aoMudarEstado: pintarConta,
+  });
+  const pop = $('#pop-conta'), btn = $('#btn-conta');
+  const fechar = () => { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', ev => { ev.stopPropagation(); pop.hidden = !pop.hidden; btn.setAttribute('aria-expanded', String(!pop.hidden)); });
+  document.addEventListener('click', ev => { if (!pop.hidden && !ev.target.closest('#conta-wrap')) fechar(); });
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !pop.hidden) fechar(); });
+  $('#btn-entrar').addEventListener('click', function () {
+    this.disabled = true; this.textContent = 'Abrindo o Discord…';
+    enviarNuvem();
+    Conta.entrar().then(ok => { if (!ok) { this.disabled = false; this.textContent = 'Entrar com Discord'; } });
+  });
+  $('#btn-sincronizar').addEventListener('click', function () {
+    this.disabled = true;
+    enviarNuvem();
+    Conta.sincronizar().then(r => {
+      this.disabled = false;
+      if (r) toast(`Sincronizado: ${r.total} ${r.total === 1 ? 'ficha' : 'fichas'} na conta.`, 'heal');
+    });
+  });
+  $('#btn-sair').addEventListener('click', () => {
+    enviarNuvem();
+    Conta.sair().then(() => { fechar(); toast('Você saiu. As fichas continuam neste navegador.'); });
+  });
+  window.addEventListener('pagehide', enviarNuvem);
+}
+
+// ---------- eventos ----------
+function bindEvents() {
+  document.addEventListener('input', onBindInput);
+  document.addEventListener('change', onBindInput);
+
+  document.addEventListener('click', e => {
+    const t = e.target;
+    const roll = t.closest('[data-roll]');
+    if (roll) return doRoll(roll.dataset.roll);
+    const add = t.closest('[data-add]');
+    if (add) return adicionar(add.dataset.add);
+    const del = t.closest('[data-del]');
+    if (del) return remover(del.dataset.del, Number(del.dataset.i));
+    const use = t.closest('[data-use]');
+    if (use) return usarTecnica(use.dataset.use, Number(use.dataset.i));
+    const atk = t.closest('[data-atk]');
+    if (atk) { const w = S.equipamentos[atk.dataset.atk]; return rollD20(`${w.nome || 'Ataque'} — ataque`, num(w.bonus)); }
+    const dmg = t.closest('[data-dmg]');
+    if (dmg) {
+      const w = S.equipamentos[dmg.dataset.dmg];
+      const r = rollExpr(w.dano);
+      return r ? pushLog({ label: `${w.nome || 'Ataque'} — dano${w.tipo ? ' ' + w.tipo.toLowerCase() : ''}`, total: r.total, det: r.detalhe, tipo: 'dmg' })
+        : toast('Preencha o dano (ex.: 1d8+3).', 'bad');
+    }
+    const step = t.closest('[data-step]');
+    if (step) { setPath(S, step.dataset.step, Math.max(0, num(getPath(S, step.dataset.step)) + Number(step.dataset.d))); return commit(); }
+    const pip = t.closest('[data-ex]');
+    if (pip) { const n = Number(pip.dataset.ex); S.exaustao = num(S.exaustao) === n ? n - 1 : n; renderPips(); return commit(); }
+    const die = t.closest('[data-expr]');
+    if (die) { const r = rollExpr(die.dataset.expr); return pushLog({ label: die.dataset.expr, total: r.total, det: r.detalhe, tipo: die.dataset.expr === '1d20' ? (r.total === 20 ? 'crit' : r.total === 1 ? 'fail' : '') : '' }); }
+    const tab = t.closest('[data-tab]');
+    if (tab) return abrirAba(tab.dataset.tab);
+    const modo = t.closest('[data-modo]');
+    if (modo) { modoRolagem = modo.dataset.modo; $$('#segModo button').forEach(b => b.classList.toggle('on', b === modo)); return; }
+    const open = t.closest('[data-open]');
+    if (open) return $('#' + open.dataset.open).showModal();
+  });
+
+  $('#btnDano').onclick = () => { const v = num($('#inpDano').value); if (v > 0) { aplicarDano(v); $('#inpDano').value = ''; commit(); } };
+  $('#btnCura').onclick = () => { const v = num($('#inpDano').value); if (v > 0) { aplicarCura(v); $('#inpDano').value = ''; commit(); } };
+  $('#inpDano').onkeydown = e => { if (e.key === 'Enter') $('#btnDano').click(); };
+  $('#btnGastarPP').onclick = () => { const v = num($('#inpPP').value); if (v > 0) { gastarPP(v); $('#inpPP').value = ''; commit(); } };
+  $('#btnRecPP').onclick = () => { const v = num($('#inpPP').value); if (v > 0) { S.pp.gasto = Math.max(0, num(S.pp.gasto) - v); $('#inpPP').value = ''; commit(); } };
+  $('#inpPP').onkeydown = e => { if (e.key === 'Enter') $('#btnGastarPP').click(); };
+  $('#btnDescCurto').onclick = descansoCurto;
+  $('#btnDescLongo').onclick = descansoLongo;
+
+  $('#btnExpr').onclick = () => {
+    const r = rollExpr($('#inpExpr').value);
+    r ? pushLog({ label: $('#inpExpr').value.trim(), total: r.total, det: r.detalhe }) : toast('Expressão inválida. Ex.: 2d6+3', 'bad');
+  };
+  $('#inpExpr').onkeydown = e => { if (e.key === 'Enter') $('#btnExpr').click(); };
+
+  $('#inpRetrato').onchange = e => { const f = e.target.files[0]; if (f) retratoDeArquivo(f); e.target.value = ''; };
+  $('#charSelect').onchange = e => trocarPersonagem(e.target.value);
+  $('#btnNovo').onclick = () => { const p = novoPersonagem(); db.chars[p.id] = p; trocarPersonagem(p.id); toast('Novo personagem criado.'); $('.wanted-name').focus(); };
+  $('#btnDuplicar').onclick = () => { const p = structuredClone(S); p.id = uid(); p.nome = (p.nome || 'Sem nome') + ' (cópia)'; db.chars[p.id] = p; marcar(p); trocarPersonagem(p.id); };
+  $('#btnExcluir').onclick = async () => {
+    if (!await perguntar({ titulo: 'Excluir personagem', texto: `Excluir “${S.nome || 'Sem nome'}”? Isso não pode ser desfeito. Exporte antes se quiser guardar.`, ok: 'Excluir', perigo: true })) return;
+    if (Conta && S.atualizadoEm) Conta.apagar(S.id);
+    pendentesNuvem.delete(S.id);
+    delete db.chars[S.id];
+    if (!Object.keys(db.chars).length) { const p = novoPersonagem(); db.chars[p.id] = p; }
+    trocarPersonagem(Object.keys(db.chars)[0]);
+  };
+  $('#btnExportar').onclick = () => abrirTransfer('exportar');
+  $$('[data-forja]').forEach(b => { b.onclick = () => abrirForja(b.dataset.forja); });
+  $('#forjaImportar').onclick = importarDaForja;
+  $('#guiaLista').addEventListener('click', e => { const b = e.target.closest('[data-guia]'); if (b) importarDoGuia(b.dataset.guia); });
+  $('#btnImportar').onclick = () => abrirTransfer('importar');
+  $('#transferAcao').onclick = acaoTransfer;
+  $('#transferBaixar').onclick = baixarArquivo;
+  $('#inpImportar').onchange = e => { const f = e.target.files[0]; if (f) importar(f); e.target.value = ''; };
+  $('#btnLog').onclick = () => $('#log').classList.toggle('open');
+  $('#btnFecharLog').onclick = () => $('#log').classList.remove('open');
+  $('#btnLimparLog').onclick = () => { rollLog = []; saveLog(); renderLog(); };
+  $('#dlgVida').addEventListener('click', e => { if (e.target.id === 'dlgVida') e.target.close(); });
+  window.addEventListener('storage', e => { if (e.key === STORE_KEY) { db = loadDb(); S = db.chars[db.atual]; renderAll(); } });
+}
+
+function abrirAba(nome) {
+  $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === nome));
+  $$('.tab').forEach(s => s.classList.toggle('on', s.id === 'tab-' + nome));
+  try { localStorage.setItem(TAB_KEY, nome); } catch {}
+}
+
+// ---------- início ----------
+renderStatic();
+renderAttrs();
+renderSkills();
+bindEvents();
+renderAll();
+renderLog();
+iniciarConta();
+if (location.hash === '#guia') abrirTransfer('importar');
+try { const aba = localStorage.getItem(TAB_KEY); if (aba && $('#tab-' + aba)) abrirAba(aba); } catch {}
+})();
+
+</script>
