@@ -271,6 +271,44 @@ table{width:100%; border-collapse:collapse}
 .tech .field{margin-bottom:0}
 .tech input,.tech select,.tech textarea,.item-card input{background:var(--surf)}
 .tech-foot{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap}
+/* texto formatado: toda caixa de texto grande vira um editor com barra própria */
+.rt{width:100%; min-width:0; font-family:var(--font-body); font-size:calc(15px * var(--fs-scale)); color:var(--ink); line-height:1.5;
+  background:var(--surf2); border:1px solid var(--line); border-radius:var(--radius); padding:6px 9px; outline:none;
+  overflow:auto; resize:vertical; white-space:pre-wrap; overflow-wrap:anywhere; cursor:text}
+.rt:focus{border-color:var(--red)}
+.rt:empty::before{content:attr(data-placeholder); color:var(--ink3); pointer-events:none}
+.rt.sub{font-size:calc(13px * var(--fs-scale))}
+.rt.notes{font-size:calc(16px * var(--fs-scale)); line-height:1.6}
+.tech .rt,.caract .rt,.treino .rt{background:var(--surf)}
+.rt-bar{position:fixed; z-index:88; display:flex; flex-wrap:wrap; gap:3px; align-items:center; max-width:min(560px, calc(100vw - 16px));
+  background:var(--surf); border:1px solid var(--line2); box-shadow:0 10px 30px -12px rgba(0,0,0,.5); padding:4px; border-radius:var(--radius)}
+.rt-bar button,.rt-bar select{font-family:var(--font-body); font-size:13px; height:28px; min-width:28px; padding:0 6px; cursor:pointer;
+  background:var(--surf2); color:var(--ink); border:1px solid var(--line); border-radius:var(--radius); width:auto}
+.rt-bar button:hover{border-color:var(--red); color:var(--red)}
+.rt-bar select{max-width:118px}
+.rt-bar .sep{width:1px; height:20px; background:var(--line); margin:0 2px}
+.rt-bar .cor{min-width:20px; width:20px; height:20px; padding:0; border-radius:50%}
+.rt-bar label.cor{display:inline-grid; place-content:center; height:20px; border:1px dashed var(--line2); cursor:pointer; font-size:11px; color:var(--ink3); overflow:hidden; position:relative}
+.rt-bar label.cor input{position:absolute; inset:0; opacity:0; cursor:pointer}
+.fx-wobble{display:inline-block; animation:rt-wobble 1.6s ease-in-out infinite; transform-origin:50% 60%}
+.fx-pulse{display:inline-block; animation:rt-pulse 1.3s ease-in-out infinite}
+.fx-shake{display:inline-block; animation:rt-shake .35s linear infinite}
+.fx-glow{text-shadow:0 0 4px var(--glow, currentColor), 0 0 10px var(--glow, currentColor); animation:rt-glow 2s ease-in-out infinite}
+@keyframes rt-wobble{0%,100%{transform:rotate(-3deg) translateY(0)} 50%{transform:rotate(3deg) translateY(-2px)}}
+@keyframes rt-pulse{0%,100%{transform:scale(1)} 50%{transform:scale(1.12)}}
+@keyframes rt-shake{0%{transform:translate(0,0)} 25%{transform:translate(1px,-1px)} 50%{transform:translate(-1px,1px)} 75%{transform:translate(1px,1px)} 100%{transform:translate(0,0)}}
+@keyframes rt-glow{0%,100%{text-shadow:0 0 3px var(--glow, currentColor), 0 0 7px var(--glow, currentColor)} 50%{text-shadow:0 0 7px var(--glow, currentColor), 0 0 16px var(--glow, currentColor)}}
+.caract{display:flex; flex-direction:column; gap:5px; padding:8px; border:1px solid var(--line); border-left:3px solid var(--line2); background:var(--surf2)}
+.caract.auto{border-left-color:var(--red)}
+.caract input,.caract textarea{background:var(--surf)}
+.conhec{border:1px solid var(--line); background:var(--surf2); padding:4px 10px 6px; margin-bottom:8px}
+.conhec h4{margin:6px 0 4px}
+.conhec details{border-top:1px solid var(--line); padding:5px 0}
+.conhec details:first-of-type{border-top:0}
+.conhec summary{cursor:pointer; font-family:var(--font-display); font-weight:500; font-size:calc(14.5px * var(--fs-scale)); color:var(--ink)}
+.conhec summary:hover{color:var(--red)}
+.conhec p{margin:5px 0 2px; font-size:calc(13.5px * var(--fs-scale)); color:var(--ink2); line-height:1.5}
+.tech-forma{border:1px dashed var(--gold); background:var(--goldsoft); padding:9px; display:flex; flex-direction:column; gap:7px}
 .item-card{background:var(--surf2); border:1px solid var(--line); padding:10px; display:flex; flex-direction:column; gap:8px}
 .sub{font-size:calc(13px * var(--fs-scale)); margin-top:-3px}
 .carga{display:flex; align-items:center; gap:10px; margin-bottom:12px; font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); color:var(--ink3)}
@@ -287,6 +325,23 @@ table{width:100%; border-collapse:collapse}
 .haki-table td small{display:block; color:var(--ink3); font-size:calc(12px * var(--fs-scale))}
 .haki-table tr.locked td:first-child{opacity:.45}
 .haki-table tr.owned td:first-child b{color:var(--red)}
+.haki-table td.hnome{cursor:help}
+.haki-table tr:hover td{background:var(--surf2)}
+.haki-table tr.pinned td{background:var(--goldsoft)}
+.haki-tip{position:fixed; z-index:85; width:min(360px, calc(100vw - 24px)); background:var(--surf); color:var(--ink);
+  border:1px solid var(--line2); border-left:3px solid var(--red); box-shadow:0 14px 40px -16px rgba(0,0,0,.55);
+  padding:11px 13px; font-size:calc(14px * var(--fs-scale)); line-height:1.45; pointer-events:none}
+.haki-tip.pinned{pointer-events:auto; user-select:text; border-left-color:var(--gold)}
+.haki-tip h5{font-family:var(--font-display); font-size:calc(16px * var(--fs-scale)); font-weight:600; margin:0 18px 2px 0}
+.haki-tip .meta{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); color:var(--ink3); letter-spacing:.04em; margin-bottom:7px}
+.haki-tip p{margin:0 0 6px}
+.haki-tip p:last-child{margin-bottom:0}
+.haki-tip .forma b{font-family:var(--font-mono); font-size:calc(10.5px * var(--fs-scale)); text-transform:uppercase; letter-spacing:.08em; color:var(--gold)}
+.haki-tip .forma.foco{background:var(--goldsoft); outline:4px solid var(--goldsoft)}
+.haki-tip .fechar{position:absolute; top:6px; right:8px; background:none; border:0; color:var(--ink3); cursor:pointer; font-size:14px; display:none}
+.haki-tip.pinned .fechar{display:block}
+.haki-tip .dica{font-family:var(--font-mono); font-size:calc(10px * var(--fs-scale)); color:var(--ink3); margin-top:8px}
+.haki-tip.pinned .dica{display:none}
 
 /* diálogos */
 dialog{background:var(--surf); color:var(--ink); border:1px solid var(--line2); padding:0;
@@ -312,6 +367,21 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
 .pick span span{display:block; font-size:calc(13px * var(--fs-scale)); color:var(--ink3)}
 .pick i{font-style:normal; font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); color:var(--gold); min-width:30px}
 .guia-bloco{border:1px solid var(--line); background:var(--goldsoft); padding:10px 12px}
+.item-det{display:grid; grid-template-columns:200px minmax(0,1fr); gap:14px; align-items:start}
+.item-img{display:block; position:relative; aspect-ratio:1; border:1px dashed var(--line2); background:var(--surf2); cursor:pointer; overflow:hidden}
+.item-img img{width:100%; height:100%; object-fit:contain; display:none}
+.item-img.has img{display:block}
+.item-img.has{border-style:solid}
+.item-img-hint{position:absolute; inset:0; display:grid; place-content:center; text-align:center; font-size:calc(12px * var(--fs-scale)); color:var(--ink3)}
+.item-img.has .item-img-hint{display:none}
+.item-thumb{width:34px; height:34px; flex:none; border:1px solid var(--line); background:var(--surf2); cursor:pointer; padding:0;
+  display:grid; place-content:center; color:var(--ink3); font-size:15px; overflow:hidden}
+.item-thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.item-thumb:hover{border-color:var(--red); color:var(--red)}
+.item-desc{font-size:calc(12.5px * var(--fs-scale)); color:var(--ink3); margin:-3px 0 2px 40px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.treino{display:flex; flex-direction:column; gap:5px; padding-bottom:8px; border-bottom:1px dashed var(--line)}
+.treino:last-child{border-bottom:0}
+@media (max-width:560px){ .item-det{grid-template-columns:1fr} .item-img{max-width:220px} }
 .guia-bloco h4{margin-top:0}
 
 /* histórico de rolagens e avisos */
@@ -645,6 +715,12 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
           </div>
         </div>
         <div class="card">
+          <div class="card-head"><h3>Características do Estilo</h3>
+            <div class="row"><button class="btn small" id="btnPreencherCaract" title="Traz as características do seu estilo até o nível atual">⟳ Do estilo</button><button class="btn small" data-add="caracteristicas">＋ Própria</button></div></div>
+          <p class="hint" style="margin:0 0 10px" data-calc="caractInfo"></p>
+          <div id="caracteristicas" class="stack"></div>
+        </div>
+        <div class="card">
           <div class="card-head"><h3>Habilidades Básicas</h3><span class="muted small">1 inata + 1 no 1º, 2º e 3º nível</span></div>
           <div id="habilidades" class="stack"></div>
           <button class="btn small" data-add="habilidades">＋ Habilidade</button>
@@ -686,6 +762,7 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
           <label class="field"><span>Tipo de Usuário</span><input data-bind="akuma.tipoUsuario"></label>
           <label class="field"><span>Tipo de Despertar</span><input data-bind="akuma.tipoDespertar"></label>
         </div>
+        <label class="field"><span>Propriedades da Fruta</span><textarea data-bind="akuma.propriedades" rows="5" placeholder="O que o fruto faz, do que o corpo passa a ser feito, fraquezas…"></textarea></label>
         <label class="field"><span>Estágio Desperto</span><textarea data-bind="akuma.desperto" rows="3"></textarea></label>
       </div>
       <div class="card">
@@ -710,9 +787,11 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
         <div class="field"><span>PA ociosos</span><output class="big" data-calc="paOciosos"></output></div>
         <div class="field"><span>Estágio · CD</span><output class="big" data-calc="hakiEstagio"></output></div>
       </div>
-      <p class="hint">Estágio: 1–20 PA Inexperiente · 21–70 Treinado · 71+ Perito. CD de Haki = 8 + Proficiência + Vontade. Cada forma (Possui / Dominado / Aprimorado) custa o valor do talento.</p>
+      <p class="hint">Estágio: 1–20 PA Inexperiente · 21–70 Treinado · 71+ Perito. CD de Haki = 8 + Proficiência + Vontade. Cada caixa (Possui / Forma Dominada / Forma Avançada) custa o valor do talento.</p>
+      <p class="hint">Passe o mouse num talento para ler o que ele faz, ou numa caixa para ver o que aquela forma muda. Clique no nome (ou Shift+clique) para fixar a descrição e poder selecionar e copiar o texto.</p>
     </div>
     <div class="haki-cols" id="haki"></div>
+    <div class="haki-tip" id="hakiTip" hidden role="tooltip"></div>
   </section>
 
   <!-- PERSONAGEM -->
@@ -751,12 +830,13 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
       </div>
       <div class="col">
         <div class="card">
-          <div class="card-head"><h3>Individualidades</h3><span class="small" data-calc="indivInfo"></span></div>
-          <p class="hint">5 espaços: Suave = 1, Média = 3, Forte = 4. Cada Singularidade exige um Defeito do mesmo nível.</p>
-          <h4>Singularidades</h4>
+          <div class="card-head"><h3>Singularidades</h3><span class="small" data-calc="indivInfo"></span></div>
+          <p class="hint" style="margin:0 0 10px">5 espaços: Suave = 1, Média = 3, Forte = 4. Cada Singularidade exige um Defeito do mesmo nível.</p>
           <div id="singularidades" class="stack"></div>
           <button class="btn small" data-add="pers.singularidades">＋ Singularidade</button>
-          <h4>Defeitos</h4>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Defeitos</h3><span class="small muted" data-calc="defInfo"></span></div>
           <div id="defeitos" class="stack"></div>
           <button class="btn small" data-add="pers.defeitos">＋ Defeito</button>
         </div>
@@ -789,14 +869,21 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
           <label class="field"><span>Bellys (฿)</span><input data-bind="dinheiro" type="number"></label>
         </div>
         <div class="card">
-          <div class="card-head"><h3>Treinamentos</h3><button class="btn small" data-add="treinamentos">＋</button></div>
+          <h3>Pontos de Treinamento</h3>
           <div class="grid g3">
-            <div class="field"><span>Pontos de Treinamento</span><output class="big" data-calc="ptTotal"></output></div>
+            <div class="field"><span>Total</span><output class="big" data-calc="ptTotal"></output></div>
             <div class="field"><span>Gastos</span><output class="big" data-calc="ptGasto"></output></div>
             <label class="field"><span>Extra</span><input data-bind="ptExtra" type="number"></label>
           </div>
-          <div id="treinamentos" class="stack"></div>
           <p class="hint">TT = tempo de treino · PT = pontos de treinamento. "Guerreiro Treinado" e "Resistência dos Gigantes / Corpo do Ogro" afetam a vida automaticamente.</p>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Treinamentos concluídos</h3><button class="btn small" data-add="treinamentos" data-status="treinado">＋ Treinado</button></div>
+          <div id="treinados" class="stack"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Em treinamento</h3><button class="btn small" data-add="treinamentos" data-status="treinando">＋ Em treino</button></div>
+          <div id="treinando" class="stack"></div>
         </div>
       </div>
     </div>
@@ -896,12 +983,66 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
   </form>
 </dialog>
 
+<!-- ======= DIÁLOGO: DETALHES DO ITEM ======= -->
+<dialog id="dlgItem">
+  <form method="dialog" class="dlg" id="itemForm">
+    <div class="card-head"><h3>Item do inventário</h3><button class="link" value="close">✕</button></div>
+    <div class="item-det">
+      <label class="item-img" title="Clique para escolher uma imagem">
+        <img id="itemImg" alt="">
+        <span class="item-img-hint">Clique para<br>adicionar imagem</span>
+        <input type="file" id="inpItemImg" accept="image/*" hidden>
+      </label>
+      <div class="item-campos" id="itemCampos"></div>
+    </div>
+    <div class="dlg-actions">
+      <button type="button" class="btn small" id="itemTirarImg">Tirar imagem</button>
+      <button class="btn accent" value="close">Pronto</button>
+    </div>
+  </form>
+</dialog>
+
 <!-- ======= HISTÓRICO DE ROLAGENS ======= -->
 <aside class="log" id="log">
   <div class="log-head"><h3>Rolagens</h3><div><button class="link" id="btnLimparLog">limpar</button> <button class="link" id="btnFecharLog">✕</button></div></div>
   <ol id="logList"></ol>
 </aside>
 <div class="toasts" id="toasts"></div>
+
+<!-- ======= BARRA DE FORMATAÇÃO (aparece sobre a caixa de texto em uso) ======= -->
+<div class="rt-bar" id="rtBar" hidden role="toolbar" aria-label="Formatação do texto">
+  <button type="button" data-rtc="bold" title="Negrito (Ctrl+B)"><b>N</b></button>
+  <button type="button" data-rtc="italic" title="Itálico (Ctrl+I)"><i>I</i></button>
+  <button type="button" data-rtc="underline" title="Sublinhado (Ctrl+U)"><u>S</u></button>
+  <span class="sep"></span>
+  <button type="button" data-rtc="menor" title="Diminuir a letra — do trecho selecionado, ou da caixa toda">A−</button>
+  <button type="button" data-rtc="maior" title="Aumentar a letra — do trecho selecionado, ou da caixa toda">A+</button>
+  <select data-rtfonte title="Fonte">
+    <option value="">Fonte…</option>
+    <option value="Spectral, Georgia, serif">Spectral</option>
+    <option value="Oswald, 'Arial Narrow', sans-serif">Oswald</option>
+    <option value="'IBM Plex Mono', monospace">Máquina</option>
+    <option value="Rye, Georgia, serif">Cartaz</option>
+    <option value="Georgia, serif">Georgia</option>
+    <option value="Arial, sans-serif">Arial</option>
+    <option value="'Comic Sans MS', 'Comic Neue', cursive">Comic</option>
+  </select>
+  <span class="sep"></span>
+  <button type="button" class="cor" data-rtcor="#C0392B" style="background:#C0392B" title="Vermelho"></button>
+  <button type="button" class="cor" data-rtcor="#E67E22" style="background:#E67E22" title="Laranja"></button>
+  <button type="button" class="cor" data-rtcor="#D4A017" style="background:#D4A017" title="Dourado"></button>
+  <button type="button" class="cor" data-rtcor="#27AE60" style="background:#27AE60" title="Verde"></button>
+  <button type="button" class="cor" data-rtcor="#2E86C1" style="background:#2E86C1" title="Azul"></button>
+  <button type="button" class="cor" data-rtcor="#8E44AD" style="background:#8E44AD" title="Roxo"></button>
+  <label class="cor" title="Outra cor">＋<input type="color" data-rtcorlivre value="#e05a4f"></label>
+  <span class="sep"></span>
+  <button type="button" data-rtfx="fx-glow" title="Brilho na cor escolhida">✦ Brilho</button>
+  <button type="button" data-rtfx="fx-wobble" title="Balanço">〰 Balanço</button>
+  <button type="button" data-rtfx="fx-pulse" title="Pulso">◉ Pulso</button>
+  <button type="button" data-rtfx="fx-shake" title="Tremor">≋ Tremor</button>
+  <span class="sep"></span>
+  <button type="button" data-rtc="limpar" title="Tirar toda a formatação do trecho (ou da caixa)">⌫</button>
+</div>
 
 <datalist id="dlEstilos"></datalist>
 <datalist id="dlProfissoes"></datalist>
@@ -911,6 +1052,8 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
 <datalist id="dlCaminhos"></datalist>
 <datalist id="dlVariacoes"></datalist>
 <datalist id="dlAkuma"></datalist>
+<datalist id="dlCaract"></datalist>
+<datalist id="dlTamanhoItem"><option value="Miúdo"><option value="Pequeno"><option value="Médio"><option value="Grande"><option value="Enorme"><option value="Imenso"></datalist>
 
 <script>
 // Dados de regras do OP RPG 2.1 (Livro do Jogador) + homebrews presentes na ficha do Lucco.
@@ -979,9 +1122,373 @@ const ESTILOS = {
   'Herói':                       { dado: 8,  prim: ['FOR', 'VON'], saves: ['CON', 'VON'], pericias: [2, ['Atletismo', 'Acrobacia', 'Haki', 'Sorte', 'Persuasão']], homebrew: true, armas: 'Corporal' },
 };
 
+// Características de cada Estilo de Combate (Livro do Jogador 2.1, cap. 3, e suplemento
+// dos Estilos Exclusivos 2.1), resumidas: [nível, nome, o que faz]. Técnicas e Aumento no
+// Valor de Atributo (4º, 8º, 12º, 16º e 20º) são comuns a todos e entram à parte.
+const ESTILO_CARACT = {
+  'Atirador': [
+    [1, 'Caminho do Atirador', 'Escolha definitiva. Duelista (duas pistolas): Gun-Fu ("Defesa Aprimorada" do Corpo de Guerreiro com a arma favorita), Corpo Treinado (+1 PV por nível de Atirador) e Pistoleiro (sem desvantagem à distância a 1,5 m). Sniper (mosquete): Visão do Caçador ("Perito em Técnicas" com a arma favorita), Visão Além do Alcance (enxerga 5 km, Percepção dobrada e sem desvantagem por longa distância) e Corrida Contínua (1 hora de disparada sem Exaustão, deslocamento 15 m sem terreno difícil).'],
+    [2, 'Guarda Astuta', 'Rompante Defensivo: a primeira vez por rodada que um inimigo visível te acerta com ataque comum, o dano cai pela metade. 4º: Queda Suave (reduz dano de queda em 5× o nível). 6º: Sentido de Perigo (vantagem em Salvaguardas de Destreza contra Técnicas e armadilhas). 8º: Esquiva Fugaz (Destreza para meio dano: nada no sucesso, metade na falha). 10º: Elusivo (nenhum ataque comum tem vantagem contra você).'],
+    [3, 'Atirador de Elite', 'Técnicas de ataque à distância com alcance dobrado, ignora meia e três quartos de cobertura, dobra a proficiência no ataque comum à distância e pode trocar −5 no acerto por +10 no dano. Duelista de Elite: Rápido no Gatilho (ação bônus para mais um tiro, 1×/turno) e Tiro de Oportunidade (reação quando alguém entra ou sai de 1,5 m). Sniper de Elite: Alvo na Mira (ação bônus dobra o alcance no turno) e Posicionamento Perfeito (9 m de escalada).'],
+    [5, 'Franco Atirador', 'Carga de Adrenalina (ação bônus: +3 de CR por 1 minuto, 3 usos, recupera 1 por descanso longo), Alvo Travado (ação bônus: por 1 minuto, até 10 tiros extras com vantagem contra um alvo, no máx. 2 por rodada; 1×/descanso longo), Talento Confiável (d20 de 9 ou menos em teste proficiente vira 10) e Melhorar Munição (1 hora: 50 munições com 1d10, ignorando resistência, dano mínimo 5).'],
+    [6, 'Emissário da Morte', 'Uma vez por encontro, ao acertar quem não sabe que você está ali ou está Surpreso, os PV dele caem para metade do máximo antes do dano. Seu dano contra quem está abaixo da metade dos PV nunca é menor que seu nível de Atirador.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Contagem de Balas', 'Todo dia, 10 disparos de precisão máxima: 1 por rodada junto da ação Atacar, acerto automático e dados de dano da munição dobrados.'],
+    [11, 'Rei Atirador', 'Pistola e mosquete viram armas favoritas e você recebe tudo do caminho que não escolheu. Por ฿ 100.000 e 2 horas, uma arma à distância ganha alcance ilimitado, crítico 18–20, +3 no acerto, dano rolado 2× e o melhor (3×/descanso longo) e 3 dados extras nas Técnicas.'],
+    [14, 'Tempestade de Balas', 'Ao reduzir uma criatura a 0 PV, ganha 2 ataques comuns à distância extras até o fim do turno.'],
+    [15, 'Mira Absoluta', 'Ataques comuns à distância causam dano Verdadeiro e atravessam todo o alcance em linha reta; cada alvo além do primeiro sofre metade.'],
+    [18, 'Mestre Atirador', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Deus Atirador', 'Engatilhado (+2 ataques no Ataque Extra), Next Level (acertar criatura de ND 6 ou menos — ND 9 no crítico — zera os PV dela) e Homem sem Nome (com mais da metade dos PV, não erra ataques comuns à distância).'],
+  ],
+  'Aventureiro': [
+    [1, 'Whip and Gun', 'Chicote: dado 1d10, crítico dá um tiro extra de pistola (1×/turno), ignora resistência a Cortante e causa metade contra invulnerabilidade, e reação para atacar quem entra ou sai do alcance. Pistola: crítico rola o dano 3×, ignora meia e três quartos de cobertura, ação bônus para atirar se já atacou com o chicote, e Fan Firing (ação: 3 tiros com desvantagem a até 6 m, 6 no 6º nível; 1×/descanso longo).'],
+    [2, 'Pronto para a Aventura', 'Pronto para o Perigo: Técnicas sem custo fora de combate se não afetarem ninguém, +4 + proficiência PP máximos, recupera metade dos PP no início de cada encontro (sem Exaustão) e Exaustão extra nos descansos. Pronto para a Exploração: 1 hora de disparada sem Exaustão, deslocamento 15 m, proficiência em montarias e veículos, nado igual ao deslocamento e proficiência (ou dobrada) em Investigação.'],
+    [3, 'Estilo Arriscado', 'Ataque Empolgante (cada crítico natural com chicote amplia a margem em 1 até o fim do encontro, até 15–20), Tiro Sem Paciência (ação poderosa: tiro com 1 dado extra por rodada de combate, até 2× o nível; 1×/descanso longo), Domador da Coragem (reação ao acertar: inimigos a 9 m sofrem −(sua proficiência) nos ataques até seu próximo turno; 5×/descanso curto) e Errar com Vontade (falha crítica com chicote te acerta 2d12 Verdadeiro, mas também amplia a margem).'],
+    [5, 'Caminho da Aventura', 'Dados de Aventura (d8, metade do nível): +3 m de deslocamento, +1 de CR, curar, espalhar meio dano de Técnica a outro alvo, refazer teste com +nível (2 dados) ou somar ao dano de Técnicas. Recupera 1 quando erra ou é errado (1×/turno) e todos no descanso curto. No 10º: d12, quantidade igual ao nível, 6 dados para voltar de 0 PV com metade da vida e recarga no início de cada encontro.'],
+    [6, 'Companheiro Inseparável', 'Reação Agressiva (toda reação vem com um golpe de chicote de 3d6), Mobilidade Aprimorada (escalada dobrada e saltos sem Salvaguarda) e Wha-Pah (ao acertar com o chicote, ação bônus + 2 PP para Desarmar, Restringir ou forçar um crítico).'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Reação Imediata', 'Ao ser alvo de ataque, Salvaguarda ou perigo, interrompe tudo para um turno especial sem causar dano. 3×/descanso longo, 1 por encontro.'],
+    [11, 'Controle do Ambiente', 'Não sofre dano de Salvaguardas de Força ou Destreza, passando ou não; contra armadilhas e desastres, quem está a até 3 m também é protegido.'],
+    [14, 'Domador', 'Errou uma Técnica ou ela não afetou ninguém? Não gasta PP; se for de Combate instantânea, os alvos fazem Salvaguarda de Sabedoria ou sofrem metade do dano como Psíquico.'],
+    [15, 'Aventura Frenética', 'Gaste Dados de Aventura para ataques extras de chicote ou pistola, 1 por dado, até 2 por rodada.'],
+    [18, 'Mestre Aventureiro', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Explorador Destemido', 'Interrupção Relâmpago (6 dados anulam uma Técnica a até 9 m ao ser ativada), Domínio Fatal (Técnicas instantâneas com chicote ou pistola sempre no dano máximo) e Arsenal do Desbravador (chicote causa 4d8 e um ataque extra de pistola no Ataque Extra).'],
+  ],
+  'Brutamontes (Guerreiro-Oni)': [
+    [1, 'Demônio Incarnado', 'Ataques comuns com a arma favorita causam +1 de dano por inimigo que você feriu e caiu a 0 PV no encontro (máx. metade do nível). Contra um único inimigo, 2 PP dão de uma vez metade desse bônus máximo.'],
+    [2, 'Sede de Sangue', 'Recupera 1d12 PV ao derrubar um inimigo, e 1d6 quando um aliado derruba alguém que você feriu (máx. 5× o nível por descanso longo). Contra um único inimigo, 1 PP por ataque com a arma favorita cura 1d12 ao acertar.'],
+    [3, '8 Trigramas', 'Ação bônus: por 1 minuto, role 1d8 no início de cada turno — Sedutor (cura 1d10 ao sofrer dano), Chorão (15 m de deslocamento sem provocar reações), Depressivo (nada), Brigão (+1 ataque com a arma favorita), Sanguinário (crítico 19–20 e +1 dado no crítico), Risonho (vantagem nos ataques corpo a corpo), Ladrão (copia uma Técnica do encontro por metade dos PP) ou Lúcido (escolhe). Usos = proficiência por descanso curto. Tudo melhora no 10º nível.'],
+    [5, 'Guerreiro Bruto', 'Ataque de Oportunidade Brutal (reação quando sai do seu alcance; acertando, empurra 9 m com Salvaguarda de Força e 3d8 se bater), Brutalidade Excessiva (crítico dá desvantagem contra você a quem viu), Arma Brutal (arma favorita causa 2d6) e Balanço Sanguinário (troca um ataque por um giro de 3 m: 3d8 +1d8 por alvo extra, máx. 6d8, Salvaguarda de Destreza).'],
+    [6, 'Corpo de Criatura', '+60 PV máximos permanentes. Reação para reduzir qualquer dano sofrido a 0, 3×/descanso curto.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, '3 Caminhos da Besta', 'Besta Imparável (no início do turno: deslocamento dobrado e 30 PV temporários, ou refaz uma Salvaguarda; usos = proficiência), Rugido Furioso (ação bônus: inimigos a 9 m causam −5 de dano físico por 1 minuto; 3×/descanso longo) e Aspecto Bestial (dano que sobra ao derrubar alguém vira Psíquico nos inimigos a 6 m que falharem em Vontade).'],
+    [11, 'Sede de Sangue Revigorante', 'Recupera 1d6 PP por inimigo derrubado (máx. 50 por descanso longo). Contra um único inimigo, 1 PP por acerto com a arma favorita.'],
+    [14, '6 Caminhos da Destruição', 'Um crítico ativa o 8 Trigramas de graça e você escolhe o modo, que ganha um aprimoramento: Sedutor (curas no máximo), Chorão (crítico Atordoa), Brigão (+1d8), Sanguinário (+nível no crítico), Risonho (+5 no acerto) ou Ladrão (a Técnica copiada vira sua). Também dá para aplicar 3×/descanso curto com o 8 Trigramas já ativo.'],
+    [15, 'Aposta Certa', 'Em duelo (só você e um inimigo na iniciativa), ganha Pontos de Duelo iguais ao nível: Escudo Arrogante (3, metade do dano de Técnica), Inabalável (3, passa numa Salvaguarda), Jogo Sujo (4, um aliado age na hora), Olhar do Terror (2, faz um ataque comum errar) e Peso da Batalha (2, −6 m de deslocamento do inimigo).'],
+    [18, 'Mestre Ogro', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Invencibilidade', 'Arma favorita causa 4d8, +1 ataque no Ataque Extra, resistência a todo dano (até Verdadeiro), imune a condições (menos Enfraquecido e Inconsciente) e a queda; em todo crítico, role 1d12 — com 12, o alvo vai a 0 PV.'],
+  ],
+  'Carateca Homem-Peixe': [
+    [1, 'Seiken', 'Um ataque desarmado em cone de 6 m, sem ter se movido (1d6 + FOR, ignora resistências e invulnerabilidades); 2d6 no 3º, 6d6 no 6º e 9d6 no 9º nível. Usos = proficiência por descanso longo. Alternativa contra um único alvo a 6 m com d10, 1×/descanso longo.'],
+    [2, 'Samehada Shotei', 'Quando um ataque corpo a corpo erra você, a reação devolve esse e os próximos ataques até seu turno contra o atacante ou alguém a 1,5 m dele, com +3, e o atingido tem desvantagem no próximo ataque. Pode usar até contra um ataque que acertou (1× por atacante por encontro, ou 3 PP).'],
+    [3, 'Jujutsu Homem-Peixe', 'Movimentos com ação bônus (ou no lugar do Samehada): Hikishio (Salvaguarda de Força ou Caído e 1d10 + FOR), Uzushio (empurra 3 m e 1d6 + FOR), Nageru (arremessa um aliado até 12 m) e Hinowara (agarra uma criatura Grande ou menor e a arrasta, 1d6 a cada 1,5 m).'],
+    [5, 'Manipulação da Água', 'Cada movimento do Jujutsu dá 1 Ponto de Carateca (6 no início do encontro; máx. 5 + nível): +1d10 de dano (até 3), +1d6 e +3 m de empurrão (até 3), +1,5 m arrastando, desvantagem (1) ou falha automática (3) na Salvaguarda, ou vantagem num teste de Força (1). Depois dá para comprar os traços de Filho do Mar (6º), Mizugokoro (14º) e Gentileza do Mar (15º) fora d\'água por 2 PC.'],
+    [6, 'Filho do Mar', 'Submerso: resistência a dano físico, nado de 15 m sem provocar reações, 10 minutos sem respirar e, 1×/descanso curto, uma ação ou ação poderosa extra (Técnicas até 3º grau).'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Umidaiko', 'Ataques desarmados ignoram resistência e invulnerabilidade, não são reduzidos nem absorvidos por PV temporários e anulam a Intangibilidade. Ao acertar, todos a 1,5 m sofrem o dado de dano desarmado.'],
+    [11, 'Ataque Atordoante', '1×/turno, num crítico desarmado (ou gastando 4 PP), o alvo faz Salvaguarda de Constituição ou fica Atordoado até o fim do próximo turno; no 14º nível, quem passa fica Estremecido.'],
+    [14, 'Mizugokoro', 'Submerso: Ultramarine (+2 dados nas Técnicas de Combate que não são de Toque) e Escudo Atmosférico (2 PP e reação param todos os projéteis a 15 m até seu turno).'],
+    [15, 'Gentileza do Mar', 'Submerso, Técnicas de Combate custam menos PP igual ao grau delas (mín. 1).'],
+    [18, 'Mestre Carateca', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Kaikyo', 'Ação bônus: por 5 minutos, conta como submerso mesmo em terra, e recupera 40 PP. 1×/descanso curto.'],
+  ],
+  'Ciborgue': [
+    [1, 'Corpo Robótico', 'A cada nível até o 5º, escolha 1 Modificação Simples e 1 Avançada. Simples: Autodestruição (20d10 de Fogo em 15 m, você cai a 0), Pele de Aço (CR fixa 17, 19 no 6º e 21 no 13º), Strong Hammer (desarmado 1d10, pode usar SAB), Dureza Reforçada (devolve dano a quem bate sem Haki; reduz dano à distância), Melhoria Animal (traços de Zoan), Mente Artificial (ação bônus encerra condições mentais), Pernas Adaptáveis e Visão Adaptável. Avançadas: Baú Secreto, Farol Especial, Hélice, Holograma, Mãos Auxiliares, Membros Remotos, Morte Forjada e Parte Localizadora.'],
+    [2, 'Mira Robótica', 'Ataque comum que erra (sem ser 1 natural) ainda causa dano igual ao mod. de SAB; em Técnicas, SAB + nível (máx. 20; metade em área, máx. 10). Pode usar SAB no acerto e no dano dos ataques comuns.'],
+    [3, 'Guerreiro da Ciência', 'Escolha uma: Giga-Arm (+1 de CR, reação que absorve até 5× o nível de dano, agarrar com 2d6 por turno, Strong Hammer 1d12, arremesso de 2d12 e ataque duplo no 7º), Mega-Head (banco de dados da Marinha, hackear robôs e computadores, 3 acertos automáticos por descanso, Percepção e Investigação dobradas) ou Proto-Body (um pequeno robô independente com CR 12, 20 PV, ataque de 1d12+3 Elétrico e 3 Técnicas por descanso).'],
+    [5, 'Reparos de Emergência', 'Ação bônus: cura 5d10 + nível e encerra qualquer condição ou efeito negativo. 3×/descanso curto.'],
+    [6, 'Arma Assimilada', 'Uma arma do Cap. 8 vira parte do corpo: 2d6 + 1d6 de um tipo elemental, +proficiência no ataque, pode usar SAB, ignora resistências que não sejam de Haki e não precisa de munição. Troca a cada nível.'],
+    [7, 'Tecnologia Avançada', 'Com menos da metade dos PP, recupera metade dos PP totais. 1×/descanso curto.'],
+    [10, 'Guerreiro da Ciência Avançada', 'Escolha mais uma tecnologia do Guerreiro da Ciência.'],
+    [11, 'Overclock', 'Por 5 minutos: deslocamento 15 m e +1d6 Elétrico nos ataques comuns; quem sofre esse dano tem desvantagem para atacar outros alvos que não você. 1×/descanso curto.'],
+    [14, 'Pontos de Vida Virtuais', 'Ao cair a 0 PV, continua de pé por até 3 minutos com PV Virtuais iguais a metade do máximo; curas só valem depois que eles acabam. 1× por encontro.'],
+    [15, 'Protocolo de Combate Avançado', 'No início de cada encontro, ative dois: Ofensivo (+3 no acerto e +5 no dano), Defensivo (reduz todo dano em seu nível), Tático (repete uma ação bônus sem dano) ou de Eficiência (50% de chance de Técnica de Ciborgue não gastar PP).'],
+    [18, 'Mestre Ciborgue', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Piloto Automático', 'Ao cair a 0 PV, volta em modo de combate por até 5 minutos com 200 PV Virtuais e os benefícios de "Hard Armor", atacando sempre a ameaça mais próxima; cada Técnica gasta 5 PV Virtuais.'],
+  ],
+  'Espadachim': [
+    [1, 'Postura de Espadachim', 'Escolha uma postura (troca no 3º, 6º e 9º nível), ativa com o número exato de armas cortantes: Ittoryu (1: +2 no acerto e +3 de dano contra um único inimigo próximo), Nitoryu (2: 2d6 em quem está a 1,5 m ao atacar), Santoryu (3: +1 de CR por inimigo a 3 m, até +3), Yontoryu (4: ataque corpo a corpo a 6 m), Rokutoryu (6: ignora terreno difícil e escala), Hattoryu (8: 1d4 em quem te ataca de perto) ou Kyutoryu (9: 1d10 em quem chega ou começa o turno a 1,5 m). Ou, no lugar, uma Manobra: Movimento Enganador, Golpe Provocativo, Contra-Atacar, Golpe Concentrado ou Nunca Recuar.'],
+    [2, 'Consciência Expandida', 'Ataques com arma cortante dobram os dados contra objetos e estruturas de rocha e cedro (ferro e carvalho no 4º, aço e cerejeira no 6º, aço temperado e Adam no 8º). Preparando-se, corta construções inteiras a até 6 m conforme a tabela "Cortar Mundos" (de Pequeno no 2º a Imenso no 16º, com PP e Exaustão).'],
+    [3, 'Empunhadura', 'Crítico 19–20 com arma cortante e +1 dado no crítico (18–20 e +2 no 15º; 17–20 e +3 no 18º). Escolha Lâmina Forte (armas sem Acuidade: +6 m nas Técnicas de área, +metade do nível no dano, ataque extra no crítico) ou Lâmina Gentil (com Acuidade: ignora resistência a Cortante, ação bônus para atacar de novo, dado 1d10). No 6º nível ganha as duas.'],
+    [5, 'Honra de um Espadachim', 'O primeiro dano por rodada pela frente cai 10; ataques de oportunidade contra você levam +2 dados Psíquicos; pode aceitar o dano de um ataque que errou para ganhar 3 PP a cada 10 de dano (máx. o nível) e uma reação extra sem dano.'],
+    [6, 'Aura Bestial', 'Escolha uma aura (mais uma no 8º, 10º, 12º e 14º): Caranguejo (ignora invulnerabilidade a Cortante), Cavalo (Atletismo dobrado e 15 m), Corvo (Ataque Extra), Dragão (dano máximo numa Técnica até 4º grau por 2 Exaustões), Gavião (+3 no acerto das Técnicas com espada), Gorila (Técnicas causam ao menos metade do dano), Leão (20 PA no Haki do Rei e dano Psíquico), Lobo (Técnica que erra custa só grau −1), Ogro (Intimidação dobrada e encerra condições), Rinoceronte (lida com Exaustão), Tigre (persegue quem foge) ou Touro (até +40 PV).'],
+    [7, 'Análise de Batalha', 'Ao acertar com arma cortante, trata os dados da arma como crítico. 3×/descanso longo.'],
+    [10, 'Roubar Técnicas', 'Vendo um inimigo usar uma Técnica de Combate com arma cortante, Percepção CD 15 + grau para aprendê-la (+2 PP máximos cada). Técnicas roubadas têm +1 dado e −1 PP. Ou, 3×/descanso, some metade da proficiência em dados numa Técnica sua.'],
+    [11, 'Postura Aperfeiçoada', 'Um Traço Inato de postura fica sempre ativo com qualquer número de espadas (mais um no 15º nível).'],
+    [14, 'Aura Demoníaca', '2 PP numa Técnica de Combate cortante: vantagem no ataque, desvantagem na Salvaguarda e dano Verdadeiro. Ou, 1×/descanso longo, ação bônus para manter a forma por 1 minuto e usar qualquer postura.'],
+    [15, 'Apogeu', 'Técnicas de Combate com espada: 1º grau não custa PP, 2º a 5º custam metade, e o alcance pode dobrar ou encolher para 3 m.'],
+    [18, 'Mestre Espadachim', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Espada Lendária', 'Uma espada vira Kokuto: Corte Negro (Consciência Expandida com ação bônus, sem custo nem limite de tamanho), Morte Negra (Técnicas zeram criaturas de ND 8 ou menos) e Domínio Negro (Técnicas de 6º e 7º grau custam menos PP igual ao grau).'],
+  ],
+  'Guerrilheiro': [
+    [1, 'Mestre das Armas', 'Ação bônus para guardar duas armas e sacar outras duas. Escolha uma Aptidão Bélica (mais três no 5º e no 11º): Açoitador (chicote: ignora resistência, ataque extra com ação bônus), Ardiloso (adagas: +2 de CR com duas, crítico rola 3×), Arqueiro (+3 no acerto e +1 no dano, ignora cobertura), Atirador (golpe tático e Passo Seguro), Bárbaro (armas pesadas: +1/+3, −5 por +10), Espadachim (+2/+2, erro causa dano de SAB) ou Lanceiro (+1 de CR, golpe em todos a 1,5 m). Desarmado, usa efeitos de qualquer aptidão; no 11º cria uma Aptidão Bélica Suprema.'],
+    [2, 'Músculos e Cérebro', 'Pode usar SAB no acerto e no dano dos ataques comuns, e liga SAB a FOR ou a DES: nos testes e Salvaguardas desses atributos usa o maior.'],
+    [3, 'Especialista em Combate', 'Escolha 2 Efeitos Especiais para suas Técnicas (mais 2 no 6º e no 9º), um por Técnica: Cirúrgica (protege aliados e não perde PP se não afetar nada), Extravagante (dano Psíquico extra em área), Escondida (alcance dobrado e origem oculta), Insistente (vantagem no ataque, meio dano garantido), Otimizada (dano máximo até 4º grau, Exaustão se repetir) e Veloz (encadeia uma Técnica menor com ação bônus). Pode combinar dois, 3×/descanso curto.'],
+    [5, 'Doutrinamento', 'Ataque de Oportunidade Estratégico (também quando o inimigo ataca outro ou sofre dano), Camuflagem (Furtividade com vantagem usando SAB), Aprendizado Impetuoso (um treinamento de graça, de novo no 9º e 12º), Sentido de Perigo (vantagem em Destreza contra Técnicas e armadilhas). No 7º: Treinamento Secreto (Soru, Geppo e mais uma do Rokushiki) e Ataque Extra.'],
+    [6, 'Ordens Táticas', 'Troque a Ação Poderosa por uma ordem a um aliado: ele tem vantagem para cumpri-la e, se conseguir, você ganha 1 Ponto de Ordem (+1 no ataque e no dano e +1 dado nas Técnicas; máx. = proficiência). Ou, até 5×/encontro, em vez do ponto, cura 5d10 PV ou 2d10 PP dele.'],
+    [7, 'Potencializador', 'Crítico 19–20 (18–20 no 12º). No crítico ganha 1 Ponto de Ordem e aplica +1d8 em todo dano que o alvo sofrer, vantagem contra ele ou desvantagem nos ataques dele; se ele falhar em Constituição, fica Atordoado. Com 1 Ponto de Ordem, faz isso num acerto normal.'],
+    [10, 'Especialista em Estratégias', 'Não pode ser surpreendido; no início do encontro, a reação te põe em primeiro na iniciativa com dois turnos seguidos.'],
+    [11, 'Galaxy Revolution', '1× por encontro, ação bônus: aliados a 15 m que te ouvem recuperam até metade dos PP máximos. Ao atacar, cada Ponto de Ordem gasto dá um ataque extra.'],
+    [14, 'Ação Tática', '1×/rodada, ganha uma Ação, Ação Bônus, Reação, Deslocamento ou Ação Poderosa extra. 3×/descanso longo.'],
+    [15, 'Erudito', 'Começa todo encontro com 3 Pontos de Ordem, o máximo dobra e você pode dar ordens a si mesmo.'],
+    [18, 'Mestre Guerrilheiro', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Super Soldado', 'Por 5 minutos: ignora Exaustão, deslocamento 18 m, recupera 12d10 PV e 4d6 PP por turno, +5 em testes e Salvaguardas e CR 30. 1×/descanso curto.'],
+  ],
+  'Lutador': [
+    [1, 'Combatente Selvagem', 'Ação bônus junto de um ataque desarmado: Voadora (após 3 m em linha, +1d6 ou empurra 6 m), Golpe Baixo (+1d6 e −3 m de deslocamento, ou derruba sem teste) ou Subjugador (agarra uma criatura Grande ou menor em vez de causar dano).'],
+    [2, 'Bom de Briga', 'Mãos Letais (desarmado conta como arma marcial, com uma expertise), Truque Sujo (1 natural no ataque vira crítico), Mão de Marreta (dobro de dano em estruturas), Power Grip (vantagem contra quem você agarra) e Tiro de Meta (crítico 17–20 contra Caído). Usos = proficiência por descanso curto: ignorar um crítico sofrido, ignorar resistência de quem acertou ou rerrolar um ataque corpo a corpo que errou.'],
+    [3, 'Posições de Luta', 'No início do turno, assuma uma posição: Castigo de Ferro (reação para atacar antes de um golpe em você ou aliado e interrompê-lo), Descuidado (vantagem para você e contra você), Imparável (imune a redução de deslocamento e a Amedrontado, Atordoado, Letárgico e Sonolento), Foco de Batalha (recupera 4 PP ao sofrer 10+ de dano), Fanático (Combatente Selvagem sem ação bônus) ou Músculo de Aço (resistência a dano físico). Duas ao mesmo tempo no 6º, três no 10º.'],
+    [5, 'Sedento', 'Uma ação ou ação poderosa extra no turno (Técnicas até 3º grau, ignorando o limite de uma por turno). 1×/descanso longo; 2× no 10º e 3× no 15º, uma por rodada.'],
+    [6, 'Golpe Brutal', 'Crítico corpo a corpo soma seu nível ao dano e rola 1d8 na tabela (impede reação e ação bônus, desvantagem nos ataques, impede ações ou Atordoa). Ganha Dados Brutais (metade do nível + FOR) para somar ao ataque, ao dano ou curar, até 3 por turno; voltam no descanso curto.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Resistência Sobrenatural', 'Em batalha, ao fim de cada turno ganha 2d10 + CON de PV temporários (pode trocar pelos que já tem).'],
+    [11, 'Metralhadora de Golpes', 'Depois de Atacar, usa a ação poderosa para mais um ataque: o alvo perde reações e ações bônus e, falhando em Constituição, leva mais 2 ataques.'],
+    [14, 'Espírito de Luta', 'Vitalidade Inesgotável (abaixo de 50 PV, Constituição CD 16 para voltar a 100; a CD sobe a cada uso), Energia Inesgotável (abaixo de 10 PP, CD 12 para voltar a 20; 3 usos) e Vontade Inesgotável (ao chegar a 0 PV, recupera metade; 1×/descanso curto).'],
+    [15, 'Corpo Forjado', 'Desarmado +1d6; reduz em 10 todo dano a que resiste; com mais da metade dos PV, suas resistências não são anuladas por "Destruição Interna" e dano Verdadeiro conta como Contundente.'],
+    [18, 'Mestre Lutador', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Movimentos Lendários', 'Pulo Heroico (salta para qualquer lugar que veja, sem dano de queda), One-Punch (acertar criatura de ND 10 ou menos zera os PV dela) e Devastação (com mais da metade dos PV, abre buracos em muros, montanhas e navios).'],
+  ],
+  'Ninja': [
+    [1, 'Yami no Kijin', 'Estado Sombrio (fora da luz plena): Arauto das Sombras (−10 em todo dano sofrido, exceto Verdadeiro, e +1d6 Psíquico nos ataques comuns), Ocultação das Sombras (após 1 rodada sem ser visto, fica Invisível até causar ou sofrer dano) e Translocação das Sombras (1×/rodada, sem ser visto, teleporta até 21 m para um lugar que ninguém observa).'],
+    [2, 'Ninjutsu', 'Pontos de Ninjutsu iguais ao nível (voltam no descanso curto; +1 por crítico natural, por escapar de ser achado ou por Técnica de Ninja). Escolha um conjunto: Místico (Futon empurra 9 m, Katon devolve 2d6 de Fogo, Raiton soma 2d6 Elétrico e trava o alvo) ou Tradicional (escapar de amarras, Fuga Impossível a 0 PV, Furtividade Suprema, levantar rápido, Mira Parada e Movimentação Rápida de 18 m). No 8º, o outro conjunto ou +10 PN.'],
+    [3, 'Assassinar', '1×/rodada, +1d4 por nível de Ninja num ataque com vantagem (ou com outro inimigo do alvo a 1,5 m dele, sem desvantagem).'],
+    [5, 'Nindo', 'Escolha um caminho: Assassino (Armadilha Mortal paralisa quem não te vê, e zera quem tem menos de 50 PV; Dano Mortal finaliza quem fica com PV ≤ dados do Assassinar; +3/+5 no Estado Sombrio), Desastre da Natureza (Lufada Elemental em cone de 12 m, Arremesso Elemental +3d4 com shuriken, Técnicas com dados elementais extras) ou Honrado (Corpo de Guerreiro e +10 PV +1 por nível, reação que reduz dano de um inimigo próximo, PV temporários no Estado Sombrio).'],
+    [6, 'Equipamento Ninja', 'Com o traje: armas proficientes com dado 1d10 e crítico 19–20, escala sem custo e anda pelo teto, Arte Invisível (1×/turno, refaz um ataque que errou) e Ninpo Odako (funciona como asa delta).'],
+    [7, 'Arte Ninja', 'Ataque de Oportunidade Superior (para o alvo no lugar), Ervas Medicinais (3d12 + nível, 1×/descanso curto), Velocidade Ofensiva (dois ataques na ação Atacar e um extra com ação bônus) e Preparo Imbatível (no 1º turno: deslocamento dobrado, ataque extra, cura ou PP).'],
+    [10, 'Agilidade Shinobi', 'No início do encontro, a reação te coloca em primeiro com dois turnos seguidos (Surpreso: rola iniciativa com vantagem).'],
+    [11, 'Corpo das Sombras', 'Com metade dos PV ou mais e sem Exaustão, ataques à distância sempre erram você; pode apanhar os projéteis e devolvê-los com o dano do Assassinar.'],
+    [14, 'Owari', 'Mais um caminho do Nindo, PN iguais ao dobro do nível, e 5 PN para entrar no Estado Sombrio mesmo na luz por 1 minuto.'],
+    [15, 'Golpe de Sorte', 'Usos = mod. de DES por descanso longo: transformar um ataque em crítico, não ser acertado por um ataque ou tratar um teste como 20 natural.'],
+    [18, 'Mestre Ninja', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Dádiva dos Ninjas', 'Full Counter (todo ataque contra você a 1,5 m recebe um contra-ataque), Assassinar Aprimorado (no Estado Sombrio, zera criaturas de ND 10 ou menos), Corpo Imaterial (não sofre dano de Salvaguardas), Anulação Perfeita (4 PN anulam uma Técnica a 9 m) e Invisibilidade Superior.'],
+  ],
+  'Okama Kenpo': [
+    [1, 'Protegendo um Amigo', 'Reação: vai até um aliado a 6 m que é alvo de ataque e o recebe no lugar dele, reduzindo o dano em 1d12 + nível (2d12 no 10º, 3d12 no 15º). Zerando o dano, contra-ataca desarmado. Contra humanoide hostil, ganha 2 PP (4 se zerar).'],
+    [2, 'Ambiguidade', 'Okama Dash (deslocamento 12 m; 15 m e sem terreno difícil no 10º), Resistência Okama (dano Contundente de humanoide te cura 1d6, 1d12 no 10º) e Brutalidade Graciosa (Presença no lugar de Força no corpo a corpo).'],
+    [3, 'Okama Way', 'Gambaray (ação bônus: aliado a 9 m cura 3d12 ou ignora Exaustão; 1× por aliado por descanso longo), Poder da Amizade (10 PV temporários por aliado na iniciativa, até 60), Super Protetor (quem ataca outro a 6 m de você tem desvantagem), Amor Próprio (Protegendo um Amigo em você mesmo) e Amor Insistente (ação bônus para mais um ataque desarmado).'],
+    [5, 'Surto Okama', 'Uma ação ou ação poderosa extra no turno (Técnicas até 3º grau). 1×/descanso longo; 2× no 10º e 3× no 15º, uma por rodada.'],
+    [6, 'Stalker', 'Ação bônus: por 1 minuto, ataca quem se mover 1,5 m ou mais dentro do seu alcance. 3×/descanso longo.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Acerto Destruidor', 'Gaste PP para +1d8 por PP no ataque corpo a corpo (até 5d8); trocando dados, impõe uma condição da tabela "Golpes Sensíveis" (Caído, Cego, Estremecido, Incapacitado, Letárgico, Sangramento, Sufocado, Surdo) com Salvaguarda de Constituição.'],
+    [11, 'Tasukeru', 'Pode usar Ajudar no lugar da ação poderosa; se o aliado acertar ou passar, os dois sofrem metade do dano até o próximo turno de cada um.'],
+    [14, 'Ballet Kenpo', 'Ataques comuns contra você têm desvantagem até você perder PV (o dano de proteger aliados não conta). Enquanto ativo, você e aliados a 9 m somam seu mod. de PRE nas Salvaguardas.'],
+    [15, 'Makeup Armor', 'Maquiagem que absorve 80 de dano; enquanto intacta, imune a Atordoado e Envenenado e resistente a dano físico. Desfaz se molhar; refazer leva 1 hora.'],
+    [18, 'Mestre Okama', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Friends for Life', 'Ganha Pontos de Okama quando um aliado perde PV ou você o protege: +10 num ataque, +3 de CR, +5 numa Salvaguarda, +10 num teste ou +15 de dano (1 por rodada, até 10 por encontro; ou pague 10 PV no lugar).'],
+  ],
+  'Usuário de Rokushiki': [
+    [1, '6 Habilidades', 'Refaz uma Salvaguarda que falhou e escolhe o resultado, 3×/descanso longo. Aprende as Técnicas do Rokushiki: Soru e Shigan (1º), Tekkai e Rankyaku (3º), Kamie e Geppo (6º).'],
+    [2, 'Táticas', 'Aprendizado Rápido (todo dia, proficiência em 2 perícias à escolha; dobrada no 5º; sucesso automático 3×/descanso no 10º), Ataques Incapacitantes (troca o dano por Cego, Surdo ou mudo num humanoide; Inconsciente em alvo surpreso no 5º) e Caminho das Sombras (escalada e nado iguais ao deslocamento, ignora terreno difícil; Furtividade com vantagem no 5º; invisível a 9 m de inimigos no 10º).'],
+    [3, 'Arma Viva', 'Escolha 2 (e mais 1 a cada nível): Técnica Assassina (1 PP: crítico 18–20 nas Técnicas), Execução Impecável (−2 PP nas Técnicas do Rokushiki), Fôlego Treinado (lida melhor com Exaustão), Ataque de Oportunidade Traiçoeiro, Reação Defensiva (crítico vira dano normal) e Habilidades Dominadas (6º: Técnicas das 6 Habilidades sem PP enquanto estiver bem).'],
+    [5, 'Resposta Perfeita', 'Usos = proficiência por descanso longo: repetir com vantagem um ataque ou teste que falhou, ignorar uma reação contra você, dobrar os dados de um acerto, devolver uma condição a quem a causou a 1,5 m ou sumir de quem te viu fora de combate.'],
+    [6, 'Atributos Aperfeiçoados', 'Um Aumento no Valor de Atributo extra só para FOR, DES ou CON (até 30). De novo no 9º, 12º e 15º.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Rokushiki Aperfeiçoado', 'Escolha 3 (todas no 15º): Soru Ikyaku (12 m atravessando inimigos com 4d8 Trovejante), Jusshigan (+3 dados e Salvaguarda com desvantagem), Tekkai Kenpo (com ação bônus e se movendo; +1d8 desarmado), Rankyaku Kiri Shigure (acerto automático de 4d8 num alvo), Kamie Slime (passa por frestas) e Geppo Moon (dura 5 minutos).'],
+    [11, 'Estratégia de Batalha', 'Com metade dos PV ou menos (sem Exaustão), recupera 20 + CON de PV e 2 PP no início de cada turno.'],
+    [14, 'Análise Aprofundada', 'Ação bônus, 1×/descanso longo: por 24 horas contra uma criatura, ela tem desvantagem contra você e você vantagem contra ela, você força 3 acertos ou falhas em testes entre vocês e causa +3d8.'],
+    [15, 'Pontos de Rokushiki', 'Cada Técnica do Rokushiki dá 1 ponto (máx. metade do nível): 2 para um ataque extra, 1 para dobrar o deslocamento ou 2 para curar 30 PV.'],
+    [18, 'Mestre Rokushiki', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Arma de Massacre', 'Técnicas e características do Rokushiki não custam PP, duas ações poderosas no mesmo turno e, 1×/rodada, encadeia outra reação ou ação bônus sem dano.'],
+  ],
+  'Samurai': [
+    [1, 'Armamento Samurai', 'Proficiência nas Armas de Samurai (arco, daito katana, foice, kanabo, katana, lança, nodachi, pistola, shikomizue): crítico 19–20 e +1d6 uma vez por turno (1d8 no 5º, 1d10 no 10º; 2× por turno no 12º). Escolha um estilo (troca a cada nível): Zansetsu (Verdadeiro, dano não se cura), Okamihyo (Frio, desacelera quem está perto), Takakaze (Cortante em todos a 3 m), Kappasui (Perfurante e PV temporários) ou Kitsunebi (Fogo, soma o dado ao acerto que errou). Todos melhoram no 8º.'],
+    [2, 'Juramento', 'Escolha definitiva: Proteção (Medicina Holística: ação bônus cura 1d6 por nível, e cura de novo depois, com PP), Vingança (Ódio Motivacional: ataque extra com ação bônus, ou 3×/encontro sem ela) ou Dever (Ataque Determinado: Técnicas causam ao menos metade e rolam 3 dados extras para chegar ao máximo).'],
+    [3, 'Bushido', 'Escolha um caminho (pode trocar a cada nível): Vassalo (+2 no acerto; no 5º transforma um erro em acerto; proteção de aliados no 7º; Marca da Vingança no 9º), Ronin (Oportunista a 3 m que trava o alvo; postura Descuidada no 5º; +2 de CR no 7º; +2 de dano por inimigo a 9 m no 9º) ou Shogun (Consciência Expandida do Espadachim; −5 por +10 no 5º; Técnicas mais baratas no 7º; recupera PP com golpes fortes no 9º).'],
+    [5, 'Concentração Total', 'Por 1 minuto, todo 9 ou menos no d20 de ataques, testes e Salvaguardas vira 10. 1×/descanso longo (3× no 12º).'],
+    [6, 'Armadura Samurai', '฿ 50.000 e 1 hora: armadura com 5 PV por nível que absorve o dano antes de você. Ou, no lugar, +10 PV e Dados de Vida d12 nos próximos níveis.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Combate Elegante', 'Guarda Orgulhosa (dano de Técnica ou crítico cura 2d8 e dá +1 de CR até o fim do encontro, até 25), Ignorar a Dor (ignora o dano de um crítico, 3× por encontro) e Combate Honroso (troca o dano de um crítico por vantagem, um uso de Ignorar a Dor e +1 de CR).'],
+    [11, 'Desafiar a Honra', 'Desafia uma criatura a 9 m (Salvaguarda de Sabedoria): por 1 minuto sua CR contra ela vira 25, ela tem desvantagem contra outros e não consegue se afastar mais de 6 m. Usos = proficiência por descanso longo.'],
+    [14, 'Fúria Indomável', 'Na Concentração Total: resistência a todo dano (menos Verdadeiro), 80 PV temporários e deslocamento que não pode ser reduzido.'],
+    [15, 'Orgulho Inquebrável', 'Imune aos sintomas de doenças e venenos (mas ainda precisa de tratamento), às condições de Exaustão até o nível 5 e a Golpe Grave e Dano Brutal.'],
+    [18, 'Mestre Samurai', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Sunacchi', 'Ao cair a 0 PV sem morrer, age por 3d6 + VON turnos com Concentração Total, Fúria Indomável, 2 ataques extras e modificador de dano dobrado. 1×/descanso longo; ou ativa por 1 minuto sem estar a 0, zerando os PP depois.'],
+  ],
+  // ── Estilos de Combate Exclusivos (suplemento, atualização 2.1)
+  'Black Leg': [
+    [1, 'Pernas Fortes e Mãos Gentis', 'Pacto Sagrado: jura nunca usar as mãos em combate; quem prova sua vocação faz Salvaguarda de Vontade ou fica Enfeitiçado por 1 hora (+10 em Atuação e Persuasão contra ela, −5 nos ataques dela contra você). Usar as mãos perde tudo para sempre — ou troque o Pacto por benefícios de arma marcial nos ataques desarmados, com uma expertise (nova escolha a cada nível). Kicker: gaste PP para destruir objetos e construções a até 6 m conforme o nível (sem Ação Poderosa na preparação), e +1 no acerto e no dano de todos os ataques comuns do turno a cada 4,5 m percorridos.'],
+    [2, 'Godspeed', 'Hard Walk: ignora terreno difícil e não provoca reações. 3º: Speed Walk (deslocamento 12 m; 15 m no 8º, 18 m no 12º). 4º: Burst Walk (Disparada com ação bônus). 5º: Blue Walk (nada sem desvantagem, nado igual ao deslocamento). 7º: Sky Walk (Geppo). 10º: Stealth Walk (sacrifica 9 m para ficar invisível até atacar).'],
+    [3, 'Diable Jambe', 'Por 1 minuto: resistência a Fogo, +1d4 de Fogo nos ataques desarmados corpo a corpo (1d6 no 7º, 1d8 no 11º) e dados de Fogo extras nas Técnicas iguais a metade do grau (mín. 1). Dois acertos comuns seguidos nos seus turnos (a sequência continua entre turnos) dão uma ação bônus ou reação extra, 1×/turno. 3 usos por descanso longo.'],
+    [5, 'Way of the Kick', '1×/turno, ação bônus: ataques desarmados extras, um a cada 5 níveis de Black Leg (2 no 10º).'],
+    [6, 'Shoot', 'Quem você acerta com desarmado escolhe perder deslocamento, ação, ação bônus ou reação no próximo turno. Com 16+ no d20, Kick Festival: Salvaguarda de Constituição ou Letárgico (16), Caído (18), Impedido (19), Cego ou Atordoado (20), até o fim do próximo turno dele. Parage Shoot: chutes que mudam o rosto de alguém.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Enfer de Flammes', 'Esfera de 4,5 m a até 9 m: por 1 minuto, você se move pela área e ataca toda criatura que inicie uma ação lá dentro; falhando em Constituição, o turno dela acaba após o dano. Enquanto ativo, não pode ser alvo de ataques nem sofrer efeitos; ao encerrar, escolhe onde ficar. 1×/descanso longo (3× no 15º, 1 por encontro).'],
+    [11, 'Overdrive', 'Way of the Kick ativa sozinho no primeiro ataque, com +2 ataques adicionais.'],
+    [14, 'Spectre', 'Em cada ataque desarmado: atinge também todos a 1,5 m (só com o dano base desarmado), empurra 3 m ou ganha +1,5 m de alcance.'],
+    [15, 'Ifrit Jambe', 'Com o Diable Jambe: +5 de Fogo nos ataques desarmados, o dano de Fogo extra vira 1d12, ação bônus para vantagem ou Queimado, e ignora resistência a Fogo. 1×/descanso longo.'],
+    [18, 'Mestre Black Leg', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Hell Memories', 'Diable Jambe sem limite, Ifrit Jambe 3×/descanso, todo dano de Fogo causa Queimado e ignora invulnerabilidade a Fogo; quem não resiste a Fogo sofre o Fogo do Black Leg como vulnerável; Técnicas somam dados de Fogo iguais ao grau.'],
+  ],
+  'Esgrimista': [
+    [1, 'Mestre do Duelo', 'Corte Petulante (Presença no acerto e no dano com arma cortante), "Eu Sou a Velocidade" (+2 de CR após andar 3 m), Passo da Liberdade (deslocamento 12 m, 15 m no 10º; reação para ignorar terreno difícil e reduções), Lâmina Imbatível (vantagem em Salvaguarda de Força com a arma favorita) e "Hoje Não!" (rerrola todo 1 natural).'],
+    [2, 'Erro Planejado', 'Uma Técnica que não afetou nenhuma criatura, ambiente, estrutura ou objeto não gasta PP, sem limite de usos. Se mirava criaturas e usava Ação Poderosa, ainda anda até 6 m a mais e faz um ataque comum com a arma favorita (dois no 10º).'],
+    [3, 'Resposta para Tudo', 'Reações a até 6 m, todas no valor do seu nível: "Ih, Rapaz…" (reduz dano), "Errou!" (Vontade ou encerra os ataques do inimigo), "Acertou, Miserável!" (soma ao acerto), "Receba!" (soma ao dano), "À Sua Esquerda!" (aliado ignora redução de deslocamento), "É o Filho do Vento!" (ação extra para aliado), "Tá Ganhando ou Tá Perdendo?" (soma num teste que falhou) e "Vingue-me!" (antes de cair, dá PP a um aliado, que os gasta primeiro).'],
+    [5, 'Versatilidade de Combate', 'Ao Esquivar, Disparar, Usar um Objeto ou Ajudar, faz um ataque comum na mesma ação (dois a partir do 7º).'],
+    [6, 'Continue a Atacar!', 'Cada 8 ou menos no d20 de ataque contra inimigo dá 1 Ponto de Resiliência (máx. 20; também 1 por Resposta para Tudo): 3 PR usam uma Resposta sem reação, 5 PR curam 20 PV, 7 PR recuperam 5 PP e 10 PR removem 1 Exaustão.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Esgrima Aperfeiçoada', 'Arma favorita com dado 1d12 e crítico 19–20 (18–20 no 15º); crítico dá 2 PR e, 1×/descanso curto, pode causar o dano máximo.'],
+    [11, 'Pode Ser o Céu ou o Inferno', 'Errou com a arma favorita? Ação bônus e 6 m do deslocamento restante para transformar em acerto (no 18º, 1×/descanso curto, em crítico).'],
+    [14, 'Lucky!', 'Com a arma favorita, críticos contra você não causam dano (ou viram dano normal se estiver Incapacitado, parado, abaixo da metade dos PV ou exausto).'],
+    [15, 'Dança do Combate', '1×/rodada, ao usar uma reação ou ação bônus, encadeia outra em seguida (sem ataque nem dano).'],
+    [18, 'Mestre Esgrimista', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Prepare to Die', '1×/turno, um ataque com a arma favorita vira crítico (+30 Psíquico se já era natural), e enquanto o último ataque do turno acertar, você ganha outro.'],
+  ],
+  'Herói': [
+    [1, 'Jornada do Herói', 'Nenhuma Técnica de graça, nem as da Akuma no Mi: Técnicas e Points vêm de treinamentos ou Maestrias. Esforço Heroico: 5 Pontos de Treinamento no 1º nível e +2 a cada nível par, só para "Genialidade Inusitada" (uma Técnica Auxiliar custa 1 PT + 1 por Auxiliar que já tenha).'],
+    [1, 'Tipo de Herói', 'Dados Heroicos: 1d10 no 1º nível e +1 por nível até o 10º, voltam no descanso longo (e 1 volta quando alguém te agradece por socorro ou você reparte ฿ 70.000+). Escolha o caminho: Guerreiro do Poder Oculto (Corpo de Guerreiro e d12 de vida, Vontade nos ataques, dados somados a qualquer rolagem; no 5º Discurso Heroico, Virada Heroica e Impulso Heroico; no 10º Técnica Assinatura, +5 dados e Ataque Extra), Mestre do Harém (companheiros Healer, Tanker e Warrior com ações compartilhadas: 3 + 2 por companheiro extra, renovadas a cada turno seu) ou Deus da Arma (Espada, Lança, Escudo ou Arco sagrado, d10 de vida, Defesa Ofensiva, dano que ignora resistências e bônus por arma no 1º, 5º, 10º e 15º).'],
+    [2, 'Protagonismo', 'Assume uma rolagem qualquer (pode até definir a CD) e só você vê o resultado. 1×/descanso curto. Extra do caminho: Guerreiro volta da inconsciência com 1/3 dos PV; Mestre do Harém dobra a proficiência para convencer alguém a ajudar; Deus da Arma soma a proficiência ao dano da arma favorita por 1 minuto.'],
+    [3, 'Último a Chegar', 'Entrando num encontro já começado, ganha um turno especial (sem causar dano) e: The Hero Arrives (1 Dado Heroico por rodada que passou), Poder da Amizade (10 PV por aliado consciente) e "Eu Não Perdoo!" (5 PP por aliado caído a 0 PV ao chegar, e mais 5 sempre que um aliado cair depois) — tudo podendo passar do máximo até o fim do encontro.'],
+    [6, 'Trunfo', 'Uma Técnica secreta de 1º grau, só ofensiva, sem custo de PP, 1×/descanso curto. Ganha +2 dados a cada encontro em que você não a usa (máx. = nível) e volta a 2 dados depois de usada.'],
+    [7, 'Super Hero', 'Ação bônus, por 1 minuto: ataques com dado d12, +1 de CR sempre que gastar Dados Heroicos e deslocamento 18 m. 1×/descanso longo.'],
+    [11, 'Plot Armor', 'Ação bônus: por 1 minuto não sofre dano nenhum (nem Verdadeiro), com desvantagem nas Salvaguardas; depois fica Inconsciente por 1 minuto. 1×/descanso longo.'],
+    [14, 'Recuperação Heroica', 'Ao fim de um descanso, 10 Dados Heroicos recuperam todos os PV e PP e suspendem Exaustão e doenças até o próximo descanso longo. Cada uso tira 2 da CON máxima (até 8 no total), e cada perda volta 3 descansos longos depois.'],
+    [15, 'Herói Lendário', 'Recebe tudo de outro caminho do Tipo de Herói, ou aumenta o máximo de Dados Heroicos para 30.'],
+    [18, 'Mestre Herói', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Versus', 'Arrasta um humanoide a 3 m para um duelo à parte: os dois ficam com 8 PV, CR 10, +1 no acerto e 1 de dano, só atacando. Quem chega a 0 perde. Depois, o vencedor volta aos PV de antes e sofre 10 de dano por ponto que levou no duelo. 1×/descanso longo.'],
+  ],
+  'Solfista': [
+    [1, 'A Música de Todas as Coisas', 'Corte Musical (ao fim do efeito de uma Técnica com instrumento, 1d8 Trovejante por ponto de proficiência), Golpes Performáticos (Presença no acerto e no dano com a arma favorita), Movimento Enganador (do início de cada turno seu até o próximo, ataques contra você com desvantagem; acaba se sofrer dano), Canção de Proteção (ação bônus: você e aliados a 18 m imunes a Amedrontado e Enfeitiçado), Sentido Sonoro (sabe onde está toda criatura a 6 m, mesmo invisível) e Corte Ecoante (reduz o dado a d6 para marcar o alvo; 1 PP nega uma reação ou ação bônus dele com Salvaguarda de Presença).'],
+    [2, 'Inspiração', 'Proficiente em todo instrumento. Ação bônus: você ou alguém a 9 m que te ouve ganha um dado de Inspiração (d8; d10 no 10º, d12 no 15º) para somar a um teste, ataque, dano, CR ou Salvaguarda nos 10 minutos seguintes; se sair o valor máximo, o dado volta na hora. Usos = nível + PRE por descanso longo.'],
+    [3, 'Repertório', 'Técnicas Auxiliares de música que devolvem dados de Inspiração iguais aos PP gastos: I Shot the Sheriff, Fight the Power e Respect (3º); Born to Run, Purple Haze e The Sounds of Silence (6º); Beat It, Dream On e Hotel California (9º).'],
+    [5, 'Dança de Lâminas', 'Ao atacar, deslocamento 15 m no turno. Quando a arma favorita acerta, 1× em cada turno seu e sem ação bônus, gaste uma Inspiração para: Dança Defensiva (dado na CR), Dança Cortante (ataque em todos a 1,5 m com o dado de dano extra) ou Dança da Fuga (dano extra, empurrão e 6 m de deslocamento com a reação). No 10º, pode rolar d6 em vez de gastar Inspiração.'],
+    [6, 'Atrapalhar', 'Reação contra quem está a 18 m e te ouve: gaste até 2 dados de Inspiração e subtraia do ataque, teste, Salvaguarda ou dano dele.'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Corte Trovejante', 'Acertos com a arma favorita causam dano Trovejante que não pode ser reduzido nem absorvido por PV temporários.'],
+    [11, 'Mestre do Som', 'Proficiência dobrada em Atuação, Acrobacia e Furtividade; reação para gastar Inspirações e reduzir o dano pelo valor máximo dos dados; soma VON ao dano da arma favorita.'],
+    [14, 'Mente Imprevisível', 'Proficiência em Salvaguardas de Sabedoria, Vontade e Presença. Ao rolar iniciativa sem nenhum dado de Inspiração, recupera dados iguais ao mod. de PRE.'],
+    [15, 'Manto da Inspiração', 'Ação bônus e uma Inspiração: até PRE criaturas a 18 m ganham um dado de Inspiração sem gastar os seus.'],
+    [18, 'Mestre Solfista', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Majestade Inquebrável', 'Ação bônus, até ficar Incapacitado: quem tenta te atacar faz Salvaguarda de Presença com desvantagem; falhando, troca de alvo; passando, sofre 5d10 Psíquico e desvantagem contra suas Técnicas.'],
+  ],
+  'Usuário Ínsito': [
+    [1, 'Crescimento Imprevisível', 'Nenhuma Técnica de graça, nem as do fruto: Técnicas e Points vêm de treinamentos ou Maestrias ("Genialidade Inusitada"; uma Técnica Auxiliar custa 1 PT + 1 por Auxiliar que já tenha).'],
+    [1, 'Akuma no Chikara', 'Você é usuário de uma Akuma no Mi e usa as Técnicas dela de graça fora de combate (se não afetarem ninguém). +2 PT por nível par e, no 1º nível, +3 (Categoria S), +4 (A) ou +6 (B e C), todos para "Genialidade Inusitada"; PP máximo +1 por nível. Por tipo: Logia e Zoan Mítica (+1d4 de dano nos ataques, 1d8 no 10º, e Técnicas com ao menos metade do dano), Paramecia (Auxiliares baratas de graça 3×/descanso e +2 pontos virtuais numa MP) ou Zoan Comum e Ancestral (d12 de vida, Corpo de Guerreiro e Prodígio do Combate, dano desarmado +1 passo).'],
+    [2, 'Escolha Diabólica', 'Escolha um traço: Objeto Infundido (2 PP: o objeto vira arma de 2d8 + VON com proficiência e Vontade no acerto, dano de tipo ligado ao fruto ou ao objeto — sem custo no 8º; guarda até 10 PP; erros causam dano de VON e ajuda a manter Técnicas), Defesa Infundida (Pontos de Defesa = nível: +1 de CR por 3, 20 PV por 2, ou +30 PV máximos por 5) ou Selvageria Infundida (ignora resistência a um tipo de dano, 3 Técnicas de 3º grau ou menor de graça por descanso e, sem PP, paga 5 PV por PP).'],
+    [3, 'Técnica Principal', 'Uma Técnica de Combate de 4º grau ou menos custa metade dos PP (arred. ↑) 3×/descanso longo, causa +2 dados, ignora resistências e invulnerabilidades e não é absorvida por PV temporários. Troca a cada nível.'],
+    [5, 'Rompante Diabólico', 'Uma ação ou ação poderosa extra (Auxiliares ou Técnicas de Combate de 3º grau ou menor). 1×/descanso curto; 2× no 10º e 3× no 15º, uma por rodada.'],
+    [6, 'Sobrecarga Explosiva', 'Cada Técnica de Combate do fruto pode somar 1d4 Dados de Sobrecarga (d6); depois de rolar duas vezes, gasta todos como dano extra numa Técnica instantânea. Passando de 6 dados, sofre metade como dano Verdadeiro (no 12º, pode perder a reação no lugar).'],
+    [7, 'Ataque Extra', 'Ataca duas vezes ao usar a ação Atacar.'],
+    [10, 'Uso Controlado', 'Aprende as Técnicas que faltam até ter uma de cada grau até o 4º e 2 Auxiliares (ou 3 novas). Ganha as de 5º, 6º e 7º grau no 12º, 16º e 20º, e uma Auxiliar extra no 12º.'],
+    [11, 'Escolha Aprimorada', 'Mais um traço da Escolha Diabólica, usando os dois.'],
+    [14, 'Transformação Diabólica', 'Por 1 minuto: crítico 18–20, força 3 falhas em Salvaguardas, Técnicas de 1º grau sem custo no lugar de um ataque, e um crítico permite uma Técnica de até 3º grau com ação bônus. 1×/descanso longo.'],
+    [15, 'Singularidade Exaltada', 'Logia: dano máximo numa Técnica 3×/descanso. Paramecia: ação bônus ou reação extra sem dano 3×/descanso. Zoan Comum ou Ancestral: +150 PV máximos. Zoan Mítica: qualquer uma. No 18º, escolhe mais uma.'],
+    [18, 'Mestre Usuário', 'Distribua 6 pontos entre atributos (limite 24); dois atributos podem chegar a 30.'],
+    [19, 'Poder sem Limites', 'Cria uma nova Manifestação de Poder, Técnicas e características do fruto não custam PP e pode usar 2 ações poderosas no mesmo turno.'],
+  ],
+  // fim ESTILO_CARACT
+};
+
 const PROFISSOES = ['Adestrador', 'Arqueólogo', 'Botânico', 'Caçador de Recompensas', 'Carpinteiro', 'Cientista',
   'Contrabandista', 'Cozinheiro', 'Engenheiro', 'Espião', 'Farmacêutico', 'Ferreiro', 'Informante', 'Inventor',
   'Jornalista', 'Médico', 'Músico', 'Navegador', 'Psiquiatra', 'Timoneiro', 'Sem Profissão'];
+
+// Conhecimentos do Trabalho de cada profissão (Livro do Jogador 2.1, cap. 4), resumidos.
+const PROF_CONHEC = {
+  'Adestrador': [
+    ['Vínculo Animal', 'Um animal da tabela "Animal Vinculado" vira seu companheiro: você o monta sem penalidade (se for do seu tamanho ou maior), faz Salvaguardas de Destreza para não cair com vantagem e pode substituí-lo se morrer. Seus gastos com comida e hospedagem dobram.'],
+    ['Animal Vinculado', 'Tem a sua CR e metade dos seus PV máximos, age na sua iniciativa e recupera todos os PV no descanso longo. Usa sua SAB, VON e PRE; FOR, DES e CON vêm da tabela, sempre com seu Bônus de Proficiência. Ataca com primário + proficiência e causa 1d4 + mod. As ações dele são Atacar (2 ataques), Disparada, Esconder e Procurar.'],
+    ['Treinamento Animal', 'A cada nível par, escolha 2 melhorias para o animal (até 6 no total): Poder Bruto (dano sobe um passo), Super Nutrição (+1 categoria de tamanho, até Enorme), Treino de Velocidade (+3 m em terra/nado ou +1,5 m de voo) ou Melhorar Potencial (2 Traços Comuns ou 1 Específico das Zoan).'],
+    ['Adestrar Animais', 'Teste de Sabedoria CD 10 + ND para adestrar um animal selvagem por 24 h (montaria e ordens). Ele se liberta se sofrer dano ou for forçado a se ferir ou atacar os seus. O mesmo teste serve para se comunicar, afugentar ou acalmar.'],
+  ],
+  'Arqueólogo': [
+    ['Explorador Atento', 'Guia: vantagem em testes de exploração de ruínas; passando, quem vê ou segue sua instrução passa também. Salvador: com a reação, corta pela metade o dano de uma armadilha ou perigo do ambiente que alguém falhou, ou anula o efeito (1×/descanso curto). Solucionador: resolve na hora um enigma, fechadura ou barreira — depois só volta a usar após resolver 3 sem ela.'],
+    ['Encontrar Tesouro', 'Em ruínas, calabouços e cidades antigas, um Teste de Sabedoria revela pistas de um tesouro escondido. Role d8 na tabela "Tesouros Perdidos" (artefatos rolam d10 na subdivisão; "Joias e Ouro" vale nível × ฿ 500.000.000). Dials rolam o d10 duas vezes; outros artefatos rolam duas vezes e você escolhe.'],
+    ['Conhecimento Proibido', 'Você consegue ler Poneglyphs: Históricos (Sabedoria CD 20), Instrutivos (CD 25) e Caminho (CD 30). Falhou? Após 3 dias de estudo pode tentar de novo com CD −5 a cada tentativa. Ler Poneglyphs é crime para o Governo Mundial.'],
+  ],
+  'Botânico': [
+    ['Cultivar Pop Green', 'Cultiva e usa sementes Pop Green (Guia do Narrador); a cada 10 sementes produzidas, escolhe o tipo que germina no dia seguinte.'],
+    ['Criar Vivre Card', 'Cultiva a Vivre Tree (1 mês + 1 semana com unha, pele ou cabelo de alguém) e produz a Vivre Card, que aponta sempre para o dono e se consome conforme a saúde dele.'],
+    ['Revestir com Resina', 'Usa a resina da Yarukiman Mangrove para envolver pessoas, objetos ou navios numa bolha: navios viajam submersos (1 semana de ar, até 10.000 m). A bolha resiste a Contundente e é vulnerável a Cortante e Perfurante; usuários de fruto dentro dela não ficam Enfraquecidos. PV da bolha: 50 (Grande ou menor), 100 (Enorme+), 150 (navios P/M/G), 300 (Enormes e Colossais).'],
+    ['Geomante', '3 horas coletando no terreno + Sabedoria CD 17 criam um composto de uso único (ação bônus): Pasta Curativa (floresta, cura 2× seu nível), Incenso do Predador (caverna), Pedra-Fumaça (montanha), Líquido Aromático (pântano), Areia Refrescante (deserto), Essência do Calor (tundra) ou Resina Obsidiana (vulcão, ergue uma barreira).'],
+    ['Herbalismo', 'Com Kit de Herbalismo identifica plantas e faz remédios, poções e antídotos. Soma a proficiência em Investigação, Medicina e Sobrevivência ligadas a plantas.'],
+  ],
+  'Caçador de Recompensas': [
+    ['Encontrar um Alvo', 'Teste de Sabedoria para localizar alguém: Pessoa Comum CD 12, Figura Pública 14, Criminoso Procurado 16, Identidade Oculta 25, Entidade 30. Pode repetir a cada 2 dias ou com nova pista, com CD −2 a cada teste. Cada teste custa ฿ 5.000–25.000 em subornos.'],
+    ['Alvo Marcado', 'Ao encontrar o alvo, pode marcá-lo (até 3 ao mesmo tempo): sempre sabe onde ele está, tem vantagem em Furtividade contra ele, ignora terreno difícil natural na perseguição e ele tem desvantagem para te localizar.'],
+    ['Contratos Clandestinos', 'Contatos corruptos pagam 70–90% da recompensa de criminosos entregues vivos, mesmo que você seja pirata. O Narrador pode pedir Sabedoria para achar um contato na região.'],
+  ],
+  'Carpinteiro': [
+    ['Trabalho em Madeira', 'Constrói navios de qualquer porte (Cap. 14). Eficiência: −40% nos custos extras de construção e reparo. Eficácia: navios seus ganham +12 nós e +3 de CR. Corpo Preparado: dias de obra contam para treinamento.'],
+    ['Conserto em Madeira', 'Repara navios conforme a tabela "Navio Danificado" (1d6 a 4d6 dias, custo extra de ฿ 15.000 a ฿ 300.000), pagando por PV conforme a madeira: Cedro ฿ 40.000, Carvalho ฿ 100.000, Cerejeira ฿ 190.000, Adam ฿ 500.000.'],
+    ['Confecção Rápida', 'Com uma ação, constrói 1,5 m² de chão, escada, parede ou ponte (CR 10, 10 PV por segmento). Custa ฿ 22.000 em madeira por segmento e 1d4 kits de construção.'],
+    ['Reparo Emergencial / Reforçar Estruturas', 'Sabedoria CD 15 e 1 minuto de trabalho dão ao navio uma segunda barra de 30d10 + 50 PV, gasta antes da normal e que some em 2d6 dias. Custa 1d4 kits de construção.'],
+  ],
+  'Cientista': [
+    ['Fator Linhagem', 'Com cápsula de recriação genética (฿ 1,5 bi, feita por engenheiro), laboratório e 1 bateria grande por dia: Green Blood (Sabedoria CD 17, ฿ 200 mi por frasco, dá os poderes de um fruto estudado), Akuma no Mi Artificial (só Zoan, CD 17, ฿ 2,5 bi, 1 mês), Clonagem (CD 15, a partir de ฿ 1 bi), Melhoria Genética (dá o "Heat" lunariano ou +4 PV por nível e uma perícia) e Objeto Usuário (funde uma Zoan a um objeto, ฿ 500 mi).'],
+    ['Ciência Avançada', 'Raid Suit (traje de batalha, ฿ 1 bi, só para quem fez 1 ano de Melhoria Genética e está acima do nível 10); Ciborguização (próteses que dão habilidades do "Corpo Robótico" do Ciborgue, ou melhorias menores: Sentidos Aprimorados, Disparador com a Técnica "Laser" e Olho Gravador; até 3 por pessoa); Centelha de Mother Flame (fonte de energia que recarrega 10 baterias por dia).'],
+  ],
+  'Contrabandista': [
+    ['Aquisição Sombria', 'Consegue pelo mercado negro quase qualquer item (frutos, Meito, Raid Suit, kairoseki, venenos…) com acréscimo de 20–50% no preço, ou em troca de missões. A entrega costuma levar cerca de 1 semana.'],
+    ['Membro do Submundo', 'Ao chegar num lugar novo, Sabedoria CD 16 revela atividades ilegais, rotas e autoridades disfarçadas. Pode pedir ao submundo Abrigo (3 dias), Transporte (2 dias, até 5 pessoas), Sequestro (5 dias, alvo ND 1 ou menor) ou Cobertura (1 hora). Cada serviço custa ฿ 50–100 mi, a pagar em até 1 mês.'],
+    ['Coiote', 'Criaturas fora do combate a até 6 m de você ficam imunes a dano enquanto você não estiver Incapacitado. Com a reação, transforma a falha delas num teste em sucesso e assume as consequências.'],
+  ],
+  'Cozinheiro': [
+    ['Refeição do Chef', 'Quem come uma Refeição do Chef ganha, até o próximo descanso longo: Alimento Medicinal (recupera 1 Exaustão a mais no descanso longo e dobra o tempo que aguenta uma doença), Descanso Pleno (recupera Dados de Vida extras iguais à proficiência no descanso curto e rerrola 1–3 ao subir de nível) e Nutrição Superior (1×/dia, ação para curar 2× o nível; dados de cura saem no máximo). Custa 1d4 kits de temperos + ฿ 3.000 por prato.'],
+    ['Preparo Perfeito', 'Fora de combate, quem comeu a refeição escolhe: recuperar 1 Exaustão, vantagem em Salvaguardas de Constituição por 1 minuto ou recuperar 5× o mod. de CON em PV. Usos por criatura = mod. de CON (mín. 1, máx. 3) por descanso longo.'],
+    ['Alimento Energético', 'A refeição guarda Dados Calóricos (d6): 1 + 1 a cada 2 níveis, divididos entre quem comeu. Cada dado recupera PP igual ao resultado (metade e gastando uma ação em combate). Limite de 2× o nível em PP recuperados por descanso longo.'],
+  ],
+  'Engenheiro': [
+    ['Criar Submarino', 'Constrói submarinos (Cap. 14) com −40% nos custos extras, +6 nós de velocidade, e os dias de obra contam para treinamento.'],
+    ['Engenharia Avançada', 'Projeta Canhão de Energia, Cômodos Engenhados, Mini Submarino, Motores, Propulsão a Jato e revestimento de casco com Kairoseki (navio imune a Rei dos Mares nos Testes de Navegação e +1 de CR).'],
+    ['Criar Arma de Grande Porte', 'Constrói armas de navio e de fortaleza feitas para destruir embarcações, muralhas e castelos (Cap. 14).'],
+    ['Conserto Avançado', 'Repara submarinos, robôs e construções avançadas pela tabela "Construção Avançada Danificada" (2d6 a 8d6 dias), pagando por PV em aço (฿ 550.000) ou aço temperado (฿ 750.000).'],
+    ['Construir Robô', 'Robô de ND 10 (40 dias, ฿ 500 mi, manutenção de ฿ 2 mi/mês) que obedece só a você, um ativo por vez. Ordens com ação bônus: Atacar, Defender (recebe metade do dano do protegido), Movimentação e Parar. Pode ter protocolos para quando você cair: Vingança, Salvar ou Proteger.'],
+  ],
+  'Espião': [
+    ['Infiltrador', 'Sabedoria CD 16, 7 dias e ฿ 250.000 criam uma identidade falsa convincente. Também faz máscaras de quem observou por 2 horas (Percepção CD 19 para notar; com 20 no d20 da confecção, fica perfeita). Cada disfarce gasta 1d4 caixas de maquiagem.'],
+    ['Linguagem de Espião', 'Esconde mensagens na fala, gestos e expressões que só outros espiões entendem. Pode ensinar 1 mensagem curta por dia a um aliado, ou passar uma a quem não conhece com Atuação CD 14.'],
+    ['Dispositivo de Espião', 'Um objeto disfarçado (caneta, chapéu, óculos…) com até 3 funções, cada uma com ação bônus: Alterador de Voz, Aparelho de Comunicação (5 km), Asa Delta Oculta, Chave Mestra, Escuta Direcional (30 m), Gancho Portátil (15 m), Microcâmera ou Mini Radar (6 m).'],
+  ],
+  'Farmacêutico': [
+    ['Drogas Especiais', 'Em laboratório: Rompante Lunar (força a forma Sulong por 1 minuto), Remédio Milagroso Mink (tudo cheio por 5 minutos, depois cai a 0 e arrisca morrer), Rumble Ball (Zoan ganha Controle Corporal e 2 Points; 3 por descanso forçam o despertar), Energy Steroids (cura 10× nível em PV e nível em PP, +1d6 de dano, risco de perder CON) e Antídoto Universal.'],
+    ['Controle de Doenças', 'Sabedoria CD 16 analisa uma doença ou veneno; após 3d6 dias, cria cura para 5 pessoas (CD 15, 2 horas) ou uma cura em massa por fumaça numa esfera de 9 m (CD 18, 5 horas).'],
+    ['Toxicologia', 'Com kit de venenos, cria, identifica, trata e aplica venenos. Soma a proficiência em Investigação/Percepção, Medicina, Sobrevivência e Prestidigitação ligadas a venenos.'],
+  ],
+  'Ferreiro': [
+    ['Forjar Equipamentos', 'Cria qualquer arma ou equipamento do Cap. 8 com Teste de Força, Destreza ou Sabedoria CD 16.'],
+    ['Lâminas', 'Ganha 1 Ponto de Forja a cada 10 anos de vida (recomendado começar com 2–4), +1 a cada 10 lâminas comuns e +2 por graduação. Com PF faz lâminas Meito: Wazamono (2), Ryo (4), Ô (6), Saijo Ô Wazamono (10). Também melhora qualquer arma: Expertise (1), Supremacia (2), Densidade (1), Dureza (1), Balanço (2) e Fio (2). Custa 1 lingote + ฿ 20.000 ou 20% do valor.'],
+    ['Aprimorar / Consertar Equipamento', 'Força, Destreza ou Sabedoria CD 16 para revestir uma arma (ou 10 munições) com Kairoseki, criar 20 munições de 1d12, aumentar o alcance em 6 m ou dar +3 no acerto (perde 1 a cada 3 encontros). Tirar 1 quebra o item. Também conserta equipamentos não destruídos.'],
+  ],
+  'Informante': [
+    ['Chantagem', 'Sabedoria CD 17 acha algo comprometedor sobre alguém, que pode fazer Vista Grossa, Cooperação Parcial ou Cooperação Total — o Narrador não revela qual nem se é fingimento.'],
+    ['Buscar Tripulante', 'Nos 3 primeiros dias numa ilha, acha um voluntário de uma profissão passando no teste da tabela "Busca de Tripulantes" (CD 14 a 20). Ficando 2 semanas, repete com vantagem. Não acha arqueólogos nem informantes.'],
+    ['Sempre Informado', 'Lembra de tudo o que viu ou ouviu nos últimos 30 dias, reconhece figuras importantes com Sabedoria CD 14 e consegue 40% de desconto em compras que intermediar.'],
+    ['Analisar e Buscar Informações', 'Sabedoria CD 15 nos seus arquivos dá quase qualquer informação (onde está um pirata, se uma notícia é falsa, quem está numa ilha, segredos do Governo…). Acontecimentos dos últimos 5 dias: CD 17.'],
+  ],
+  'Inventor': [
+    ['Criar Engenhoca', 'Constrói equipamentos com dials pela tabela "Engenhocas com Dial" (Clima-Tact, Burn Bazooka, Jet Board, Eisen Whip, Milky Arrow…), com o Teste de Sabedoria da tabela. Falhando, gasta 10% do custo em materiais para tentar de novo. Criar uma tecnologia nova com o mesmo efeito custa 100× mais.'],
+    ['Engenhocas Avançadas', 'Com Sabedoria CD 18: Bubble Gun (bolha de kairoseki que prende usuários de fruto), Bubble Shield (reação que anula dano e efeitos de Akuma no Mi), GP Flower (armas de pólvora soltam flores por 10 minutos) e Disparador de Pop Green.'],
+  ],
+  'Jornalista': [
+    ['Pesquisa Jornalística', 'Interpretar Fatos (reconstrói um acontecimento por fotos e relatos), Apurar a Verdade (5 minutos de conversa e Intuição CD 17 revelam mentira ou omissão), Registro Impecável (vantagem em Investigação sobre o que registrou, e nunca esquece), Coletor de Provas (10 minutos e Investigação CD 15 acham uma evidência) e Rede de Informações (1 informação por descanso longo).'],
+    ['Poder da Imprensa', 'Fake News (espalha uma notícia, verdadeira ou falsa, pelo mundo no dia seguinte; mentiras caem em 1d6 dias), Manipular Narrativas (10 minutos e Persuasão ou Enganação CD 15 convencem uma comunidade, que espalha a versão pela ilha) e Pressão da Imprensa (uma pauta por vez, pressiona uma figura pública por 1d6 semanas).'],
+  ],
+  'Médico': [
+    ['Tratar Ferimentos', '2 Dados Curativos (d6) por nível, recuperados no descanso longo. Com ação bônus a até 1,5 m, role quantos quiser para curar (metade em combate). Limite de 20× o nível de cura por criatura entre descansos longos. Gasta 1d4 kits médico.'],
+    ['Especialista em Cura', 'Curas suas fora da profissão nunca rolam menos que metade do máximo e sobem um passo de dado (1d4 → … → 2d8); curas de valor fixo aumentam 50%.'],
+    ['Paramedicina', 'Ação bônus e Sabedoria CD 18 numa criatura a 0 PV ou morta há menos de 3 minutos. Falha: remove condições não sobrenaturais e dá 50 PV temporários. Sucesso: além disso, ela volta com metade dos PV por 1 minuto e depois cai com 1 PV. O sucesso só vale uma vez por criatura por descanso longo. Gasta 1d4 kits de primeiros socorros.'],
+    ['Tratar Doenças', 'Só médicos tratam doenças: 1 minuto de análise e uma ação suspendem os sintomas por 24 horas. Doenças específicas pedem Sabedoria CD 18; comuns, CD 16, 1d4+1 dias e ฿ 30.000 (CD −mod. de CON do paciente, +1 por dia sem tratar).'],
+    ['Inspeção Médica', 'Quem passa 1 semana com você, sem Exaustão e com mais da metade dos PV, tem vantagem em Salvaguardas contra Envenenado, Letárgico, Queimado, Sangramento e doenças. Perde após 3 dias longe.'],
+    ['Cirurgia', 'Em local adequado, reverte Danos Brutais (costela quebrada, hemorragia, membro decepado…) pela tabela "Dano Brutal" (CD 13–17, 1 a 12 horas, ฿ 75.000–125.000). Gasta 1d4 kits médico.'],
+  ],
+  'Músico': [
+    ['Alma de Artista', 'Proficiente em todo instrumento e com bela voz; vantagem em Percepção pela audição; 3×/descanso longo, obriga quem resistiu a uma canção sua a repetir a Salvaguarda.'],
+    ['Repertório Encantador', 'Começa com ação + ação bônus e mantém com ação bônus a cada turno, uma música por vez, a 15 m (Salvaguarda de Presença CD 8 + prof. + PRE). Paz (tira a hostilidade por 1 minuto), Sedução (Enfeitiça um humanoide por 1 hora), Herói (imune a Amedrontado por 1 minuto), Ninar (30d10 de PV caem no sono), Distração (desvantagem em Percepção para notar outra coisa), Dança Irresistível (move os alvos na direção que você mandar) e Desrespeito (Enfurecido).'],
+  ],
+  'Navegador': [
+    ['Navegação', 'Testes de Navegação contam como da profissão. Dos Males, o Menor: ao falhar, rola o d10 duas vezes e escolhe. Cortina Climática: contra Animal Alado, Ataque Pirata, Frota da Marinha ou Rei dos Mares, um Teste de Sabedoria despista. Preparo Infalível: 1×/viagem, troca uma falha por sucesso.'],
+    ['Previsão Marítima', 'Antes de partir, Sabedoria (Blues 12, Paradise 16, Novo Mundo 18, outros 14): passando, a partida atrasa 1d4 dias mas todos os Testes de Navegação da viagem têm vantagem.'],
+    ['Mente Afiada', 'Sempre sabe onde é o Norte e quantas horas faltam para o sol nascer ou se pôr, e lembra de todo mapa, caminho ou paisagem dos últimos 30 dias.'],
+    ['Criar Mapa', 'Sabedoria (Blues 10, Paradise 14, Novo Mundo 16, outros 12) cria o mapa da rota: com ele, a viagem leva metade do tempo e os Testes de Navegação passam automaticamente.'],
+  ],
+  'Psiquiatra': [
+    ['Perspicácia Psicológica', '5 minutos de conversa e Intuição CD 16 revelam o estado emocional, gatilhos, traumas e fragilidades de uma criatura. Análise Comportamental: o mesmo com um grupo revela hierarquia, quem mente, quem manipula e a intenção do grupo.'],
+    ['Táticas Mentais', 'Diagnosticando: a cada minuto ouvindo alguém, ganha 1 Ponto Mental (até 3) que vale +5 num Teste de Presença com ela; pode usar Sabedoria no lugar de Presença na profissão. Terapia de Crise: ação bônus encerra Amedrontado, Empoderado, Enfeitiçado ou Enfurecido em alguém a 15 m. Discurso Desmotivacional: Intuição CD 17 dá desvantagem em Testes de Atributo por 5 minutos, com −1 acumulado a cada falha. Xadrez Mental: prevê as próximas ações de quem ouviu por 5 minutos.'],
+    ['Aprimorar Personalidade', 'Uma hora de consulta por dia durante 1 semana dá aos companheiros (e a você) 1 Singularidade Suave extra e anula as penalidades dos Defeitos, enquanto as consultas continuarem (nada ligado a fatores externos ou limitações físicas).'],
+  ],
+  'Timoneiro': [
+    ['Combate', 'Investida (Força ou Sabedoria contra a CR do alvo; seu navio sofre só 3d10), Ritmo de Combate (+3 ataques de canhão, +2 por categoria acima de Pequeno), Estabilidade Absoluta (dano de colisão pela metade) e Dados de Manobra (2d10 por nível, gastos para reduzir dano no navio).'],
+    ['Condução', 'Manobras Ampliadas (até 6 Ações de Manobra), Eficiência da Tripulação (−10 tripulantes mínimos de navegação), Ajudante Entendido (construção do navio na metade do tempo, ajudando o carpinteiro) e Forçando Limites (ignora a perda de velocidade por dano).'],
+    ['Controle', 'Cavalgar Correntes (move como corrente nível 2 a favor), Direção Absoluta (metade da perda de velocidade por correntes, controle até no nível 3), Impulso (3 Manobras: corrente nível 3 a favor) e Surf Naval (4 Manobras: ataques contra o navio com desvantagem por 1 minuto).'],
+    ['Manobrar Desastres Naturais', 'Testes de Desastre Natural contam como da profissão. Resiliência Náutica (metade do dano na falha, nada no sucesso), Reação Instintiva (troca Maremoto, Redemoinho ou Tufão por Chuva, 1×/viagem) e Controle Sob Pressão (1×/viagem, falha vira sucesso).'],
+  ],
+  'Sem Profissão': [
+    ['Ajudante Perfeito', '3×/descanso longo, ajuda alguém num Teste de Atributo de qualquer profissão com +5 (em combate, pela ação "Ajudar").'],
+    ['Foco', 'Proficiência em 2 perícias à escolha (menos Haki, Sobrenatural e Sorte).'],
+    ['Parceiro de Treino', 'Corta pela metade o tempo de treinamento de alguém, se não exigir tutor; nesse período você não treina.'],
+    ['Tempo Livre', 'Assume até 5 funções no navio sem perder dias de treinamento.'],
+  ],
+};
 
 const ANTECEDENTES = ['Amnésia', 'Artista', 'Criminoso', 'Derrotado', 'Erudito', 'Escravo', 'Exilado', 'Família D.',
   'Marinheiro', 'Mercador', 'Mercenário', 'Nobre', 'Órfão', 'Pescador', 'Político', 'Predestinado', 'Revolucionário',
@@ -1095,6 +1602,91 @@ const HAKI = {
   ],
 };
 
+// Descrição dos talentos de Haki (Livro do Jogador 2.1, cap. 7), resumida.
+// b = o talento · d = Forma Dominada · a = Forma Avançada (null quando o talento não tem).
+const HAKI_DESC = {
+  // ── Armamento
+  'Ataque Infuso': { b: 'Suas jogadas de ataque de Técnica e o dano Contundente, Cortante ou Perfurante das suas Técnicas atingem usuários de Akuma no Mi normalmente: ignoram Intangibilidade, resistências e invulnerabilidades (exceto resistências comuns não sobrenaturais e as das Zoan). Nos ataques comuns, vale para uma forma à escolha: desarmado, corpo a corpo com arma ou à distância.',
+    d: 'Escolha mais uma forma de ataque comum.', a: 'Escolha mais uma forma de ataque comum.' },
+  'Endurecimento Defensivo': { b: 'Você ganha 20 Pontos de Escudo, que funcionam como PV temporários: coexistem com eles, são gastos antes deles e se renovam após 10 minutos fora de combate. Têm resistência a dano Cortante, Perfurante e Contundente.',
+    d: 'Passa a 40 Pontos de Escudo.', a: 'Passa a 60 Pontos de Escudo.' },
+  'Endurecimento Ofensivo': { b: 'Ataques comuns com dano Contundente, Cortante ou Perfurante causam +1 de dano.',
+    d: 'O extra vira 1d4.', a: 'O extra vira 1d6.' },
+  'Chama do Armamento': { b: 'Você pode converter o dano extra do Endurecimento Ofensivo em dano de Fogo.',
+    d: 'Suas Técnicas nunca causam menos que metade do dano máximo (antes de reduções), e até metade do dano delas pode virar Fogo.',
+    a: 'Ao executar uma Técnica, role dados extras iguais ao grau dela (dobram no crítico). Eles só ajudam a Técnica a chegar ao dano máximo, nunca a passar dele.' },
+  'Emissão Defensiva': { b: 'Ao ser alvo de ataque ou de Salvaguarda de Força ou Destreza, use a reação para erguer uma barreira à sua frente e num cone de 6 m atrás de você: você e quem estiver na área não sofrem o dano desse ataque ou Técnica. 1 vez por descanso longo.',
+    d: 'Também recupera no descanso curto.', a: 'Contra ataque corpo a corpo, você pode repelir o golpe antes que aconteça: o ataque é cancelado e o turno do atacante acaba.' },
+  'Escudo de Vontade': { b: 'Com uma ação, faça Salvaguarda de Vontade CD 21: no sucesso, desfaz um efeito ativo de Akuma no Mi que esteja afetando seu corpo (menos os que só causam dano).',
+    d: 'Pode usar com ação bônus ou reação gastando 2 PP, e a CD cai para 17.', a: 'Usado como reação contra dano de Técnica de Akuma no Mi, também corta esse dano pela metade.' },
+  'Emissão Ofensiva': { b: 'Seus ataques corpo a corpo ganham +1,5 m de alcance. Num ataque comum com 18–19 no dado (sem ser crítico), os dados de dano causam o valor máximo (vale também para o Endurecimento Ofensivo).',
+    d: 'Funciona com 16–19.', a: 'Funciona com 14–19.' },
+  'Corpo Armadurado': { b: 'Com uma ação bônus, por 1 minuto você soma +2 em todas as Salvaguardas. 1 vez por descanso longo.',
+    d: 'Enquanto ativo, os Pontos de Escudo do Endurecimento Defensivo resistem a todo tipo de dano, menos Verdadeiro.',
+    a: 'Enquanto ativo, o dado do Endurecimento Ofensivo sobe um passo (1 → 1d4 → 1d6 → 1d8).' },
+  'Destruição Interna': { b: 'Ataques (comuns ou de Técnica) com dano Contundente, Cortante ou Perfurante passam a causar dano Verdadeiro.',
+    d: 'Escolha uma característica da Maestria "Armamento Máximo" ou "Imaculado" (sem os PA que ela daria).', a: null },
+  'Armadura Suprema': { b: 'Quem te causar dano com ataque comum corpo a corpo, sem ter Emissão Ofensiva, sofre 1d10 de dano Contundente.',
+    d: 'Enquanto puder usar o Haki do Armamento, você é imune aos efeitos de crítico em ataques comuns (sofre o dano normal).',
+    a: 'Os Pontos de Escudo do Endurecimento Defensivo (Forma Avançada) sobem para 80, e seus PV máximos aumentam 40 de forma permanente.' },
+  'Defesa Suprema': { b: 'Ao sofrer dano, gaste 2 PP e a reação para manter qualquer resistência ou invulnerabilidade (menos contra dano Verdadeiro), acima de qualquer outro efeito.',
+    d: 'Não custa mais PP, e o efeito dura até o início do seu próximo turno.', a: 'Você pode fazer um ataque comum como parte da mesma reação.' },
+  // ── Observação
+  'Perceber Emoção': { b: 'Sabe na hora se uma criatura que você vê a até 6 m está hostil, neutra ou amigável com você, sem teste.',
+    d: 'Vantagem em Testes de Presença com criaturas amigáveis.', a: 'Vantagem em Testes de Presença com criaturas neutras.' },
+  'Antecipação': { b: 'Ao usar uma característica que dependa de acerto, ser alvo de ataque ou fazer Salvaguarda, você pode decidir ativá-la só depois de saber se o ataque ou efeito funcionou — sem desperdiçar PP ou usos.',
+    d: 'Ao sofrer dano, pode perguntar ao Narrador o valor exato antes de decidir usar suas características.',
+    a: 'Se a sua reação não causar nem reduzir dano e não tiver nenhum efeito, você a recupera no fim daquele turno.' },
+  'Antevisão': { b: 'Com ação bônus e Concentração, +1 na CR enquanto mantiver. Sem estar concentrado nisso, ao ser alvo de ataque comum, use a reação para +2 na CR até seu próximo turno.',
+    d: '+2 na forma com Concentração e +3 na reação.', a: '+3 na forma com Concentração e +4 na reação.' },
+  'Previsão': { b: '+1 para acertar em jogadas de ataque (comuns e de Técnica).', d: 'O bônus vira +2.', a: 'O bônus vira +3.' },
+  'Perceber Presença': { b: 'Com uma ação e Concentração, sente criaturas vivas num raio de 6 m: percepção às cegas, vendo as presenças como auras mesmo invisíveis ou escondidas.',
+    d: 'O raio sobe para 12 m.', a: 'Sabe o estado (vivo, morto, ferido, saudável) de qualquer criatura que você conheça na ilha em que está.' },
+  'Clarividência': { b: 'Quando uma Técnica com jogada de ataque não afeta nenhuma criatura, ambiente, estrutura ou objeto, você gasta só metade dos PP dela (arred. para cima).',
+    d: 'Nesse caso pode não gastar PP nenhum, até 3 vezes por descanso longo.', a: 'A Forma Dominada também vale para Técnicas de Salvaguarda que não afetem nada.' },
+  'Passo Antecipado': { b: 'Uma vez por rodada, ignora um ataque comum provocado pelo seu deslocamento — mesmo um que ignore esse tipo de característica.', d: null, a: null },
+  'Antevisão Sobrenatural': { b: 'Contra efeitos de Salvaguarda de Destreza para meio dano: passando, não sofre nada; falhando, sofre só metade.', d: null, a: null },
+  'Previsão Sobrenatural': { b: 'Cada vez que erra um ataque de Técnica (ou ela não afeta nada), acumula 1 dado extraordinário de dano/cura, até 5, até o fim do encontro. Eles só ajudam uma Técnica a chegar ao máximo, nunca passar.',
+    d: 'Pode gastar esses dados para recuperar 1 PP cada.', a: 'Pode gastar esses dados para recuperar 2 PP cada.' },
+  'Perceber Desafio': { b: 'Uma vez por encontro, com uma ação, foca numa criatura a até 6 m: o Narrador revela o ND ou os PV aproximados dela.',
+    d: 'Você sente a presença de qualquer criatura poderosa (ND acima do seu nível, ou a critério do Narrador) que esteja ou chegue na sua ilha.', a: null },
+  'Vidente': { b: 'Depois de cada descanso longo, role 1d20 e guarde o valor. Até o próximo descanso, pode trocar o resultado de um Teste ou Salvaguarda seu ou de quem você vê por esse valor (decida após rolar, antes de saber se passou).',
+    d: 'Guarda 2 dados por descanso longo.', a: null },
+  'Perceber o Futuro': { b: 'Fora de combate, pode pedir ao Narrador uma visão dos próximos 30 segundos — que pode ser enganosa ou incompleta.',
+    d: 'Enxerga até 2 minutos à frente.', a: 'Enxerga até 10 minutos à frente.' },
+  'Premonição': { b: 'Você não pode ser surpreendido, não rola iniciativa e sempre age primeiro.', d: null, a: null },
+  'Ver o Futuro': { b: 'Ao falhar numa Salvaguarda ou ataque comum, pode tratá-lo como sucesso. 3 vezes por descanso longo.', d: null, a: null },
+  'Antecipar Movimentos': { b: 'Gaste 2 PP quando uma criatura a até 1,5 m tentar levantar, escalar, saltar ou usar a reação: a tentativa é impedida, sem gastar ação. O alvo fica com deslocamento 0 até o turno dele e perde os recursos da tentativa. 1 vez por rodada por criatura.', d: null, a: null },
+  'Antevisão Especial': { b: 'Ataques comuns contra você, de criaturas sem Haki da Observação, têm desvantagem.',
+    d: 'Vantagem em Salvaguardas de Destreza contra essas criaturas.', a: null },
+  'Ímpeto Antecipado': { b: 'Ao usar uma Técnica de Combate de dano direto com Ação Poderosa, faz um ataque comum extra contra o alvo na mesma ação. 3 vezes por descanso longo (não acumula com "Ímpeto Desperto").',
+    d: 'Sem limite de usos.', a: null },
+  'Previsão Especial': { b: 'Seus ataques comuns ignoram reações que eles ativariam, e o alvo perde a reação até o turno dele.',
+    d: 'Escolha uma característica da Maestria "Profeta" ou "Imaculado" (sem os PA que ela daria).', a: null },
+  'Antevisão Profética': { b: 'Uma vez por rodada, ao usar uma Técnica ou característica com a reação, usa outra de reação na mesma reação (diferente e sem causar dano). 1 vez por descanso longo.',
+    d: '3 vezes por descanso longo.', a: '5 vezes, recuperando em descanso curto ou longo.' },
+  'Previsão Profética': { b: 'Ao usar uma Técnica ou característica com a ação bônus, usa outra de ação bônus na mesma ação (diferente e sem causar dano). 1 vez por descanso longo.',
+    d: '3 vezes por descanso longo.', a: '5 vezes, recuperando em descanso curto ou longo.' },
+  // ── Rei
+  'Rei': { b: 'Ao revelar o Haki do Rei: Presença Real (sob estresse extremo, libera uma onda de 9 m que pode desmaiar inimigos), Carisma do Conquistador (+2 em Vontade, com limite 26), Ambição Crescente (+2 PA no 10º nível e a cada nível depois, retroativo) e Espírito Selvagem (vantagem em Vontade contra animais não lendários).', d: null, a: null },
+  'Autoridade do Rei': { b: 'Com uma ação, uma criatura a até 18 m faz Salvaguarda de Vontade; falhando, fica Amedrontada até o fim do próximo turno dela ou desmaia (regras de "Desmaiando Inimigos").',
+    d: 'Pode usar com ação bônus.', a: 'Pode usar como reação ao ser alvo de ataque comum.' },
+  'Superação Majestosa': { b: 'Com uma ação bônus, recupera 1 uso de uma característica de usos limitados ou que volte em descanso (menos esta). 1 vez por descanso longo.',
+    d: '2 vezes por descanso longo.', a: null },
+  'Imposição do Rei': { b: 'Ao acertar um ataque, derruba na hora criaturas de ND 2 ou menos que possam desmaiar: vão a 0 PV, inconscientes.',
+    d: 'ND máximo 4.', a: 'ND máximo 6.' },
+  'Vontade do Rei': { b: 'Caído a 0 PV, após o 5º turno inconsciente pode voltar com todos os PV e metade dos PP. Dois minutos depois fica Paralisado por 1 hora e com 5 níveis de Exaustão, recuperando 1 por descanso longo (com tempo dobrado).',
+    d: 'Os descansos longos voltam ao tempo normal.', a: 'A inconsciência cai para 2 turnos.' },
+  'Soberania do Rei': { b: 'Com uma ação, por até 1 minuto, uma onda de 15 m pode amedrontar ou desmaiar as criaturas que você escolher. Quem resiste e ainda pode desmaiar gasta o dobro de deslocamento dentro da área.',
+    d: 'Alcance de 30 m.', a: 'Alcance de 60 m.' },
+  'Presença Esmagadora': { b: 'Criatura hostil sem Haki do Rei que começar o turno a até 3 m de você faz Salvaguarda de Vontade ou sofre 2d6 de dano Psíquico.',
+    d: 'Escolha uma característica da Maestria "Ambição Suprema" ou "Imaculado" (sem os PA que ela daria).',
+    a: 'Numa Técnica contra um único alvo, some dados de dano extras iguais ao ND dele. 1 vez por descanso longo.' },
+  'Armamento do Rei': { b: 'Uma vez por turno, gaste 3 PP para tornar um ataque comum um crítico automático com todos os dados no máximo.',
+    d: 'Os PV que seus ataques tiram não podem ser recuperados até o fim do encontro.', a: 'Condições que você causa com duração definida não podem ser encerradas antes por Salvaguardas ou características.' },
+  'Emissão de Autoridade': { b: 'Com uma ação, uma criatura a até 120 m que você veja ou sinta faz Salvaguarda de Vontade CD 18. Sucesso: desvantagem numa jogada até o fim do próximo turno dela. Falha: no próximo turno fica com deslocamento 0 e só pode fazer uma entre Ação, Ação Poderosa ou Ação Bônus.', d: null, a: null },
+};
+
 const XP_TABELA = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
 
 const GRAU_POR_NIVEL = [[1, 1], [3, 2], [6, 3], [9, 4], [12, 5], [16, 6], [20, 7]];
@@ -1135,6 +1727,8 @@ const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLow
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const uid = () => Math.random().toString(36).slice(2, 10);
 const fmtNum = n => Number(n || 0).toLocaleString('pt-BR');
+// Texto sem marcação (as caixas de texto podem guardar formatação em HTML).
+const textoPuro = s => { const d = document.createElement('div'); d.innerHTML = String(s || ''); return (d.textContent || '').replace(/\s+/g, ' ').trim(); };
 
 function getPath(obj, path) {
   return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
@@ -1179,7 +1773,8 @@ function novoPersonagem() {
     habilidades: ['', '', '', ''],
     maestria: { nome: '', tracos: {}, especial: '' },
     tecnicas: [],
-    akuma: { nome: '', categoria: '', tipoUsuario: '', tipoDespertar: '', desperto: '', manifestacoes: '', tracos: '', tecnicas: [] },
+    caracteristicas: [],
+    akuma: { nome: '', categoria: '', tipoUsuario: '', tipoDespertar: '', propriedades: '', desperto: '', manifestacoes: '', tracos: '', tecnicas: [] },
     haki: { aptidao: '', principal: '', paTotal: 0, talentos: {} },
     pers: {
       alcunha: '', tripulacao: '', sonho: '', caminho: '', historia: '', aparencia: '', fisico: '',
@@ -1454,6 +2049,14 @@ function compute() {
   const ok = esp <= 5 && ['Suave', 'Média', 'Forte'].every(t => (cs[t] || 0) === (cdf[t] || 0));
   C.indivInfo = `${esp}/5 espaços ${ok ? '✔' : '⚠ singularidades e defeitos não batem'}`;
   C.indivOk = ok;
+  const kc = Object.keys(ESTILO_CARACT).find(k => norm(k) === norm(S.estilo));
+  const faltam = kc ? ESTILO_CARACT[kc].filter(([nv, n]) => nv <= clamp(lvl, 1, 20) && !S.caracteristicas.some(c => norm(c.nome) === norm(n))).length : 0;
+  C.caractInfo = !S.estilo ? 'Escolha um Estilo de Combate para trazer as características dele.'
+    : !kc ? `${S.estilo} não está no livro: escreva as características com “Própria”.`
+    : faltam ? `${faltam} ${faltam === 1 ? 'característica' : 'características'} de ${kc} até o ${clamp(lvl, 1, 20)}º nível ainda fora da ficha — use “Do estilo”.`
+    : `Todas as características de ${kc} até o ${clamp(lvl, 1, 20)}º nível estão na ficha. Edite à vontade: escolhas, usos, anotações.`;
+  const nd = S.pers.defeitos.length;
+  C.defInfo = nd ? `${nd} ${nd === 1 ? 'defeito' : 'defeitos'}` : '';
 }
 
 // ---------- renderização ----------
@@ -1533,6 +2136,47 @@ function renderHabilidades() {
     </div>`).join('');
 }
 
+// ---------- características do estilo ----------
+const chaveEstilo = () => Object.keys(ESTILO_CARACT).find(k => norm(k) === norm(S.estilo)) || '';
+function caractDoEstilo(nome) {
+  const k = chaveEstilo();
+  const procurar = lista => (lista || []).find(([, n]) => norm(n) === norm(nome));
+  return procurar(ESTILO_CARACT[k]) || Object.values(ESTILO_CARACT).map(procurar).find(Boolean) || null;
+}
+function renderCaracteristicas() {
+  const k = chaveEstilo();
+  $('#dlCaract').innerHTML = (ESTILO_CARACT[k] || []).map(([nv, n]) => `<option value="${esc(n)}">${nv}º nível</option>`).join('');
+  const ordem = S.caracteristicas.map((c, i) => i).sort((a, b) => num(S.caracteristicas[a].nivel) - num(S.caracteristicas[b].nivel));
+  $('#caracteristicas').innerHTML = ordem.map(i => {
+    const c = S.caracteristicas[i];
+    return `
+    <div class="caract${c.fonte === 'estilo' ? ' auto' : ''}">
+      <div class="row">
+        <input type="number" min="1" max="20" data-bind="caracteristicas.${i}.nivel" class="w60 center" title="Nível em que entra" data-rerender="caract">
+        <input data-bind="caracteristicas.${i}.nome" list="dlCaract" class="grow strong" placeholder="Nome da característica" data-rerender="caract">
+        ${delBtn('caracteristicas', i)}
+      </div>
+      <textarea data-bind="caracteristicas.${i}.desc" rows="${c.desc && c.desc.length > 160 ? 4 : 2}" class="sub" placeholder="O que ela faz, escolhas feitas, usos…"></textarea>
+    </div>`;
+  }).join('') || '<p class="hint" style="margin:0">Nenhuma característica ainda. Use “Do estilo” para trazer as do seu Estilo de Combate, ou “Própria” para escrever uma.</p>';
+}
+// Traz as características do estilo até o nível atual, sem repetir as que já estão na ficha.
+function preencherCaract(silencioso) {
+  const k = chaveEstilo();
+  if (!k) { if (!silencioso) toast(S.estilo ? 'Esse estilo não está no livro — use “Própria”.' : 'Escolha um Estilo de Combate primeiro.', 'bad'); return 0; }
+  const lvl = clamp(num(S.nivel), 1, 20);
+  const tem = new Set(S.caracteristicas.map(c => norm(c.nome)));
+  const novas = ESTILO_CARACT[k].filter(([nv, n]) => nv <= lvl && !tem.has(norm(n)))
+    .map(([nv, n, d]) => ({ nivel: nv, nome: n, desc: d, fonte: 'estilo' }));
+  const ava = [4, 8, 12, 16, 20].filter(n => n <= lvl).length;
+  if (ava && !tem.has(norm('Aumento no Valor de Atributo')))
+    novas.push({ nivel: 4, nome: 'Aumento no Valor de Atributo', desc: 'No 4º, 8º, 12º, 16º e 20º nível: +2 num atributo ou +1 em dois (limite 20; 22 a partir do 12º e 24 a partir do 16º).', fonte: 'estilo' });
+  S.caracteristicas.push(...novas);
+  renderCaracteristicas(); fillBindings($('#caracteristicas')); updateOutputs(); save();
+  if (!silencioso) toast(novas.length ? `${novas.length} ${novas.length === 1 ? 'característica adicionada' : 'características adicionadas'} de ${k}.` : 'A ficha já tem todas as características do estilo até este nível.');
+  return novas.length;
+}
+
 function renderMaestria() {
   const tr = MAESTRIAS[S.maestria.nome];
   $('#maestriaTracos').innerHTML = tr
@@ -1594,9 +2238,29 @@ function renderTecnicas(path, containerId) {
         <label class="field"><span>Salvaguarda</span><input data-bind="${p}.salva" placeholder="DES / —"></label>
       </div>
       <label class="field"><span>Requisito / Efeito</span><textarea rows="2" data-bind="${p}.desc"></textarea></label>
+      ${t.forma ? `
+      <div class="tech-forma">
+        <div class="tech-head">
+          <select data-bind="${p}.forma.tipo" class="w100" style="width:170px!important">
+            ${['Forma Alternativa', 'Forma Aperfeiçoada'].map(f => opt(f, f, t.forma.tipo === f)).join('')}</select>
+          <input data-bind="${p}.forma.nome" placeholder="Nome da forma" class="strong grow">
+          <button class="x" data-delforma="${path}" data-i="${i}" title="Tirar a forma">✕</button>
+        </div>
+        <div class="grid g4 tight">
+          <label class="field"><span>Grau</span><input type="number" min="1" max="7" data-bind="${p}.forma.grau"></label>
+          <label class="field"><span>Custo PP</span><input type="number" min="0" data-bind="${p}.forma.pp"></label>
+          <label class="field"><span>Dano</span><input data-bind="${p}.forma.dano" placeholder="6d10"></label>
+          <label class="field"><span>Tipo de dano</span><input data-bind="${p}.forma.tipoDano"></label>
+        </div>
+        <label class="field"><span>O que muda</span><textarea rows="2" data-bind="${p}.forma.texto"></textarea></label>
+        <div class="tech-foot"><span></span><button class="btn small accent" data-useforma="${path}" data-i="${i}">Usar forma</button></div>
+      </div>` : ''}
       <div class="tech-foot">
         <label class="check small"><input type="checkbox" class="chk" data-bind="${p}.ataque"> rola ataque</label>
-        <button class="btn accent" data-use="${path}" data-i="${i}">Usar técnica</button>
+        <span class="row">
+          ${t.forma ? '' : `<button class="btn small" data-addforma="${path}" data-i="${i}" title="Forma Alternativa ou Aperfeiçoada">＋ Forma</button>`}
+          <button class="btn accent" data-use="${path}" data-i="${i}">Usar técnica</button>
+        </span>
       </div>
     </div>`;
   }).join('') || '<p class="hint">Nenhuma técnica ainda. Use “＋ Técnica”. O botão “Usar” desconta PP e rola ataque/dano.</p>';
@@ -1610,22 +2274,98 @@ function renderHaki() {
   $('#haki').innerHTML = Object.entries(HAKI).map(([tipo, tal]) => `
     <div class="card">
       <h3>${titulos[tipo]}</h3>
-      <table class="haki-table"><thead><tr><th>Talento</th><th>PA</th><th title="Possui">P</th><th title="Dominado">D</th><th title="Aprimorado">A</th></tr></thead><tbody>
+      <table class="haki-table"><thead><tr><th>Talento</th><th>PA</th><th title="Possui o talento">P</th><th title="Forma Dominada">D</th><th title="Forma Avançada">A</th></tr></thead><tbody>
       ${tal.map(([nome, est, custo, req]) => {
         const reqOk = req.every(possui);
         const estOk = (ordem[est] || 0) <= Math.max(1, estagioAtual) || possui(nome);
         const bloqueado = !(reqOk && estOk);
         const k = `haki.talentos.${nome}`;
-        return `<tr class="${bloqueado ? 'locked' : ''} ${possui(nome) ? 'owned' : ''}">
-          <td><b>${nome}</b><small>${est}${req.length ? ' · req: ' + req.join(', ') : ''}</small></td>
+        const desc = HAKI_DESC[nome] || {};
+        const t = S.haki.talentos[nome] || {};
+        // forma que o talento não tem fica desligada (a menos que já esteja marcada)
+        const caixa = (campo, forma, tem) => `<td data-hforma="${forma}"><input type="checkbox" class="chk" data-bind="${k}.${campo}" data-rerender="haki"${!tem && !t[campo] ? ' disabled' : ''}></td>`;
+        return `<tr class="${bloqueado ? 'locked' : ''} ${possui(nome) ? 'owned' : ''}" data-talento="${esc(nome)}">
+          <td class="hnome"><b>${nome}</b><small>${est}${req.length ? ' · req: ' + req.join(', ') : ''}</small></td>
           <td class="center">${custo}</td>
-          <td><input type="checkbox" class="chk" data-bind="${k}.possui" data-rerender="haki"></td>
-          <td><input type="checkbox" class="chk" data-bind="${k}.dominado" data-rerender="haki"></td>
-          <td><input type="checkbox" class="chk" data-bind="${k}.aprimorado" data-rerender="haki"></td>
+          ${caixa('possui', 'b', true)}${caixa('dominado', 'd', !!desc.d)}${caixa('aprimorado', 'a', !!desc.a)}
         </tr>`;
       }).join('')}
       </tbody></table>
     </div>`).join('');
+  if (hakiTip.fixo) $$('#haki tr[data-talento]').forEach(tr => tr.classList.toggle('pinned', tr.dataset.talento === hakiTip.nome));
+}
+
+// ---------- descrição dos talentos de Haki ----------
+// Passar o mouse mostra; clicar no nome (ou Shift+clique na linha) fixa a caixa,
+// que então aceita seleção de texto. Esc ou clique fora solta.
+const hakiTip = { nome: '', foco: '', fixo: false };
+function textoTalento(nome, foco) {
+  const linha = Object.values(HAKI).flat().find(([n]) => n === nome);
+  const d = HAKI_DESC[nome] || {};
+  if (!linha) return '';
+  const [, est, custo, req] = linha;
+  const forma = (k, rot) => d[k] ? `<p class="forma${foco === k ? ' foco' : ''}"><b>${rot}</b><br>${esc(d[k])}</p>` : '';
+  return `<button type="button" class="fechar" data-tipfechar aria-label="Fechar">✕</button>
+    <h5>${esc(nome)}</h5>
+    <div class="meta">${est} · ${custo} PA${req.length ? ' · requer ' + esc(req.join(', ')) : ''}</div>
+    <p class="${foco === 'b' ? 'forma foco' : ''}">${esc(d.b || 'Sem descrição.')}</p>
+    ${forma('d', 'Forma Dominada')}${forma('a', 'Forma Avançada')}
+    ${!d.d && !d.a ? '<p class="meta" style="margin:0">Este talento não tem Forma Dominada nem Avançada.</p>' : ''}
+    <div class="dica">clique no nome para fixar e copiar</div>`;
+}
+function mostrarTalento(nome, foco, x, y) {
+  const tip = $('#hakiTip');
+  if (!nome) { tip.hidden = true; return; }
+  if (hakiTip.nome !== nome || hakiTip.foco !== foco || tip.hidden) tip.innerHTML = textoTalento(nome, foco);
+  hakiTip.nome = nome; hakiTip.foco = foco;
+  tip.hidden = false;
+  posicionarTip(x, y);
+}
+function posicionarTip(x, y) {
+  const tip = $('#hakiTip'), m = 14;
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let left = x + m, top = y + m;
+  if (left + w > innerWidth - 8) left = Math.max(8, x - w - m);
+  if (top + h > innerHeight - 8) top = Math.max(8, innerHeight - h - 8);
+  tip.style.left = left + 'px'; tip.style.top = top + 'px';
+}
+function fixarTalento(nome, x, y) {
+  hakiTip.fixo = true;
+  mostrarTalento(nome, '', x, y);
+  $('#hakiTip').classList.add('pinned');
+  $$('#haki tr[data-talento]').forEach(tr => tr.classList.toggle('pinned', tr.dataset.talento === nome));
+}
+function soltarTalento() {
+  hakiTip.fixo = false;
+  $('#hakiTip').classList.remove('pinned');
+  $('#hakiTip').hidden = true;
+  $$('#haki tr.pinned').forEach(tr => tr.classList.remove('pinned'));
+}
+function ligarDicasHaki() {
+  const box = $('#haki');
+  box.addEventListener('mousemove', e => {
+    if (hakiTip.fixo) return;
+    const tr = e.target.closest('tr[data-talento]');
+    if (!tr) { $('#hakiTip').hidden = true; return; }
+    const td = e.target.closest('td[data-hforma]');
+    mostrarTalento(tr.dataset.talento, td ? td.dataset.hforma : '', e.clientX, e.clientY);
+  });
+  box.addEventListener('mouseleave', () => { if (!hakiTip.fixo) $('#hakiTip').hidden = true; });
+  box.addEventListener('click', e => {
+    const tr = e.target.closest('tr[data-talento]');
+    if (!tr) return;
+    const noNome = e.target.closest('td.hnome');
+    if (!noNome && !e.shiftKey) return;           // clique na caixa marca a forma normalmente
+    if (e.shiftKey && !noNome) e.preventDefault(); // Shift+clique na caixa só fixa
+    if (hakiTip.fixo && hakiTip.nome === tr.dataset.talento) return soltarTalento();
+    fixarTalento(tr.dataset.talento, e.clientX, e.clientY);
+  });
+  document.addEventListener('click', e => {
+    if (!hakiTip.fixo) return;
+    if (e.target.closest('[data-tipfechar]')) return soltarTalento();
+    if (!e.target.closest('#hakiTip') && !e.target.closest('#haki tr[data-talento]')) soltarTalento();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && hakiTip.fixo) soltarTalento(); });
 }
 
 function renderIndividualidades() {
@@ -1642,39 +2382,80 @@ function renderIndividualidades() {
 }
 
 function renderInventario() {
-  $('#inventario').innerHTML = (S.inventario.length ? `<div class="row head"><span class="grow">Item</span><span class="w60">Qt.</span><span class="w80">Peso (kg)</span><span class="w24"></span></div>` : '')
+  $('#inventario').innerHTML = (S.inventario.length ? `<div class="row head"><span class="w24" style="width:34px"></span><span class="grow">Item</span><span class="w60">Qt.</span><span class="w80">Peso (kg)</span><span class="w24"></span></div>` : '')
     + S.inventario.map((it, i) => `
     <div class="row">
+      <button type="button" class="item-thumb" data-item="${i}" title="Detalhes: descrição, tamanho e imagem">${it.img ? `<img src="${esc(it.img)}" alt="">` : '▤'}</button>
       <input data-bind="inventario.${i}.item" class="grow" placeholder="Item">
       <input type="number" data-bind="inventario.${i}.qt" class="w60 center" min="0">
       <input type="number" data-bind="inventario.${i}.peso" class="w80" step="0.1" min="0">
       ${delBtn('inventario', i)}
-    </div>`).join('');
+    </div>${it.desc || it.tamanho ? `<div class="item-desc" data-item="${i}">${esc([it.tamanho, textoPuro(it.desc)].filter(Boolean).join(' · '))}</div>` : ''}`).join('');
 }
 
+// Treinamentos: um painel para os concluídos e outro para os que ainda estão em treino.
 function renderTreinamentos() {
-  $('#treinamentos').innerHTML = S.treinamentos.map((t, i) => `
-    <div class="row">
-      <input data-bind="treinamentos.${i}.nome" class="grow" placeholder="Treinamento">
-      <select data-bind="treinamentos.${i}.status" class="w100">
-        ${opt('treinando', 'Treinando', t.status === 'treinando')}${opt('treinado', 'Treinado', t.status === 'treinado')}</select>
-      <input data-bind="treinamentos.${i}.tt" class="w60" placeholder="TT">
-      <input type="number" data-bind="treinamentos.${i}.pt" class="w60" placeholder="PT">
-      ${delBtn('treinamentos', i)}
-    </div>`).join('');
+  const linha = (t, i) => `
+    <div class="treino">
+      <div class="row">
+        <input data-bind="treinamentos.${i}.nome" class="grow strong" placeholder="Treinamento">
+        <input data-bind="treinamentos.${i}.tt" class="w60" placeholder="TT" title="Tempo de treino">
+        <input type="number" data-bind="treinamentos.${i}.pt" class="w60" placeholder="PT" title="Pontos de Treinamento">
+        <button type="button" class="btn small" data-mover-treino="${i}" title="${t.status === 'treinado' ? 'Voltar para Em treinamento' : 'Marcar como concluído'}">${t.status === 'treinado' ? '↺' : '✔'}</button>
+        ${delBtn('treinamentos', i)}
+      </div>
+      <textarea data-bind="treinamentos.${i}.desc" rows="2" class="sub" placeholder="O que esse treinamento faz (opcional)"></textarea>
+    </div>`;
+  const lista = st => S.treinamentos.map((t, i) => (t.status === st ? linha(t, i) : '')).join('');
+  $('#treinados').innerHTML = lista('treinado') || '<p class="hint" style="margin:0">Nenhum treinamento concluído.</p>';
+  $('#treinando').innerHTML = lista('treinando') || '<p class="hint" style="margin:0">Nada em treino agora.</p>';
+}
+
+// ---------- detalhes do item do inventário ----------
+let itemAberto = -1;
+function abrirItem(i) {
+  const it = S.inventario[i];
+  if (!it) return;
+  itemAberto = i;
+  const p = `inventario.${i}`;
+  $('#itemCampos').innerHTML = `
+    <label class="field"><span>Nome</span><input data-bind="${p}.item" placeholder="Item"></label>
+    <div class="grid g3">
+      <label class="field"><span>Quantidade</span><input type="number" min="0" data-bind="${p}.qt"></label>
+      <label class="field"><span>Peso (kg)</span><input type="number" min="0" step="0.1" data-bind="${p}.peso"></label>
+      <label class="field"><span>Tamanho</span><input data-bind="${p}.tamanho" list="dlTamanhoItem" placeholder="Pequeno, Médio…"></label>
+    </div>
+    <label class="field"><span>Descrição</span><textarea data-bind="${p}.desc" rows="6" placeholder="Para que serve, de onde veio, efeitos…"></textarea></label>`;
+  pintarImagemItem();
+  fillBindings($('#itemCampos'));
+  $('#dlgItem').showModal();
+}
+function pintarImagemItem() {
+  const it = S.inventario[itemAberto] || {};
+  $('#itemImg').src = it.img || '';
+  $('#itemImg').parentElement.classList.toggle('has', !!it.img);
+  $('#itemTirarImg').hidden = !it.img;
 }
 
 function renderProfissoes() {
   const grad = sel => ['-', 'Especialista', 'Mestre', 'Grão-Mestre'].map(g => opt(g, g, sel === g)).join('');
-  const card = (titulo, nomeBind, gradBind, conhBind, gradVal) => `
+  const conhecimentos = nome => {
+    const k = Object.keys(PROF_CONHEC).find(p => norm(p) === norm(nome));
+    if (!k) return nome ? '<p class="hint">Profissão fora do livro — anote os conhecimentos abaixo.</p>' : '';
+    return `<div class="conhec"><h4>Conhecimentos do Trabalho · ${esc(k)}</h4>`
+      + PROF_CONHEC[k].map(([n, d]) => `<details><summary>${esc(n)}</summary><p>${esc(d)}</p></details>`).join('')
+      + '</div>';
+  };
+  const card = (titulo, nomeBind, gradBind, conhBind, gradVal, nomeVal) => `
     <div class="card">
       <h3>${titulo}</h3>
-      <label class="field"><span>Profissão</span><input data-bind="${nomeBind}" list="dlProfissoes"></label>
+      <label class="field"><span>Profissão</span><input data-bind="${nomeBind}" list="dlProfissoes" data-rerender="prof"></label>
       <label class="field"><span>Graduação</span><select data-bind="${gradBind}">${grad(gradVal)}</select></label>
-      <label class="field"><span>Conhecimentos do Trabalho</span><textarea data-bind="${conhBind}" rows="8"></textarea></label>
+      ${conhecimentos(nomeVal)}
+      <label class="field"><span>Anotações da profissão</span><textarea data-bind="${conhBind}" rows="5" placeholder="Feitos, graduações, ferramentas, detalhes combinados com o Narrador…"></textarea></label>
     </div>`;
-  $('#profissoes').innerHTML = card('Profissão Inicial', 'profissao', 'profGrad', 'profConhecimentos', S.profGrad)
-    + S.profissoesExtras.map((p, i) => card('Profissão Extra', `profissoesExtras.${i}.nome`, `profissoesExtras.${i}.grad`, `profissoesExtras.${i}.conhecimentos`, p.grad)).join('');
+  $('#profissoes').innerHTML = card('Profissão Inicial', 'profissao', 'profGrad', 'profConhecimentos', S.profGrad, S.profissao)
+    + S.profissoesExtras.map((p, i) => card('Profissão Extra', `profissoesExtras.${i}.nome`, `profissoesExtras.${i}.grad`, `profissoesExtras.${i}.conhecimentos`, p.grad, p.nome)).join('');
 }
 
 function renderHpRolls() {
@@ -1706,12 +2487,18 @@ function renderBounty() {
 }
 
 function renderLists() {
-  renderPrimario(); renderHabilidades(); renderMaestria(); renderEquip(); renderMunicao();
+  renderPrimario(); renderCaracteristicas(); renderHabilidades(); renderMaestria(); renderEquip(); renderMunicao();
   renderTecnicas('tecnicas', 'tecnicas'); renderTecnicas('akuma.tecnicas', 'akumaTecnicas');
   renderIndividualidades(); renderInventario(); renderTreinamentos(); renderProfissoes(); renderHpRolls(); renderPips();
 }
 
 function fillBindings(root = document) {
+  enriquecer(root);
+  $$('[data-rt]', root).forEach(el => {
+    if (document.activeElement === el) return;
+    const h = rtDeTexto(getPath(S, el.dataset.rt));
+    if (el.innerHTML !== h) el.innerHTML = h;
+  });
   $$('[data-bind]', root).forEach(el => {
     if (el.id === 'inpRecompensa') return;
     const v = getPath(S, el.dataset.bind);
@@ -1856,6 +2643,24 @@ function usarTecnica(path, i) {
   commit();
 }
 
+function usarForma(path, i) {
+  const t = getPath(S, path)[i];
+  const f = t && t.forma;
+  if (!f) return;
+  const nome = f.nome || `${t.nome || 'Técnica'} (${f.tipo || 'forma'})`;
+  const custo = num(f.pp);
+  if (custo && !gastarPP(custo)) { commit(); return; }
+  if (t.ataque) rollD20(`${nome} — ataque`, C.atkTecN);
+  if (f.dano) {
+    const r = rollExpr(f.dano);
+    if (r) pushLog({ label: `${nome} — dano${f.tipoDano ? ' ' + String(f.tipoDano).toLowerCase() : ''}`, total: r.total, det: r.detalhe, tipo: 'dmg' });
+    else toast(`Expressão de dano inválida: ${esc(f.dano)}`, 'bad');
+  }
+  if (!t.ataque && !f.dano) pushLog({ label: nome, total: `−${custo} PP`, det: t.salva ? `Salvaguarda de ${t.salva} · CD ${C.cd}` : 'Forma usada' });
+  else if (t.salva) toast(`Alvo faz Salvaguarda de ${esc(t.salva)} — CD ${C.cd}`);
+  commit();
+}
+
 function descansoCurto() {
   const lvl = num(S.nivel), disp = lvl - num(S.dvGastos);
   const { dado } = dadoDeVida();
@@ -1893,6 +2698,205 @@ async function descansoLongo() {
   pushLog({ label: 'Descanso longo', total: '✓', det: exausto ? 'Exausto: recuperou só metade dos PP' : 'PV e PP restaurados', tipo: 'heal' });
   commit();
   renderPips();
+}
+
+// ---------- texto formatado ----------
+// As caixas de texto grandes (textarea com data-bind) viram editores com formatação.
+// O que fica salvo é HTML limpo: só as tags, estilos e efeitos abaixo passam.
+const RT_TAGS = new Set(['B', 'STRONG', 'I', 'EM', 'U', 'S', 'BR', 'DIV', 'P', 'SPAN', 'FONT']);
+const RT_CSS = ['color', 'font-size', 'font-family', 'font-weight', 'font-style', 'text-decoration-line', '--glow'];
+const RT_FX = new Set(['fx-wobble', 'fx-glow', 'fx-pulse', 'fx-shake']);
+
+function rtLimpar(html) {
+  const tpl = document.createElement('template');
+  tpl.innerHTML = String(html || '');
+  const out = document.createElement('div');
+  const copiar = (de, para) => de.childNodes.forEach(n => {
+    if (n.nodeType === 3) { para.append(n.textContent); return; }
+    if (n.nodeType !== 1 || /^(SCRIPT|STYLE|TEMPLATE|NOSCRIPT|IFRAME|OBJECT|SVG|MATH)$/i.test(n.tagName)) return;
+    if (!RT_TAGS.has(n.tagName)) { copiar(n, para); return; }   // tag estranha: fica só o conteúdo
+    const tag = n.tagName === 'FONT' ? 'SPAN' : n.tagName;
+    const el = document.createElement(tag);
+    if (tag === 'SPAN' || tag === 'DIV' || tag === 'P') {
+      const css = [];
+      RT_CSS.forEach(p => {
+        const v = n.style.getPropertyValue(p).trim();
+        if (v && !/url\(|expression|javascript|[<>"]/i.test(v)) css.push(`${p}:${v}`);
+      });
+      if (n.tagName === 'FONT') {
+        const c = n.getAttribute('color'), f = n.getAttribute('face');
+        if (c && /^#?[\w(),.\s%]+$/.test(c)) css.push(`color:${c}`);
+        if (f && !/[<>"]/.test(f)) css.push(`font-family:${f}`);
+      }
+      if (css.length) el.setAttribute('style', css.join(';'));
+      const fx = [...n.classList].filter(c => RT_FX.has(c));
+      if (fx.length) el.className = fx.join(' ');
+    }
+    copiar(n, el);
+    para.append(el);
+  });
+  copiar(tpl.content, out);
+  return out.innerHTML;
+}
+// Texto antigo (sem marcação) vira HTML respeitando as quebras de linha.
+const rtDeTexto = v => { const s = String(v ?? ''); return /<[a-z][^>]*>/i.test(s) ? rtLimpar(s) : esc(s).replace(/\n/g, '<br>'); };
+
+function enriquecer(root = document) {
+  $$('textarea[data-bind]', root).forEach(ta => {
+    const ed = document.createElement('div');
+    ed.className = 'rt ' + ta.className;
+    ed.contentEditable = 'true';
+    ed.dataset.rt = ta.dataset.bind;
+    ed.dataset.placeholder = ta.getAttribute('placeholder') || '';
+    ed.setAttribute('role', 'textbox');
+    ed.setAttribute('aria-multiline', 'true');
+    ed.style.minHeight = `calc(${(Number(ta.getAttribute('rows')) || 2) * 1.5}em + 14px)`;
+    ed.innerHTML = rtDeTexto(getPath(S, ta.dataset.bind));
+    ta.replaceWith(ed);
+  });
+}
+function rtSalvar(ed) {
+  const vazio = !ed.textContent.trim() && !ed.querySelector('br + br');
+  setPath(S, ed.dataset.rt, vazio ? '' : rtLimpar(ed.innerHTML));
+  save();
+  renderCharSelectDebounced();
+}
+
+let rtAtivo = null, rtRange = null, rtCor = '#e05a4f';
+function rtGuardarSelecao() {
+  const sel = getSelection();
+  if (!sel.rangeCount) return;
+  const r = sel.getRangeAt(0);
+  const ed = (r.commonAncestorContainer.nodeType === 1 ? r.commonAncestorContainer : r.commonAncestorContainer.parentElement)?.closest('[data-rt]');
+  if (ed) { rtAtivo = ed; rtRange = r.cloneRange(); }
+}
+// Sem nada selecionado, o comando vale para a caixa inteira.
+function rtSelecionar() {
+  const ed = rtAtivo;
+  if (!ed || !document.body.contains(ed)) return null;
+  ed.focus({ preventScroll: true });
+  const sel = getSelection();
+  sel.removeAllRanges();
+  if (rtRange && ed.contains(rtRange.commonAncestorContainer) && !rtRange.collapsed) sel.addRange(rtRange);
+  else { const r = document.createRange(); r.selectNodeContents(ed); sel.addRange(r); }
+  return sel.getRangeAt(0);
+}
+function rtEmbrulhar(estilo, classe) {
+  const range = rtSelecionar();
+  if (!range) return;
+  const span = document.createElement('span');
+  Object.entries(estilo || {}).forEach(([k, v]) => span.style.setProperty(k, v));
+  if (classe) span.className = classe;
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+  const sel = getSelection(), r = document.createRange();
+  r.selectNodeContents(span); sel.removeAllRanges(); sel.addRange(r);
+  rtGuardarSelecao();
+  rtSalvar(rtAtivo);
+}
+// Tirar formatação: o trecho volta a ser texto puro, mantendo as quebras de linha.
+function rtTextoPuro(no) {
+  let t = '';
+  no.childNodes.forEach(n => {
+    if (n.nodeType === 3) t += n.textContent;
+    else if (n.nodeName === 'BR') t += '\n';
+    else if (n.nodeType === 1) { const dentro = rtTextoPuro(n); t += (/^(DIV|P)$/.test(n.nodeName) && t && !t.endsWith('\n') ? '\n' : '') + dentro; }
+  });
+  return t;
+}
+function rtComando(cmd) {
+  const range = rtSelecionar();
+  if (!range) return;
+  if (cmd === 'maior' || cmd === 'menor') return rtEmbrulhar({ 'font-size': cmd === 'maior' ? '1.2em' : '0.84em' });
+  if (cmd === 'limpar') {
+    const frag = range.extractContents(), tmp = document.createElement('div');
+    tmp.append(frag);
+    const linhas = rtTextoPuro(tmp).split('\n');
+    const novo = document.createDocumentFragment();
+    linhas.forEach((l, i) => { if (i) novo.append(document.createElement('br')); novo.append(l); });
+    range.insertNode(novo);
+    return rtSalvar(rtAtivo);
+  }
+  document.execCommand('styleWithCSS', false, true);
+  document.execCommand(cmd, false, null);
+  rtGuardarSelecao();
+  rtSalvar(rtAtivo);
+}
+function rtPosicionarBarra() {
+  const bar = $('#rtBar');
+  if (!rtAtivo || bar.hidden) return;
+  const r = rtAtivo.getBoundingClientRect(), h = bar.offsetHeight, w = bar.offsetWidth;
+  let top = r.top - h - 6;
+  if (top < 58) top = Math.min(innerHeight - h - 8, r.bottom + 6);
+  bar.style.top = Math.max(8, top) + 'px';
+  bar.style.left = Math.max(8, Math.min(r.left, innerWidth - w - 8)) + 'px';
+}
+function ligarTextoFormatado() {
+  const bar = $('#rtBar');
+  document.addEventListener('input', e => {
+    const ed = e.target.closest && e.target.closest('[data-rt]');
+    if (ed) rtSalvar(ed);
+  });
+  document.addEventListener('selectionchange', rtGuardarSelecao);
+  document.addEventListener('focusin', e => {
+    const ed = e.target.closest && e.target.closest('[data-rt]');
+    if (!ed) return;
+    rtAtivo = ed;
+    bar.hidden = false;
+    // dentro de uma janela (dialog) a barra precisa morar nela para ficar por cima
+    const dlg = ed.closest('dialog');
+    if (dlg && bar.parentElement !== dlg) dlg.append(bar);
+    else if (!dlg && bar.parentElement !== document.body) document.body.append(bar);
+    rtPosicionarBarra();
+  });
+  document.addEventListener('focusout', () => {
+    setTimeout(() => {
+      const a = document.activeElement;
+      if (a && (a.closest('[data-rt]') || a.closest('#rtBar'))) return;
+      bar.hidden = true;
+    }, 180);
+  });
+  // colar sempre como texto, para não trazer lixo de outras páginas
+  document.addEventListener('paste', e => {
+    const ed = e.target.closest && e.target.closest('[data-rt]');
+    if (!ed) return;
+    e.preventDefault();
+    document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text/plain'));
+  });
+  bar.addEventListener('mousedown', e => { if (!e.target.closest('select,input')) e.preventDefault(); });
+  bar.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (b.dataset.rtc) return rtComando(b.dataset.rtc);
+    if (b.dataset.rtcor) {
+      rtCor = b.dataset.rtcor;
+      rtSelecionar();
+      document.execCommand('styleWithCSS', false, true);
+      document.execCommand('foreColor', false, rtCor);
+      rtGuardarSelecao();
+      return rtSalvar(rtAtivo);
+    }
+    if (b.dataset.rtfx) return rtEmbrulhar(b.dataset.rtfx === 'fx-glow' ? { '--glow': rtCor } : null, b.dataset.rtfx);
+  });
+  bar.querySelector('[data-rtfonte]').addEventListener('change', function () {
+    if (!this.value) return;
+    rtSelecionar();
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand('fontName', false, this.value);
+    this.value = '';
+    rtGuardarSelecao();
+    rtSalvar(rtAtivo);
+  });
+  bar.querySelector('[data-rtcorlivre]').addEventListener('change', function () {
+    rtCor = this.value;
+    rtSelecionar();
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand('foreColor', false, rtCor);
+    rtGuardarSelecao();
+    rtSalvar(rtAtivo);
+  });
+  addEventListener('scroll', rtPosicionarBarra, true);
+  addEventListener('resize', rtPosicionarBarra);
 }
 
 // ---------- ciclo ----------
@@ -1936,6 +2940,20 @@ function onBindInput(e) {
   if (r === 'equip') renderEquip(), fillBindings($('#equipamentos'));
   if (r === 'tecnicas') { renderTecnicas('tecnicas', 'tecnicas'); renderTecnicas('akuma.tecnicas', 'akumaTecnicas'); fillBindings(); }
   if (r === 'indiv') renderIndividualidades(), fillBindings($('#tab-personagem'));
+  if (r === 'prof' || path === 'profissao') renderProfissoes(), fillBindings($('#profissoes'));
+  if (r === 'caract') {
+    // nome do livro digitado numa linha sem descrição: completa sozinho
+    const m = path.match(/^caracteristicas\.(\d+)\.nome$/);
+    const c = m && S.caracteristicas[Number(m[1])];
+    const achada = c && !String(c.desc || '').trim() && caractDoEstilo(c.nome);
+    if (achada) { c.nivel = achada[0]; c.nome = achada[1]; c.desc = achada[2]; save(); }
+    renderCaracteristicas(); fillBindings($('#caracteristicas'));
+  }
+  // subiu de nível com características do estilo na ficha: traz as novas
+  if (path === 'nivel' && S.caracteristicas.some(c => c.fonte === 'estilo')) {
+    const n = preencherCaract(true);
+    if (n) toast(`Novo nível: ${n} ${n === 1 ? 'característica entrou' : 'características entraram'} na aba Combate.`, 'heal');
+  }
 }
 
 function aoMudarEstilo() {
@@ -1947,6 +2965,9 @@ function aoMudarEstilo() {
   }
   if (est && est.armas && !S.combate.armas) S.combate.armas = est.armas;
   commit();
+  // ficha ainda sem características: já traz as do estilo escolhido
+  if (!S.caracteristicas.length && chaveEstilo()) preencherCaract(true);
+  else renderCaracteristicas(), fillBindings($('#caracteristicas'));
 }
 
 function aoMudarEspecie(principal) {
@@ -1962,7 +2983,7 @@ function aoMudarEspecie(principal) {
   commit();
 }
 
-function adicionar(path) {
+function adicionar(path, status) {
   const list = getPath(S, path);
   const novos = {
     'habilidades': '',
@@ -1970,15 +2991,16 @@ function adicionar(path) {
     'akuma.tecnicas': { nome: '', tipo: 'Combate', grau: 1, pp: 0, acao: 'Ação Poderosa', alcance: '', duracao: 'Instantâneo', dano: '', salva: '', desc: '', ataque: true },
     'equipamentos': { nome: '', bonus: C.atkTecN || 0, dano: '', alcance: '', tipo: '', props: '' },
     'municao': { nome: '', dano: '', tipo: '', qt: 10 },
-    'inventario': { item: '', qt: 1, peso: 0 },
-    'treinamentos': { nome: '', status: 'treinando', tt: '', pt: 0 },
+    'inventario': { item: '', qt: 1, peso: 0, tamanho: '', desc: '', img: '' },
+    'treinamentos': { nome: '', status: status === 'treinado' ? 'treinado' : 'treinando', tt: '', pt: 0, desc: '' },
     'pers.singularidades': { tier: 'Suave', nome: '', desc: '' },
     'pers.defeitos': { tier: 'Suave', nome: '', desc: '' },
+    'caracteristicas': { nivel: clamp(num(S.nivel), 1, 20), nome: '', desc: '', fonte: 'propria' },
   };
   list.push(structuredClone(novos[path]));
   renderLists(); fillBindings(); updateOutputs(); save();
   const cont = { 'tecnicas': '#tecnicas', 'akuma.tecnicas': '#akumaTecnicas', 'equipamentos': '#equipamentos', 'municao': '#municao',
-    'inventario': '#inventario', 'treinamentos': '#treinamentos', 'pers.singularidades': '#singularidades', 'pers.defeitos': '#defeitos', 'habilidades': '#habilidades' }[path];
+    'inventario': '#inventario', 'treinamentos': status === 'treinado' ? '#treinados' : '#treinando', 'pers.singularidades': '#singularidades', 'pers.defeitos': '#defeitos', 'habilidades': '#habilidades', 'caracteristicas': '#caracteristicas' }[path];
   const ins = $$(`${cont} input:not([type=checkbox])`);
   const alvo = path === 'pers.singularidades' || path === 'pers.defeitos' ? ins[ins.length - 1] : $$(`${cont} input[data-bind$=".nome"], ${cont} input[data-bind$=".item"], ${cont} input[data-bind^="habilidades."]`).pop();
   alvo?.focus();
@@ -1987,27 +3009,33 @@ function adicionar(path) {
 async function remover(path, i) {
   const list = getPath(S, path);
   const it = list[i];
-  const vazio = !it || (typeof it === 'string' ? !it : !Object.values(it).some(v => v && v !== 0 && v !== 'Combate' && v !== 'Suave' && v !== 'treinando'));
+  const vazio = !it || (typeof it === 'string' ? !it : !Object.values(it).some(v => v && v !== 0 && v !== 'Combate' && v !== 'Suave' && v !== 'treinando' && v !== 'treinado'));
   if (!vazio && !await perguntar({ titulo: 'Remover item', texto: 'Este item tem informações preenchidas. Remover mesmo assim?', ok: 'Remover', perigo: true })) return;
   list.splice(i, 1);
   renderLists(); fillBindings(); updateOutputs(); save();
 }
 
-function retratoDeArquivo(file) {
-  const reader = new FileReader();
-  reader.onload = () => {
-    const img = new Image();
-    img.onload = () => {
-      const max = 480, k = Math.min(1, max / Math.max(img.width, img.height));
-      const cv = document.createElement('canvas');
-      cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
-      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
-      S.retrato = cv.toDataURL('image/jpeg', 0.85);
-      renderRetrato(); save();
+// Reduz a imagem antes de guardar: a ficha inteira vai para o navegador e para a conta.
+function imagemReduzida(file, max = 480) {
+  return new Promise(res => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, max / Math.max(img.width, img.height));
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+        res(cv.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = () => res('');
+      img.src = reader.result;
     };
-    img.src = reader.result;
-  };
-  reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
+  });
+}
+function retratoDeArquivo(file) {
+  imagemReduzida(file).then(url => { if (!url) return; S.retrato = url; renderRetrato(); save(); });
 }
 
 // Janela de confirmação própria: o link compartilhado não mostra confirm()/prompt() do navegador.
@@ -2179,7 +3207,28 @@ function deForja(x) {
     salva: r.salva ?? (!ataque && x.alvo !== 'sem-dano' ? x.salvAtr || '' : ''),
     desc: [tipoDano ? `Dano ${tipoDano}.` : '', x.tipo === 'mp' ? 'Manifestação de Poder.' : '', x.desc || ''].filter(Boolean).join(' '),
     ataque,
+    forma: formaDaForja(x),
     forjaId: x.id,
+  };
+}
+
+// Forma Alternativa / Aperfeiçoada da técnica da Forja. Técnicas salvas antes de a
+// Forja mandar a forma no resumo são refeitas a partir de x.fx, com a mesma conta.
+function formaDaForja(x) {
+  if (x.resumo && x.resumo.forma) return { ...x.resumo.forma };
+  if (x.tipo !== 'combate' || !x.forma || x.forma === 'normal' || !x.fx) return undefined;
+  const aperf = x.forma === 'aperfeicoada';
+  const grauBase = num(x.grau) || 1;
+  const gf = aperf ? clamp(num(x.fx.grau) || grauBase + 1, grauBase + 1, Math.min(grauBase + 2, 5)) : grauBase;
+  const dados = Math.max(0, num(x.fx.dados));
+  const efeitos = Array.isArray(x.fx.efeitos) ? x.fx.efeitos : [];
+  const pp = Math.max(1, dados + (x.origem === 'estilo' ? 0 : Math.floor(gf / 2)) + efeitos.reduce((a, e) => a + num(e.pp), 0));
+  const textoEf = efeitos.length ? 'Efeitos da forma: ' + efeitos.map(e => e.nm + (e.det ? ` (${e.det})` : '')).join('; ') + '.' : '';
+  return {
+    tipo: aperf ? 'Forma Aperfeiçoada' : 'Forma Alternativa',
+    nome: x.fx.nome || '', grau: gf, pp,
+    dano: dados ? dados + 'd10' : '', tipoDano: dados ? x.fx.tipoDano || '' : '',
+    texto: [String(x.fx.texto || '').trim(), textoEf, x.fx.perde ? 'Perde os efeitos da Técnica original.' : ''].filter(Boolean).join(' '),
   };
 }
 
@@ -2303,7 +3352,31 @@ function bindEvents() {
     const roll = t.closest('[data-roll]');
     if (roll) return doRoll(roll.dataset.roll);
     const add = t.closest('[data-add]');
-    if (add) return adicionar(add.dataset.add);
+    if (add) return adicionar(add.dataset.add, add.dataset.status);
+    const item = t.closest('[data-item]');
+    if (item) return abrirItem(Number(item.dataset.item));
+    const mover = t.closest('[data-mover-treino]');
+    if (mover) {
+      const tr = S.treinamentos[Number(mover.dataset.moverTreino)];
+      tr.status = tr.status === 'treinado' ? 'treinando' : 'treinado';
+      renderTreinamentos(); fillBindings($('#tab-inventario'));
+      return commit();
+    }
+    const useF = t.closest('[data-useforma]');
+    if (useF) return usarForma(useF.dataset.useforma, Number(useF.dataset.i));
+    const addF = t.closest('[data-addforma]');
+    if (addF) {
+      const tec = getPath(S, addF.dataset.addforma)[Number(addF.dataset.i)];
+      tec.forma = { tipo: 'Forma Alternativa', nome: '', grau: tec.grau || '', pp: '', dano: '', texto: '' };
+      renderTecnicas('tecnicas', 'tecnicas'); renderTecnicas('akuma.tecnicas', 'akumaTecnicas'); fillBindings();
+      return commit();
+    }
+    const delF = t.closest('[data-delforma]');
+    if (delF) {
+      delete getPath(S, delF.dataset.delforma)[Number(delF.dataset.i)].forma;
+      renderTecnicas('tecnicas', 'tecnicas'); renderTecnicas('akuma.tecnicas', 'akumaTecnicas'); fillBindings();
+      return commit();
+    }
     const del = t.closest('[data-del]');
     if (del) return remover(del.dataset.del, Number(del.dataset.i));
     const use = t.closest('[data-use]');
@@ -2346,7 +3419,16 @@ function bindEvents() {
   };
   $('#inpExpr').onkeydown = e => { if (e.key === 'Enter') $('#btnExpr').click(); };
 
+  $('#btnPreencherCaract').onclick = () => preencherCaract(false);
   $('#inpRetrato').onchange = e => { const f = e.target.files[0]; if (f) retratoDeArquivo(f); e.target.value = ''; };
+  $('#inpItemImg').onchange = e => {
+    const f = e.target.files[0]; e.target.value = '';
+    if (!f || !S.inventario[itemAberto]) return;
+    imagemReduzida(f, 360).then(url => { if (!url) return; S.inventario[itemAberto].img = url; pintarImagemItem(); save(); });
+  };
+  $('#itemTirarImg').onclick = () => { if (S.inventario[itemAberto]) { S.inventario[itemAberto].img = ''; pintarImagemItem(); save(); } };
+  $('#dlgItem').addEventListener('close', () => { itemAberto = -1; renderInventario(); fillBindings($('#inventario')); updateOutputs(); });
+  $('#dlgItem').addEventListener('click', e => { if (e.target.id === 'dlgItem') e.target.close(); });
   $('#charSelect').onchange = e => trocarPersonagem(e.target.value);
   $('#btnNovo').onclick = () => { const p = novoPersonagem(); db.chars[p.id] = p; trocarPersonagem(p.id); toast('Novo personagem criado.'); $('.wanted-name').focus(); };
   $('#btnDuplicar').onclick = () => { const p = structuredClone(S); p.id = uid(); p.nome = (p.nome || 'Sem nome') + ' (cópia)'; db.chars[p.id] = p; marcar(p); trocarPersonagem(p.id); };
@@ -2384,6 +3466,8 @@ renderStatic();
 renderAttrs();
 renderSkills();
 bindEvents();
+ligarDicasHaki();
+ligarTextoFormatado();
 renderAll();
 renderLog();
 iniciarConta();

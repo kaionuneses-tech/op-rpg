@@ -2259,7 +2259,16 @@ function resumoParaFicha(){
     duracao: S.duracao,
     ataque: ataque,
     salva: (!ataque && S.alvo !== "sem-dano") ? S.salvAtr : "",
-    texto: textoCompleto()
+    texto: textoCompleto(),
+    forma: r.fx ? {
+      tipo: S.forma === "aperfeicoada" ? "Forma Aperfeiçoada" : "Forma Alternativa",
+      nome: S.fx.nome || "",
+      grau: r.fx.grau,
+      pp: r.fx.custo,
+      dano: r.fx.dados ? r.fx.dados + "d10" : "",
+      tipoDano: r.fx.dados ? S.fx.tipoDano : "",
+      texto: [S.fx.texto.trim(), textoEfeitosForma(r.fx)].filter(Boolean).join(" ")
+    } : null
   };
 }
 
