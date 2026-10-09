@@ -131,9 +131,29 @@ main{flex:1; min-height:0; max-width:1180px; width:100%; margin:0 auto; padding:
 #a-titulo{flex:1; min-width:0; font-family:var(--font-display); font-weight:600; font-size:calc(21px * var(--fs-scale));
   color:var(--ink); background:none; border:0; padding:2px 0}
 #a-titulo::placeholder{color:var(--ink3)}
-#a-texto{flex:1; min-height:240px; width:100%; resize:none; border:0; background:none; color:var(--ink);
-  font-family:var(--font-body); font-size:calc(16px * var(--fs-scale)); line-height:var(--lh); padding:14px}
-#a-texto::placeholder{color:var(--ink3)}
+#a-texto{flex:1; min-height:240px; width:100%; border:0; background:none; color:var(--ink); outline:none; overflow:auto;
+  font-family:var(--font-body); font-size:calc(16px * var(--fs-scale)); line-height:var(--lh); padding:14px;
+  white-space:pre-wrap; overflow-wrap:anywhere; cursor:text}
+#a-texto:empty::before{content:attr(data-placeholder); color:var(--ink3); pointer-events:none}
+
+/* barra de formatação (a mesma da Ficha), fixa no topo do editor */
+.rt-bar{display:flex; flex-wrap:wrap; gap:3px; align-items:center; padding:6px 14px; border-bottom:1px solid var(--line); background:var(--surf2)}
+.rt-bar button,.rt-bar select{font-family:var(--font-body); font-size:13px; height:28px; min-width:28px; padding:0 6px; cursor:pointer;
+  background:var(--surf); color:var(--ink); border:1px solid var(--line); border-radius:var(--radius); width:auto}
+.rt-bar button:hover{border-color:var(--red); color:var(--red)}
+.rt-bar select{max-width:118px}
+.rt-bar .sep{width:1px; height:20px; background:var(--line); margin:0 2px}
+.rt-bar .cor{min-width:20px; width:20px; height:20px; padding:0; border-radius:50%}
+.rt-bar label.cor{display:inline-grid; place-content:center; border:1px dashed var(--line2); cursor:pointer; font-size:11px; color:var(--ink3); overflow:hidden; position:relative}
+.rt-bar label.cor input{position:absolute; inset:0; opacity:0; cursor:pointer}
+.fx-wobble{display:inline-block; animation:rt-wobble 1.6s ease-in-out infinite; transform-origin:50% 60%}
+.fx-pulse{display:inline-block; animation:rt-pulse 1.3s ease-in-out infinite}
+.fx-shake{display:inline-block; animation:rt-shake .35s linear infinite}
+.fx-glow{text-shadow:0 0 4px var(--glow, currentColor), 0 0 10px var(--glow, currentColor); animation:rt-glow 2s ease-in-out infinite}
+@keyframes rt-wobble{0%,100%{transform:rotate(-3deg) translateY(0)} 50%{transform:rotate(3deg) translateY(-2px)}}
+@keyframes rt-pulse{0%,100%{transform:scale(1)} 50%{transform:scale(1.12)}}
+@keyframes rt-shake{0%{transform:translate(0,0)} 25%{transform:translate(1px,-1px)} 50%{transform:translate(-1px,1px)} 75%{transform:translate(1px,1px)} 100%{transform:translate(0,0)}}
+@keyframes rt-glow{0%,100%{text-shadow:0 0 3px var(--glow, currentColor), 0 0 7px var(--glow, currentColor)} 50%{text-shadow:0 0 7px var(--glow, currentColor), 0 0 16px var(--glow, currentColor)}}
 .editor-pe{padding:10px 14px; border-top:1px solid var(--line); display:flex; align-items:center;
   gap:10px; flex-wrap:wrap}
 .editor-pe .estado{flex:1; font-family:var(--font-mono); font-size:calc(11px * var(--fs-scale)); color:var(--ink3)}
@@ -219,7 +239,41 @@ main{flex:1; min-height:0; max-width:1180px; width:100%; margin:0 auto; padding:
       <input type="text" id="a-titulo" maxlength="120" placeholder="Título da anotação">
       <button class="btn" type="button" id="btn-apagar">Apagar</button>
     </div>
-    <textarea id="a-texto" spellcheck="true" placeholder="Escreva aqui o que aconteceu na sessão, o que a tripulação decidiu, o que o Narrador deixou no ar…"></textarea>
+    <div class="rt-bar" id="rtBar" role="toolbar" aria-label="Formatação do texto">
+      <button type="button" data-rtc="bold" title="Negrito (Ctrl+B)"><b>N</b></button>
+      <button type="button" data-rtc="italic" title="Itálico (Ctrl+I)"><i>I</i></button>
+      <button type="button" data-rtc="underline" title="Sublinhado (Ctrl+U)"><u>S</u></button>
+      <span class="sep"></span>
+      <button type="button" data-rtc="menor" title="Diminuir a letra — do trecho selecionado, ou da anotação toda">A−</button>
+      <button type="button" data-rtc="maior" title="Aumentar a letra — do trecho selecionado, ou da anotação toda">A+</button>
+      <select data-rtfonte title="Fonte">
+        <option value="">Fonte…</option>
+        <option value="Spectral, Georgia, serif">Spectral</option>
+        <option value="Oswald, 'Arial Narrow', sans-serif">Oswald</option>
+        <option value="'IBM Plex Mono', monospace">Máquina</option>
+        <option value="Rye, Georgia, serif">Cartaz</option>
+        <option value="Georgia, serif">Georgia</option>
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="'Comic Sans MS', 'Comic Neue', cursive">Comic</option>
+      </select>
+      <span class="sep"></span>
+      <button type="button" class="cor" data-rtcor="#C0392B" style="background:#C0392B" title="Vermelho"></button>
+      <button type="button" class="cor" data-rtcor="#E67E22" style="background:#E67E22" title="Laranja"></button>
+      <button type="button" class="cor" data-rtcor="#D4A017" style="background:#D4A017" title="Dourado"></button>
+      <button type="button" class="cor" data-rtcor="#27AE60" style="background:#27AE60" title="Verde"></button>
+      <button type="button" class="cor" data-rtcor="#2E86C1" style="background:#2E86C1" title="Azul"></button>
+      <button type="button" class="cor" data-rtcor="#8E44AD" style="background:#8E44AD" title="Roxo"></button>
+      <label class="cor" title="Outra cor">＋<input type="color" data-rtcorlivre value="#e05a4f"></label>
+      <span class="sep"></span>
+      <button type="button" data-rtfx="fx-glow" title="Brilho na cor escolhida">✦ Brilho</button>
+      <button type="button" data-rtfx="fx-wobble" title="Balanço">〰 Balanço</button>
+      <button type="button" data-rtfx="fx-pulse" title="Pulso">◉ Pulso</button>
+      <button type="button" data-rtfx="fx-shake" title="Tremor">≋ Tremor</button>
+      <span class="sep"></span>
+      <button type="button" data-rtc="limpar" title="Tirar toda a formatação do trecho (ou da anotação)">⌫</button>
+    </div>
+    <div id="a-texto" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="true"
+      data-placeholder="Escreva aqui o que aconteceu na sessão, o que a tripulação decidiu, o que o Narrador deixou no ar…"></div>
     <div class="editor-pe">
       <span class="estado" id="a-estado">Pronto</span>
       <button class="btn" type="button" id="btn-salvar">Salvar</button>
@@ -263,6 +317,150 @@ function quando(ts){
     : String(d.getDate()).padStart(2,"0") + "/" + String(d.getMonth()+1).padStart(2,"0") + "/" + d.getFullYear();
 }
 
+/* ── texto formatado ──
+   O mesmo editor da Ficha: o que fica salvo é HTML limpo, e só passam as
+   tags, estilos e efeitos abaixo. Anotações antigas (texto puro) abrem normais. */
+var RT_TAGS = {B:1, STRONG:1, I:1, EM:1, U:1, S:1, BR:1, DIV:1, P:1, SPAN:1, FONT:1};
+var RT_CSS = ["color", "font-size", "font-family", "font-weight", "font-style", "text-decoration-line", "--glow"];
+var RT_FX = {"fx-wobble":1, "fx-glow":1, "fx-pulse":1, "fx-shake":1};
+var rtCor = "#e05a4f", rtRange = null;
+
+function esc(t){ return String(t == null ? "" : t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function rtLimpar(html){
+  var tpl = document.createElement("template");
+  tpl.innerHTML = String(html || "");
+  var out = document.createElement("div");
+  function copiar(de, para){
+    Array.prototype.forEach.call(de.childNodes, function(n){
+      if(n.nodeType === 3){ para.appendChild(document.createTextNode(n.textContent)); return; }
+      if(n.nodeType !== 1 || /^(SCRIPT|STYLE|TEMPLATE|NOSCRIPT|IFRAME|OBJECT|SVG|MATH)$/i.test(n.tagName)) return;
+      if(!RT_TAGS[n.tagName]){ copiar(n, para); return; }   /* tag estranha: fica só o conteúdo */
+      var tag = n.tagName === "FONT" ? "SPAN" : n.tagName;
+      var el = document.createElement(tag);
+      if(tag === "SPAN" || tag === "DIV" || tag === "P"){
+        var css = [];
+        RT_CSS.forEach(function(p){
+          var v = n.style.getPropertyValue(p).trim();
+          if(v && !/url\(|expression|javascript|[<>"]/i.test(v)) css.push(p + ":" + v);
+        });
+        if(n.tagName === "FONT"){
+          var c = n.getAttribute("color"), f = n.getAttribute("face");
+          if(c && /^#?[\w(),.\s%]+$/.test(c)) css.push("color:" + c);
+          if(f && !/[<>"]/.test(f)) css.push("font-family:" + f);
+        }
+        if(css.length) el.setAttribute("style", css.join(";"));
+        var fx = Array.prototype.filter.call(n.classList, function(c){ return RT_FX[c]; });
+        if(fx.length) el.className = fx.join(" ");
+      }
+      copiar(n, el);
+      para.appendChild(el);
+    });
+  }
+  copiar(tpl.content, out);
+  return out.innerHTML;
+}
+function rtDeTexto(v){
+  var s = String(v == null ? "" : v);
+  return /<[a-z][^>]*>/i.test(s) ? rtLimpar(s) : esc(s).replace(/\n/g, "<br>");
+}
+function textoPuro(v){
+  var d = document.createElement("div");
+  d.innerHTML = rtDeTexto(v);
+  return (d.textContent || "").replace(/\s+/g, " ").trim();
+}
+function porTexto(v){ $("a-texto").innerHTML = rtDeTexto(v); }
+function lerTexto(){
+  var ed = $("a-texto");
+  return ed.textContent.trim() ? rtLimpar(ed.innerHTML) : "";
+}
+
+function rtGuardarSelecao(){
+  var sel = window.getSelection();
+  if(!sel.rangeCount) return;
+  var r = sel.getRangeAt(0);
+  if($("a-texto").contains(r.commonAncestorContainer)) rtRange = r.cloneRange();
+}
+/* sem nada selecionado, o comando vale para a anotação inteira */
+function rtSelecionar(){
+  var ed = $("a-texto"), sel = window.getSelection();
+  ed.focus();
+  sel.removeAllRanges();
+  if(rtRange && ed.contains(rtRange.commonAncestorContainer) && !rtRange.collapsed) sel.addRange(rtRange);
+  else { var r = document.createRange(); r.selectNodeContents(ed); sel.addRange(r); }
+  return sel.getRangeAt(0);
+}
+function rtMudou(){ rtGuardarSelecao(); marcarSujo(); }
+function rtEmbrulhar(estilo, classe){
+  var range = rtSelecionar();
+  var span = document.createElement("span");
+  Object.keys(estilo || {}).forEach(function(k){ span.style.setProperty(k, estilo[k]); });
+  if(classe) span.className = classe;
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+  var sel = window.getSelection(), r = document.createRange();
+  r.selectNodeContents(span); sel.removeAllRanges(); sel.addRange(r);
+  rtMudou();
+}
+function rtTextoPuroDe(no){
+  var t = "";
+  Array.prototype.forEach.call(no.childNodes, function(n){
+    if(n.nodeType === 3) t += n.textContent;
+    else if(n.nodeName === "BR") t += "\n";
+    else if(n.nodeType === 1){ var dentro = rtTextoPuroDe(n); t += (/^(DIV|P)$/.test(n.nodeName) && t && t.slice(-1) !== "\n" ? "\n" : "") + dentro; }
+  });
+  return t;
+}
+function rtComando(cmd){
+  var range = rtSelecionar();
+  if(cmd === "maior" || cmd === "menor") return rtEmbrulhar({"font-size": cmd === "maior" ? "1.2em" : "0.84em"});
+  if(cmd === "limpar"){
+    var tmp = document.createElement("div");
+    tmp.appendChild(range.extractContents());
+    var novo = document.createDocumentFragment();
+    rtTextoPuroDe(tmp).split("\n").forEach(function(l, i){
+      if(i) novo.appendChild(document.createElement("br"));
+      novo.appendChild(document.createTextNode(l));
+    });
+    range.insertNode(novo);
+    return rtMudou();
+  }
+  document.execCommand("styleWithCSS", false, true);
+  document.execCommand(cmd, false, null);
+  rtMudou();
+}
+function rtCorAplicar(cor){
+  rtCor = cor;
+  rtSelecionar();
+  document.execCommand("styleWithCSS", false, true);
+  document.execCommand("foreColor", false, cor);
+  rtMudou();
+}
+document.addEventListener("selectionchange", rtGuardarSelecao);
+$("rtBar").addEventListener("mousedown", function(ev){ if(!ev.target.closest("select,input")) ev.preventDefault(); });
+$("rtBar").addEventListener("click", function(ev){
+  var b = ev.target.closest("button");
+  if(!b) return;
+  if(!atual) nova(true);
+  if(b.dataset.rtc) return rtComando(b.dataset.rtc);
+  if(b.dataset.rtcor) return rtCorAplicar(b.dataset.rtcor);
+  if(b.dataset.rtfx) return rtEmbrulhar(b.dataset.rtfx === "fx-glow" ? {"--glow": rtCor} : null, b.dataset.rtfx);
+});
+document.querySelector("[data-rtfonte]").addEventListener("change", function(){
+  if(!this.value) return;
+  if(!atual) nova(true);
+  rtSelecionar();
+  document.execCommand("styleWithCSS", false, true);
+  document.execCommand("fontName", false, this.value);
+  this.value = "";
+  rtMudou();
+});
+document.querySelector("[data-rtcorlivre]").addEventListener("change", function(){ if(!atual) nova(true); rtCorAplicar(this.value); });
+/* colar sempre como texto, para não trazer lixo de outras páginas */
+$("a-texto").addEventListener("paste", function(ev){
+  ev.preventDefault();
+  document.execCommand("insertText", false, (ev.clipboardData || window.clipboardData).getData("text/plain"));
+});
+
 var Conta = window.OPRPGConta || null;
 function nuvemGuardar(a){ if(Conta) Conta.guardar(a); }
 function nuvemApagar(id){ if(Conta) Conta.apagar(id); }
@@ -272,7 +470,7 @@ function pintar(){
   var d = ler().slice().sort(function(a,b){ return (b.atualizadoEm||0) - (a.atualizadoEm||0); });
   var busca = ($("a-busca").value || "").trim().toLowerCase();
   if(busca) d = d.filter(function(a){
-    return (a.titulo||"").toLowerCase().indexOf(busca) >= 0 || (a.texto||"").toLowerCase().indexOf(busca) >= 0;
+    return (a.titulo||"").toLowerCase().indexOf(busca) >= 0 || textoPuro(a.texto).toLowerCase().indexOf(busca) >= 0;
   });
   $("a-contagem").textContent = ler().length === 1 ? "1 anotação" : ler().length + " anotações";
   var host = $("a-itens");
@@ -281,11 +479,11 @@ function pintar(){
     return;
   }
   host.innerHTML = d.map(function(a){
-    var resumo = (a.texto || "").replace(/\s+/g, " ").trim().slice(0, 70);
+    var resumo = textoPuro(a.texto).slice(0, 70);
     return '<button class="item" type="button" data-id="' + a.id + '"'
       + (atual && a.id === atual.id ? ' aria-current="true"' : "") + '>'
-      + '<b>' + (a.titulo || "Sem título") + '</b>'
-      + '<span>' + (resumo || "—") + '</span>'
+      + '<b>' + esc(a.titulo || "Sem título") + '</b>'
+      + '<span>' + esc(resumo || "—") + '</span>'
       + '<i>' + quando(a.atualizadoEm) + '</i></button>';
   }).join("");
 }
@@ -296,18 +494,21 @@ function abrir(id){
   if(!a) return;
   atual = a;
   $("a-titulo").value = a.titulo || "";
-  $("a-texto").value = a.texto || "";
+  porTexto(a.texto);
   sujo = false;
   estado("Aberta · " + quando(a.atualizadoEm));
   pintar();
 }
 
-function nova(){
+/* manter = true: começou a escrever sem anotação aberta — cria uma nova
+   guardando o que já está no editor, sem tirar o cursor do lugar */
+function nova(manter){
   salvarSeSujo();
   atual = {id:novoId(), titulo:"", texto:"", atualizadoEm:Date.now()};
   var d = ler(); d.unshift(atual); gravar(d);
-  $("a-titulo").value = ""; $("a-texto").value = "";
   sujo = false;
+  if(manter){ pintar(); return; }
+  $("a-titulo").value = ""; porTexto("");
   pintar();
   estado("Anotação nova");
   $("a-titulo").focus();
@@ -316,7 +517,7 @@ function nova(){
 function salvar(){
   if(!atual) return;
   atual.titulo = $("a-titulo").value;
-  atual.texto = $("a-texto").value;
+  atual.texto = lerTexto();
   atual.atualizadoEm = Date.now();
   var d = ler();
   var i = -1;
@@ -331,7 +532,7 @@ function salvar(){
 function salvarSeSujo(){ if(sujo && atual) salvar(); }
 
 function marcarSujo(){
-  if(!atual) { nova(); }
+  if(!atual) { nova(true); }
   sujo = true;
   estado("Escrevendo…");
   clearTimeout(timer);
@@ -341,7 +542,7 @@ function marcarSujo(){
 $("a-titulo").addEventListener("input", marcarSujo);
 $("a-texto").addEventListener("input", marcarSujo);
 $("btn-salvar").addEventListener("click", function(){ clearTimeout(timer); salvar(); });
-$("btn-nova").addEventListener("click", nova);
+$("btn-nova").addEventListener("click", function(){ nova(); });
 $("a-busca").addEventListener("input", pintar);
 $("a-itens").addEventListener("click", function(ev){
   var b = ev.target.closest("[data-id]");
@@ -353,7 +554,7 @@ $("btn-apagar").addEventListener("click", function(){
   gravar(d);
   nuvemApagar(atual.id);
   atual = null; sujo = false;
-  $("a-titulo").value = ""; $("a-texto").value = "";
+  $("a-titulo").value = ""; porTexto("");
   pintar();
   estado("Anotação apagada");
 });
@@ -474,7 +675,7 @@ if(Conta){
         if(novo && !sujo){
           atual = novo;
           $("a-titulo").value = novo.titulo || "";
-          $("a-texto").value = novo.texto || "";
+          porTexto(novo.texto);
         }
       }
       pintar();
