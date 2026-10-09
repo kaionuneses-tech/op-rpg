@@ -819,7 +819,7 @@ footer p{margin:0 0 5px}
     <div class="tablebox"><table style="min-width:760px" id="tab-efeitos"></table></div>
     <div class="grid2" style="margin-top:8px">
       <div class="card"><h3>Teto de redução</h3>
-        <p class="small">Uma Técnica de Combate só pode ter o custo reduzido em um valor <strong>igual ao seu grau</strong>. Técnicas Auxiliares podem reduzir até <strong>6 PP</strong>.</p>
+        <p class="small">Uma Técnica de Combate só pode ter o custo reduzido em até <strong>o dobro do seu grau</strong> — uma de 2º grau reduz no máximo 4 PP. Técnicas Auxiliares podem reduzir até <strong>6 PP</strong>. Manifestações de Poder não têm esse teto.</p>
         <p class="small" style="margin-bottom:0">Quando as reduções escolhidas passam desse teto, a forja mostra a sobra numa linha própria da razão — nada some em silêncio.</p></div>
       <div class="card"><h3>Custo mínimo</h3>
         <p class="small" style="margin-bottom:0">Nenhuma Técnica chega a custar zero: o piso é sempre <strong>1 PP</strong>. Os descontos do Estilo de Combate entram por fora do teto de redução, porque vêm do Capítulo 3 e não da lista de efeitos.</p></div>
@@ -863,7 +863,7 @@ footer p{margin:0 0 5px}
           <tr><td>Passiva</td><td class="num">−3</td></tr><tr><td>Inação</td><td class="num">−1</td></tr>
           <tr><td>Ação Bônus</td><td class="num">+2</td></tr><tr><td>Reação</td><td class="num">+2</td></tr>
           <tr><td>Ação Poderosa</td><td class="num">+3</td></tr></tbody></table></div>
-        <p class="small" style="margin:10px 0 0">Efeitos de redução também <em>somam</em> pontos virtuais — mas o gasto nunca pode ultrapassar <strong>12 pontos</strong>.</p></div>
+        <p class="small" style="margin:10px 0 0">Efeitos de redução <em>somam</em> pontos virtuais ao orçamento, ponto por ponto, e não descontam de novo do custo dos efeitos. O teto de redução por grau não vale para MPs (os limites próprios de cada efeito, sim). A soma dos efeitos, antes das reduções, nunca passa de <strong>12 pontos</strong>.</p></div>
       <div class="card"><h3>O que uma MP não pode fazer</h3>
         <p class="small" style="margin-bottom:0">Causar dano diretamente · aumentar o dano de jogadas de ataque · recuperar Pontos de Vida sem limite de uso · recuperar Pontos de Poder de qualquer forma · aumentar a CR de alguém, a não ser com requisito Ação Poderosa · usar os efeitos <em>Técnica Rápida</em> e <em>Técnica Demorada</em>.</p></div>
       <div class="card"><h3>Regras herdadas</h3>
@@ -963,12 +963,14 @@ var EFEITOS = [
   rotulo:function(q){ return q + " m, " + Math.min(3, Math.round(q/3)) + "d8 de colisão"; }},
 
 {id:"vantagem", cat:"Controle", nm:"Adicionar Vantagem / Desvantagem",
-  ds:"Dá vantagem a um aliado ou desvantagem a um inimigo na próxima jogada de ataque comum, Teste de Atributo ou Salvaguarda.",
+  ds:"Dá vantagem a um aliado ou desvantagem a um inimigo na próxima jogada de ataque comum, Teste de Atributo ou Salvaguarda — o tipo de jogada é definido na criação da Técnica.",
   custoTxt:"metade do grau (arred. ↑) · 4 PP em Auxiliares",
   escolha:{id:"modo", label:"efeito", opcoes:[["desvantagem","Desvantagem em um inimigo"],["vantagem","Vantagem em um aliado"]], val:"desvantagem"},
+  escolha2:{id:"jogada", label:"tipo de jogada", opcoes:[["ataque","Jogada de ataque (comum)"],["teste","Teste de Atributo"],["salva","Salvaguarda"]], val:"ataque"},
   cost:function(g,q,aux){ return aux ? 4 : ceil2(g); },
-  prolongBase:function(){ return 2; }, prolongTxt:"2 PP — só a primeira jogada da rodada é afetada",
-  rotulo:function(q,st){ return st.escolha("vantagem","modo") === "vantagem" ? "vantagem" : "desvantagem"; }},
+  prolongBase:function(){ return 2; }, prolongTxt:"2 PP — só a primeira jogada de cada rodada é afetada",
+  rotulo:function(q,st){ return (st.escolha("vantagem","modo") === "vantagem" ? "vantagem" : "desvantagem")
+    + " em " + {ataque:"ataque", teste:"Teste de Atributo", salva:"Salvaguarda"}[st.escolha2("vantagem","jogada")]; }},
 
 {id:"aumentar-alcance", cat:"Controle", nm:"Aumentar Alcance",
   ds:"Estende o alcance de uma jogada de ataque (Técnicas) à distância.",
@@ -991,8 +993,8 @@ var EFEITOS = [
   custoTxt:"metade do grau (arred. ↑) · grátis no 1º grau", needs:"area", condArea:true,
   cost:function(g){ return g === 1 ? 0 : ceil2(g); },
   rotulo:function(){ var n = condAreaEscolhida(); return n || "nenhuma escolhida"; },
-  prolongBase:function(g){ return ceil2(g === 1 ? 0 : ceil2(g)) + 1; },
-  prolongMax:1, prolongTxt:"metade do custo (↑) +1 PP · máx. 1 minuto"},
+  prolongBase:function(g){ return (g === 1 ? 0 : ceil2(g)) + 1; },
+  prolongMax:1, prolongTxt:"custo do efeito +1 PP · máx. 1 minuto em toda a área"},
 
 {id:"controle-cirurgico", cat:"Controle", nm:"Controle Cirúrgico",
   ds:"Protege um número de aliados igual ao seu mod. de Destreza (mínimo 1) dentro da área.",
@@ -1000,7 +1002,7 @@ var EFEITOS = [
   prolongBase:function(){ return 1; }, prolongTxt:"1 PP"},
 
 {id:"power-up", cat:"Controle", nm:"Power Up",
-  ds:"Envolve seu corpo no poder do fruto por até 1 minuto. Só volta a funcionar após um descanso curto ou longo.",
+  ds:"Envolve seu corpo no poder do fruto por até 1 minuto. Só volta a funcionar após um descanso curto ou longo. Se a forma se encerrar por atingir o limite de dano, o dano excedente é ignorado.",
   custoTxt:"3 PP + opções · duração de 1 min já inclusa", duracaoInclusa:true,
   opts:[
     {id:"pu-desv", t:"Criaturas têm desvantagem em Salvaguardas contra Técnicas do seu fruto", pp:2},
@@ -1014,7 +1016,7 @@ var EFEITOS = [
   custoTxt:"1 PP", cost:function(){ return 1; }},
 
 {id:"criar-lacaio", cat:"Controle", nm:"Criar Lacaio",
-  ds:"Cria uma criatura por até 1 minuto: CR 15, 50 PV, 9 m de deslocamento, ataque +9 (1d12+5). Age no seu turno.",
+  ds:"Cria uma criatura por até 1 minuto: CR 15, 50 PV, 9 m de deslocamento, ataque +9 (1d12+5). Age logo depois de você na iniciativa, com no máximo um Atacar por turno.",
   custoTxt:"7 PP + melhorias (teto de 15 PP) · duração inclusa", duracaoInclusa:true,
   qtd:{label:"PP em melhorias", min:0, max:8, step:1, val:0},
   cost:function(g,q){ return 7 + q; },
@@ -1066,12 +1068,12 @@ var EFEITOS = [
   rotulo:function(q,st){ return (Number(st.escolha("criar-arma","dados")) + 1) + "d8"; }},
 
 {id:"dano-adicional", cat:"Ofensivo", nm:"Dano Adicional",
-  ds:"Soma dados de dano a outras Técnicas instantâneas. Cada dado não usado devolve 1 PP.",
+  ds:"Executada junto de outra Técnica instantânea, soma dados de dano a ela (limitado pelo grau dela). Cada dado que não couber reduz o custo em 1 PP.",
   custoTxt:"1 PP por dado, até 5", needs:"sem-dano", qtd:{label:"dados extras", min:1, max:5, step:1, val:3},
   cost:function(g,q){ return q; }, rotulo:function(q){ return "+" + q + " dados"; }},
 
 {id:"dano-continuo", cat:"Ofensivo", nm:"Dano Contínuo",
-  ds:"Continua causando dano no início de cada turno das criaturas afetadas. Máximo de dados por turno igual ao grau.",
+  ds:"Continua causando dano: na primeira vez que a criatura entra na área (ou a área nela, inclusive ao executar) e no início de cada turno em que ela continuar lá, no máximo uma vez por turno. Máximo de dados por turno igual ao grau.",
   custoTxt:"1 + metade do grau (↑) + 1 PP por dado · duração inclusa", duracaoInclusa:true, needs:"dano",
   qtd:{label:"dados por turno", min:1, max:7, step:1, val:3},
   opts:[{id:"dc-fixa", t:"Área fixa sem emanação, ou alvo único com Salvaguarda a cada turno", pp:-2}],
@@ -1123,13 +1125,13 @@ var EFEITOS = [
   rotulo:function(q,st){ return "+" + st.escolha("aumentar-movimento","m") + " m"; }},
 
 {id:"contencao-coletiva", cat:"Suporte", nm:"Contenção de Dano (coletivo)",
-  ds:"Reduz o dano sofrido por você e por todos atrás de você num cone de 12 m.",
+  ds:"Cria uma reserva de redução de dano para você e todos atrás de você num cone de 12 m, até o início do seu próximo turno.",
   custoTxt:"1 PP por 1d8, até 15 dados", needs:"reacao",
   qtd:{label:"dados de proteção (d8)", min:1, max:15, step:1, val:5},
   cost:function(g,q){ return q; }, rotulo:function(q){ return q + "d8 de redução"; }},
 
 {id:"contencao-individual", cat:"Suporte", nm:"Contenção de Dano (individual)",
-  ds:"Reduz o dano sofrido por uma criatura.",
+  ds:"Cria uma reserva de redução de dano para você ou uma criatura no alcance, até o início do seu próximo turno ou o fim do próximo turno dela.",
   custoTxt:"1 PP por 2d8, até 30 dados", needs:"reacao",
   qtd:{label:"PP em proteção", min:1, max:15, step:1, val:5},
   cost:function(g,q){ return q; }, rotulo:function(q){ return (q*2) + "d8 de redução"; }},
@@ -1197,7 +1199,7 @@ var EFEITOS = [
   custoTxt:"−3 PP", needs:"auxiliar", cost:function(){ return -3; }},
 
 {id:"tecnica-dependente", cat:"Redução", nm:"Técnica Dependente",
-  ds:"Só pode ser usada enquanto outra Técnica ou Manifestação de Poder predeterminada estiver ativa.",
+  ds:"Só pode ser usada consumindo os efeitos de outra Técnica, ou enquanto outra Técnica ou Manifestação de Poder predeterminada estiver ativa.",
   custoTxt:"metade dos PP da Técnica exigida (−1 a −3)",
   qtd:{label:"redução", min:1, max:3, step:1, val:2}, cost:function(g,q){ return -q; },
   rotulo:function(q){ return "−" + q + " PP"; }},
@@ -1520,7 +1522,7 @@ function calcular(){
     var rotulo = e.nm + (det ? " — " + det : "");
 
     if(v >= 0){ somaEfeitos += v; linhas.push({k:rotulo, v:"+" + v + " PP"}); }
-    else { somaReducoes += -v; linhas.push({k:rotulo, v:v + " PP", cut:true}); }
+    else { somaReducoes += -v; linhas.push({k:rotulo, v:isMP() ? "+" + (-v) + " pts no orçamento" : v + " PP", cut:true}); }
 
     // duração prolongada deste efeito
     if(e.prolongBase && S.prolong[e.id]){
@@ -1543,13 +1545,16 @@ function calcular(){
     else resumoEfeitos.push({nm:e.nm, det:det, pp:v, red:true});
   });
 
-  var tetoRed = aux ? 6 : g;
-  var redAplicada = Math.min(somaReducoes, tetoRed);
-  if(somaReducoes > tetoRed){
-    linhas.push({k:"Teto de redução — " + (aux ? "Auxiliares: 6 PP" : g + "º grau: " + g + " PP"),
+  /* Teto de redução (2.1): o dobro do grau nas Técnicas de Combate e 6 PP nas
+     Auxiliares. Nas Manifestações de Poder não há teto por grau e a redução não
+     desconta custo — ela soma pontos virtuais ao orçamento (conta uma vez só). */
+  var tetoRed = isMP() ? Infinity : (aux ? 6 : 2 * g);
+  var redAplicada = isMP() ? 0 : Math.min(somaReducoes, tetoRed);
+  if(!isMP() && somaReducoes > tetoRed){
+    linhas.push({k:"Teto de redução — " + (aux ? "Auxiliares: 6 PP" : g + "º grau: " + tetoRed + " PP"),
                  v:"+" + (somaReducoes - tetoRed) + " PP", cap:true});
     alertas.push({t:"warn", m:"Você escolheu " + somaReducoes + " PP de redução, mas o teto "
-      + (aux ? "de uma Técnica Auxiliar é 6 PP" : "de uma Técnica de " + g + "º grau é " + g + " PP")
+      + (aux ? "de uma Técnica Auxiliar é 6 PP" : "de uma Técnica de " + g + "º grau é " + tetoRed + " PP (o dobro do grau)")
       + ". Só " + redAplicada + " PP entraram na conta."});
   }
 
@@ -1571,8 +1576,12 @@ function calcular(){
   var limite, rotuloLimite;
   if(isMP()){
     var modAtiv = {passiva:-3, inacao:-1, bonus:2, reacao:2, poderosa:3}[S.ativacao];
+    /* a soma dos efeitos, antes das reduções, nunca passa de 12 */
     limite = Math.min(12, 6 + modAtiv + somaReducoes);
     rotuloLimite = "de " + limite + " pontos virtuais";
+    if(6 + modAtiv + somaReducoes > 12)
+      alertas.push({t:"warn", m:"A ativação e as reduções somam " + (6 + modAtiv + somaReducoes)
+        + " pontos virtuais, mas os efeitos de uma Manifestação nunca podem passar de 12 pontos."});
   } else {
     limite = specs().pp;
     rotuloLimite = "de " + limite + " PP";
@@ -1669,8 +1678,8 @@ function calcular(){
     efFx.forEach(function(x){ ppEfFx += Number(x.pp) || 0; });
     var custoFx = Math.max(1, dadosFx + sobretaxa + ppEfFx);
     var maxDadosFx = GRAUS[gf].dados;
-    /* a sobretaxa entra POR CIMA do teto do grau: o Gomu-Gomu no Cannon do
-       livro é 5º grau (teto 10 PP) e custa 12 PP — 10 do grau + 2 da forma */
+    /* a sobretaxa entra por cima do teto do grau, para a forma ter o mesmo
+       espaço de efeitos que uma Técnica do grau dela */
     var maxFx = GRAUS[gf].pp + sobretaxa;
 
     fx = {
@@ -1740,24 +1749,24 @@ function gerarDescricao(){
   if(S.ativos["controle-cirurgico"]) p.push("Ao realizar esta Técnica você pode escolher um número de criaturas igual ao seu modificador de Destreza (mínimo de uma criatura) dentro da área da Técnica para não sofrer dano.");
   if(S.ativos["dano-insistente"]) p.push("Caso a criatura passe na Salvaguarda e tenha qualquer característica para não sofrer nenhum dano, ela ainda assim receberá metade do dano.");
   if(S.ativos["ataque-cerco"]) p.push("O dano desta Técnica é dobrado em objetos e estruturas.");
-  if(S.ativos["dano-continuo"]) p.push("A Técnica continua causando " + (S.qtds["dano-continuo"] || 1) + "d" + dado + " no início de cada turno de cada criatura afetada, enquanto durar.");
+  if(S.ativos["dano-continuo"]) p.push("A Técnica continua causando " + (S.qtds["dano-continuo"] || 1) + "d" + dado + " a cada criatura na primeira vez que ela entrar no espaço da Técnica e no início de cada turno em que permanecer nele, no máximo uma vez por turno, enquanto durar.");
   if(S.ativos["cura"]) p.push("A Técnica recupera " + (S.qtds["cura"] || 1) + "d" + (ehArea() ? 6 : 10) + " Pontos de Vida.");
   if(S.ativos["pv-temp"]) p.push("A criatura afetada recebe " + (S.qtds["pv-temp"] || 1) + "d" + (ehArea() ? 4 : 10) + " Pontos de Vida temporários.");
   if(S.ativos["aumentar-cr"]) p.push("A CR da criatura afetada aumenta em +" + (S.qtds["aumentar-cr"] || 1) + " enquanto a Técnica durar.");
   if(S.ativos["aumentar-movimento"]) p.push("O deslocamento normal da criatura afetada aumenta em " + ctx.escolha("aumentar-movimento") + " metros.");
   if(S.ativos["reducao-movimento"]) p.push("O deslocamento da criatura afetada é " + (ctx.escolha("reducao-movimento") === "2" ? "reduzido a 0" : "reduzido pela metade") + ".");
   if(S.ativos["voo"]) p.push("A criatura afetada recebe " + (S.qtds["voo"] || 9) + " metros de deslocamento de voo.");
-  if(S.ativos["contencao-coletiva"]) p.push("A Técnica reduz " + (S.qtds["contencao-coletiva"] || 1) + "d8 do dano recebido por você e por toda criatura em um cone de 12 metros atrás de você.");
-  if(S.ativos["contencao-individual"]) p.push("A Técnica reduz " + ((S.qtds["contencao-individual"] || 1) * 2) + "d8 de um dano qualquer.");
-  if(S.ativos["vantagem"]) p.push(ctx.escolha("vantagem") === "vantagem"
-    ? "A criatura afetada recebe vantagem na sua próxima jogada de ataque (comum), Teste de Atributo ou Salvaguarda, até o final do próximo turno dela."
-    : "A criatura afetada recebe desvantagem na sua próxima jogada de ataque (comum), Teste de Atributo ou Salvaguarda, até o final do próximo turno dela.");
+  if(S.ativos["contencao-coletiva"]) p.push("A Técnica cria uma reserva de redução de dano igual a " + (S.qtds["contencao-coletiva"] || 1) + "d8. Sempre que você ou uma criatura em um cone de 12 metros atrás de você sofrer dano, reduza esse dano utilizando a reserva.");
+  if(S.ativos["contencao-individual"]) p.push("A Técnica cria uma reserva de redução de dano igual a " + ((S.qtds["contencao-individual"] || 1) * 2) + "d8. Sempre que a criatura protegida sofrer dano, reduza-o utilizando a reserva.");
+  if(S.ativos["vantagem"]) p.push("A criatura afetada recebe " + (ctx.escolha("vantagem") === "vantagem" ? "vantagem" : "desvantagem")
+    + " na sua próxima " + {ataque:"jogada de ataque (comum)", teste:"Teste de Atributo", salva:"Salvaguarda"}[ctx.escolha2("vantagem")]
+    + ", até o final do próximo turno dela.");
   if(S.ativos["ataques-multiplos"]) p.push("Você realiza mais 2 jogadas de ataque (comum) até o final do seu turno.");
   if(S.ativos["aumentar-dano"]) p.push("Enquanto esta Técnica estiver ativa, você recebe +3 de dano na primeira jogada de ataque (comum) de cada rodada.");
   if(S.ativos["criar-arma"]) p.push("Enquanto a Técnica durar, suas jogadas de ataque (comum) com a arma criada causam "
     + (Number(ctx.escolha("criar-arma")) + 1) + "d8 de dano. Você deve consumir 2 Pontos de Poder ao final de cada turno ou ela se desfaz.");
-  if(S.ativos["dano-adicional"]) p.push("Você adiciona " + (S.qtds["dano-adicional"] || 1) + " dados de dano extra às suas Técnicas de duração “Instantâneo”, limitado pelo mesmo valor do grau da Técnica. Cada dado não utilizado reduz o custo desta Técnica em −1 PP.");
-  if(S.ativos["criar-lacaio"]) p.push("Você cria um lacaio com CR 15, 50 Pontos de Vida e 9 metros de deslocamento, que age no seu turno e pode usar uma ação para Atacar (uma vez), Ajudar, Usar um Objeto ou Agarrão.");
+  if(S.ativos["dano-adicional"]) p.push("Você executa esta Técnica em conjunto com outra Técnica de duração “Instantâneo”, adicionando " + (S.qtds["dano-adicional"] || 1) + " dados de dano extra a ela, limitados ao grau da Técnica. Para cada dado que não puder ser utilizado, reduza o custo em PP desta Técnica em 1.");
+  if(S.ativos["criar-lacaio"]) p.push("Você cria um lacaio com CR 15, 50 Pontos de Vida e 9 metros de deslocamento, que age imediatamente depois de você na iniciativa e pode usar as ações Atacar (apenas 1 por turno), Ajudar, Usar um Objeto ou Agarrão.");
   if(S.ativos["power-up"]){
     var po = S.opts["power-up"] || {}, lst = [];
     if(po["pu-desv"]) lst.push("criaturas têm desvantagem em Salvaguardas contra Técnicas do seu fruto");
