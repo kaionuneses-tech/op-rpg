@@ -1,6 +1,6 @@
 # OP RPG — Ferramentas
 
-Ferramentas de apoio para o **OP RPG — Livro do Jogador 2.0**, de Brendo Neves.
+Ferramentas de apoio para o **OP RPG — Livro do Jogador 2.1**, de Brendo Neves.
 
 - **Ficha de Personagem** — a ficha completa para jogar a campanha: calcula PV, PP, CR, CD, perícias e Haki, rola os dados e importa técnicas da Forja.
 - **Forja de Técnicas** — criador de Técnicas de Combate, Técnicas Auxiliares e Manifestações de Poder, com o orçamento de Pontos de Poder de cada grau.
@@ -48,6 +48,6 @@ O endereço fica `https://SEU-USUARIO.github.io/NOME-DO-REPO/`.
 
 ## Créditos
 
-**OP RPG — Livro do Jogador 2.0**, criação e desenvolvimento de Brendo Neves. Estas ferramentas são de apoio e não substituem o livro; toda criação precisa da aprovação do Narrador.
+**OP RPG — Livro do Jogador 2.1**, criação e desenvolvimento de Brendo Neves. Estas ferramentas são de apoio e não substituem o livro; toda criação precisa da aprovação do Narrador.
 
 Conteúdo sob Open Game License 1.0a. One Piece é obra de Eiichiro Oda.
