@@ -24,14 +24,6 @@ const PAGINAS = [
     conta: true
   },
   {
-    fonte: "op-rpg-guia.html",
-    saida: "guia.html",
-    favicon: "🏴‍☠️",
-    descricao: "Guia de criação de personagem do OP RPG — da ficha em branco até o 3º nível, " +
-      "com montador de ficha que calcula PV, CR, PP e salvaguardas ao vivo.",
-    conta: true
-  },
-  {
     fonte: "op-rpg-ficha.html",
     saida: "ficha.html",
     favicon: "☠️",

@@ -1,10 +1,10 @@
 # OP RPG — Ferramentas
 
-Duas ferramentas de apoio para o **OP RPG — Livro do Jogador 2.0**, de Brendo Neves.
+Ferramentas de apoio para o **OP RPG — Livro do Jogador 2.0**, de Brendo Neves.
 
-- **Rota do Novato** — guia de criação de personagem, da ficha em branco até o 3º nível, com montador de ficha.
-- **Ficha de Personagem** — a ficha completa para jogar a campanha: calcula PV, PP, CR, CD, perícias e Haki, rola os dados e importa técnicas da Forja e fichas do Guia.
+- **Ficha de Personagem** — a ficha completa para jogar a campanha: calcula PV, PP, CR, CD, perícias e Haki, rola os dados e importa técnicas da Forja.
 - **Forja de Técnicas** — criador de Técnicas de Combate, Técnicas Auxiliares e Manifestações de Poder, com o orçamento de Pontos de Poder de cada grau.
+- **Diário de Bordo** — anotações da campanha, com busca e salvamento automático.
 
 São páginas estáticas: sem servidor, sem banco de dados, sem cadastro. Tudo roda no navegador de quem acessa, e as técnicas ficam guardadas no próprio navegador.
 
@@ -13,7 +13,6 @@ São páginas estáticas: sem servidor, sem banco de dados, sem cadastro. Tudo r
 ```
 docs/                  o site publicado
   index.html             página inicial
-  guia.html              Rota do Novato
   forja.html             Forja de Técnicas  (gerado — não edite à mão)
   ficha.html             Ficha de Personagem (gerado — não edite à mão)
 op-rpg-forja.html      fonte da forja
