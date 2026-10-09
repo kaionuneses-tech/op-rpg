@@ -583,6 +583,13 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
         <span class="muted">Mestiço — escolha as duas espécies de origem:</span>
         <select data-bind="mestico.0" class="selEspecieBase"></select>
         <select data-bind="mestico.1" class="selEspecieBase"></select>
+        <label class="mestico" data-show="mesticoEscolhe" title="Dois Mundos: as espécies de origem têm características diferentes, então você escolhe uma">
+          <span class="muted">Dois Mundos:</span>
+          <select data-bind="doisMundos">
+            <option value="cultural">Traço Cultural (PT pela Sabedoria)</option>
+            <option value="ancestral">Ancestralidade</option>
+          </select>
+        </label>
       </div>
       <p class="hint" data-calc="estiloInfo"></p>
     </div>
@@ -787,7 +794,7 @@ dialog::backdrop{background:rgba(5,10,16,.55)}
         <div class="field"><span>PA ociosos</span><output class="big" data-calc="paOciosos"></output></div>
         <div class="field"><span>Estágio · CD</span><output class="big" data-calc="hakiEstagio"></output></div>
       </div>
-      <p class="hint">Estágio: 1–20 PA Inexperiente · 21–70 Treinado · 71+ Perito. CD de Haki = 8 + Proficiência + Vontade. Cada caixa (Possui / Forma Dominada / Forma Avançada) custa o valor do talento.</p>
+      <p class="hint">Estágio (soma dos PA nos três Hakis): 1–20 Inexperiente · 21–70 Treinado (proficiência na perícia Haki) · 71+ Perito (1 nova rolagem de Haki por dia). CD de Haki = 8 + Proficiência + Vontade. Cada caixa custa o valor do talento; a Forma Dominada pede o Estágio Treinado e a Avançada, o Perito. Dá para guardar no máximo 20 PA sem distribuir.</p>
       <p class="hint">Passe o mouse num talento para ler o que ele faz, ou numa caixa para ver o que aquela forma muda. Clique no nome (ou Shift+clique) para fixar a descrição e poder selecionar e copiar o texto.</p>
     </div>
     <div class="haki-cols" id="haki"></div>
@@ -1498,7 +1505,8 @@ const CAMINHOS = ['Conhecimento pelo Companheirismo (C/C)', 'Liberdade pelo Comp
   'Conhecimento pela Força (C/F)', 'Liberdade pela Força (L/F)', 'Poder pela Força (P/F)',
   'Conhecimento pela Enganação (C/E)', 'Liberdade pela Enganação (L/E)', 'Poder pela Enganação (P/E)'];
 
-const TAMANHOS = { 'Miúdo': 0.5, 'Pequeno': 1, 'Médio': 1, 'Grande': 2, 'Enorme': 4, 'Imenso': 6 };
+// multiplicador da capacidade de carga: dobra a cada categoria acima de Médio, metade para Miúdo (cap. 9)
+const TAMANHOS = { 'Miúdo': 0.5, 'Pequeno': 1, 'Médio': 1, 'Grande': 2, 'Enorme': 4, 'Imenso': 8 };
 
 const HABILIDADES_BASICAS = ['Aprendizado Excepcional', 'Aprimoramento de Atributo', 'Concentração Inabalável',
   'Corpo de Guerreiro', 'Defesa Ofensiva', 'Dificuldade Inefável', 'Gerenciamento de Energia', 'Mente e Corpo',
@@ -1514,7 +1522,7 @@ const MAESTRIAS = {
   'Bárbaro': ['Devorador de Montanhas', 'Fúria', 'Ira'],
   'Capitão Implacável': ['Confiança Merecida', 'Nakama', 'Desigualdade Soberana'],
   'Deus do Fogo': ['Corpo Forjado: Ignição', 'Corpo Forjado: Labareda', 'Fogo Inato'],
-  'Estilingueiro': ['Atirador Imprevisível', 'Mira Elástica', 'Arsenal do Estilingueiro'],
+  'Estilingueiro': ['Atirador Imprevisível', 'Mira Elástica', 'Forçar Bravura'],
   'Hasshoken': ['Golpe Ressoante', 'Impacto Puro', 'Resistência Vibrante'],
   'Imaculado': ['Corpo Espirituoso', 'Energia Impetuosa', 'Estratégias do Imaculado'],
   'Kung Fu': ['Domínio dos Cem Punhos', 'Seja como a Água', 'Wire Fu'],
@@ -1695,7 +1703,7 @@ const GRAU_POR_NIVEL = [[1, 1], [3, 2], [6, 3], [9, 4], [12, 5], [16, 6], [20, 7
 Object.entries({
   'Atirador': 'Armas de Fogo, Lançador de Arpão, Bazuca, Canhão e Armas de Navio',
   'Aventureiro': 'Armas Cortantes, Armas de Fogo, Armas Especiais e Armas Marciais',
-  'Brutamontes (Guerreiro-Oni)': 'Kanabo',
+  'Brutamontes (Guerreiro-Oni)': 'Kanabo/Tacape',
   'Carateca Homem-Peixe': 'Armas Marciais e Tridente',
   'Ciborgue': 'Nenhuma',
   'Espadachim': 'Armas Cortantes',
@@ -1760,7 +1768,7 @@ function novoPersonagem() {
   ATRIBUTOS.forEach(a => { saves[a.key] = false; savesExtra[a.key] = 0; savesAdv[a.key] = false; });
   return {
     id: uid(), nome: '', jogador: '', nivel: 1, xp: 0, recompensa: '',
-    especie: '', mestico: ['', ''], estilo: '', profissao: '', antecedente: '', primario: '', oficioAttr: 'SAB',
+    especie: '', mestico: ['', ''], doisMundos: 'cultural', estilo: '', profissao: '', antecedente: '', primario: '', oficioAttr: 'SAB',
     retrato: '',
     attrs: { FOR: 10, DES: 10, CON: 10, SAB: 10, PRE: 10, VON: 10 },
     saves, savesExtra, savesAdv, skills,
@@ -1914,9 +1922,9 @@ function compute() {
     hpMax += base.v; linhas.push([`Vida base da espécie (${base.src})`, base.v]);
     if (S.hp.modo === 'rolagem') {
       const soma = S.hp.rolagens.slice(0, lv20).reduce((a, b) => a + num(b), 0);
-      const conTot = Math.max(1, con) * lv20;
+      const conTot = con * lv20;
       hpMax += soma + conTot;
-      linhas.push([`Dados rolados (${lv20} níveis)`, soma], [`Constituição × nível (mín. 1)`, conTot]);
+      linhas.push([`Dados rolados (${lv20} níveis)`, soma], [`Constituição × nível`, conTot]);
     } else if (dado) {
       const n1 = Math.max(1, dado + con);
       const nx = Math.max(1, Math.floor(dado / 2) + 1 + con) * (lv20 - 1);
@@ -1977,6 +1985,11 @@ function compute() {
   C.atkTec = sgn(prof + pm);
 
   // iniciativa, deslocamento
+  const forD = Math.max(0, mod('FOR'));
+  const dadoCG = habTem('Corpo de Guerreiro') ? (lvl >= 16 ? 'd10' : lvl >= 11 ? 'd8' : lvl >= 6 ? 'd6' : 'd4')
+    : treinadoTem('Guerreiro Treinado') ? 'd4' : '';
+  C.desarmado = dadoCG ? `1${dadoCG}${forD ? ' + ' + forD : ''} Contundente` : `${1 + forD} de dano Contundente (1 + Força, quando positiva)`;
+
   C.iniciativaN = mod('DES');
   C.iniciativa = sgn(mod('DES'));
   const ex = num(S.exaustao);
@@ -1986,7 +1999,7 @@ function compute() {
   if (num(S.desloc.nado)) outros.push(`nado ${num(S.desloc.nado).toLocaleString('pt-BR')}`);
   if (num(S.desloc.voo)) outros.push(`voo ${num(S.desloc.voo).toLocaleString('pt-BR')}`);
   C.deslocOutros = outros.join(' · ') || 'terra';
-  C.exaustaoInfo = ex ? (ex >= 6 ? '— desmaiado!' : `— −${2 * ex} no d20, −${(1.5 * ex).toLocaleString('pt-BR')} m`) : '';
+  C.exaustaoInfo = ex ? (ex >= 6 ? '— desmaio: cai a 0 PV' : `— −${2 * ex} no d20, −${(1.5 * ex).toLocaleString('pt-BR')} m`) : '';
 
   // perícias e salvaguardas
   PERICIAS.forEach(p => {
@@ -2024,7 +2037,14 @@ function compute() {
   C.cargaExcedida = carga > cargaMax;
 
   // treinamento
-  const semSab = S.especie === 'Mestiços' ? S.mestico.some(e => ESPECIES[e]?.semPTSab) : ESPECIES[S.especie]?.semPTSab;
+  // Mestiço (Dois Mundos): se as duas espécies de origem têm a mesma característica, ela vale;
+  // se uma tem Traço Cultural e a outra Ancestralidade, o jogador escolhe.
+  const origensSemSab = S.mestico.filter(Boolean).map(e => !!ESPECIES[e]?.semPTSab);
+  const mestMisto = origensSemSab.length === 2 && origensSemSab[0] !== origensSemSab[1];
+  C.mesticoEscolhe = S.especie === 'Mestiços' && mestMisto;
+  const semSab = S.especie === 'Mestiços'
+    ? (mestMisto ? S.doisMundos === 'ancestral' : origensSemSab.length > 0 && origensSemSab.every(Boolean))
+    : ESPECIES[S.especie]?.semPTSab;
   const pt = Math.min(15, 3 * Math.floor(lvl / 2)) + (semSab ? 0 : Math.max(0, mod('SAB'))) + num(S.ptExtra)
     + (singTem('Disciplinado') ? Math.floor(lvl / 2) : 0);
   C.ptTotal = pt;
@@ -2039,6 +2059,7 @@ function compute() {
   C.paGastosN = gastos;
   C.paGastos = gastos;
   C.paOciosos = num(S.haki.paTotal) - gastos;
+  if (C.paOciosos > 20) C.paOciosos = `${C.paOciosos} (máx. 20)`;
   C.hakiEstagioNome = gastos >= 71 ? 'Perito' : gastos >= 21 ? 'Treinado' : gastos >= 1 ? 'Inexperiente' : 'Latente';
   C.hakiEstagio = `${C.hakiEstagioNome} · ${8 + prof + mod('VON')}`;
 
@@ -2200,7 +2221,7 @@ function renderEquip() {
         <label class="field"><span>Tipo</span><input data-bind="equipamentos.${i}.tipo" placeholder="Cortante"></label>
         <label class="field"><span>Propriedades</span><input data-bind="equipamentos.${i}.props"></label>
       </div>
-    </div>`).join('') || '<p class="hint">Nenhuma arma. Ataque desarmado padrão: 1d4 (Corpo de Guerreiro aumenta).</p>';
+    </div>`).join('') || `<p class="hint">Nenhuma arma. Ataque desarmado: ${esc(C.desarmado || '1 + Força')}.</p>`;
 }
 
 function renderMunicao() {
@@ -2283,7 +2304,13 @@ function renderHaki() {
         const desc = HAKI_DESC[nome] || {};
         const t = S.haki.talentos[nome] || {};
         // forma que o talento não tem fica desligada (a menos que já esteja marcada)
-        const caixa = (campo, forma, tem) => `<td data-hforma="${forma}"><input type="checkbox" class="chk" data-bind="${k}.${campo}" data-rerender="haki"${!tem && !t[campo] ? ' disabled' : ''}></td>`;
+        const libera = { possui: true, dominado: !!t.possui && estagioAtual >= 2, aprimorado: !!t.dominado && estagioAtual >= 3 };
+        const motivo = { dominado: 'A Forma Dominada exige o talento e o Estágio Treinado', aprimorado: 'A Forma Avançada exige a Forma Dominada e o Estágio Perito' };
+        const caixa = (campo, forma, tem) => {
+          const off = !t[campo] && (!tem || !libera[campo]);
+          const tip = !tem ? '' : (!libera[campo] && !t[campo] ? motivo[campo] : '');
+          return `<td data-hforma="${forma}"${tip ? ` title="${tip}"` : ''}><input type="checkbox" class="chk" data-bind="${k}.${campo}" data-rerender="haki"${off ? ' disabled' : ''}></td>`;
+        };
         return `<tr class="${bloqueado ? 'locked' : ''} ${possui(nome) ? 'owned' : ''}" data-talento="${esc(nome)}">
           <td class="hnome"><b>${nome}</b><small>${est}${req.length ? ' · req: ' + req.join(', ') : ''}</small></td>
           <td class="center">${custo}</td>
@@ -2509,6 +2536,7 @@ function fillBindings(root = document) {
 
 function updateOutputs() {
   compute();
+  if (!S.equipamentos.length) renderEquip();
   $$('[data-calc]').forEach(el => { const v = C[el.dataset.calc]; el.textContent = v ?? ''; });
   $$('[data-calc-style]').forEach(el => { el.style.width = (C[el.dataset.calcStyle] || 0) + '%'; });
   $$('[data-show]').forEach(el => { el.hidden = !C[el.dataset.show]; });
@@ -2680,15 +2708,16 @@ function descansoCurto() {
 function gastarDadosDeVida(n, dado) {
   const con = mod('CON');
   const rolls = Array.from({ length: n }, () => rollDie(dado));
-  const cura = rolls.reduce((a, r) => a + Math.max(0, r + con), 0);
+  const cura = rolls.reduce((a, r) => a + r + Math.max(0, con), 0);
   aplicarCura(cura);
   S.dvGastos = num(S.dvGastos) + n;
-  pushLog({ label: `Descanso curto (${n}d${dado})`, total: `+${cura} PV`, det: `[${rolls.join(', ')}] ${sgn(con)} CON cada`, tipo: 'heal' });
+  pushLog({ label: `Descanso curto (${n}d${dado})`, total: `+${cura} PV`, det: `[${rolls.join(', ')}]${con > 0 ? ` ${sgn(con)} CON cada` : ''}`, tipo: 'heal' });
   commit();
 }
 
 async function descansoLongo() {
   if (!await perguntar({ titulo: 'Descanso longo', texto: 'Recupera PV e PP, metade dos Dados de Vida e reduz 1 nível de exaustão.', ok: 'Descansar' })) return;
+  if (C.hpMaxN && num(S.hp.dano) >= C.hpMaxN) return toast('Sem nenhum PV, o descanso longo não traz benefícios. Recupere ao menos 1 PV antes.', 'bad');
   const lvl = num(S.nivel);
   const exausto = num(S.exaustao) > 0;
   S.hp.dano = 0;
@@ -3393,7 +3422,13 @@ function bindEvents() {
     const step = t.closest('[data-step]');
     if (step) { setPath(S, step.dataset.step, Math.max(0, num(getPath(S, step.dataset.step)) + Number(step.dataset.d))); return commit(); }
     const pip = t.closest('[data-ex]');
-    if (pip) { const n = Number(pip.dataset.ex); S.exaustao = num(S.exaustao) === n ? n - 1 : n; renderPips(); return commit(); }
+    if (pip) {
+      const n = Number(pip.dataset.ex);
+      S.exaustao = num(S.exaustao) === n ? n - 1 : n;
+      // 6º nível de Exaustão: desmaio, o personagem cai a 0 PV (cap. 10)
+      if (S.exaustao >= 6) { S.hp.temp = 0; S.hp.escudo = 0; S.hp.dano = C.hpMaxN; toast('6 níveis de Exaustão: desmaio, cai a 0 PV.', 'bad'); }
+      renderPips(); return commit();
+    }
     const die = t.closest('[data-expr]');
     if (die) { const r = rollExpr(die.dataset.expr); return pushLog({ label: die.dataset.expr, total: r.total, det: r.detalhe, tipo: die.dataset.expr === '1d20' ? (r.total === 20 ? 'crit' : r.total === 1 ? 'fail' : '') : '' }); }
     const tab = t.closest('[data-tab]');
